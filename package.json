@@ -1,0 +1,16 @@
+{
+  "name": "skill-issue",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Formation et kit : construire, porter et chaîner des Agent Skills — cas réel : review de code Angular.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "node evals/angular-review/check-catalogue.mjs && node evals/angular-review/run-scan-tests.mjs && node skills/skill-smith/scripts/validate.mjs skills/angular-review skills/review-fix skills/pr-handoff skills/skill-smith",
+    "test:update": "node evals/angular-review/run-scan-tests.mjs --update",
+    "build:site": "node site/build.mjs",
+    "render:videos": "python studio/render.py",
+    "install:skills": "node kit/install.mjs"
+  }
+}
