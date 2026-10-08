@@ -1,0 +1,10 @@
+<div class="card" (click)="select()" [ngClass]="{ active: true }">
+  <img src="/img/huge.png">
+  <input type="text" placeholder="Search">
+  <ul>
+    <li *ngFor="let item of items()">{{ format(item, 'short') }}</li>
+  </ul>
+  @for (talk of talks(); track $index) {
+    <p [innerHTML]="talk.bio"></p>
+  }
+</div>

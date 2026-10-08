@@ -1,0 +1,1 @@
+{ "projects": { "fixture": { "architect": { "build": { "options": { "browser": "src/main.ts" } }, "test": { "builder": "@angular/build:unit-test" } } } } }

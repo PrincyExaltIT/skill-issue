@@ -1,0 +1,599 @@
+{
+  "repo": "PrincyExaltIT/skill-issue-playground",
+  "branch": "feat/speaker-spotlight",
+  "base": "main",
+  "angular": "22.2.1",
+  "notes": "Lignes 1-based sur feat/speaker-spotlight. line = emplacement principal ; alsoAt = autres emplacements du même défaut, acceptés comme équivalents ; rules = ids acceptés pour ce défaut. mustFind=false : défaut INFO ou secondaire (bonus, jamais pénalisé). skillSeverity : sévérité appliquée par la version actuelle du skill quand elle diffère de severity. Un finding sur une ligne de decoy (line ou alsoAt) est un faux positif. Severities aligned with skill v2.0.0 references (2026-10-08).",
+  "issues": [
+    {
+      "id": "S01",
+      "rules": [
+        "R-ARCH-007"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 9,
+      "title": "Injection par paramètres de constructeur (constructor(private http: HttpClient))",
+      "mustFind": true
+    },
+    {
+      "id": "S02",
+      "rules": [
+        "R-ARCH-030"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 7,
+      "title": "URL d'API codée en dur (http://localhost:3000/api/speakers) au lieu du token API_BASE_URL",
+      "mustFind": true
+    },
+    {
+      "id": "S03",
+      "rules": [
+        "R-ARCH-029"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 11,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker.service.ts",
+          "line": 16
+        }
+      ],
+      "title": "Méthodes typées Observable<any>",
+      "mustFind": true
+    },
+    {
+      "id": "S04",
+      "rules": [
+        "R-ARCH-022"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 12,
+      "title": "console.log résiduel dans getSpeaker()",
+      "mustFind": true
+    },
+    {
+      "id": "S05",
+      "rules": [
+        "R-ARCH-034"
+      ],
+      "severity": "INFO",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 5,
+      "title": "Nouveau service racine en @Injectable({ providedIn: 'root' }) au lieu de @Service() (Angular 22)",
+      "mustFind": false
+    },
+    {
+      "id": "S06",
+      "rules": [
+        "R-SIG-001",
+        "R-ARCH-009"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 17,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 18
+        }
+      ],
+      "title": "Décorateurs @Input() / @Output() + EventEmitter au lieu de input() / output()",
+      "mustFind": true
+    },
+    {
+      "id": "S07",
+      "rules": [
+        "R-ARCH-027"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 18,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.html",
+          "line": 22
+        }
+      ],
+      "title": "Output nommé select, comme l'événement DOM natif",
+      "mustFind": true
+    },
+    {
+      "id": "S08",
+      "rules": [
+        "R-PERF-020"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 14,
+      "title": "ChangeDetectionStrategy.Eager forcé sans justification dans un nouveau composant (OnPush est le défaut en v22)",
+      "mustFind": true
+    },
+    {
+      "id": "S09",
+      "rules": [
+        "R-ARCH-029"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 20,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 21
+        }
+      ],
+      "title": "Champs speaker: any et talks: any[]",
+      "mustFind": true
+    },
+    {
+      "id": "S10",
+      "rules": [
+        "R-SIG-005"
+      ],
+      "severity": "BLOCKER",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 30,
+      "title": "takeUntilDestroyed() sans argument dans ngOnInit : NG0203 à l'ouverture de /speakers/:id (constaté dans le navigateur)",
+      "mustFind": true
+    },
+    {
+      "id": "S11",
+      "rules": [
+        "R-RX-001",
+        "R-ARCH-017",
+        "R-SIG-007"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 32,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 35
+        }
+      ],
+      "title": "subscribe imbriqués (paramMap → speaker → talks) : aucune annulation, réponses dans le désordre",
+      "mustFind": true
+    },
+    {
+      "id": "S12",
+      "rules": [
+        "R-PERF-035"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 33,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 34
+        },
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 36
+        }
+      ],
+      "title": "Zoneless : champs simples (speaker, bioHtml, talks) assignés dans des callbacks subscribe, la vue n'est pas rafraîchie (Eager n'y change rien)",
+      "mustFind": true
+    },
+    {
+      "id": "S13",
+      "rules": [
+        "R-SEC-003",
+        "R-SEC-001"
+      ],
+      "severity": "BLOCKER",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 34,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.html",
+          "line": 13
+        },
+        {
+          "file": "src/app/proposals/proposal-form.html",
+          "line": 35
+        }
+      ],
+      "title": "bypassSecurityTrustHtml sur la bio saisie par les orateurs, rendue via [innerHTML] : XSS stockée",
+      "mustFind": true
+    },
+    {
+      "id": "S14",
+      "rules": [
+        "R-ARCH-028"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 3,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.html",
+          "line": 5
+        },
+        {
+          "file": "src/app/speakers/speaker-spotlight.html",
+          "line": 6
+        },
+        {
+          "file": "src/app/speakers/speaker-spotlight.html",
+          "line": 22
+        },
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 11
+        }
+      ],
+      "title": "*ngIf / *ngFor (NgIf, NgFor importés) au lieu du control flow @if / @for",
+      "mustFind": true
+    },
+    {
+      "id": "S15",
+      "rules": [
+        "R-PERF-037"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 6,
+      "title": "Méthode avec argument appelée dans le template : getInitials(speaker.name)",
+      "mustFind": true
+    },
+    {
+      "id": "S16",
+      "rules": [
+        "R-A11Y-014"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 5,
+      "title": "<img> de la photo du speaker sans attribut alt",
+      "mustFind": true
+    },
+    {
+      "id": "S17",
+      "rules": [
+        "R-PERF-034"
+      ],
+      "severity": "INFO",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 5,
+      "title": "<img [src]> sans NgOptimizedImage (ngSrc, width, height)",
+      "mustFind": false
+    },
+    {
+      "id": "S18",
+      "rules": [
+        "R-A11Y-005"
+      ],
+      "severity": "BLOCKER",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 22,
+      "title": "(click) sur une <div class=\"talk\"> : ni focusable ni activable au clavier",
+      "mustFind": true
+    },
+    {
+      "id": "S19",
+      "rules": [
+        "R-ARCH-031",
+        "R-SIG-009"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 27,
+      "alsoAt": [
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 3
+        },
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 16
+        }
+      ],
+      "title": "Formulaire non typé (UntypedFormBuilder / UntypedFormGroup)",
+      "mustFind": true
+    },
+    {
+      "id": "S20",
+      "rules": [
+        "R-ARCH-017"
+      ],
+      "severity": "BLOCKER",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 47,
+      "title": "this.form.valueChanges.subscribe(...) sans désabonnement (source infinie)",
+      "mustFind": false,
+      "debatable": "Contesté par la review réelle du 08/10/2026 : le FormGroup est créé et détenu par le composant, abonnement et formulaire sont libérés ensemble ; pas de fuite durable. Garder comme bonus."
+    },
+    {
+      "id": "S21",
+      "rules": [
+        "R-SIG-003"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 38,
+      "alsoAt": [
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 33
+        },
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 37
+        }
+      ],
+      "title": "effect() qui recopie abstract().length dans le signal charCount : état dérivé, à remplacer par computed()",
+      "mustFind": true
+    },
+    {
+      "id": "S22",
+      "rules": [
+        "R-PERF-035"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 67,
+      "alsoAt": [
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 34
+        },
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 66
+        },
+        {
+          "file": "src/app/proposals/proposal-form.html",
+          "line": 9
+        }
+      ],
+      "title": "Zoneless : submitted (champ simple) passé à true dans un setTimeout, la confirmation ne s'affiche qu'au prochain événement (constaté)",
+      "mustFind": true
+    },
+    {
+      "id": "S23",
+      "rules": [
+        "R-TEST-001"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 1,
+      "title": "Nouveau composant ProposalForm sans fichier spec",
+      "mustFind": true
+    },
+    {
+      "id": "S24",
+      "rules": [
+        "R-A11Y-013"
+      ],
+      "severity": "BLOCKER",
+      "file": "src/app/proposals/proposal-form.html",
+      "line": 15,
+      "title": "Champ titre sans label ni aria-label (placeholder seul)",
+      "mustFind": true
+    },
+    {
+      "id": "S25",
+      "rules": [
+        "R-ARCH-032"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/proposals/proposal.guard.ts",
+      "line": 7,
+      "alsoAt": [
+        {
+          "file": "src/app/app.routes.ts",
+          "line": 26
+        }
+      ],
+      "title": "Guard sous forme de classe (implements CanActivate) au lieu d'un CanActivateFn",
+      "mustFind": true
+    },
+    {
+      "id": "S26",
+      "rules": [
+        "R-PERF-001"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/app.routes.ts",
+      "line": 22,
+      "alsoAt": [
+        {
+          "file": "src/app/app.routes.ts",
+          "line": 3
+        }
+      ],
+      "title": "Route secondaire speakers/:id chargée eagerly (component:) : bundle initial 284,67 kB → 323,07 kB",
+      "mustFind": true
+    },
+    {
+      "id": "S27",
+      "rules": [
+        "R-SIG-004"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/favorites/favorites.store.ts",
+      "line": 28,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 51
+        }
+      ],
+      "title": "add() mute le tableau du signal en place (this.ids().push) : ni le compteur ni la persistance ne sont notifiés",
+      "mustFind": true
+    },
+    {
+      "id": "S28",
+      "rules": [
+        "R-SIG-010"
+      ],
+      "severity": "BLOCKER",
+      "file": "src/app/talks/talk-card.ts",
+      "line": 28,
+      "title": "Signal isFavorite testé sans être appelé (!this.isFavorite toujours faux) : le feedback affiche toujours « Retiré de vos favoris » (constaté)",
+      "mustFind": true
+    },
+    {
+      "id": "S29",
+      "rules": [
+        "R-TEST-002"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/speakers/speaker-spotlight.spec.ts",
+      "line": 20,
+      "title": "it.only : test focalisé (avec CI=true, Vitest échoue : « Unexpected .only modifier »)",
+      "mustFind": true
+    },
+    {
+      "id": "S30",
+      "rules": [
+        "R-TEST-003"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker-spotlight.spec.ts",
+      "line": 21,
+      "title": "Seule assertion : expect(component).toBeTruthy()",
+      "mustFind": true
+    },
+    {
+      "id": "S31",
+      "rules": [
+        "R-TEST-001"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 1,
+      "title": "Nouveau service SpeakerService sans fichier spec",
+      "mustFind": false
+    },
+    {
+      "id": "S32",
+      "rules": [
+        "R-TEST-001"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/proposals/proposal.guard.ts",
+      "line": 1,
+      "title": "Nouveau guard ProposalGuard sans fichier spec",
+      "mustFind": false
+    },
+    {
+      "id": "S33",
+      "rules": [
+        "R-ARCH-034"
+      ],
+      "severity": "INFO",
+      "file": "src/app/proposals/proposal.guard.ts",
+      "line": 6,
+      "title": "@Injectable({ providedIn: 'root' }) sur une nouvelle classe (disparaît avec un CanActivateFn)",
+      "mustFind": false
+    },
+    {
+      "id": "S34",
+      "rules": [
+        "R-ERR-005",
+        "R-ERR-008"
+      ],
+      "severity": "MAJOR",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 32,
+      "alsoAt": [
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 30
+        },
+        {
+          "file": "src/app/speakers/speaker-spotlight.ts",
+          "line": 35
+        }
+      ],
+      "title": "Appels HTTP sans gestion d'erreur : « Chargement du speaker… » reste affiché si l'API échoue",
+      "mustFind": false
+    },
+    {
+      "id": "S35",
+      "rules": [
+        "R-ARCH-024"
+      ],
+      "severity": "MINOR",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 42,
+      "title": "getInitials() duplique initialsOf() de src/app/talks/initials.ts",
+      "mustFind": false
+    }
+  ],
+  "decoys": [
+    {
+      "id": "D01",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 42,
+      "alsoAt": [
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 41
+        },
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 43
+        }
+      ],
+      "why": "effect() qui écrit seulement dans localStorage : effet de bord légitime, aucune écriture de signal (à opposer à l'effect des lignes 37-39)"
+    },
+    {
+      "id": "D02",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 51,
+      "alsoAt": [
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 49
+        },
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 50
+        },
+        {
+          "file": "src/app/proposals/proposal-form.ts",
+          "line": 52
+        }
+      ],
+      "why": "takeUntilDestroyed(this.destroyRef) dans ngOnInit : le DestroyRef est passé explicitement, donc ni NG0203 ni fuite"
+    },
+    {
+      "id": "D03",
+      "file": "src/app/proposals/proposal-form.html",
+      "line": 44,
+      "why": "@for (talk of sameTrackTalks(); track talk.id) : control flow natif et identité stable"
+    },
+    {
+      "id": "D04",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 20,
+      "why": "localStorage lu à l'initialisation d'un signal : l'application n'a pas de SSR (scope.angular.ssr = false), l'accès direct est acceptable"
+    },
+    {
+      "id": "D05",
+      "file": "src/app/proposals/proposal-form.html",
+      "line": 42,
+      "why": "{{ selectedTrack() }} : lecture d'un signal sans argument, pas un appel de méthode coûteux"
+    },
+    {
+      "id": "D06",
+      "file": "src/app/proposals/proposal-form.html",
+      "line": 19,
+      "why": "<select id=\"track\"> associé à <label for=\"track\"> : champ correctement étiqueté, contrairement au titre ligne 15"
+    },
+    {
+      "id": "D07",
+      "file": "src/app/talks/talk-card.html",
+      "line": 28,
+      "why": "[routerLink]=\"['/speakers', person.id]\" : tableau littéral mémoïsé par le compilateur, et vrai lien <a> pour naviguer"
+    }
+  ]
+}

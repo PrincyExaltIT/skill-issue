@@ -1,0 +1,28 @@
+{
+  "skill": "angular-review",
+  "how_to_use": "Run each query in a fresh session of your harness, with the skill installed, and note whether angular-review loads. Target: >= 90% correct on both lists. A miss on should_trigger means the description lacks that trigger branch; a false trigger means it is too broad.",
+  "should_trigger": [
+    "Fais une review de ma branche Angular avant que je merge",
+    "review PR 42",
+    "Peux-tu auditer les changements de ce composant ? src/app/talks/talk-card.ts",
+    "Est-ce que ce code Angular est propre ? Je l'ai écrit vite ce matin",
+    "Check my staged Angular changes for bugs before I commit",
+    "Relis la MR !128 côté front, on est en Angular 22",
+    "Is this good Angular? (pasted a component with @Input and *ngFor)",
+    "Review the diff since main, focus on signals and RxJS",
+    "Fais une passe qualité sur feat/speaker-spotlight",
+    "Avant merge : sécurité et accessibilité de mes templates Angular"
+  ],
+  "should_not_trigger": [
+    "Crée-moi un composant Angular de liste de talks",
+    "Migre ce projet d'Angular 21 à 22",
+    "Explique-moi la différence entre computed et linkedSignal",
+    "Review my React component for hooks issues",
+    "Corrige les findings du rapport de review",
+    "Écris la description de la PR",
+    "Fais une code review de ce service Spring Boot",
+    "Génère des tests Vitest pour talk-card.ts",
+    "Pourquoi mon build Angular échoue avec NG8001 ?",
+    "Résume les changements de cette semaine dans le changelog"
+  ]
+}

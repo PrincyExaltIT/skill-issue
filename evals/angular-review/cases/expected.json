@@ -1,0 +1,57 @@
+{
+  "src/app/bad/bad-card.ts": [
+    "R-ARCH-019:13",
+    "R-ARCH-027:11",
+    "R-ARCH-027:17"
+  ],
+  "src/app/bad/bad-store.ts": [
+    "R-ARCH-035:20",
+    "R-ARCH-035:3",
+    "R-SIG-006:10",
+    "R-SIG-008:13",
+    "R-SIG-010:16",
+    "R-SIG-010:19"
+  ],
+  "src/app/bad/bad-widget.html": [
+    "R-A11Y-005:1",
+    "R-A11Y-013:3",
+    "R-A11Y-014:2",
+    "R-ARCH-012:1",
+    "R-ARCH-028:5",
+    "R-PERF-034:2",
+    "R-PERF-036:7",
+    "R-PERF-037:5"
+  ],
+  "src/app/bad/bad-widget.spec.ts": [
+    "R-TEST-002:5",
+    "R-TEST-003:7"
+  ],
+  "src/app/bad/bad-widget.ts": [
+    "R-ARCH-007:25",
+    "R-ARCH-010:10",
+    "R-ARCH-017:32",
+    "R-ARCH-017:33",
+    "R-ARCH-022:34",
+    "R-ARCH-027:16",
+    "R-ARCH-029:21",
+    "R-ARCH-030:32",
+    "R-ARCH-030:33",
+    "R-ARCH-031:20",
+    "R-ARCH-031:5",
+    "R-PERF-020:11",
+    "R-PERF-035:37",
+    "R-PERF-035:40",
+    "R-RX-001:33",
+    "R-RX-002:23",
+    "R-SEC-003:50",
+    "R-SEC-023:22",
+    "R-SIG-001:15",
+    "R-SIG-001:16",
+    "R-SIG-003:27",
+    "R-SIG-004:45",
+    "R-SIG-004:46",
+    "R-SIG-005:37",
+    "R-SIG-005:38"
+  ],
+  "src/app/clean/talk-card.ts": []
+}
