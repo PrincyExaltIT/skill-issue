@@ -1,0 +1,13 @@
+{
+  "$comment": "Merge into .claude/settings.json of the project, and copy angular-scan-on-edit.mjs to .claude/hooks/.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          { "type": "command", "command": "node .claude/hooks/angular-scan-on-edit.mjs", "timeout": 30 }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "checked": "2026-10-08",
+  "note": "Single source of truth for where each harness looks for skills. Read by kit/install.mjs and by the course site. Update this file, not the course, when a harness changes.",
+  "list": [
+    {
+      "id": "claude",
+      "name": "Claude Code",
+      "support": "Natif depuis le 16/10/2025 (Claude Code, apps Claude, API, Agent SDK).",
+      "project": [".claude/skills/<nom>/SKILL.md (et dossiers parents jusqu'à la racine du repo)"],
+      "user": ["~/.claude/skills/<nom>/"],
+      "invoke": "Automatique via la description, ou /angular-review [arguments].",
+      "extras": "Ne lit PAS .agents/skills (issue #16345 ouverte). Extensions : disable-model-invocation, user-invocable, argument-hint, context: fork, agent, model, effort, hooks, paths ; ${CLAUDE_SKILL_DIR} ; !`cmd`. Liste des skills plafonnée à 1 % du contexte, description + when_to_use à 1 536 caractères.",
+      "install": "node kit/install.mjs --target . --harness claude",
+      "projectInstall": [".claude/skills"],
+      "userInstall": ["~/.claude/skills"],
+      "sources": ["https://code.claude.com/docs/en/skills", "https://github.com/anthropics/claude-code/issues/16345"]
+    },
+    {
+      "id": "codex",
+      "name": "OpenAI Codex",
+      "support": "Expérimental en décembre 2025 ; lit .agents/skills depuis février 2026 (CLI, IDE, app ChatGPT).",
+      "project": [".agents/skills/ (du dossier courant jusqu'à la racine du repo)"],
+      "user": ["~/.agents/skills/", "~/.codex/skills/ (historique, encore lu)"],
+      "invoke": "$angular-review ou /skills ; implicite via la description.",
+      "extras": "agents/openai.yaml optionnel : interface (display_name, short_description, icônes, default_prompt), policy.allow_implicit_invocation (false = uniquement $nom), dependencies.tools (MCP). Désactivation via [[skills.config]] dans config.toml. Skills intégrés $skill-creator et $skill-installer.",
+      "install": "node kit/install.mjs --target . --harness codex",
+      "projectInstall": [".agents/skills"],
+      "userInstall": ["~/.agents/skills"],
+      "sources": ["https://learn.chatgpt.com/docs/build-skills", "https://github.com/openai/codex/pull/10317"]
+    },
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot",
+      "support": "Agent de code, CLI et VS Code depuis le 18/12/2025 ; activé par défaut dans VS Code 1.109 (04/02/2026).",
+      "project": [".github/skills/", ".claude/skills/", ".agents/skills/"],
+      "user": ["~/.copilot/skills/", "~/.agents/skills/", "~/.claude/skills/ (VS Code)"],
+      "invoke": "Automatique ; /angular-review dans le chat ; CLI : /skills list|info|add|reload.",
+      "extras": "VS Code accepte argument-hint, user-invocable, disable-model-invocation, context: fork (expérimental). GitHub déconseille de pré-autoriser shell/bash dans allowed-tools. Gestion via gh skill (aperçu, gh ≥ 2.90).",
+      "install": "node kit/install.mjs --target . --harness copilot",
+      "projectInstall": [".agents/skills"],
+      "userInstall": ["~/.agents/skills"],
+      "sources": ["https://docs.github.com/en/copilot/concepts/agents/about-agent-skills", "https://code.visualstudio.com/docs/copilot/customization/agent-skills"]
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "support": "Depuis Cursor 2.4 (22/01/2026), éditeur et CLI.",
+      "project": [".agents/skills/", ".cursor/skills/", ".claude/skills/ et .codex/skills/ (lus aussi)"],
+      "user": ["~/.agents/skills/", "~/.cursor/skills/"],
+      "invoke": "Automatique ; menu / pour un message ; en Custom Mode pour toute la session.",
+      "extras": "Champs : paths (globs), disable-model-invocation, icon, color, metadata. /migrate-to-skills convertit rules et commandes. Seul ~/.cursor/skills est synchronisé vers les Cloud Agents.",
+      "install": "node kit/install.mjs --target . --harness cursor",
+      "projectInstall": [".agents/skills"],
+      "userInstall": ["~/.agents/skills"],
+      "sources": ["https://cursor.com/docs/context/skills", "https://cursor.com/changelog/2-4"]
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini CLI / Antigravity",
+      "support": "Gemini CLI : stable depuis v0.27 (02/2026). Remplacé par Antigravity CLI (agy) pour les comptes gratuits et AI Pro/Ultra depuis le 18/06/2026.",
+      "project": [".agents/skills/ (prioritaire)", ".gemini/skills/"],
+      "user": ["~/.agents/skills/", "~/.gemini/skills/", "~/.gemini/antigravity-cli/skills/ (Antigravity)"],
+      "invoke": "Le modèle appelle activate_skill, puis l'utilisateur valide une demande de consentement. Antigravity : chaque skill devient /nom.",
+      "extras": "/skills list|link|enable|disable|reload ; gemini skills install <git|dossier>. Priorité : workspace > utilisateur > extension > intégré.",
+      "install": "node kit/install.mjs --target . --harness gemini",
+      "projectInstall": [".agents/skills"],
+      "userInstall": ["~/.agents/skills"],
+      "sources": ["https://geminicli.com/docs/cli/skills/", "https://antigravity.google/docs/skills"]
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "support": "Depuis v1.0.186 (22/12/2025).",
+      "project": [".opencode/skills/", ".claude/skills/", ".agents/skills/"],
+      "user": ["~/.config/opencode/skills/", "~/.claude/skills/", "~/.agents/skills/"],
+      "invoke": "Outil skill intégré (liste <available_skills>).",
+      "extras": "Lit name, description, license, compatibility, metadata ; ignore le reste. Permissions par skill : permission.skill allow|deny|ask.",
+      "install": "node kit/install.mjs --target . --harness opencode",
+      "projectInstall": [".agents/skills"],
+      "userInstall": ["~/.agents/skills"],
+      "sources": ["https://opencode.ai/docs/skills/"]
+    },
+    {
+      "id": "kilo",
+      "name": "Kilo Code",
+      "support": "Depuis janvier 2026 (nouvelle plateforme basée sur OpenCode ; extension historique avec .kilocode/skills).",
+      "project": [".agents/skills/", ".kilo/skills/", ".claude/skills/ (option de compatibilité Claude Code)"],
+      "user": ["~/.agents/skills/", "~/.kilo/skills/"],
+      "invoke": "Outil skill ; chaque skill est aussi une commande slash.",
+      "extras": "Chemins supplémentaires via skills.paths, skills distants via skills.urls (kilo.jsonc). Les commandes !`cmd` ne s'exécutent que dans des skills globaux de confiance.",
+      "install": "node kit/install.mjs --target . --harness kilo",
+      "projectInstall": [".agents/skills"],
+      "userInstall": ["~/.agents/skills"],
+      "sources": ["https://kilo.ai/docs/customize/skills"]
+    },
+    {
+      "id": "continue",
+      "name": "Continue",
+      "support": "Dans le code (IDE 29/12/2025, CLI cn 20/01/2026) ; pas de page de documentation officielle.",
+      "project": [".continue/skills/", ".claude/skills/"],
+      "user": ["~/.continue/skills/"],
+      "invoke": "Le modèle appelle l'outil Skills ; CLI : /skill-<nom>, /skills.",
+      "extras": "Ne lit pas .agents/skills. Seuls name et description sont validés.",
+      "install": "node kit/install.mjs --target . --harness continue",
+      "projectInstall": [".claude/skills"],
+      "userInstall": ["~/.continue/skills"],
+      "note": "Comportement établi d'après le code source de Continue, faute de documentation publiée.",
+      "sources": ["https://github.com/continuedev/continue/blob/main/core/config/markdown/loadMarkdownSkills.ts"]
+    }
+  ],
+  "others": "Lisent aussi .agents/skills : Amp, goose, Devin Desktop (ex-Windsurf). Lisent .claude/skills : Cline. Roo Code a fermé le 15/05/2026."
+}
