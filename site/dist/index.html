@@ -1563,12 +1563,14 @@ Tous les snapshots passent.</span>
         <h3>Mesurer : rappel et précision</h3>
         <p>Le corrigé de la branche est dans le kit, pas dans le playground (sinon l'agent pourrait le lire).</p>
 <pre class="term"><span class="p">$ </span><span class="cmd">node ../skill-issue/evals/angular-review/score.mjs --findings .review/findings.json</span>
-<span class="o">✔ S01 MINOR   R-ARCH-007   src/app/speakers/speaker.service.ts:…   Injection par constructeur
-✖ S17 MAJOR   R-PERF-001   src/app/app.routes.ts:…   Route chargée sans lazy loading
+<span class="o">✖ S03 MINOR   R-ARCH-029               speaker.service.ts:11  Méthodes typées Observable&lt;any&gt;
+✔ S10 BLOCKER R-SIG-005                speaker-spotlight.ts:30  takeUntilDestroyed() sans argument dans ngOnInit : …
+✔ S13 BLOCKER R-SEC-003|R-SEC-001      speaker-spotlight.ts:34  bypassSecurityTrustHtml sur la bio saisie par les o…
 …
-Rappel …% · BLOCKER …/… · MAJOR …/… · MINOR …/… · INFO …/…
-Leurres signalés à tort : …/…</span></pre>
-        <div class="expect">Compare avec ton voisin qui utilise un autre harness ou un autre modèle : même skill, résultats différents. C'est exactement ce que les evals servent à suivre.</div>
+Rappel 96 % (26/27) · BLOCKER 5/5 · MAJOR 10/10 · MINOR 11/12 · bonus 2/8
+Précision 100 % (28/28 findings expliqués par le corrigé ; un « hors corrigé » peut rester légitime)
+Leurres signalés à tort : 0/7</span></pre>
+        <div class="expect">Sortie réelle de la review Claude Code du 8 octobre. Compare avec ton voisin qui utilise un autre harness : le même jour, Codex a obtenu 100 % de rappel avec 8 BLOCKER au lieu de 2 (leçon 2.8). Même skill, résultats différents : c'est ce que les evals servent à suivre.</div>
         <label class="check"><input type="checkbox" data-step="s6"> Fait</label>
       </div></div>
 
@@ -1619,10 +1621,13 @@ Leurres signalés à tort : …/…</span></pre>
 │  ├─ install.mjs                  <span class="c"># installe dans .agents/skills, .claude/skills, … (copie ou lien)</span>
 │  ├─ harnesses.json               <span class="c"># où chaque harness cherche ses skills — daté, à jour</span>
 │  ├─ <span class="d">ci/github/</span>angular-review.yml   <span class="c"># scan sans IA + annotations + SARIF, review IA optionnelle</span>
+│  ├─ <span class="d">ci/github/</span>angular-review-codex.yml  <span class="c"># la même review par Codex (job lecture seule + job commentaire)</span>
 │  ├─ <span class="d">ci/gitlab/</span>angular-review.gitlab-ci.yml  <span class="c"># Code Quality dans la MR, note IA optionnelle</span>
 │  ├─ <span class="d">hooks/</span>                       <span class="c"># Claude Code : scan après chaque édition de l'agent</span>
+│  ├─ gitlab-mirror.sh             <span class="c"># miroir GitLab des dépôts (après glab auth login)</span>
 │  └─ <span class="d">templates/</span>                   <span class="c"># AGENTS.md et CLAUDE.md pour un projet Angular</span>
-├─ <span class="d">evals/angular-review/</span>           <span class="c"># fixtures + snapshots, triggers.json, corrigé de la démo, score.mjs</span>
+├─ <span class="d">evals/angular-review/</span>           <span class="c"># snapshots, catalogue, déclenchement (run-triggers.mjs), corrigé, score.mjs</span>
+├─ <span class="d">docs/sample-review/</span>             <span class="c"># reviews réelles Claude Code et Codex, avec leurs scores</span>
 ├─ <span class="d">site/</span>                           <span class="c"># cette formation (un seul fichier HTML généré)</span>
 └─ <span class="d">studio/</span>                         <span class="c"># les vidéos : scènes HTML rendues image par image</span></div>
     </section>
@@ -1640,7 +1645,7 @@ Leurres signalés à tort : …/…</span></pre>
     </section>
 
     <section class="section" aria-labelledby="gitlab-title">
-      <div class="section-head"><h2 id="gitlab-title">Sur GitLab</h2><p>Le kit est neutre vis-à-vis de la forge : même installeur, même scan, un job prêt à inclure.</p></div>
+      <div class="section-head"><h2 id="gitlab-title">Sur GitLab</h2><p>Le kit est neutre vis-à-vis de la forge : même installeur, même scan, un job prêt à inclure. Pour recopier les deux dépôts sur GitLab : <code>glab auth login</code>, puis <code>bash kit/gitlab-mirror.sh &lt;groupe&gt;</code> depuis chacun.</p></div>
 <pre class="code" data-lang="yaml"># .gitlab-ci.yml de ton projet
 include:
   - local: kit/ci/gitlab/angular-review.gitlab-ci.yml   # ou copie le fichier

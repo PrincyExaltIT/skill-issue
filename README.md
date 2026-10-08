@@ -2,7 +2,7 @@
 
 > Ton agent sait coder. Il ne sait pas comment **ton équipe** code.
 
-Formation en trois modules et kit prêt à l'emploi : construire un **Agent Skill** complet (scripts, références, evals) à partir d'un cas réel, la review de code Angular, le faire tourner sur six harnesses, puis le chaîner dans un workflow qui va du diff à la CI.
+Formation en trois modules et kit prêt à l'emploi : construire un **Agent Skill** complet (scripts, références, evals) à partir d'un cas réel, la review de code Angular, le faire tourner sur huit harnesses, puis le chaîner dans un workflow qui va du diff à la CI.
 
 - **La formation** : `site/dist/index.html` (un seul fichier, à ouvrir dans un navigateur), avec 4 vidéos dans `site/dist/media/`.
 - **Le kit** : 4 skills au standard [agentskills.io](https://agentskills.io), un installeur multi-harness, des pipelines GitHub Actions et GitLab CI, un hook Claude Code, des gabarits `AGENTS.md`.
@@ -18,6 +18,19 @@ Formation en trois modules et kit prêt à l'emploi : construire un **Agent Skil
 | [`skill-smith`](skills/skill-smith/SKILL.md) | Crée, valide et installe un nouveau skill | besoin → dossier de skill validé |
 
 `angular-review` v2 succède à la v1 de [PrincyExaltIT/agent-skill](https://github.com/PrincyExaltIT/agent-skill) : mêmes identifiants de règles et même logique de verdict, mais un seul dossier portable, des scripts déterministes, la prise en compte de la version d'Angular (OnPush par défaut en v22), deux nouveaux domaines (réactivité, tests) et des evals.
+
+## Résultats réels
+
+La même phrase (« Fais une review de cette branche avant que je la merge sur main ») sur la branche de démo, le 8 octobre 2026, notée contre le corrigé `evals/angular-review/playground-key.json` :
+
+| | Scan seul | Claude Code (Opus 5.5) | Codex (gpt-5.6-sol) |
+|---|---|---|---|
+| Rappel (27 attendus) | 96 % | 96 % | 100 % |
+| Précision | 100 % | 100 % | 100 % |
+| Leurres signalés | 0/7 | 0/7 | 0/7 |
+| Durée | 90 ms | 4 min 30 | ≈ 12 min |
+
+Rapports complets et transcriptions résumées : [`docs/sample-review/`](docs/sample-review/).
 
 ## Installer
 
@@ -40,6 +53,8 @@ Ajouter `.review/` au `.gitignore` du projet.
 
 - GitHub : copier [`kit/ci/github/angular-review.yml`](kit/ci/github/angular-review.yml) dans `.github/workflows/`. Le scan déterministe annote la PR sans IA ni secret ; la review complète tourne si le secret `ANTHROPIC_API_KEY` existe.
 - GitLab : inclure [`kit/ci/gitlab/angular-review.gitlab-ci.yml`](kit/ci/gitlab/angular-review.gitlab-ci.yml). Rapport Code Quality dans la MR ; note IA si `ANTHROPIC_API_KEY` et `GITLAB_REVIEW_TOKEN` sont définis.
+- Miroir GitLab des deux dépôts : `glab auth login`, puis `bash kit/gitlab-mirror.sh <groupe-ou-utilisateur>` depuis la racine de chaque dépôt.
+- Variante Codex pour GitHub : [`kit/ci/github/angular-review-codex.yml`](kit/ci/github/angular-review-codex.yml) (job agent en lecture seule, job séparé pour commenter).
 
 ## Développer le kit
 

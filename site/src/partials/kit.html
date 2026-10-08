@@ -20,10 +20,13 @@
 │  ├─ install.mjs                  <span class="c"># installe dans .agents/skills, .claude/skills, … (copie ou lien)</span>
 │  ├─ harnesses.json               <span class="c"># où chaque harness cherche ses skills — daté, à jour</span>
 │  ├─ <span class="d">ci/github/</span>angular-review.yml   <span class="c"># scan sans IA + annotations + SARIF, review IA optionnelle</span>
+│  ├─ <span class="d">ci/github/</span>angular-review-codex.yml  <span class="c"># la même review par Codex (job lecture seule + job commentaire)</span>
 │  ├─ <span class="d">ci/gitlab/</span>angular-review.gitlab-ci.yml  <span class="c"># Code Quality dans la MR, note IA optionnelle</span>
 │  ├─ <span class="d">hooks/</span>                       <span class="c"># Claude Code : scan après chaque édition de l'agent</span>
+│  ├─ gitlab-mirror.sh             <span class="c"># miroir GitLab des dépôts (après glab auth login)</span>
 │  └─ <span class="d">templates/</span>                   <span class="c"># AGENTS.md et CLAUDE.md pour un projet Angular</span>
-├─ <span class="d">evals/angular-review/</span>           <span class="c"># fixtures + snapshots, triggers.json, corrigé de la démo, score.mjs</span>
+├─ <span class="d">evals/angular-review/</span>           <span class="c"># snapshots, catalogue, déclenchement (run-triggers.mjs), corrigé, score.mjs</span>
+├─ <span class="d">docs/sample-review/</span>             <span class="c"># reviews réelles Claude Code et Codex, avec leurs scores</span>
 ├─ <span class="d">site/</span>                           <span class="c"># cette formation (un seul fichier HTML généré)</span>
 └─ <span class="d">studio/</span>                         <span class="c"># les vidéos : scènes HTML rendues image par image</span></div>
     </section>
@@ -41,7 +44,7 @@
     </section>
 
     <section class="section" aria-labelledby="gitlab-title">
-      <div class="section-head"><h2 id="gitlab-title">Sur GitLab</h2><p>Le kit est neutre vis-à-vis de la forge : même installeur, même scan, un job prêt à inclure.</p></div>
+      <div class="section-head"><h2 id="gitlab-title">Sur GitLab</h2><p>Le kit est neutre vis-à-vis de la forge : même installeur, même scan, un job prêt à inclure. Pour recopier les deux dépôts sur GitLab : <code>glab auth login</code>, puis <code>bash kit/gitlab-mirror.sh &lt;groupe&gt;</code> depuis chacun.</p></div>
 <pre class="code" data-lang="yaml"># .gitlab-ci.yml de ton projet
 include:
   - local: kit/ci/gitlab/angular-review.gitlab-ci.yml   # ou copie le fichier
