@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>v1 — anatomie d'un skill</title>
+<link rel="stylesheet" href="../stage.css">
+<style>
+  .seg { position: absolute; top: 0; bottom: 0; transform-origin: left center; }
+  .legend { display: grid; grid-template-columns: repeat(2, auto); gap: 10px 40px; font: 500 20px/1.3 var(--mono); color: var(--ink-2); justify-content: start; }
+  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; margin-right: 10px; vertical-align: -1px; }
+  .kpi { font: 800 64px/1 var(--display); font-variant-numeric: tabular-nums; }
+  .files { display: grid; grid-template-columns: 520px 1fr; gap: 14px 30px; font: 500 26px/1.3 var(--mono); align-items: baseline; }
+  .files .role { font: 400 22px/1.3 var(--body); color: var(--ink-2); }
+  .levels { display: grid; gap: 16px; }
+  .lvlrow { display: grid; grid-template-columns: 110px 420px 1fr 220px; gap: 20px; align-items: center; padding: 16px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); }
+  .lvlrow .tag { font: 800 22px/1 var(--mono); }
+  .lvlrow .what { font: 600 24px/1.2 var(--body); }
+  .lvlrow .when { font: 400 20px/1.3 var(--body); color: var(--ink-2); }
+  .lvlrow .cost { font: 700 22px/1 var(--mono); text-align: right; }
+  .dots { display: flex; gap: 4px; flex-wrap: wrap; width: 260px; }
+  .dots b { width: 9px; height: 9px; border-radius: 2px; background: var(--add); display: block; }
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .skills-list { display: grid; gap: 10px; font: 400 20px/1.3 var(--mono); }
+  .skills-list div { padding: 10px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); }
+  .skills-list div b { color: var(--ink); }
+  .hl { position: absolute; inset: -2px; border-radius: 10px; border: 2px solid var(--accent); box-shadow: 0 0 40px -8px var(--accent); }
+  .calls { font: 400 20px/1.6 var(--mono); }
+  .calls .tool { color: var(--accent); font-weight: 700; display: inline-block; width: 70px; }
+  .calls .r { color: var(--add); }
+</style></head>
+<body data-duration="70">
+<div class="brandmark">SKILL ISSUE · 01</div>
+
+<!-- A · 0–14 · le problème -->
+<div class="chapter" data-at="0.2" data-until="13.6">01 · le problème</div>
+<section class="scene" data-at="0" data-dur="0.01" data-until="13.7">
+  <div class="mid" data-at="0.3" data-fx="rise">Le contexte est un budget.</div>
+  <div class="dim mono" data-at="1.0" style="font-size:20px">fenêtre de contexte · 200 000 tokens</div>
+  <div class="bar" data-at="1.1" style="height:64px">
+    <i class="seg" style="left:0;width:8%;background:#3a475a" data-at="2.0" data-fx="grow" data-dur="0.7"></i>
+    <i class="seg" style="left:8%;width:24%;background:var(--del)" data-at="3.0" data-fx="grow" data-dur="1.0"></i>
+    <i class="seg" style="left:32%;width:16%;background:var(--major)" data-at="4.2" data-fx="grow" data-dur="0.8"></i>
+    <i class="seg" style="left:48%;width:12%;background:var(--info)" data-at="5.3" data-fx="grow" data-dur="0.8"></i>
+  </div>
+  <div class="legend">
+    <span data-at="2.0"><i style="background:#3a475a"></i>système + outils</span>
+    <span data-at="3.0"><i style="background:var(--del)"></i>CLAUDE.md de 900 lignes</span>
+    <span data-at="4.2"><i style="background:var(--major)"></i>schémas des serveurs MCP</span>
+    <span data-at="5.3"><i style="background:var(--info)"></i>conversation</span>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <span class="kpi accent" data-at="2.0" data-count="0:120000" data-dur="4.5">0</span>
+    <span class="dim" data-at="2.2" style="font-size:24px">tokens consommés<br>avant ta première question</span>
+  </div>
+</section>
+<div class="cap" data-at="7.0" data-until="13.5">Tout charger d'avance : la moitié de la fenêtre part avant d'avoir lu une ligne de ton code.</div>
+
+<!-- B · 14–30 · le dossier -->
+<div class="chapter" data-at="14.0" data-until="29.6">02 · le dossier</div>
+<section class="scene" data-at="14.0" data-until="29.7">
+  <div class="mid" data-at="14.1" data-fx="rise">Un skill est un dossier.</div>
+  <div class="files">
+    <span data-at="15.0" data-fx="slide-l">angular-review/SKILL.md</span><span class="role" data-at="15.4">frontmatter + workflow en 6 étapes</span>
+    <span data-at="16.4" data-fx="slide-l">  scripts/scope.mjs</span><span class="role" data-at="16.8">périmètre du diff, version d'Angular</span>
+    <span data-at="17.8" data-fx="slide-l">  scripts/scan.mjs</span><span class="role" data-at="18.2">41 règles détectables, lignes modifiées seulement</span>
+    <span data-at="19.2" data-fx="slide-l">  scripts/findings.mjs</span><span class="role" data-at="19.6">fusion, preuve, verdict calculé</span>
+    <span data-at="20.6" data-fx="slide-l">  references/*.md</span><span class="role" data-at="21.0">7 domaines de règles, chargés à la demande</span>
+    <span data-at="22.0" data-fx="slide-l">  assets/</span><span class="role" data-at="22.4">gabarit du rapport, schéma du contrat</span>
+  </div>
+</section>
+<div class="cap" data-at="23.2" data-until="29.5">Des instructions, du code exécutable, et du savoir découpé par domaine.</div>
+
+<!-- C · 30–52 · trois étages -->
+<div class="chapter" data-at="30.0" data-until="51.6">03 · trois étages</div>
+<section class="scene" data-at="30.0" data-until="51.7" style="padding-top:96px">
+  <div class="levels">
+    <div class="lvlrow" data-at="30.4" data-fx="rise"><span class="tag" style="color:var(--add)">N1</span><span class="what">name + description</span><span class="when">toujours, pour chaque skill installé</span><span class="cost">~150 tokens</span></div>
+    <div class="lvlrow" data-at="32.4" data-fx="rise"><span class="tag" style="color:var(--major)">N2</span><span class="what">corps de SKILL.md</span><span class="when">quand la description correspond</span><span class="cost">~1 600 tokens</span></div>
+    <div class="lvlrow" data-at="34.4" data-fx="rise"><span class="tag" style="color:var(--info)">N3</span><span class="what">references/, assets/</span><span class="when">quand une étape les pointe</span><span class="cost">par domaine</span></div>
+    <div class="lvlrow" data-at="36.4" data-fx="rise"><span class="tag" style="color:var(--accent)">exec</span><span class="what">scripts/</span><span class="when">exécutés : seule la sortie entre</span><span class="cost">0 token de code</span></div>
+  </div>
+  <div class="vs" data-at="39.0" data-fx="rise">
+    <div class="card"><div class="dim" style="font-size:20px">40 skills · progressive disclosure</div><div class="kpi" style="color:var(--add)"><span data-at="39.4" data-count="0:13000" data-dur="2">0</span></div><div class="dim mono" style="font-size:18px">tokens</div></div>
+    <div class="card"><div class="dim" style="font-size:20px">40 skills · tout charger</div><div class="kpi" style="color:var(--del)"><span data-at="39.4" data-count="0:184000" data-dur="3">0</span></div><div class="dim mono" style="font-size:18px">tokens</div></div>
+  </div>
+</section>
+<div class="cap" data-at="43.0" data-until="51.5">On ne paie que ce que la tâche du moment utilise.</div>
+
+<!-- D · 52–70 · un déclenchement réel -->
+<div class="chapter" data-at="52.0" data-until="69.6">04 · un déclenchement réel</div>
+<section class="scene" data-at="52.0" data-until="66.6" style="gap:16px">
+  <div class="term" style="padding:14px 20px;font-size:22px"><span class="p">› </span><span data-at="52.4" data-fx="type">fais une review de ma branche</span></div>
+  <div class="skills-list">
+    <div data-at="54.0"><b>grill-me</b> — A relentless interview to sharpen a plan or design.</div>
+    <div data-at="54.2"><b>tdd</b> — Test-driven development, red-green-refactor…</div>
+    <div data-at="54.4" style="position:relative"><span class="hl" data-at="55.6" data-fx="pop"></span><b>angular-review</b> — Senior-level review of Angular changes — a branch, a PR/MR…</div>
+    <div data-at="54.6"><b>pr-handoff</b> — Write the pull/merge request description and a handoff note…</div>
+  </div>
+  <div class="calls card">
+    <div data-at="57.0" data-fx="slide-l"><span class="tool">Read</span>angular-review/SKILL.md <span class="r">+1 600 tokens</span></div>
+    <div data-at="58.6" data-fx="slide-l"><span class="tool">Bash</span>node scripts/scope.mjs <span class="r">→ Angular 22.2.1 · zoneless · OnPush par défaut</span></div>
+    <div data-at="60.2" data-fx="slide-l"><span class="tool">Bash</span>node scripts/scan.mjs <span class="r">→ candidats sur les lignes modifiées</span></div>
+    <div data-at="61.8" data-fx="slide-l"><span class="tool">Read</span>references/REACTIVITY_REVIEW.md <span class="dim">(des signals ont changé)</span></div>
+  </div>
+</section>
+<div class="cap" data-at="57.2" data-until="66.4">Le modèle choisit sur la description, lit le corps, exécute les scripts, et ne charge que les règles utiles.</div>
+<section class="scene center" data-at="66.8">
+  <div class="big" data-at="66.9" data-fx="blur" data-dur="0.8">Ne charger que ce dont<br><span class="accent">la tâche a besoin.</span></div>
+</section>
+
+<script src="../engine.js"></script>
+</body></html>

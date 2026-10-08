@@ -1,0 +1,43 @@
+/* Shared look of every video: the dark theme of the course site, 1280×720 logical pixels. */
+@import url("https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=block");
+:root {
+  --bg: #0b0f15; --surface: #111721; --surface-2: #19212d; --ink: #e8edf3; --ink-2: #a3afbf; --ink-3: #6f7b8c; --line: #253041;
+  --accent: #ff4f81; --add: #4cc38a; --del: #ff7a6b;
+  --blocker: #ff6b5e; --major: #ff9a52; --minor: #f5c84b; --info: #7aa2ff;
+  --display: "Anybody", "Arial Narrow", sans-serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "JetBrains Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: var(--bg); color: var(--ink); font: 400 22px/1.4 var(--body); }
+body::before { /* faint diff gutter, the site's signature */
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 56px; border-right: 1px solid #141b25;
+  background: repeating-linear-gradient(to bottom, transparent 0 31px, #121923 31px 32px);
+}
+.scene { position: absolute; inset: 0; padding: 64px 90px 120px 120px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+.center { align-items: center; text-align: center; padding-left: 90px; }
+.eyebrow { font: 600 18px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.huge { font: 900 168px/.84 var(--display); font-stretch: 125%; letter-spacing: -.01em; }
+.big { font: 900 72px/.98 var(--display); font-stretch: 100%; }
+.mid { font: 800 46px/1.05 var(--display); font-stretch: 100%; }
+.accent { color: var(--accent); }
+.dim { color: var(--ink-2); }
+.mono { font-family: var(--mono); }
+.term { background: #080b10; border: 1px solid #1c2533; border-radius: 16px; padding: 22px 26px; font: 400 21px/1.55 var(--mono); color: #dfe6ee; box-shadow: 0 30px 80px -30px #000; }
+.term .p { color: var(--add); }
+.term .o { color: #8b97a8; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 22px; }
+.chip { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font: 600 22px/1 var(--mono); }
+.sev { display: inline-flex; align-items: center; gap: 8px; font: 700 15px/1 var(--mono); padding: 6px 9px; border-radius: 7px; border: 1.5px solid currentColor; letter-spacing: .04em; }
+.sev::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.blocker { color: var(--blocker); } .major { color: var(--major); } .minor { color: var(--minor); } .info { color: var(--info); }
+.row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.cursor { display: inline-block; width: .6em; height: 1.05em; background: var(--accent); vertical-align: -0.15em; margin-left: 4px; }
+/* Captions: bottom band, one line at a time */
+.cap { position: absolute; left: 120px; right: 90px; bottom: 42px; font: 500 24px/1.35 var(--body); color: var(--ink); display: flex; gap: 14px; align-items: baseline; }
+.cap::before { content: "▍"; color: var(--accent); }
+.chapter { position: absolute; top: 34px; left: 120px; font: 600 15px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.brandmark { position: absolute; top: 30px; right: 60px; font: 900 20px/1 var(--display); font-stretch: 115%; color: var(--ink-3); letter-spacing: .02em; }
+.tree { font: 500 30px/1.6 var(--mono); }
+.tree .lv { font: 700 16px/1 var(--mono); padding: 5px 8px; border-radius: 6px; margin-left: 16px; vertical-align: middle; }
+.l1 { background: #10291d; color: var(--add); } .l2 { background: #33210f; color: var(--major); } .l3 { background: #142045; color: var(--info); } .lx { background: #2a1520; color: var(--accent); }
+.bar { height: 46px; border-radius: 10px; background: var(--surface-2); position: relative; overflow: hidden; border: 1px solid var(--line); }
+.bar > i { position: absolute; top: 0; bottom: 0; display: block; }

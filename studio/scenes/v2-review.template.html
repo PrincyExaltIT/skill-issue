@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>v2 — une review, étape par étape</title>
+<link rel="stylesheet" href="../stage.css">
+<style>
+  .paths { display: grid; gap: 14px; font: 500 26px/1.3 var(--mono); }
+  .paths .who { color: var(--ink-2); font: 400 20px/1.3 var(--body); margin-left: 18px; }
+  .invokes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .inv { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 16px 18px; display: grid; gap: 8px; }
+  .inv b { font: 600 18px/1.2 var(--body); color: var(--ink-2); }
+  .inv code { font: 700 22px/1.2 var(--mono); color: var(--ink); }
+  .flags { display: flex; flex-wrap: wrap; gap: 12px; }
+  .flag { font: 600 19px/1 var(--mono); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
+  .flag .y { color: var(--add); } .flag .n { color: var(--ink-3); }
+  .cands { font: 400 18px/1.55 var(--mono); }
+  .cands .r { display: grid; grid-template-columns: 130px 130px minmax(0, 1fr); gap: 12px; align-items: center; }
+  .cands .r > span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lanes { display: grid; gap: 12px; }
+  .lane { display: grid; grid-template-columns: 400px 1fr 150px; gap: 16px; align-items: center; font: 500 18px/1.2 var(--mono); white-space: nowrap; }
+  .lane .track { height: 16px; border-radius: 8px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }
+  .lane .track i { display: block; height: 100%; background: var(--accent); }
+  .lane .n { text-align: right; color: var(--ink-2); }
+  .lane.off { opacity: .45; }
+  .verify { display: grid; gap: 12px; }
+  .vrow { display: grid; grid-template-columns: 110px 1fr 200px; gap: 14px; align-items: center; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font: 500 19px/1.35 var(--body); }
+  .vrow .id { font: 700 18px/1 var(--mono); color: var(--ink-2); }
+  .keep { color: var(--add); font: 800 19px/1 var(--mono); } .drop { color: var(--ink-3); font: 800 19px/1 var(--mono); } .bad { color: var(--del); font: 800 19px/1 var(--mono); }
+  .report { background: #f4f6f9; color: #10151c; border-radius: 16px; padding: 26px 32px; display: grid; gap: 14px; box-shadow: 0 30px 80px -30px #000; }
+  .report h3 { margin: 0; font: 800 30px/1.1 var(--display); }
+  .verdict { font: 800 24px/1 var(--mono); color: #b42318; }
+  .counts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: center; }
+  .counts div { border: 1px solid #d3dae3; border-radius: 10px; padding: 12px; font: 800 34px/1 var(--display); }
+  .counts span { display: block; font: 700 14px/1 var(--mono); margin-top: 6px; color: #6d7889; }
+</style></head>
+<body data-duration="95">
+<div class="brandmark">SKILL ISSUE · 02</div>
+
+<!-- A · 0–20 · un dossier, huit harnesses -->
+<div class="chapter" data-at="0.2" data-until="19.6">01 · un dossier, huit harnesses</div>
+<section class="scene" data-at="0" data-dur="0.01" data-until="19.7" style="gap:26px">
+  <div class="mid" data-at="0.3" data-fx="rise">Le même dossier, posé là où chaque outil regarde.</div>
+  <div class="paths">
+    <div data-at="1.6" data-fx="slide-l">.agents/skills/angular-review/<span class="who">Codex · Copilot · Cursor · Gemini CLI · OpenCode</span></div>
+    <div data-at="2.4" data-fx="slide-l">.claude/skills/angular-review/<span class="who">Claude Code</span></div>
+    <div data-at="3.2" data-fx="slide-l">~/.config/…/skills/angular-review/<span class="who">portée utilisateur</span></div>
+  </div>
+  <div class="invokes">
+    <div class="inv" data-at="7.0" data-fx="rise"><b>Claude Code</b><code>/angular-review</code></div>
+    <div class="inv" data-at="7.5" data-fx="rise"><b>Codex</b><code>$angular-review</code></div>
+    <div class="inv" data-at="8.0" data-fx="rise"><b>Partout</b><code>« review cette branche »</code></div>
+  </div>
+</section>
+<div class="cap" data-at="4.4" data-until="19.5">Seul l'emplacement change. Et partout, la description suffit à déclencher le skill.</div>
+
+<!-- B · 20–34 · scope -->
+<div class="chapter" data-at="20.0" data-until="33.6">02 · scope</div>
+<section class="scene" data-at="20.0" data-until="33.7" style="gap:22px">
+  <div class="term" style="font-size:20px">
+    <div><span class="p">$ </span><span data-at="20.4" data-fx="type">node scripts/scope.mjs</span></div>
+    <div class="o" data-at="21.6" data-fx="fade">[scope] Angular 22.2.1 | working-tree | <span id="files">{{FILES}}</span> file(s) (+{{ADDED}} -{{DELETED}}) | base=main</div>
+  </div>
+  <div class="flags">
+    <span class="flag" data-at="22.8" data-fx="pop">onPushByDefault <span class="y">✓</span></span>
+    <span class="flag" data-at="23.2" data-fx="pop">zoneless <span class="y">✓</span></span>
+    <span class="flag" data-at="23.6" data-fx="pop">ssr <span class="n">✗</span></span>
+    <span class="flag" data-at="24.0" data-fx="pop">testRunner <span class="y">vitest</span></span>
+    <span class="flag" data-at="24.4" data-fx="pop">bestPractices <span class="y">@angular/core</span></span>
+  </div>
+</section>
+<div class="cap" data-at="25.0" data-until="33.5">Un script lit la version d'Angular : sur la v22, OnPush est le défaut, et la règle qui le réclamait se retourne.</div>
+
+<!-- C · 34–50 · scan -->
+<div class="chapter" data-at="34.0" data-until="49.6">03 · scan</div>
+<section class="scene" data-at="34.0" data-until="49.7" style="gap:16px">
+  <div class="term" style="font-size:20px;padding:14px 22px"><span class="p">$ </span><span data-at="34.3" data-fx="type">node scripts/scan.mjs</span></div>
+  <div class="cands card">
+{{CANDIDATES}}
+  </div>
+  <div class="row" data-at="44.0" data-fx="rise"><span class="mid accent" style="font-variant-numeric:tabular-nums"><span data-at="44.0" data-count="0:{{TOTAL}}" data-dur="1.2">0</span></span><span class="dim" style="font-size:22px">candidats sur les lignes modifiées<br>· ce sont des pistes, pas des verdicts</span></div>
+</section>
+<div class="cap" data-at="36.0" data-until="49.5">{{MECH}} règles détectables par script. Le reste demande du jugement.</div>
+
+<!-- D · 50–68 · 7 reviewers -->
+<div class="chapter" data-at="50.0" data-until="67.6">04 · sept reviewers</div>
+<section class="scene" data-at="50.0" data-until="67.7" style="gap:20px">
+  <div class="mid" data-at="50.2" data-fx="rise">Un reviewer par domaine, chacun dans son contexte.</div>
+  <div class="lanes">
+{{LANES}}
+  </div>
+</section>
+<div class="cap" data-at="52.0" data-until="67.5">En parallèle quand le harness a des sous-agents. Chacun ne charge que son fichier de règles.</div>
+
+<!-- E · 68–82 · vérifier -->
+<div class="chapter" data-at="68.0" data-until="81.6">05 · vérifier</div>
+<section class="scene" data-at="68.0" data-until="81.7" style="gap:16px">
+  <div class="mid" data-at="68.2" data-fx="rise">Chaque candidat : on essaie de le réfuter.</div>
+  <div class="verify">
+{{VERIFY}}
+  </div>
+</section>
+<div class="cap" data-at="70.0" data-until="81.5">Un extrait de code qui n'existe pas à la ligne annoncée est rejeté par le script, pas par la bonne volonté du modèle.</div>
+
+<!-- F · 82–95 · verdict -->
+<div class="chapter" data-at="82.0">06 · verdict</div>
+<section class="scene" data-at="82.0" style="gap:18px">
+  <div class="report" data-at="82.3" data-fx="rise">
+    <div style="font:600 15px/1 var(--mono);color:#6d7889">.review/REVIEW.md</div>
+    <h3>Review Angular — feat/speaker-spotlight → main</h3>
+    <div class="verdict" data-at="83.4" data-fx="pop">🔴 REQUEST_CHANGES — corrections nécessaires avant merge</div>
+    <div class="counts">
+      <div style="color:#c52a1f"><span data-at="84.2" data-count="0:{{N_BLOCKER}}" data-dur="1">0</span><span>BLOCKER</span></div>
+      <div style="color:#c95a10"><span data-at="84.4" data-count="0:{{N_MAJOR}}" data-dur="1">0</span><span>MAJOR</span></div>
+      <div style="color:#946d00"><span data-at="84.6" data-count="0:{{N_MINOR}}" data-dur="1">0</span><span>MINOR</span></div>
+      <div style="color:#2c5bc8"><span data-at="84.8" data-count="0:{{N_INFO}}" data-dur="1">0</span><span>INFO</span></div>
+    </div>
+  </div>
+</section>
+<div class="cap" data-at="85.6">Le verdict est calculé par un script, à partir des findings vérifiés. Jamais écrit par le modèle.</div>
+
+<script src="../engine.js"></script>
+</body></html>
