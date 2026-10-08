@@ -1,0 +1,7 @@
+node_modules/
+.review/
+studio/frames/
+*.log
+.DS_Store
+site/dist/artifact.html
+.claude/launch.json
