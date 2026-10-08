@@ -54,7 +54,11 @@ function merge() {
       const existing = byKey.get(key);
       const origin = src.agent === 'scan' ? 'scan' : 'review';
       if (existing) {
-        if (origin === 'review') Object.assign(existing, { message: raw.message, suggestion: raw.suggestion, severity: raw.severity });
+        if (origin === 'review') {
+          // Keep a trace when a reviewer re-grades a scan candidate: severity drift between runs is worth seeing.
+          if (raw.severity !== existing.severity) existing.severityChange = `${existing.severity} → ${raw.severity} (${src.agent})`;
+          Object.assign(existing, { message: raw.message, suggestion: raw.suggestion, severity: raw.severity });
+        }
         existing.origin = existing.origin === origin ? origin : 'scan+review';
         existing.agents = [...new Set([...existing.agents, src.agent])];
       } else {

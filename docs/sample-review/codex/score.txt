@@ -1,0 +1,39 @@
+✔ S01 MINOR   R-ARCH-007               speaker.service.ts:9  Injection par paramètres de constructeur (constructor(private http: HttpClient))  ← F-048 R-ARCH-007
+✔ S02 MINOR   R-ARCH-030               speaker.service.ts:7  URL d'API codée en dur (http://localhost:3000/api/speakers) au lieu du token API_BASE_URL  ← F-047 R-ARCH-030
+✔ S03 MINOR   R-ARCH-029               speaker.service.ts:11  Méthodes typées Observable<any>  ← F-049 R-ARCH-029
+✔ S04 MINOR   R-ARCH-022               speaker.service.ts:12  console.log résiduel dans getSpeaker()  ← F-050 R-ARCH-022
+· S05 INFO    R-ARCH-034               speaker.service.ts:5  Nouveau service racine en @Injectable({ providedIn: 'root' }) au lieu de @Service() (Angular 22)
+✔ S06 MINOR   R-SIG-001|R-ARCH-009     speaker-spotlight.ts:17  Décorateurs @Input() / @Output() + EventEmitter au lieu de input() / output()  ← F-038 R-SIG-001
+✔ S07 MAJOR   R-ARCH-027               speaker-spotlight.ts:18  Output nommé select, comme l'événement DOM natif  ← F-019 R-ARCH-027
+✔ S08 MAJOR   R-PERF-020               speaker-spotlight.ts:14  ChangeDetectionStrategy.Eager forcé sans justification dans un nouveau composant (OnPush est le défaut en v22)  ← F-018 R-PERF-020
+✔ S09 MINOR   R-ARCH-029               speaker-spotlight.ts:20  Champs speaker: any et talks: any[]  ← F-040 R-ARCH-029
+✔ S10 BLOCKER R-SIG-005                speaker-spotlight.ts:30  takeUntilDestroyed() sans argument dans ngOnInit : NG0203 à l'ouverture de /speakers/:id (constaté dans le navigateur)  ← F-004 R-SIG-005
+✔ S11 MAJOR   R-RX-001|R-ARCH-017|R-SIG-007 speaker-spotlight.ts:32  subscribe imbriqués (paramMap → speaker → talks) : aucune annulation, réponses dans le désordre  ← F-020 R-RX-001
+✔ S12 MAJOR   R-PERF-035               speaker-spotlight.ts:33  Zoneless : champs simples (speaker, bioHtml, talks) assignés dans des callbacks subscribe, la vue n'est pas rafraîchie (Eager n'y change rien)  ← F-021 R-PERF-035
+✔ S13 BLOCKER R-SEC-003|R-SEC-001      speaker-spotlight.ts:34  bypassSecurityTrustHtml sur la bio saisie par les orateurs, rendue via [innerHTML] : XSS stockée  ← F-006 R-SEC-003
+✔ S14 MINOR   R-ARCH-028               speaker-spotlight.html:3  *ngIf / *ngFor (NgIf, NgFor importés) au lieu du control flow @if / @for  ← F-032 R-ARCH-028
+✔ S15 MINOR   R-PERF-037               speaker-spotlight.html:6  Méthode avec argument appelée dans le template : getInitials(speaker.name)  ← F-035 R-PERF-037
+✔ S16 MAJOR   R-A11Y-014               speaker-spotlight.html:5  <img> de la photo du speaker sans attribut alt  ← F-016 R-A11Y-014
+✔ S17 INFO    R-PERF-034               speaker-spotlight.html:5  <img [src]> sans NgOptimizedImage (ngSrc, width, height)  ← F-054 R-PERF-034
+✔ S18 BLOCKER R-A11Y-005               speaker-spotlight.html:22  (click) sur une <div class="talk"> : ni focusable ni activable au clavier  ← F-003 R-A11Y-005
+✔ S19 MINOR   R-ARCH-031|R-SIG-009     proposal-form.ts:27  Formulaire non typé (UntypedFormBuilder / UntypedFormGroup)  ← F-027 R-ARCH-031
+✔ S20 BLOCKER R-ARCH-017               proposal-form.ts:47  this.form.valueChanges.subscribe(...) sans désabonnement (source infinie)  ← F-002 R-ARCH-017
+✔ S21 MAJOR   R-SIG-003                proposal-form.ts:38  effect() qui recopie abstract().length dans le signal charCount : état dérivé, à remplacer par computed()  ← F-013 R-SIG-003
+✔ S22 MAJOR   R-PERF-035               proposal-form.ts:67  Zoneless : submitted (champ simple) passé à true dans un setTimeout, la confirmation ne s'affiche qu'au prochain événement (constaté)  ← F-014 R-PERF-035
+✔ S23 MINOR   R-TEST-001               proposal-form.ts:1  Nouveau composant ProposalForm sans fichier spec  ← F-012 R-TEST-001
+✔ S24 BLOCKER R-A11Y-013               proposal-form.html:15  Champ titre sans label ni aria-label (placeholder seul)  ← F-001 R-A11Y-013
+✔ S25 MINOR   R-ARCH-032               proposal.guard.ts:7  Guard sous forme de classe (implements CanActivate) au lieu d'un CanActivateFn  ← F-031 R-ARCH-032
+✔ S26 MAJOR   R-PERF-001               app.routes.ts:22  Route secondaire speakers/:id chargée eagerly (component:) : bundle initial 284,67 kB → 323,07 kB  ← F-009 R-PERF-001
+✔ S27 MAJOR   R-SIG-004                favorites.store.ts:28  add() mute le tableau du signal en place (this.ids().push) : ni le compteur ni la persistance ne sont notifiés  ← F-010 R-SIG-004
+✔ S28 BLOCKER R-SIG-010                talk-card.ts:28  Signal isFavorite testé sans être appelé (!this.isFavorite toujours faux) : le feedback affiche toujours « Retiré de vos favoris » (constaté)  ← F-008 R-SIG-010
+✔ S29 MAJOR   R-TEST-002               speaker-spotlight.spec.ts:20  it.only : test focalisé (avec CI=true, Vitest échoue : « Unexpected .only modifier »)  ← F-017 R-TEST-002
+✔ S30 MINOR   R-TEST-003               speaker-spotlight.spec.ts:21  Seule assertion : expect(component).toBeTruthy()  ← F-037 R-TEST-003
+✔ S31 MINOR   R-TEST-001               speaker.service.ts:1  Nouveau service SpeakerService sans fichier spec  ← F-046 R-TEST-001
+✔ S32 MINOR   R-TEST-001               proposal.guard.ts:1  Nouveau guard ProposalGuard sans fichier spec  ← F-015 R-TEST-001
+· S33 INFO    R-ARCH-034               proposal.guard.ts:6  @Injectable({ providedIn: 'root' }) sur une nouvelle classe (disparaît avec un CanActivateFn)
+✔ S34 MAJOR   R-ERR-005|R-ERR-008      speaker-spotlight.ts:32  Appels HTTP sans gestion d'erreur : « Chargement du speaker… » reste affiché si l'API échoue  ← F-005 R-ERR-005
+· S35 MINOR   R-ARCH-024               speaker-spotlight.ts:42  getInitials() duplique initialsOf() de src/app/talks/initials.ts
+
+Rappel 100 % (27/27) · BLOCKER 5/5 · MAJOR 10/10 · MINOR 12/12 · bonus 5/8
+Précision 100 % (37/37 findings expliqués par le corrigé ; un « hors corrigé » peut rester légitime)
+Leurres signalés à tort : 0/7

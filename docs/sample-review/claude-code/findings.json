@@ -1,0 +1,878 @@
+{
+  "version": 2,
+  "generatedAt": "2026-10-08T07:16:33.944Z",
+  "target": {
+    "mode": "working-tree",
+    "base": "main",
+    "head": "fee042dad511c0b5693e91424ec74f5123f03170",
+    "branch": "feat/speaker-spotlight",
+    "files": 15
+  },
+  "angular": "22.2.1",
+  "reviewers": [
+    {
+      "agent": "scan",
+      "findings": 44
+    },
+    {
+      "agent": "angular-a11y-error-reviewer",
+      "findings": 4
+    },
+    {
+      "agent": "angular-architecture-reviewer",
+      "findings": 8
+    },
+    {
+      "agent": "angular-performance-reviewer",
+      "findings": 5
+    },
+    {
+      "agent": "angular-reactivity-reviewer",
+      "findings": 6
+    },
+    {
+      "agent": "angular-security-reviewer",
+      "findings": 1
+    },
+    {
+      "agent": "angular-testing-reviewer",
+      "findings": 3
+    }
+  ],
+  "summary": "La branche ajoute une page speaker (/speakers/:id), un formulaire de proposition de talk protégé par un guard de date, un bouton « Tout ajouter aux favoris » et un retour d'état sur les cartes. Risque élevé : la page speaker plante dès l'affichage (NG0203), injecte une bio distante en HTML non sanitisé (XSS stockée) et dépend d'une API localhost:3000 inexistante ; plusieurs états ne se rafraîchissent pas en zoneless (page speaker, confirmation d'envoi) et l'ajout groupé aux favoris mute le signal sans effet. Build et tests non exécutés pendant la review (approbation requise) : constats issus de la lecture du code.",
+  "praise": [
+    "Le lien vers la page speaker dans TalkCard utilise un vrai <a routerLink>, accessible au clavier."
+  ],
+  "empirical": null,
+  "verdict": "REQUEST_CHANGES",
+  "findings": [
+    {
+      "id": "F-002",
+      "ruleId": "R-SIG-005",
+      "severity": "BLOCKER",
+      "domain": "reactivity",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 30,
+      "snippet": "this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {",
+      "title": "API à contexte d'injection appelée hors contexte (NG0203)",
+      "message": "`takeUntilDestroyed()` sans argument doit être appelé dans un contexte d'injection ; dans `ngOnInit` il lève NG0203. La route `/speakers/:id` plante à l'affichage, et tous les liens speaker ajoutés dans `TalkCard` mènent à une page en erreur. Le spec ne le détecte pas car il n'appelle jamais `detectChanges()`.",
+      "suggestion": "Injecter `DestroyRef` (`private destroyRef = inject(DestroyRef)`) et écrire `takeUntilDestroyed(this.destroyRef)`, ou mieux : supprimer l'abonnement en dérivant l'état d'un input lié à la route (`id = input.required<string>()`, déjà possible grâce à `withComponentInputBinding()`) et d'un `httpResource`/`computed`.",
+      "source": "https://angular.dev/errors/NG0203",
+      "evidence": {
+        "kind": "static",
+        "confidence": "medium"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/no-implicit-take-until-destroyed (partiel)",
+      "agents": [
+        "scan",
+        "angular-reactivity-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-004",
+      "ruleId": "R-SEC-003",
+      "severity": "BLOCKER",
+      "domain": "security",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 34,
+      "snippet": "this.bioHtml = this.sanitizer.bypassSecurityTrustHtml(speaker.bio);",
+      "title": "bypassSecurityTrust* (sanitizer contourné)",
+      "message": "XSS stockée : la bio vient du réseau et est injectée via [innerHTML] après contournement du sanitizer. Le formulaire de proposition invite même à saisir du HTML (« HTML autorisé », proposal-form.html:35), alors que le modèle `Speaker.bio` est documenté comme « Texte brut : toujours affiché par interpolation, jamais comme HTML ». Une bio contenant `<img src=x onerror=…>` s'exécute chez chaque visiteur de la page speaker.",
+      "suggestion": "Afficher la bio par interpolation : `<p class=\"spotlight__bio\">{{ speaker.bio }}</p>` et supprimer `DomSanitizer`/`bioHtml`. Si du formatage est vraiment voulu, `[innerHTML]=\"speaker.bio\"` sans bypass (le sanitizer d'Angular retire scripts et handlers) et retirer la mention « HTML autorisé » du formulaire tant que ce n'est pas décidé.",
+      "source": "https://angular.dev/best-practices/security",
+      "evidence": {
+        "kind": "static",
+        "confidence": "medium"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-security-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-006",
+      "ruleId": "R-SIG-004",
+      "severity": "MAJOR",
+      "domain": "reactivity",
+      "file": "src/app/favorites/favorites.store.ts",
+      "line": 28,
+      "snippet": "this.ids().push(id);",
+      "title": "Mutation en place de la valeur d'un signal",
+      "message": "Mutation en place du tableau du signal : la référence ne change pas, donc ni `count`, ni les templates, ni l'effet de persistance ne sont notifiés. « Tout ajouter à mes favoris » ne met à jour ni le compteur de la nav ni le localStorage, et peut créer des doublons.",
+      "suggestion": "`this.ids.update((ids) => (ids.includes(id) ? ids : [...ids, id]));` — et idéalement une méthode `addAll(ids: string[])` qui fait une seule mise à jour.",
+      "source": "https://angular.dev/guide/signals",
+      "evidence": {
+        "kind": "static",
+        "confidence": "medium"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-reactivity-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-007",
+      "ruleId": "R-A11Y-013",
+      "severity": "MAJOR",
+      "domain": "a11y",
+      "file": "src/app/proposals/proposal-form.html",
+      "line": 15,
+      "snippet": "<input class=\"proposal__title\" formControlName=\"title\" placeholder=\"Titre du talk\" />",
+      "title": "Champ de formulaire sans label",
+      "message": "Champ obligatoire sans label (placeholder seul) : pas de nom accessible, et le placeholder disparaît à la saisie. Aucun message d'erreur n'est affiché quand `markAllAsTouched()` invalide le formulaire.",
+      "suggestion": "`<div class=\"field\"><label for=\"title\">Titre du talk</label><input id=\"title\" formControlName=\"title\" required aria-describedby=\"title-error\" /></div>` et un message d'erreur visible lié par `aria-describedby`.",
+      "source": "https://angular.dev/best-practices/a11y",
+      "evidence": {
+        "kind": "static",
+        "confidence": "low"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/template/label-has-associated-control",
+      "agents": [
+        "scan",
+        "angular-a11y-error-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-008",
+      "ruleId": "R-PERF-035",
+      "severity": "MAJOR",
+      "domain": "performance",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 67,
+      "snippet": "this.submitted = true;",
+      "title": "Zoneless : état modifié hors signal dans un callback asynchrone",
+      "message": "Champ simple modifié dans un `setTimeout` dans une application zoneless : la confirmation « Merci ! Votre proposition a bien été enregistrée » ne s'affiche pas (ni n'est annoncée par la région role=\"status\") tant qu'aucun autre événement ne déclenche un rendu. L'utilisateur croit que l'envoi a échoué et renvoie.",
+      "suggestion": "`submitted = signal(false);` puis `this.submitted.set(true)` et `@if (submitted())` dans le template. Le `setTimeout` de 300 ms n'a pas de raison d'être : le supprimer.",
+      "source": "https://angular.dev/guide/zoneless",
+      "evidence": {
+        "kind": "static",
+        "confidence": "low"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-performance-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-009",
+      "ruleId": "R-A11Y-014",
+      "severity": "MAJOR",
+      "domain": "a11y",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 5,
+      "snippet": "<img *ngIf=\"speaker.photoUrl\" class=\"spotlight__photo\" [src]=\"speaker.photoUrl\" />",
+      "title": "Image sans attribut alt",
+      "message": "Image sans `alt` : les lecteurs d'écran lisent l'URL de la photo.",
+      "suggestion": "La photo est décorative à côté du `<h1>` portant le nom : `alt=\"\"`. Sinon `[alt]=\"'Photo de ' + speaker.name\"`.",
+      "source": "https://angular.dev/best-practices/a11y",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/template/alt-text",
+      "agents": [
+        "scan",
+        "angular-a11y-error-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-010",
+      "ruleId": "R-A11Y-005",
+      "severity": "MAJOR",
+      "domain": "a11y",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 22,
+      "snippet": "<div class=\"talk\" *ngFor=\"let talk of talks\" (click)=\"select.emit(talk.id)\">",
+      "title": "(click) sur un élément non interactif",
+      "message": "`<div>` cliquable : ni focusable ni activable au clavier. Et comme le composant est routé, personne n'écoute `select` : le clic ne fait rien, pour tout le monde.",
+      "suggestion": "Remplacer par un lien vers le détail : `<a class=\"talk\" [routerLink]=\"['/talks', talk.id]\">…</a>` et supprimer l'output `select`.",
+      "source": "https://angular.dev/best-practices/a11y",
+      "evidence": {
+        "kind": "static",
+        "confidence": "medium"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/template/click-events-have-key-events",
+      "agents": [
+        "scan",
+        "angular-a11y-error-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-011",
+      "ruleId": "R-TEST-002",
+      "severity": "MAJOR",
+      "domain": "testing",
+      "file": "src/app/speakers/speaker-spotlight.spec.ts",
+      "line": 20,
+      "snippet": "it.only('should create', () => {",
+      "title": "Test focalisé (fit/fdescribe/.only)",
+      "message": "`it.only` oublié : Vitest refuse `.only` en CI (`allowOnly` vaut false quand `CI` est défini), donc la CI échoue ; en local, les autres tests du fichier sont ignorés en silence.",
+      "suggestion": "`it('should create', …)`.",
+      "source": "https://angular.dev/guide/testing",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "vitest/no-focused-tests",
+      "agents": [
+        "scan",
+        "angular-testing-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-012",
+      "ruleId": "R-RX-001",
+      "severity": "MAJOR",
+      "domain": "reactivity",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 32,
+      "snippet": "this.speakerService.getSpeaker(id).subscribe((speaker) => {",
+      "title": "subscribe imbriqués",
+      "message": "Trois `subscribe` imbriqués. Le composant est réutilisé quand on passe de `/speakers/a` à `/speakers/b` : les requêtes de `a` ne sont pas annulées et peuvent répondre après celles de `b`, affichant le mauvais speaker ou ses talks. Aucune gestion d'erreur non plus.",
+      "suggestion": "Un seul flux : `paramMap.pipe(map(p => p.get('id')!), switchMap(id => getSpeaker(id).pipe(switchMap(s => getTalks(s.id).pipe(map(talks => ({ s, talks })))))))` converti avec `toSignal`, ou deux `httpResource` dépendant de l'input `id`.",
+      "source": "https://angular.dev/ecosystem/rxjs-interop",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "rxjs-x/no-nested-subscribe",
+      "agents": [
+        "scan",
+        "angular-reactivity-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-013",
+      "ruleId": "R-ERR-008",
+      "severity": "MAJOR",
+      "domain": "error-handling",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 32,
+      "snippet": "this.speakerService.getSpeaker(id).subscribe((speaker) => {",
+      "message": "Aucun traitement d'erreur : un 404 ou une API injoignable laisse « Chargement du speaker… » affiché indéfiniment, sans message ni possibilité de réessayer. Avec l'URL `localhost:3000` codée en dur, c'est le cas systématique hors poste de dev.",
+      "suggestion": "Avec `httpResource`, afficher un état `@if (speaker.error())` (« Speaker introuvable » + lien retour), comme le fait déjà `TalksStore` pour le programme.",
+      "source": "https://angular.dev/guide/http/http-resource",
+      "evidence": {
+        "kind": "static",
+        "confidence": "medium"
+      },
+      "origin": "review",
+      "agents": [
+        "angular-a11y-error-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-014",
+      "ruleId": "R-PERF-035",
+      "severity": "MAJOR",
+      "domain": "performance",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 33,
+      "snippet": "this.speaker = speaker;",
+      "title": "Zoneless : état modifié hors signal dans un callback asynchrone",
+      "message": "Application zoneless : `speaker`, `bioHtml` et `talks` sont des champs simples modifiés dans des callbacks HTTP. Rien ne planifie la détection de changements, donc la page reste sur « Chargement du speaker… » jusqu'au prochain événement DOM. Le passage en `Eager` ne compense pas : il dit *quoi* vérifier, pas *quand*.",
+      "suggestion": "Porter l'état en signals (`speaker = signal<Speaker | null>(null)`) ou, mieux, le dériver via `toSignal`/`httpResource` (voir le finding sur les subscribe imbriqués), puis revenir au OnPush par défaut.",
+      "source": "https://angular.dev/guide/zoneless",
+      "evidence": {
+        "kind": "static",
+        "confidence": "low"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-performance-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-017",
+      "ruleId": "R-ARCH-030",
+      "severity": "MAJOR",
+      "domain": "architecture",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 7,
+      "snippet": "private baseUrl = 'http://localhost:3000/api/speakers';",
+      "title": "URL d'API codée en dur",
+      "message": "URL codée en dur vers une API qui n'existe pas dans ce projet : en production (et sur tout poste sans serveur sur le port 3000) la page speaker ne charge jamais. Le projet expose déjà `API_BASE_URL`, et `TalksStore` charge déjà speakers (`speakersById`) et talks (`schedule`).",
+      "suggestion": "Supprimer `SpeakerService` et dériver la page depuis `TalksStore` : `speaker = computed(() => store.speakersById().get(this.id()))`, `talks = computed(() => store.schedule().filter(t => t.speakerId === this.id()))`. Si une API dédiée est vraiment prévue, injecter `API_BASE_URL`.",
+      "source": "https://angular.dev/guide/di/defining-dependency-providers",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-architecture-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-018",
+      "ruleId": "R-SIG-010",
+      "severity": "MAJOR",
+      "domain": "reactivity",
+      "file": "src/app/talks/talk-card.ts",
+      "line": 28,
+      "snippet": "if (!this.isFavorite) {",
+      "title": "Signal testé sans être appelé",
+      "message": "`isFavorite` est un input signal : la fonction elle-même est toujours truthy, donc `!this.isFavorite` vaut toujours `false`. Le message annoncé (role=\"status\") est toujours « Retiré de vos favoris », y compris à l'ajout — information fausse pour les utilisateurs de lecteur d'écran.",
+      "suggestion": "Appeler le signal : `this.feedback.set(this.isFavorite() ? 'Retiré de vos favoris' : 'Ajouté à vos favoris');` et ajouter un test qui vérifie le message dans les deux sens.",
+      "source": "https://angular.dev/guide/signals",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/no-uncalled-signals",
+      "agents": [
+        "scan",
+        "angular-reactivity-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-019",
+      "ruleId": "R-PERF-001",
+      "severity": "MINOR",
+      "domain": "performance",
+      "file": "src/app/app.routes.ts",
+      "line": 22,
+      "snippet": "{ path: 'speakers/:id', component: SpeakerSpotlight, title: 'Speaker · Conf Planner' },",
+      "message": "Seule route importée statiquement : `SpeakerSpotlight` (et `DomSanitizer`, `SpeakerService`, `NgIf`/`NgFor`) part dans le bundle initial alors que toutes les autres pages sont en `loadComponent`.",
+      "suggestion": "`loadComponent: () => import('./speakers/speaker-spotlight')` avec `export default class SpeakerSpotlight`, et retirer l'import en tête de fichier.",
+      "source": "https://angular.dev/guide/routing/define-routes#lazily-loaded-components",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "review",
+      "agents": [
+        "angular-performance-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-020",
+      "ruleId": "R-TEST-001",
+      "severity": "MINOR",
+      "domain": "testing",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 1,
+      "snippet": "import { Component, DestroyRef, OnInit, computed, effect, inject, signal } from '@angular/core';",
+      "title": "Nouveau composant/service sans fichier de test",
+      "message": "Nouveau formulaire sans spec : la confirmation après envoi (qui ne s'affiche pas en zoneless) aurait été détectée par un test.",
+      "suggestion": "`proposal-form.spec.ts` : soumission invalide → pas d'enregistrement ; soumission valide → message de confirmation visible et `localStorage` rempli.",
+      "source": "https://angular.dev/guide/testing",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-testing-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-021",
+      "ruleId": "R-ARCH-031",
+      "severity": "MINOR",
+      "domain": "architecture",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 3,
+      "snippet": "import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';",
+      "title": "Formulaires non typés",
+      "message": "Formulaire non typé dans un nouveau composant. Le résumé vit hors du formulaire (signal séparé) : il n'est ni requis ni limité à 600 caractères malgré le compteur affiché. Le champ `draft` recopié via `valueChanges` duplique `form.getRawValue()`.",
+      "suggestion": "`inject(NonNullableFormBuilder).group({ title: ['', Validators.required], track: ['Frontend' as Track], abstract: ['', [Validators.required, Validators.maxLength(600)]], bio: [''] })` et `getRawValue()` au submit (ou Signal Forms, recommandé en v22 pour un nouveau formulaire).",
+      "source": "https://angular.dev/guide/forms/typed-forms",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-architecture-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-024",
+      "ruleId": "R-SIG-003",
+      "severity": "MINOR",
+      "domain": "reactivity",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 38,
+      "snippet": "this.charCount.set(this.abstract().length);",
+      "title": "effect() qui écrit dans un signal (état dérivé)",
+      "message": "État dérivé recopié par un `effect()` : un cycle supplémentaire et un état intermédiaire incohérent, pour une valeur qui se calcule directement.",
+      "suggestion": "`charCount = computed(() => this.abstract().length);` et supprimer l'effet.",
+      "source": "https://angular.dev/guide/signals/linked-signal",
+      "evidence": {
+        "kind": "static",
+        "confidence": "medium"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-reactivity-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-026",
+      "ruleId": "R-ARCH-032",
+      "severity": "MINOR",
+      "domain": "architecture",
+      "file": "src/app/proposals/proposal.guard.ts",
+      "line": 7,
+      "snippet": "export class ProposalGuard implements CanActivate {",
+      "title": "Guard/resolver sous forme de classe",
+      "message": "Guard sous forme de classe (interface `CanActivate` dépréciée).",
+      "suggestion": "`export const proposalGuard: CanActivateFn = () => Date.now() > CFP_CLOSES_AT.getTime() ? inject(Router).parseUrl('/') : true;`",
+      "source": "https://angular.dev/guide/routing/route-guards",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-architecture-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-027",
+      "ruleId": "R-ARCH-028",
+      "severity": "MINOR",
+      "domain": "architecture",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 3,
+      "snippet": "<section class=\"spotlight\" *ngIf=\"speaker; else loading\">",
+      "title": "Directives structurelles *ngIf/*ngFor/*ngSwitch (dépréciées depuis v20)",
+      "message": "`*ngIf` / `*ngFor` (dépréciés depuis v20) au lieu du control flow natif exigé par AGENTS.md. Concerne les lignes 3, 5, 6 et 22.",
+      "suggestion": "`@if (speaker(); as s) { … } @else { <p class=\"status\">Chargement…</p> }` et `@for (talk of talks(); track talk.id)` ; retirer `NgIf`/`NgFor` des imports. Schematic : `ng g @angular/core:control-flow`.",
+      "source": "https://angular.dev/guide/templates/control-flow",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/template/prefer-control-flow",
+      "agents": [
+        "scan",
+        "angular-architecture-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-029",
+      "ruleId": "R-PERF-034",
+      "severity": "MINOR",
+      "domain": "performance",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 5,
+      "snippet": "<img *ngIf=\"speaker.photoUrl\" class=\"spotlight__photo\" [src]=\"speaker.photoUrl\" />",
+      "title": "<img src> sans NgOptimizedImage",
+      "message": "Image sans `NgOptimizedImage` ni dimensions, contraire aux conventions du projet (AGENTS.md) : décalage de mise en page (CLS) au chargement de la photo.",
+      "suggestion": "Importer `NgOptimizedImage` et écrire `<img [ngSrc]=\"photoUrl\" width=\"96\" height=\"96\" alt=\"\" …>`.",
+      "source": "https://angular.dev/guide/image-optimization",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/template/prefer-ngsrc",
+      "agents": [
+        "scan",
+        "angular-performance-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-031",
+      "ruleId": "R-PERF-037",
+      "severity": "INFO",
+      "domain": "performance",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 6,
+      "snippet": "<span *ngIf=\"!speaker.photoUrl\" class=\"spotlight__initials\">{{ getInitials(speaker.name) }}</span>",
+      "title": "Appel de méthode avec arguments dans le template",
+      "message": "Une méthode appelée avec arguments dans le template est ré-exécutée à chaque vérification de la vue (les signals, eux, s'appellent sans argument).",
+      "suggestion": "Précalculer avec `computed()`, un pipe pur, ou enrichir le modèle en amont.",
+      "source": "https://angular.dev/best-practices/runtime-performance",
+      "evidence": {
+        "kind": "static",
+        "confidence": "medium"
+      },
+      "origin": "scan",
+      "agents": [
+        "scan"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open",
+      "severityChange": "MINOR → INFO"
+    },
+    {
+      "id": "F-033",
+      "ruleId": "R-TEST-003",
+      "severity": "MINOR",
+      "domain": "testing",
+      "file": "src/app/speakers/speaker-spotlight.spec.ts",
+      "line": 21,
+      "snippet": "expect(component).toBeTruthy();",
+      "title": "Spec qui ne vérifie que la création",
+      "message": "Le seul test vérifie la création sans `detectChanges()` : `ngOnInit` ne s'exécute jamais, d'où le crash NG0203 non détecté. Il passe aussi par le vrai `HttpClient` au lieu de `provideHttpClientTesting()`.",
+      "suggestion": "Tester le comportement : fournir un id, `await fixture.whenStable()`, vérifier le nom affiché, le rendu en texte brut d'une bio contenant `<img onerror>`, et que « Tout ajouter » met à jour `FavoritesStore.count()`.",
+      "source": "https://angular.dev/guide/testing/components-basics",
+      "evidence": {
+        "kind": "static",
+        "confidence": "medium"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-testing-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-034",
+      "ruleId": "R-PERF-020",
+      "severity": "MINOR",
+      "domain": "performance",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 14,
+      "snippet": "changeDetection: ChangeDetectionStrategy.Eager,",
+      "title": "Composant forcé en Eager/Default (Angular ≥ 22)",
+      "message": "Le composant sort du OnPush par défaut d'Angular 22 et est vérifié à chaque cycle, uniquement pour compenser un état non réactif (qui ne s'affiche pas pour autant en zoneless).",
+      "suggestion": "Supprimer la ligne une fois l'état passé en signals.",
+      "source": "https://angular.dev/best-practices/skipping-subtrees",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "agents": [
+        "scan",
+        "angular-performance-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-035",
+      "ruleId": "R-SIG-001",
+      "severity": "MINOR",
+      "domain": "reactivity",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 17,
+      "snippet": "@Input() speakerId!: string;",
+      "title": "Décorateurs @Input/@Output au lieu de input()/output()",
+      "message": "Décorateurs `@Input`/`@Output` contraires aux conventions du projet (AGENTS.md : `input()` / `output()`). De plus `speakerId` n'est jamais alimenté : avec `withComponentInputBinding()` le paramètre de route s'appelle `id`.",
+      "suggestion": "`readonly id = input.required<string>();` (lié automatiquement au paramètre `:id`) et supprimer la lecture manuelle de `paramMap`.",
+      "source": "https://angular.dev/guide/components/inputs",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/prefer-signals",
+      "agents": [
+        "scan",
+        "angular-reactivity-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-036",
+      "ruleId": "R-ARCH-027",
+      "severity": "MINOR",
+      "domain": "architecture",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 18,
+      "snippet": "@Output() select = new EventEmitter<string>();",
+      "title": "Output nommé comme un événement DOM natif",
+      "message": "Output nommé comme l'événement DOM natif `select` (collision possible avec l'événement de l'hôte) et jamais écouté puisque le composant est routé : code mort.",
+      "suggestion": "Supprimer l'output et naviguer via `routerLink` (voir le finding a11y sur le `<div>` cliquable).",
+      "source": "https://angular.dev/guide/components/outputs",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/no-output-native",
+      "agents": [
+        "scan",
+        "angular-architecture-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-038",
+      "ruleId": "R-ARCH-029",
+      "severity": "MINOR",
+      "domain": "architecture",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 20,
+      "snippet": "speaker: any;",
+      "title": "`any` explicite",
+      "message": "`any` sur `speaker`, `talks` et les retours de `SpeakerService` alors que `Speaker` et `Talk` existent : le template n'est plus vérifié (ex. `speaker.photoUrl` n'existe pas dans le modèle `Speaker`).",
+      "suggestion": "Typer avec `Speaker` / `Talk[]` (`http.get<Speaker>(…)`) et ajouter `photoUrl?` au modèle si le champ est réel.",
+      "source": "https://angular.dev/tools/cli/template-typecheck",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@typescript-eslint/no-explicit-any",
+      "agents": [
+        "scan",
+        "angular-architecture-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-041",
+      "ruleId": "R-ARCH-007",
+      "severity": "MINOR",
+      "domain": "architecture",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 9,
+      "snippet": "constructor(private http: HttpClient) {}",
+      "title": "Injection par paramètres de constructeur",
+      "message": "Injection par constructeur, contraire à la convention `inject()` du projet.",
+      "suggestion": "`private readonly http = inject(HttpClient);`",
+      "source": "https://angular.dev/reference/migrations/inject-function",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "@angular-eslint/prefer-inject",
+      "agents": [
+        "scan",
+        "angular-architecture-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    },
+    {
+      "id": "F-043",
+      "ruleId": "R-ARCH-022",
+      "severity": "MINOR",
+      "domain": "architecture",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 12,
+      "snippet": "console.log('getSpeaker', id);",
+      "title": "console.log résiduel",
+      "message": "`console.log` de debug laissé dans le code livré.",
+      "suggestion": "Supprimer la ligne.",
+      "source": "https://angular.dev/best-practices/error-handling",
+      "evidence": {
+        "kind": "static",
+        "confidence": "high"
+      },
+      "origin": "scan+review",
+      "eslintRule": "no-console",
+      "agents": [
+        "scan",
+        "angular-architecture-reviewer"
+      ],
+      "evidenceCheck": "ok",
+      "status": "open"
+    }
+  ],
+  "dismissed": [
+    {
+      "id": "F-001",
+      "ruleId": "R-ARCH-017",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 47,
+      "origin": "scan",
+      "reason": "Le FormGroup est créé et détenu par le composant : abonnement et formulaire sont collectés ensemble, pas de fuite. La recopie inutile dans `draft` est couverte par le finding R-ARCH-031."
+    },
+    {
+      "id": "F-003",
+      "ruleId": "R-ARCH-017",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 32,
+      "origin": "scan",
+      "reason": "HttpClient complète après une émission : pas de fuite. Le vrai problème (requêtes non annulées, course entre speakers) est le finding R-RX-001 sur la même ligne."
+    },
+    {
+      "id": "F-005",
+      "ruleId": "R-ARCH-017",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 35,
+      "origin": "scan",
+      "reason": "HttpClient complète après une émission : pas de fuite ; couvert par R-RX-001."
+    },
+    {
+      "id": "F-015",
+      "ruleId": "R-RX-001",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 35,
+      "origin": "scan",
+      "reason": "Même chaîne de subscribe imbriqués que R-RX-001 ligne 32."
+    },
+    {
+      "id": "F-016",
+      "ruleId": "R-PERF-035",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 36,
+      "origin": "scan",
+      "reason": "Même cause et même correction que R-PERF-035 ligne 33 (état non réactif du composant)."
+    },
+    {
+      "id": "F-022",
+      "ruleId": "R-ARCH-031",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 16,
+      "origin": "scan",
+      "reason": "Doublon de R-ARCH-031 ligne 3 (même formulaire)."
+    },
+    {
+      "id": "F-023",
+      "ruleId": "R-ARCH-031",
+      "file": "src/app/proposals/proposal-form.ts",
+      "line": 27,
+      "origin": "scan",
+      "reason": "Doublon de R-ARCH-031 ligne 3 (même formulaire)."
+    },
+    {
+      "id": "F-025",
+      "ruleId": "R-TEST-001",
+      "file": "src/app/proposals/proposal.guard.ts",
+      "line": 1,
+      "origin": "scan",
+      "reason": "Une seule comparaison de dates ; une fois en CanActivateFn (R-ARCH-032) le test apporte peu par rapport aux specs du formulaire."
+    },
+    {
+      "id": "F-028",
+      "ruleId": "R-ARCH-028",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 5,
+      "origin": "scan",
+      "reason": "Regroupé dans R-ARCH-028 ligne 3 (même template, même migration)."
+    },
+    {
+      "id": "F-030",
+      "ruleId": "R-ARCH-028",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 6,
+      "origin": "scan",
+      "reason": "Regroupé dans R-ARCH-028 ligne 3."
+    },
+    {
+      "id": "F-032",
+      "ruleId": "R-ARCH-028",
+      "file": "src/app/speakers/speaker-spotlight.html",
+      "line": 22,
+      "origin": "scan",
+      "reason": "Regroupé dans R-ARCH-028 ligne 3."
+    },
+    {
+      "id": "F-037",
+      "ruleId": "R-SIG-001",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 18,
+      "origin": "scan",
+      "reason": "Même correction que R-SIG-001 ligne 17 ; l'output est de toute façon à supprimer (R-ARCH-027)."
+    },
+    {
+      "id": "F-039",
+      "ruleId": "R-ARCH-029",
+      "file": "src/app/speakers/speaker-spotlight.ts",
+      "line": 21,
+      "origin": "scan",
+      "reason": "Regroupé dans R-ARCH-029 ligne 20."
+    },
+    {
+      "id": "F-040",
+      "ruleId": "R-TEST-001",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 1,
+      "origin": "scan",
+      "reason": "Le service est à supprimer au profit de TalksStore (R-ARCH-030)."
+    },
+    {
+      "id": "F-042",
+      "ruleId": "R-ARCH-029",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 11,
+      "origin": "scan",
+      "reason": "Regroupé dans R-ARCH-029 ligne 20 ; service à supprimer (R-ARCH-030)."
+    },
+    {
+      "id": "F-044",
+      "ruleId": "R-ARCH-029",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 16,
+      "origin": "scan",
+      "reason": "Regroupé dans R-ARCH-029 ligne 20 ; service à supprimer (R-ARCH-030)."
+    },
+    {
+      "id": "F-045",
+      "ruleId": "R-ARCH-034",
+      "file": "src/app/proposals/proposal.guard.ts",
+      "line": 6,
+      "origin": "scan",
+      "reason": "Le guard doit devenir une CanActivateFn (R-ARCH-032) : plus de classe injectable."
+    },
+    {
+      "id": "F-046",
+      "ruleId": "R-ARCH-034",
+      "file": "src/app/speakers/speaker.service.ts",
+      "line": 5,
+      "origin": "scan",
+      "reason": "Le service est à supprimer au profit de TalksStore (R-ARCH-030)."
+    }
+  ]
+}
