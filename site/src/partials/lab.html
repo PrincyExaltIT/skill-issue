@@ -102,7 +102,7 @@ Leurres signalés à tort : 0/7</span></pre>
       <div class="section-head"><p class="eyebrow">Pour aller plus loin</p><h2 id="bonus-title">Trois bonus</h2></div>
       <div class="grid-3">
         <div class="tool"><span class="tool-title">Bonus A · ta règle maison</span><p>Ajoute une règle <code>R-PROJ-001</code> dans <code>.agents/skills/angular-review/references/PROJECT_COMPLIANCE_REVIEW.md</code> (par exemple : « chaque page expose un <code>data-testid</code> racine »). Relance : le reviewer projet s'active, et un BLOCKER R-PROJ suffit à demander des changements.</p></div>
-        <div class="tool"><span class="tool-title">Bonus B · la CI</span><p>Sur ton fork, ouvre une PR depuis <code>feat/speaker-spotlight</code>. Le workflow <code>angular-review.yml</code> annote le diff sans IA ; ajoute le secret <code>ANTHROPIC_API_KEY</code> pour la review complète en commentaire.</p></div>
+        <div class="tool"><span class="tool-title">Bonus B · la CI</span><p>Sur ton fork, active les workflows dans l'onglet Actions (désactivés par défaut), puis ouvre une PR depuis <code>feat/speaker-spotlight</code>. Le job de scan annote le diff sans IA, liste tous les candidats dans son résumé et échoue sur R-SIG-010, comme sur la PR #1 du playground. Ajoute le secret <code>ANTHROPIC_API_KEY</code> pour la review complète en commentaire.</p></div>
         <div class="tool"><span class="tool-title">Bonus C · ton skill</span><p>Demande à l'agent « crée un skill pour … » : <code>skill-smith</code> t'interviewe, génère le squelette, et <code>validate.mjs</code> vérifie qu'il respecte le standard. Idée : un skill <code>angular-upgrade-notes</code> qui résume l'impact d'un <code>ng update</code>.</p></div>
       </div>
     </section>

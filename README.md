@@ -51,10 +51,11 @@ Ajouter `.review/` au `.gitignore` du projet.
 
 ## CI
 
-- GitHub : copier [`kit/ci/github/angular-review.yml`](kit/ci/github/angular-review.yml) dans `.github/workflows/`. Le scan déterministe annote la PR sans IA ni secret ; la review complète tourne si le secret `ANTHROPIC_API_KEY` existe.
+- GitHub : copier [`kit/ci/github/angular-review.yml`](kit/ci/github/angular-review.yml) dans `.github/workflows/`. Le scan déterministe annote la PR sans IA ni secret et liste tous les candidats dans le résumé du job ; la review complète tourne si le secret `ANTHROPIC_API_KEY` existe.
 - GitLab : inclure [`kit/ci/gitlab/angular-review.gitlab-ci.yml`](kit/ci/gitlab/angular-review.gitlab-ci.yml). Rapport Code Quality dans la MR ; note IA si `ANTHROPIC_API_KEY` et `GITLAB_REVIEW_TOKEN` sont définis.
 - Miroir GitLab des deux dépôts : `glab auth login`, puis `bash kit/gitlab-mirror.sh <groupe-ou-utilisateur>` depuis la racine de chaque dépôt.
 - Variante Codex pour GitHub : [`kit/ci/github/angular-review-codex.yml`](kit/ci/github/angular-review-codex.yml) (job agent en lecture seule, job séparé pour commenter).
+- Dépannage : sur un fork, les workflows sont désactivés tant qu'on ne les active pas dans l'onglet Actions. Sur le playground (dépôt neuf), les premières PR n'ont créé aucun run jusqu'au premier run déclenché par un push ; ensuite, fermer et rouvrir la PR a suffi.
 
 ## Développer le kit
 

@@ -125,10 +125,11 @@ e4aaa47 perf(routes): charge la page speaker à la demande (F-009)
             <p class="kicker">Deux jobs, deux promesses. Le premier est déterministe : il tourne sur chaque PR, sans IA ni secret. Le second lance le skill complet si une clé d'API est configurée.</p>
             <div class="grid-2 stack">
               <div class="tool"><span class="tool-title">GitHub Actions · kit/ci/github/angular-review.yml</span>
-<pre class="code" data-lang="yaml">- name: Scope + scan (annotations sur le diff)
+<pre class="code" data-lang="yaml">- name: Scope + scan (annotations + résumé du job)
   run: |
     node .agents/skills/angular-review/scripts/scope.mjs --committed --quiet
     node .agents/skills/angular-review/scripts/scan.mjs --format github
+    node .agents/skills/angular-review/scripts/scan.mjs --no-save       --format markdown >> "$GITHUB_STEP_SUMMARY"
 - name: Gate (BLOCKER de confiance haute)
   run: node .agents/skills/angular-review/scripts/scan.mjs \
     --format sarif --out angular-review.sarif \
@@ -146,13 +147,22 @@ e4aaa47 perf(routes): charge la page speaker à la demande (F-009)
       codequality: gl-code-quality-report.json</pre>
               </div>
             </div>
-            <p>Côté GitHub, les candidats apparaissent en annotations sur le diff de la PR. Côté GitLab, le rapport Code Quality s'affiche dans le widget de la MR. Le job IA déroule les six étapes et poste <code>REVIEW.md</code> en commentaire. Trois façons de le brancher :</p>
+            <p>Côté GitHub, les candidats apparaissent en annotations sur le diff de la PR (dix par niveau et par étape au maximum : la liste complète va dans le résumé du job). Côté GitLab, le rapport Code Quality s'affiche dans le widget de la MR. Le job IA déroule les six étapes et poste <code>REVIEW.md</code> en commentaire. Trois façons de le brancher :</p>
             <ul>
               <li><b>Claude Code</b> : <code>anthropics/claude-code-action@v1</code> (entrées <code>prompt</code>, <code>claude_args</code>, <code>anthropic_api_key</code>). Le prompt peut appeler le skill par son nom : <code>/angular-review</code>.</li>
               <li><b>Codex</b> : <code>openai/codex-action@v1</code> dans un job en lecture seule, puis un second job qui détient le droit d'écrire le commentaire (le modèle recommandé par OpenAI, fourni dans <code>kit/ci/github/angular-review-codex.yml</code>).</li>
               <li><b>GitLab</b> : Claude Code en headless dans un job (<code>claude -p</code>, intégration maintenue par GitLab, en bêta), ou l'intégration Codex pour GitLab (<code>@codex review</code>, en bêta).</li>
             </ul>
             <div class="rc"><span class="av" aria-hidden="true">!</span><div><p class="who"><b>Pourquoi « confiance haute » ?</b></p><p>Le scan produit des candidats. Bloquer un merge sur un candidat de confiance basse (un label manquant deviné par heuristique) fabrique des faux blocages et fait détester l'outil. La porte ne bloque que ce qu'un script peut affirmer seul ; le reste passe par la review.</p></div></div>
+            <h3>Ce que la vraie CI nous a appris</h3>
+            <p>Le workflow du kit a tourné sur les deux PR du playground le 8 octobre 2026. Ce qu'on en a tiré :</p>
+            <ul>
+              <li><b>La porte fait ce qu'elle promet.</b> PR #1 (branche du lab) : 44 candidats, mais un seul BLOCKER de confiance haute, R-SIG-010 à <code>talk-card.ts:28</code>, et le job échoue. PR #2 (branche corrigée) : la porte passe. La re-review complète de cette branche trouve pourtant encore un BLOCKER.</li>
+              <li><b>Les annotations sont plafonnées.</b> GitHub en garde dix par niveau et par étape : les 8 BLOCKER étaient visibles, 9 MAJOR sur 11 ne l'étaient pas. D'où le tri par sévérité et le résumé du job, qui liste tout.</li>
+              <li><b>Le SARIF a ses conditions.</b> L'upload demande la permission <code>actions: read</code>, et le code scanning d'un dépôt privé demande GitHub Code Security. Le kit n'envoie le SARIF que sur un dépôt public, ou si la variable de dépôt <code>ANGULAR_REVIEW_SARIF</code> vaut <code>true</code>.</li>
+              <li><b>Les avertissements vieillissent vite.</b> Actions en Node 20 dépréciées, CodeQL v3 en fin de vie en décembre 2026 : le kit est passé à <code>checkout@v7</code>, <code>setup-node@v7</code> et <code>upload-sarif@v4</code>. Lis les avertissements de ta CI comme des findings.</li>
+              <li><b>Un dépôt neuf peut rester muet.</b> Sur le playground, les premières PR n'ont créé aucun run jusqu'au premier workflow déclenché par un push ; ensuite, fermer et rouvrir la PR a suffi. Sur un fork, les workflows restent désactivés tant qu'on ne les active pas dans l'onglet Actions.</li>
+            </ul>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
