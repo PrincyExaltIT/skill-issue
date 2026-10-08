@@ -1,0 +1,110 @@
+<section class="view" id="lab" hidden aria-labelledby="lab-title">
+  <span hidden data-title="Lab · ta première review — Skill Issue"></span>
+  <div class="wrap">
+    <header class="module-head">
+      <span class="num">lab</span>
+      <h1 id="lab-title">Ta première review en 30 minutes</h1>
+      <p class="promise">Une vraie branche Angular 22, écrite trop vite, avec {{LAB_ISSUES}} problèmes cachés. Tu lances le skill, tu lis le rapport, tu mesures ce qu'il a trouvé, tu corriges, tu passes le relais.</p>
+      <div class="chips"><span class="chip">⏱ <b>30 min</b></span><span class="chip">8 étapes · 3 bonus</span><span class="chip">dépôt : <b>skill-issue-playground</b></span></div>
+    </header>
+
+    <div class="steps" style="margin-top:26px">
+      <div class="step lesson" id="lab-s1"><div class="step-body">
+        <h3>Récupérer les deux dépôts</h3>
+        <p>Le kit (les skills, l'installeur, les evals) et l'application de démo « Conf Planner » (Angular 22.2, zoneless, Vitest).</p>
+<pre class="term"><span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
+<span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue-playground.git</span>
+<span class="p">$ </span><span class="cmd">cd skill-issue-playground &amp;&amp; npm ci</span></pre>
+        <p class="small muted">Node.js 24.15 ou plus récent est requis par Angular 22 (<code>node --version</code>).</p>
+        <label class="check"><input type="checkbox" data-step="s1"> Fait</label>
+      </div></div>
+
+      <div class="step lesson" id="lab-s2"><div class="step-body">
+        <h3>Voir ce que l'équipe a installé</h3>
+        <p>Les skills sont versionnés dans le dépôt, comme le ferait une équipe : <code>.agents/skills/</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode…) et <code>.claude/skills/</code> (Claude Code). Si ton harness lit un autre dossier, l'installeur s'en charge :</p>
+<pre class="term"><span class="p">$ </span><span class="cmd">ls .agents/skills</span>
+<span class="o">angular-review  pr-handoff  review-fix  skill-smith</span>
+<span class="p">$ </span><span class="cmd">node ../skill-issue/kit/install.mjs --list</span>
+<span class="p">$ </span><span class="cmd">node ../skill-issue/kit/install.mjs --target . --harness kilo</span></pre>
+        <label class="check"><input type="checkbox" data-step="s2"> Fait</label>
+      </div></div>
+
+      <div class="step lesson" id="lab-s3"><div class="step-body">
+        <h3>Passer sur la branche à relire</h3>
+<pre class="term"><span class="p">$ </span><span class="cmd">git checkout feat/speaker-spotlight</span>
+<span class="p">$ </span><span class="cmd">git log --oneline main..HEAD</span>
+<span class="p">$ </span><span class="cmd">npm run build</span></pre>
+        <div class="expect">Le build passe. Les bugs sont ailleurs : à l'exécution (NG0203), dans la vue qui ne se rafraîchit pas (zoneless), dans la sécurité, l'accessibilité et les tests.</div>
+        <label class="check"><input type="checkbox" data-step="s3"> Fait</label>
+      </div></div>
+
+      <div class="step lesson" id="lab-s4"><div class="step-body">
+        <h3>Lancer la review dans ton harness</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Harness</th><th>Ce que tu tapes</th></tr></thead>
+            <tbody>
+              <tr><td>Claude Code</td><td>« fais une review de cette branche » ou <code>/angular-review</code></td></tr>
+              <tr><td>Codex (CLI, IDE, app)</td><td><code>$angular-review</code>, <code>/skills</code>, ou « review this branch against main »</td></tr>
+              <tr><td>GitHub Copilot (VS Code, CLI)</td><td><code>/angular-review</code> ou « review this branch »</td></tr>
+              <tr><td>Cursor</td><td><code>/angular-review</code> ou « fais une review de la branche »</td></tr>
+              <tr><td>Gemini CLI / Antigravity</td><td>« review this Angular branch » puis accepter l'activation (Antigravity : <code>/angular-review</code>)</td></tr>
+              <tr><td>OpenCode, Kilo Code, Continue</td><td>« review this Angular branch » : le modèle appelle son outil de skills</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Observe ce que fait l'agent : il lit <code>SKILL.md</code>, lance <code>scope.mjs</code> puis <code>scan.mjs</code>, active les reviewers concernés (en parallèle si ton harness a des sous-agents), fusionne, vérifie chaque candidat, puis rend le rapport.</p>
+        <div class="expect">À la fin : <code>.review/REVIEW.md</code> avec un verdict <b>REQUEST_CHANGES</b>, et <code>.review/findings.json</code>.</div>
+        <label class="check"><input type="checkbox" data-step="s4"> Fait</label>
+      </div></div>
+
+      <div class="step lesson" id="lab-s5"><div class="step-body">
+        <h3>Lire le rapport comme un relecteur</h3>
+        <ul>
+          <li>Le verdict vient du script : compte les BLOCKER et les MAJOR, vérifie la règle.</li>
+          <li>Ouvre un finding BLOCKER et va voir la ligne : l'extrait cité y est-il ?</li>
+          <li>Lis la section « Écartés à la vérification » : chaque rejet a une raison. Es-tu d'accord ?</li>
+          <li>Cherche ce que le skill <i>n'a pas</i> vu : l'étape suivante te dira s'il en manque.</li>
+        </ul>
+        <label class="check"><input type="checkbox" data-step="s5"> Fait</label>
+      </div></div>
+
+      <div class="step lesson" id="lab-s6"><div class="step-body">
+        <h3>Mesurer : rappel et précision</h3>
+        <p>Le corrigé de la branche est dans le kit, pas dans le playground (sinon l'agent pourrait le lire).</p>
+<pre class="term"><span class="p">$ </span><span class="cmd">node ../skill-issue/evals/angular-review/score.mjs --findings .review/findings.json</span>
+<span class="o">✖ S03 MINOR   R-ARCH-029               speaker.service.ts:11  Méthodes typées Observable&lt;any&gt;
+✔ S10 BLOCKER R-SIG-005                speaker-spotlight.ts:30  takeUntilDestroyed() sans argument dans ngOnInit : …
+✔ S13 BLOCKER R-SEC-003|R-SEC-001      speaker-spotlight.ts:34  bypassSecurityTrustHtml sur la bio saisie par les o…
+…
+Rappel 96 % (26/27) · BLOCKER 5/5 · MAJOR 10/10 · MINOR 11/12 · bonus 2/8
+Précision 100 % (28/28 findings expliqués par le corrigé ; un « hors corrigé » peut rester légitime)
+Leurres signalés à tort : 0/7</span></pre>
+        <div class="expect">Sortie réelle de la review Claude Code du 8 octobre. Compare avec ton voisin qui utilise un autre harness : le même jour, Codex a obtenu 100 % de rappel avec 8 BLOCKER au lieu de 2 (leçon 2.8). Même skill, résultats différents : c'est ce que les evals servent à suivre.</div>
+        <label class="check"><input type="checkbox" data-step="s6"> Fait</label>
+      </div></div>
+
+      <div class="step lesson" id="lab-s7"><div class="step-body">
+        <h3>Corriger, puis relancer</h3>
+        <p>Demande « corrige les blockers et les majors » : <code>review-fix</code> prend la main, corrige un finding à la fois, build et test après chacun, et écrit <code>.review/FIXES.md</code>. Relance ensuite la review.</p>
+        <div class="expect">Le verdict doit passer à <b>COMMENT</b> (plus aucun BLOCKER, moins de 3 MAJOR).</div>
+        <label class="check"><input type="checkbox" data-step="s7"> Fait</label>
+      </div></div>
+
+      <div class="step lesson" id="lab-s8"><div class="step-body">
+        <h3>Passer le relais</h3>
+        <p>Lance <code>/pr-handoff</code> (dans Claude Code ; ailleurs : « écris la description de PR avec pr-handoff »). Lis <code>.review/PR_BODY.md</code> et <code>.review/HANDOFF.md</code> : est-ce qu'un collègue pourrait reprendre ta branche demain matin avec ça ?</p>
+        <label class="check"><input type="checkbox" data-step="s8"> Fait</label>
+      </div></div>
+    </div>
+
+    <section class="section" aria-labelledby="bonus-title">
+      <div class="section-head"><p class="eyebrow">Pour aller plus loin</p><h2 id="bonus-title">Trois bonus</h2></div>
+      <div class="grid-3">
+        <div class="tool"><span class="tool-title">Bonus A · ta règle maison</span><p>Ajoute une règle <code>R-PROJ-001</code> dans <code>.agents/skills/angular-review/references/PROJECT_COMPLIANCE_REVIEW.md</code> (par exemple : « chaque page expose un <code>data-testid</code> racine »). Relance : le reviewer projet s'active, et un BLOCKER R-PROJ suffit à demander des changements.</p></div>
+        <div class="tool"><span class="tool-title">Bonus B · la CI</span><p>Sur ton fork, ouvre une PR depuis <code>feat/speaker-spotlight</code>. Le workflow <code>angular-review.yml</code> annote le diff sans IA ; ajoute le secret <code>ANTHROPIC_API_KEY</code> pour la review complète en commentaire.</p></div>
+        <div class="tool"><span class="tool-title">Bonus C · ton skill</span><p>Demande à l'agent « crée un skill pour … » : <code>skill-smith</code> t'interviewe, génère le squelette, et <code>validate.mjs</code> vérifie qu'il respecte le standard. Idée : un skill <code>angular-upgrade-notes</code> qui résume l'impact d'un <code>ng update</code>.</p></div>
+      </div>
+    </section>
+  </div>
+</section>

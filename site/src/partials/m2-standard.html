@@ -1,0 +1,24 @@
+            <p class="kicker">Les skills sont nés chez Anthropic en octobre 2025. Deux mois plus tard, le format devenait un standard ouvert. Un an après, plus de quarante outils le lisent.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Date</th><th>Événement</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">16/10/2025</td><td>Anthropic lance les Agent Skills dans Claude (apps, Claude Code, API, Agent SDK).</td></tr>
+                  <tr><td class="mono">déc. 2025</td><td>Codex CLI les ajoute en expérimental ; Amp et goose suivent.</td></tr>
+                  <tr><td class="mono">18/12/2025</td><td>Le format devient un <b>standard ouvert</b> sur agentskills.io. Le même jour, GitHub Copilot les supporte (agent de code, CLI, VS Code).</td></tr>
+                  <tr><td class="mono">22/12/2025</td><td>OpenCode 1.0.186.</td></tr>
+                  <tr><td class="mono">janv. 2026</td><td>Gemini CLI 0.24, Cline, Kilo Code, Cursor 2.4 (22/01). Vercel lance <code>npx skills</code> et l'annuaire skills.sh (20/01).</td></tr>
+                  <tr><td class="mono">févr. 2026</td><td>Codex lit <code>.agents/skills</code> ; skills actifs par défaut dans VS Code 1.109 ; audits de sécurité sur skills.sh.</td></tr>
+                  <tr><td class="mono">16/04/2026</td><td><code>gh skill</code> : chercher, installer en épinglant une version, publier (aperçu).</td></tr>
+                  <tr><td class="mono">juin 2026</td><td>Angular 22 publie ses propres skills ; Gemini CLI cède la place à Antigravity CLI pour une partie des comptes ; Windsurf devient Devin Desktop.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Ce que fixe le standard, et ce qu'il laisse libre</h3>
+            <ul>
+              <li><b>Obligatoire</b> : un dossier avec un <code>SKILL.md</code> ; dans le frontmatter, <code>name</code> (1 à 64 caractères, minuscules, chiffres et tirets, sans tiret au début, à la fin ni doublé, identique au nom du dossier) et <code>description</code> (1 à 1 024 caractères : ce que fait le skill et quand l'utiliser).</li>
+              <li><b>Optionnel</b> : <code>license</code>, <code>compatibility</code> (500 caractères max), <code>metadata</code> (clés et valeurs texte, on y range la version) et <code>allowed-tools</code>, expérimental.</li>
+              <li><b>Conventions</b> : <code>scripts/</code>, <code>references/</code>, <code>assets/</code> ; corps sous 5 000 tokens et 500 lignes ; références à un seul niveau de profondeur.</li>
+              <li><b>Libre</b> : le format du corps, l'emplacement des dossiers, la façon d'invoquer. C'est là que les harnesses divergent.</li>
+            </ul>
+            <div class="rc"><span class="av" aria-hidden="true">!</span><div><p class="who"><b>Deux écoles pour la description</b></p><p>Anthropic recommande la troisième personne, parce que la description est injectée dans le prompt système (« Reviews Angular changes… »). agentskills.io conseille une tournure à l'impératif, quitte à être un peu insistant (« Use this skill when… »), car les modèles ont tendance à sous-déclencher. Les deux s'accordent sur l'essentiel : dire ce que fait le skill <b>et</b> quand l'utiliser. Les descriptions du kit font les deux.</p></div></div>

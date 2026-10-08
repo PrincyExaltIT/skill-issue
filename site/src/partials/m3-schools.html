@@ -1,0 +1,18 @@
+            <h2>Les écoles du moment : comment les autres enchaînent leurs skills</h2>
+            <p class="kicker">Trois approches dominent fin 2026. Elles se disputent une question : qui tient le processus, le framework ou l'ingénieur ?</p>
+            <div class="grid-2">
+              <div class="rc"><span class="av" aria-hidden="true">MP</span><div>
+                <p class="who"><b>Matt Pocock</b> · <a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a> · MIT</p>
+                <p>Des skills petits, faciles à adapter et composables, qui laissent l'ingénieur aux commandes. Une chaîne typique : <code>grill-me</code> (un interrogatoire sans relâche pour durcir un plan) → <code>to-spec</code> → <code>to-tickets</code> → <code>implement</code> ou <code>tdd</code> → <code>code-review</code> → <code>handoff</code>.</p>
+                <p>Son <code>code-review</code> sépare deux axes jamais fusionnés : <b>Standards</b> (le code respecte-t-il les règles du repo ?) et <b>Spec</b> (fait-il ce que le ticket demandait ?), chacun dans un sous-agent. Son <code>handoff</code> compacte la conversation en un document pour l'agent suivant, avec les skills à appeler.</p>
+                <p>Détail parlant : <code>to-spec</code>, <code>to-tickets</code> et <code>implement</code> sont déclarés manuels (<code>disable-model-invocation: true</code>). C'est l'humain qui fait avancer la chaîne d'une étape à l'autre.</p>
+              </div></div>
+              <!-- @include partials/m3-schools-others.html -->
+            </div>
+            <h3>Ce que le kit en retient</h3>
+            <ul>
+              <li><b>Petit et composable</b> (Pocock) : quatre skills d'une étape chacun, qu'on peut utiliser seuls.</li>
+              <li><b>Des artefacts comme contrats</b> (spec-driven) : <code>findings.json</code>, <code>FIXES.md</code>, <code>PR_BODY.md</code>.</li>
+              <li><b>Des axes séparés</b> (Pocock) : un reviewer par domaine, et les règles du projet au-dessus des règles génériques. L'axe « Spec » est le reviewer projet : on y encode le ticket ou le cahier des charges.</li>
+              <li><b>Capitaliser</b> (compound engineering) : chaque candidat écarté garde sa raison ; ces raisons nourrissent les règles et les evals de la version suivante.</li>
+            </ul>

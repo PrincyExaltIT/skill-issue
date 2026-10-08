@@ -1,0 +1,118 @@
+<section class="view" id="accueil" aria-labelledby="hero-title">
+  <span hidden data-title="Skill Issue"></span>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Formation · Agent Skills · cas réel : la review Angular</p>
+        <h1 id="hero-title"><span class="skill">SKILL</span><span class="issue">ISSUE</span></h1>
+        <p class="lede">Ton agent sait coder. Il ne sait pas comment <strong>ton équipe</strong> code. En trois modules, on construit un skill de review Angular complet, avec ses scripts, ses références et ses evals. On le fait tourner sur huit harnesses, puis on le branche dans un workflow qui va du commit au merge.</p>
+        <div class="cta">
+          <a class="btn primary" href="#m1">Commencer le module 01 →</a>
+          <a class="btn" href="#lab">Aller direct au lab</a>
+          <a class="btn" href="#kit">Récupérer le kit</a>
+        </div>
+        <div class="meta-row">
+          <span><b>3</b> modules · ~2 h 40</span>
+          <span><b>1</b> lab · 30 min</span>
+          <span><b>4</b> skills · <b>{{RULES_TOTAL}}</b> règles</span>
+          <span>Angular <b>22</b> · oct. 2026</span>
+        </div>
+      </div>
+
+      <div class="pr-panel" aria-label="Exemple de review produite par le skill">
+        <div class="pr-head">
+          <span class="file">feat/speaker-spotlight · speaker-spotlight.ts</span>
+          <span class="verdict-pill">REQUEST_CHANGES</span>
+        </div>
+<pre class="diff" data-nocopy><span class="ln"><span class="n">29</span><span class="s"> </span><span>  <span class="tok-f">ngOnInit</span>(): <span class="tok-k">void</span> {</span></span>
+<span class="ln add hl"><span class="n">30</span><span class="s">+</span><span>    <span class="tok-k">this</span>.route.paramMap.pipe(<span class="tok-f">takeUntilDestroyed</span>()).subscribe((params) =&gt; {</span></span>
+<span class="ln add"><span class="n">31</span><span class="s">+</span><span>      <span class="tok-k">const</span> id = params.get(<span class="tok-s">'id'</span>) ?? <span class="tok-k">this</span>.speakerId;</span></span>
+<span class="ln add hl"><span class="n">32</span><span class="s">+</span><span>      <span class="tok-k">this</span>.speakerService.getSpeaker(id).subscribe((speaker) =&gt; {</span></span>
+<span class="ln add"><span class="n">33</span><span class="s">+</span><span>        <span class="tok-k">this</span>.speaker = speaker;</span></span>
+<span class="ln add hl"><span class="n">34</span><span class="s">+</span><span>        <span class="tok-k">this</span>.bioHtml = <span class="tok-k">this</span>.sanitizer.<span class="tok-f">bypassSecurityTrustHtml</span>(speaker.bio);</span></span>
+<span class="ln add"><span class="n">35</span><span class="s">+</span><span>        <span class="tok-k">this</span>.speakerService.getTalks(speaker.id).subscribe((talks) =&gt; {</span></span>
+<span class="ln add"><span class="n">36</span><span class="s">+</span><span>          <span class="tok-k">this</span>.talks = talks;</span></span></pre>
+        <div class="inline-comments">
+          <div class="rc"><span class="av" aria-hidden="true">AR</span><div><p class="who"><b>angular-review</b> <span class="sev blocker">BLOCKER</span> <code>R-SIG-005</code> · L30</p><p><code>takeUntilDestroyed()</code> sans argument dans <code>ngOnInit</code> : hors contexte d'injection, la route <code>/speakers/:id</code> plante dès l'affichage (NG0203).</p></div></div>
+          <div class="rc"><span class="av" aria-hidden="true">AR</span><div><p class="who"><b>angular-review</b> <span class="sev blocker">BLOCKER</span> <code>R-SEC-003</code> · L34</p><p>La bio vient du réseau et le formulaire de proposition annonce « HTML autorisé ». Sanitizer contourné : XSS stockée chez chaque visiteur.</p></div></div>
+          <div class="rc"><span class="av" aria-hidden="true">AR</span><div><p class="who"><b>angular-review</b> <span class="sev major">MAJOR</span> <code>R-RX-001</code> · L32</p><p>Subscribes imbriqués : changer d'orateur ne coupe pas la requête précédente. Composer avec <code>switchMap</code>, ou mieux un <code>httpResource</code> piloté par l'input de route.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" aria-labelledby="trailer-title">
+      <div class="section-head">
+        <p class="eyebrow">00:30 · bande-annonce</p>
+        <h2 id="trailer-title">Trente secondes pour comprendre où on va</h2>
+      </div>
+      <div class="video-card">
+        <video controls preload="metadata" poster="media/v0-trailer.jpg" playsinline>
+          <source src="media/v0-trailer.mp4" type="video/mp4">
+        </video>
+        <div class="video-meta"><b>Bande-annonce</b><span>sous-titrée, sans son</span><span>motion design généré à partir du code du site</span></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="build-title">
+      <div class="section-head">
+        <p class="eyebrow">Ce que tu repars avec</p>
+        <h2 id="build-title">Quatre skills qui se passent le relais</h2>
+        <p>Pas un <code>SKILL.md</code> de vingt lignes. Un vrai outillage, versionné, testé, que ton équipe peut installer dans n'importe quel dépôt Angular.</p>
+      </div>
+      <div class="grid-2">
+        <div class="module-card"><span class="eyebrow">le héros</span><h3><code>angular-review</code></h3><p class="sub">Review d'un diff Angular 17 → 22 par 7 reviewers spécialisés. Scripts pour le périmètre, le scan, le verdict ; LLM pour le jugement. Sortie : <code>REVIEW.md</code> + <code>findings.json</code>.</p><div class="foot"><span>SKILL.md · 3 scripts · 10 références · evals</span></div></div>
+        <div class="module-card"><span class="eyebrow">le relais</span><h3><code>review-fix</code></h3><p class="sub">Corrige les findings un par un, plus petit changement d'abord, avec un build et un test après chacun. Chaque finding finit corrigé ou écarté avec sa raison.</p><div class="foot"><span>lit findings.json · écrit FIXES.md</span></div></div>
+        <div class="module-card"><span class="eyebrow">la passation</span><h3><code>pr-handoff</code></h3><p class="sub">Écrit la description de PR/MR et la note de passation pour la session suivante, à partir des faits de la branche. Déclenché à la main uniquement.</p><div class="foot"><span>PR_BODY.md · HANDOFF.md · gh / glab</span></div></div>
+        <div class="module-card"><span class="eyebrow">la forge</span><h3><code>skill-smith</code></h3><p class="sub">Le skill qui fabrique des skills : interview, squelette, description, validation au standard, conseils de portabilité. Pour que l'équipe écrive les suivants.</p><div class="foot"><span>new-skill.mjs · validate.mjs</span></div></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="prog-title">
+      <div class="section-head">
+        <p class="eyebrow">Programme</p>
+        <h2 id="prog-title">Trois modules, un lab</h2>
+        <p>Chaque leçon porte un niveau. Lis tout, ou suis ton fil :</p>
+        <div class="chips"><span class="lvl base">base · tu découvres</span><span class="lvl core">core · tu pratiques</span><span class="lvl deep">deep · tu industrialises</span></div>
+      </div>
+      <div class="grid-3">
+        <a class="module-card" href="#m1"><span class="num">01</span><h3>Ouvre le capot</h3><p class="sub">Ce qu'est vraiment un skill, et l'agent qui l'exécute.</p><ul><li>Modèle, agent, harness</li><li>La fenêtre de contexte comme budget</li><li>Anatomie d'un dossier de skill</li><li>Progressive disclosure, description, scripts</li></ul><div class="foot"><span>45 min</span><span class="lvl base">base</span><span class="lvl core">core</span></div></a>
+        <a class="module-card" href="#m2"><span class="num">02</span><h3>Write once, review everywhere</h3><p class="sub">Construire <code>angular-review</code> pas à pas et le faire tourner partout.</p><ul><li>Le standard ouvert et huit harnesses</li><li>De la v1 à la v2 : autopsie d'une refonte</li><li>Scripts, références, versions d'Angular</li><li>Installer et brancher les outils</li></ul><div class="foot"><span>70 min</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div></a>
+        <a class="module-card" href="#m3"><span class="num">03</span><h3>Chain reaction</h3><p class="sub">Du skill isolé au workflow : hand-off, sous-agents, CI.</p><ul><li>Les écoles : Pocock, Superpowers, spec-driven</li><li>review → fix → handoff → CI</li><li>Le radar des outils d'octobre 2026</li><li>Sécurité, gouvernance, durabilité</li></ul><div class="foot"><span>45 min</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div></a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="harness-title">
+      <div class="section-head">
+        <p class="eyebrow">Un dossier, tous les outils</p>
+        <h2 id="harness-title">Les harnesses couverts</h2>
+        <p>Le même dossier de skill fonctionne dans chacun : seul l'endroit où on le pose change. Deux dossiers suffisent à couvrir les huit (<code>.agents/skills</code> et <code>.claude/skills</code>) ; le module 02 donne les détails et l'installeur du kit s'en charge.</p>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>Claude Code</b></span><span class="chip"><b>OpenAI Codex</b></span><span class="chip"><b>GitHub Copilot</b></span><span class="chip"><b>Cursor</b></span><span class="chip"><b>Gemini CLI / Antigravity</b></span><span class="chip"><b>OpenCode</b></span><span class="chip"><b>Kilo Code</b></span><span class="chip"><b>Continue</b></span><span class="chip">+ 40 autres outils compatibles <b>agentskills.io</b></span>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="durable-title">
+      <div class="section-head">
+        <p class="eyebrow">Bien vieillir</p>
+        <h2 id="durable-title">Ce qui va durer, ce qui va bouger</h2>
+        <p>Une formation sur l'IA périme vite. Celle-ci sépare ce qui est un principe de ce qui est un réglage, et date chaque réglage.</p>
+      </div>
+      <div class="grid-2">
+        <div class="rc note"><span class="av" aria-hidden="true">✓</span><div><p class="who"><b>Ce qui dure</b></p><ul><li>La fenêtre de contexte est un budget : on charge à la demande.</li><li>Ce qui doit être exact devient un script ; le jugement reste au modèle.</li><li>Les skills se parlent par des fichiers (contrats), pas par du code partagé.</li><li>Un skill se teste : déclenchement, rappel, précision.</li><li>Les règles du projet priment sur les règles génériques.</li></ul></div></div>
+        <div class="rc"><span class="av" aria-hidden="true">~</span><div><p class="who"><b>Ce qui bouge</b> <span class="lvl">daté au {{BUILD_DATE}}</span></p><ul><li>Les chemins de dossiers et les champs propres à chaque harness.</li><li>Les bonnes pratiques Angular de chaque version (OnPush est le défaut depuis la v22).</li><li>Les noms des modes et des commandes : auto mode, plan mode, /review…</li><li>Le radar des outils du module 03.</li></ul><p class="small muted">Le skill délègue ces faits à leur source : il lit le fichier de bonnes pratiques livré avec la version d'Angular installée.</p></div></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="prereq-title">
+      <div class="section-head">
+        <p class="eyebrow">Avant de commencer</p>
+        <h2 id="prereq-title">Prérequis</h2>
+      </div>
+      <div class="grid-2">
+        <div class="tool"><span class="tool-title">Sur ta machine</span><ul><li>Git et Node.js 24.15+ (Angular 22 l'exige)</li><li>Au moins un harness : Claude Code, Codex, Copilot (VS Code), Cursor, Gemini CLI…</li><li>Optionnel : <code>gh</code> ou <code>glab</code> pour la partie PR/MR</li></ul></div>
+        <div class="tool"><span class="tool-title">Dans ta tête</span><ul><li>Angular moderne (signals, control flow) : bases suffisantes</li><li>Avoir déjà demandé du code à un assistant IA</li><li>Aucune expérience des skills nécessaire</li></ul></div>
+      </div>
+    </section>
+  </div>
+</section>

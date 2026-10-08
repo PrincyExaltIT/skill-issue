@@ -1,0 +1,62 @@
+<section class="view" id="ressources" hidden aria-labelledby="res-title">
+  <span hidden data-title="Sources — Skill Issue"></span>
+  <div class="wrap">
+    <header class="module-head">
+      <span class="num">bib</span>
+      <h1 id="res-title">Sources et glossaire</h1>
+      <p class="promise">Chaque affirmation datée de la formation vient d'une source primaire, vérifiée le {{BUILD_DATE}}. Les notes complètes sont dans <code>docs/research/</code> du kit.</p>
+    </header>
+
+    <div class="grid-2" style="margin-top:26px">
+      <div class="tool">
+        <span class="tool-title">Le standard et les harnesses</span>
+        <!-- @include partials/resources-skills.html -->
+      </div>
+      <div class="tool">
+        <span class="tool-title">Angular (état d'octobre 2026)</span>
+        <ul class="small">
+          <li><a href="https://angular.dev/reference/releases" target="_blank" rel="noopener">angular.dev/reference/releases</a> — versions et support</li>
+          <li><a href="https://angular.dev/ai" target="_blank" rel="noopener">angular.dev/ai</a> — guidance IA, MCP, agent skills</li>
+          <li><a href="https://github.com/angular/skills" target="_blank" rel="noopener">github.com/angular/skills</a> — skills officiels (angular-developer, angular-new-app)</li>
+          <li><a href="https://angular.dev/style-guide" target="_blank" rel="noopener">angular.dev/style-guide</a> — style guide 2025</li>
+          <li><a href="https://angular.dev/guide/signals" target="_blank" rel="noopener">angular.dev/guide/signals</a> · <a href="https://angular.dev/guide/zoneless" target="_blank" rel="noopener">/guide/zoneless</a> · <a href="https://angular.dev/guide/templates/control-flow" target="_blank" rel="noopener">/guide/templates/control-flow</a></li>
+          <li><a href="https://angular.dev/best-practices/security" target="_blank" rel="noopener">angular.dev/best-practices/security</a> · <a href="https://angular.dev/best-practices/a11y" target="_blank" rel="noopener">/best-practices/a11y</a></li>
+          <li><a href="https://angular.dev/errors/NG0203" target="_blank" rel="noopener">angular.dev/errors/NG0203</a> — contexte d'injection</li>
+          <li><a href="https://github.com/angular-eslint/angular-eslint" target="_blank" rel="noopener">angular-eslint</a> · <a href="https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x" target="_blank" rel="noopener">eslint-plugin-rxjs-x</a></li>
+          <li>Typings livrés avec <code>@angular/core@22.2.1</code> — OnPush par défaut, statut <code>@publicApi 22.0</code> des resources et Signal Forms</li>
+        </ul>
+      </div>
+      <div class="tool">
+        <span class="tool-title">Écoles et praticiens</span>
+        <!-- @include partials/resources-people.html -->
+      </div>
+      <div class="tool">
+        <span class="tool-title">Héritage du kit</span>
+        <ul class="small">
+          <li><a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> — angular-review v1 (106 règles, MIT)</li>
+          <li><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">PrincyExaltIT/forgent</a> — installeur de skills avec lockfile sha256</li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="section" aria-labelledby="glossary-title">
+      <div class="section-head"><h2 id="glossary-title">Glossaire</h2></div>
+      <div class="table-wrap">
+        <table>
+          <tbody>
+            <tr><th scope="row">Harness</th><td>Le programme autour du modèle : il assemble le contexte, expose les outils, exécute les appels et gère les permissions (Claude Code, Codex, Cursor…).</td></tr>
+            <tr><th scope="row">Agent</th><td>Un modèle dans une boucle : contexte → réponse ou appel d'outil → exécution → résultat ajouté au contexte.</td></tr>
+            <tr><th scope="row">Skill</th><td>Un dossier avec un <code>SKILL.md</code> (frontmatter + instructions) et, au besoin, des scripts, des références et des ressources.</td></tr>
+            <tr><th scope="row">Progressive disclosure</th><td>Charger les informations par étages : description toujours, corps au déclenchement, fichiers à la demande.</td></tr>
+            <tr><th scope="row">Contrat (hand-off)</th><td>Le fichier qu'une étape laisse à la suivante, au format stable : ici <code>.review/findings.json</code>.</td></tr>
+            <tr><th scope="row">Candidat</th><td>Un problème possible trouvé par le scan ou un reviewer, avant vérification.</td></tr>
+            <tr><th scope="row">Finding</th><td>Un candidat gardé à la vérification : règle, ligne, extrait cité, conséquence, correctif.</td></tr>
+            <tr><th scope="row">Version gate</th><td>Une règle qui ne s'applique qu'à certaines versions d'Angular (ex. OnPush par défaut en v22).</td></tr>
+            <tr><th scope="row">Eval</th><td>Un test du skill : déclenchement, snapshots du scan, rappel et précision sur un corrigé.</td></tr>
+            <tr><th scope="row">MCP</th><td>Model Context Protocol : un standard pour exposer des outils et des données externes à un agent.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</section>

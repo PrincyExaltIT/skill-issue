@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skill Issue</title>
+<meta name="description" content="Formation en 3 modules : construire un Agent Skill complet de review de code Angular, le porter sur huit harnesses et le chaîner dans un workflow, du commit au merge.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+/* @styles */
+</style>
+</head>
+<body>
+<a class="sr-only" href="#main">Aller au contenu</a>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#accueil" aria-label="Skill Issue, accueil"><b>SKILL ISSUE</b><span>formation · agent skills</span></a>
+    <nav class="tabs" aria-label="Modules">
+      <a class="tab" href="#accueil"><span class="dot"></span>README.md</a>
+      <a class="tab" href="#m1" data-module="m1"><span class="dot"></span>01-anatomie.md <span class="done-mark" hidden>✓</span></a>
+      <a class="tab" href="#m2" data-module="m2"><span class="dot"></span>02-portabilite.md <span class="done-mark" hidden>✓</span></a>
+      <a class="tab" href="#m3" data-module="m3"><span class="dot"></span>03-workflows.md <span class="done-mark" hidden>✓</span></a>
+      <a class="tab" href="#lab"><span class="dot"></span>lab.sh</a>
+      <a class="tab" href="#kit"><span class="dot"></span>kit/</a>
+      <a class="tab" href="#ressources"><span class="dot"></span>sources.bib</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="present-toggle" type="button" title="Mode présentation (touche P)" aria-label="Mode présentation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+      </button>
+      <button class="icon-btn" id="theme-toggle" type="button" title="Thème clair / sombre" aria-label="Changer de thème">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<!-- @include partials/landing.html -->
+<!-- @include partials/m1.html -->
+<!-- @include partials/m2.html -->
+<!-- @include partials/m3.html -->
+<!-- @include partials/lab.html -->
+<!-- @include partials/kit.html -->
+<!-- @include partials/resources.html -->
+</main>
+
+<div class="present-bar" role="toolbar" aria-label="Navigation de présentation">
+  <button class="btn" id="present-prev" type="button">← Précédent</button>
+  <span id="present-pos">1 / 1</span>
+  <button class="btn" id="present-next" type="button">Suivant →</button>
+  <button class="btn" id="present-exit" type="button">Quitter (Échap)</button>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <span><b>Skill Issue</b> · formation conçue par Princy A. avec Claude · contenu à jour au {{BUILD_DATE}}</span>
+    <span>Kit : <a href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue</a> · Démo : <a href="https://github.com/PrincyExaltIT/skill-issue-playground" target="_blank" rel="noopener">skill-issue-playground</a></span>
+  </div>
+</footer>
+
+<!-- @data -->
+<script>
+/* @script */
+</script>
+</body>
+</html>
