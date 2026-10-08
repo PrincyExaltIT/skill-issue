@@ -87,7 +87,7 @@ Leurres signalés à tort : 0/7</span></pre>
       <div class="step lesson" id="lab-s7"><div class="step-body">
         <h3>Corriger, puis relancer</h3>
         <p>Demande « corrige les blockers et les majors » : <code>review-fix</code> prend la main, corrige un finding à la fois, build et test après chacun, et écrit <code>.review/FIXES.md</code>. Relance ensuite la review.</p>
-        <div class="expect">Le verdict doit passer à <b>COMMENT</b> (plus aucun BLOCKER, moins de 3 MAJOR).</div>
+        <div class="expect">Ne t'attends pas forcément à <b>COMMENT</b>. Dans notre essai réel, après 21 corrections, la re-review a encore trouvé 1 BLOCKER (l'URL d'API en dur, laissée car MINOR au premier tour) et 2 MAJOR introduits par les corrections. Compare avec la branche <code>solution/review-fix</code> et <code>docs/sample-review/chain/</code> du kit.</div>
         <label class="check"><input type="checkbox" data-step="s7"> Fait</label>
       </div></div>
 

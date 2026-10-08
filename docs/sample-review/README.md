@@ -11,3 +11,5 @@ La même phrase, le même skill, deux harnesses, le 8 octobre 2026. Scores contr
 | Verdict | — | REQUEST_CHANGES | REQUEST_CHANGES |
 
 Le scan seul et le corrigé ont été écrits par la même équipe : son rappel est optimiste.
+
+La chaîne complète (review Codex → corrections Claude Code → re-review → description de PR) est dans [`chain/`](chain/).

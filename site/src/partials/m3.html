@@ -59,15 +59,26 @@
               <div class="stage" role="listitem"><span class="who">pr-handoff</span><span class="what">Description de PR/MR et note de passation, depuis les faits.</span><span class="out">PR_BODY.md<br>HANDOFF.md</span></div>
               <div class="stage" role="listitem"><span class="who">CI</span><span class="what">Scan déterministe sur chaque PR, review IA si une clé est configurée.</span><span class="out">annotations · Code Quality</span></div>
             </div>
-<pre class="term"><span class="cm"># dans Claude Code (les autres harnesses : voir la matrice du module 02)</span>
-<span class="p">› </span><span class="cmd">/angular-review</span>
-<span class="o">  … Verdict : REQUEST_CHANGES — 3 BLOCKER, 9 MAJOR · rapport : .review/REVIEW.md</span>
-<span class="p">› </span><span class="cmd">corrige les blockers et les majors</span>
-<span class="o">  … review-fix : 12 corrigés, 0 écarté · .review/FIXES.md</span>
-<span class="p">› </span><span class="cmd">/angular-review</span>
-<span class="o">  … Verdict : COMMENT — 0 BLOCKER, 0 MAJOR, 6 MINOR</span>
-<span class="p">› </span><span class="cmd">/pr-handoff</span>
-<span class="o">  … .review/PR_BODY.md et .review/HANDOFF.md écrits. Ouvrir la PR ? (gh pr create …)</span></pre>
+<h3>La chaîne en vrai, le 8 octobre 2026</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Étape</th><th>Harness</th><th>Résultat</th><th>Durée · coût</th></tr></thead>
+                <tbody>
+                  <tr><td><code>angular-review</code></td><td>Codex</td><td><span class="sev blocker">REQUEST_CHANGES</span> 8 BLOCKER, 13 MAJOR, 16 MINOR</td><td>≈ 12 min · quota ChatGPT</td></tr>
+                  <tr><td><code>review-fix</code> (BLOCKER + MAJOR)</td><td>Claude Code</td><td>21 commits, un par finding, chacun avec un test de régression</td><td>21 min · 6,08 $</td></tr>
+                  <tr><td><code>angular-review</code> (re-review)</td><td>Claude Code</td><td><span class="sev blocker">REQUEST_CHANGES</span> 1 BLOCKER, 2 MAJOR, 15 MINOR</td><td>2,7 min · 5,69 $</td></tr>
+                  <tr><td><code>pr-handoff</code></td><td>Claude Code</td><td>Description de PR « à ne pas merger en l'état », décisions listées pour l'humain</td><td>1,7 min · 0,71 $</td></tr>
+                </tbody>
+              </table>
+            </div>
+<pre class="code" data-lang="git" data-nocopy>cdd40ce fix(proposals): donne un label accessible au champ titre (F-001)
+e46570e fix(speakers): passe DestroyRef à takeUntilDestroyed dans ngOnInit (F-004)
+c373015 fix(speakers): laisse Angular assainir la bio du speaker (F-006)
+29b0877 fix(speakers): compose le chargement speaker/talks avec switchMap (F-020)
+e4aaa47 perf(routes): charge la page speaker à la demande (F-009)
+9877d9d refactor(proposals): dérive charCount avec computed au lieu d'un effect (F-013)
+…  21 commits au total, branche solution/review-fix</pre>
+            <p>Deux leçons. D'abord, <b>le contrat suffit au relais</b> : Codex a écrit <code>findings.json</code>, Claude Code l'a lu et corrigé, sans adaptation. Ensuite, <b>la chaîne ne merge pas à ta place</b> : l'URL d'API en dur, classée MINOR au premier tour, n'était pas dans le périmètre des corrections ; à la re-review, elle devient le BLOCKER qui empêche la page de charger. Et deux MAJOR sont nés des corrections elles-mêmes, dont un bouton rendu accessible au clavier… mais qui n'a aucun effet. La description de PR le dit noir sur blanc.</p>
             <p>Chaque flèche est un endroit où un humain peut reprendre la main : relire le rapport avant de corriger, refuser un correctif, réécrire la description. La chaîne accélère, elle ne décide pas à ta place.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
