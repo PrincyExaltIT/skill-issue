@@ -548,7 +548,7 @@ details.more[open] > summary { margin-bottom: 10px; }
       <div class="grid-3">
         <a class="module-card" href="#m1"><span class="num">01</span><h3>Ouvre le capot</h3><p class="sub">Ce qu'est vraiment un skill, l'agent qui l'exécute, et ton premier skill de review en dix lignes.</p><ul><li>Modèle, agent, harness, contexte</li><li>Anatomie d'un dossier de skill</li><li>La description qui déclenche</li><li>Atelier 0 : ta v0, notée sur une vraie PR</li></ul><div class="foot"><span>~75 min</span><span class="lvl base">base</span><span class="lvl core">core</span></div></a>
         <a class="module-card" href="#m2"><span class="num">02</span><h3>Construis-le, mesure-le</h3><p class="sub">De la v1 à la v5, un dossier qui grandit et un score qui monte.</p><ul><li>Une procédure avec des critères de fin</li><li>Les règles de ton équipe, chargées à la demande</li><li>Des scripts, des exemples, des tests</li><li>Le partager à toute l'équipe, quel que soit son outil</li></ul><div class="foot"><span>~80 min</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div></a>
-        <a class="module-card" href="#m3"><span class="num">03</span><h3>Le flux d'équipe</h3><p class="sub">Ton skill dans le travail de tous les jours.</p><ul><li>Passer le relais : relire, corriger, raconter</li><li>Les écoles : Pocock, Superpowers, spec-driven</li><li>Sous-agents, hook, sécurité</li><li>Le radar d'octobre 2026</li></ul><div class="foot"><span>~90 min</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div></a>
+        <a class="module-card" href="#m3"><span class="num">03</span><h3>Le flux d'équipe</h3><p class="sub">Ton skill dans le travail de tous les jours.</p><ul><li>Passer le relais : relire, corriger, raconter</li><li>Les écoles : Pocock, Superpowers, spec-driven</li><li>Sous-agents, hook, sécurité</li><li>Le radar d'octobre 2026</li><li>Extra : le bon modèle au bon endroit</li></ul><div class="foot"><span>~1 h 30</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div></a>
       </div>
       <div class="grid-2" style="margin-top:16px">
         <a class="module-card bonus" href="#cloud"><span class="num">+1</span><h3>Il relit pendant que tu dors</h3><p class="sub">Bonus cloud : ton skill sur chaque PR, sans le poste de personne. CI GitHub et GitLab, relecteurs hébergés, agents cloud.</p><div class="foot"><span>~65 min</span><span class="lvl core">core</span></div></a>
@@ -1404,7 +1404,7 @@ metadata:
       <span class="num">03</span>
       <h1 id="m3-title">Le flux d'équipe</h1>
       <p class="promise">Ton skill relit bien. Ce module le branche dans le travail de l'équipe : deux skills de plus, à toi, qui corrigent puis racontent la branche, une relecture en parallèle, un garde-fou qui tourne tout seul, des garde-fous de sécurité, et un skill qui vit dans la durée.</p>
-      <div class="chips"><span class="chip">⏱ <b>~90 min</b> avec les ateliers</span><span class="chip">8 leçons · 2 ateliers · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
+      <div class="chips"><span class="chip">⏱ <b>~1 h 30</b> avec les ateliers</span><span class="chip">9 leçons · 2 ateliers · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
     <div class="module-layout">
@@ -1418,6 +1418,7 @@ metadata:
         <a href="#m3-l6"><span class="k">3.6</span><span>Le radar d'octobre 2026</span><span class="ok">✓</span></a>
         <a href="#m3-l7"><span class="k">3.7</span><span>Sécurité et gouvernance</span><span class="ok">✓</span></a>
         <a href="#m3-l8"><span class="k">3.8</span><span>Faire vivre le skill</span><span class="ok">✓</span></a>
+        <a href="#m3-l9"><span class="k">3.9</span><span>Extra · le bon modèle au bon endroit</span><span class="ok">✓</span></a>
         <a href="#m3-quiz"><span class="k">✎</span><span>Quiz</span><span class="ok">✓</span></a>
         <div class="progress"><i></i></div>
       </nav>
@@ -1608,7 +1609,7 @@ description: Écrit la description de PR ou de MR d'une branche à partir
               <li><b>Parallélisme.</b> Les relecteurs tournent en même temps quand le harness le permet ; sinon, l'orchestrateur les joue un par un.</li>
               <li><b>Attention focalisée.</b> Un relecteur qui ne cherche que des problèmes de réactivité n'a qu'une liste de règles en tête.</li>
             </ul>
-            <p>Le risque des relecteurs spécialisés : ils trouvent toujours quelque chose. D'où ton étape de vérification, qui essaie de réfuter chaque finding avant de le garder. Les outils du moment font de même : vérifier avant de publier. Le package du bonus final pousse l'idée au bout, avec sept relecteurs.</p>
+            <p>Le risque des relecteurs spécialisés : ils trouvent toujours quelque chose. D'où ton étape de vérification, qui essaie de réfuter chaque finding avant de le garder. Les outils du moment font de même : vérifier avant de publier. Le package du bonus final pousse l'idée au bout, avec sept relecteurs. Et chaque relecteur peut tourner sur un modèle plus petit que l'orchestrateur : c'est l'extra de la <a href="#m3-l9">leçon 3.9</a>.</p>
             <h3>Ce sur quoi les outils du marché ont convergé</h3>
             <div class="table-wrap">
               <table>
@@ -1778,6 +1779,71 @@ node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
         </article>
 
         <!-- Quiz -->
+        <!-- 3.9 -->
+        <article class="lesson" id="m3-l9">
+          <div class="hunk"><span class="at">@@ 03 · 3.9 @@</span><span>extra · modèles</span><span class="spacer"></span><span class="lvl deep">deep</span><span>12 min</span></div>
+          <div class="lesson-body">
+            <h2>Extra · Le bon modèle au bon endroit</h2>
+            <p class="kicker">Un modèle intelligent qui orchestre, des modèles petits et rapides qui lisent pour lui. Moins cher par token, et un contexte principal qui reste propre. Pas gratuit pour autant.</p>
+            <p>Anthropic appelle ce montage <i>orchestrator-worker</i>. La session principale tourne sur un modèle fort (chez Anthropic, Opus 5.5 est recommandé pour la plupart des usages). Elle décide, tranche et écrit. Les sous-agents tournent sur un petit modèle (Haiku 5.5, dont la fiche cite justement les « subagent tasks »). Ils parcourent la codebase, lisent la doc, collectent, et rendent un résumé court. L'orchestrateur ne reçoit que leurs conclusions, jamais les milliers de lignes lues.</p>
+            <h3>Ce que ça coûte, honnêtement</h3>
+            <ul>
+              <li><b>Moins cher par token.</b> Opus 5.5 coûte 4 $ par million de tokens en entrée et 20 $ en sortie ; Haiku 5.5, 0,10 $ et 0,50 $ (prompts jusqu'à 100 000 tokens). Lire à la place d'Opus coûte quarante fois moins cher.</li>
+              <li><b>Plus de tokens au total.</b> Anthropic mesure qu'un agent consomme environ 4 fois les tokens d'un chat, et un système multi-agent environ 15 fois (mesure faite sur la génération Claude 4). La doc de Codex le dit aussi : les sous-agents consomment plus qu'un agent seul.</li>
+              <li><b>Quand déléguer.</b> Quand la sous-tâche est lourde en lecture et légère en conclusion : explorer, collecter, vérifier un lien, relire une doc. Pas quand tout le monde doit partager le même contexte : Anthropic le classe parmi les cas qui ne conviennent pas au multi-agent.</li>
+            </ul>
+            <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>Un petit modèle a besoin d'un cadre</b> · runs de référence du 9 octobre 2026</p><p>Avec un skill de dix lignes (v0), Haiku 5.5 trouve 22 % des problèmes du lab, contre 74 % pour Opus 5.5. Avec le skill de l'étape 4, procédure, règles et scripts compris : 93 % contre 96 %. C'est le skill qui rend la délégation possible : un sous-agent rapide suit bien une procédure écrite, mal une intention.</p><p class="small muted">Cette formation a été construite comme ça : Opus 5.5 en session principale, des sous-agents Haiku 5.5 pour collecter et relire les sources, vérifier les liens et rejouer le parcours depuis un clone neuf.</p></div></div>
+            <h3>Dans ton harness</h3>
+            <p>Presque tous les harnesses savent donner un autre modèle à un sous-agent. Sans réglage, le sous-agent hérite le plus souvent du modèle principal : il faut donc le demander.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th scope="col">Harness</th><th scope="col">Où le régler</th><th scope="col">À savoir</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Claude Code</th><td><code>.claude/agents/&lt;nom&gt;.md</code>, champ <code>model</code> : <code>haiku</code>, <code>sonnet</code>, <code>opus</code>, <code>fable</code> ou <code>inherit</code> ; pour tous les sous-agents : <code>CLAUDE_CODE_SUBAGENT_MODEL</code></td><td>L'exploration intégrée suit la session ; un agent à toi nommé <code>Explore</code> avec <code>model: haiku</code> la remplace</td></tr>
+                  <tr><th scope="row">GitHub Copilot</th><td><code>.github/agents/&lt;nom&gt;.agent.md</code>, propriété <code>model</code></td><td>La doc ne liste pas les valeurs acceptées : reprends le nom affiché par ton sélecteur de modèle</td></tr>
+                  <tr><th scope="row">Kilo Code</th><td><code>kilo.jsonc</code> : <code>subagent_model</code> pour tous ; ou <code>model</code> par agent, au format <code>provider/model-id</code></td><td>Le mode Orchestrator est déprécié : les agents Code, Plan et Debug délèguent eux-mêmes</td></tr>
+                  <tr><th scope="row">OpenCode</th><td>Un agent en <code>mode: subagent</code>, avec <code>model</code> au format <code>provider/model-id</code></td><td>Sans <code>model</code>, le sous-agent prend celui de l'agent principal</td></tr>
+                  <tr><th scope="row">Codex</th><td><code>.codex/agents/&lt;nom&gt;.toml</code>, champ <code>model</code></td><td>La doc conseille <code>gpt-6-luna</code> pour le travail léger des sous-agents</td></tr>
+                  <tr><th scope="row">Cursor</th><td><code>.cursor/agents/&lt;nom&gt;.md</code>, champ <code>model</code> (<code>inherit</code> par défaut)</td><td>Son sous-agent Explore tourne déjà sur un modèle plus rapide</td></tr>
+                  <tr><th scope="row">Gemini CLI</th><td><code>.gemini/agents/&lt;nom&gt;.md</code>, champ <code>model</code></td><td><code>/model</code> ne change pas le modèle des sous-agents ; Google bascule vers Antigravity CLI pour les abonnés AI Pro et Ultra</td></tr>
+                  <tr><th scope="row">Et les autres</th><td colspan="2">Cherche « subagent » et « model » dans la documentation de ton outil, outil maison compris. S'il n'a pas de sous-agents, le skill marche quand même : il tourne sur le modèle principal.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Un explorateur pour ta review</h3>
+            <p>Le plus rentable : un sous-agent qui lit autour du diff avant la review, et rend une carte. La review elle-même reste sur le modèle principal : c'est elle qui juge.</p>
+<pre class="code" data-lang="md"># .claude/agents/explorateur.md (Claude Code)
+---
+name: explorateur
+description: Explore le code autour d'un diff et rend une carte courte (fichiers, rôles, tests liés). À utiliser avant une review ou une correction.
+model: haiku
+tools: Read, Grep, Glob
+---
+Lis les fichiers qu'on te donne et leurs voisins directs. Rends au plus 30 lignes :
+fichier, rôle, tests associés, conventions repérées. Pas d'avis, pas de correction.</pre>
+<pre class="code" data-lang="toml"># .codex/agents/explorateur.toml (Codex) : la même idée
+name = "explorateur"
+description = "Explore le code autour d'un diff et rend une carte courte."
+developer_instructions = "Lis les fichiers donnés et leurs voisins. Au plus 30 lignes : fichier, rôle, tests liés. Pas d'avis."
+model = "gpt-6-luna"</pre>
+            <h3>Le panorama du 9 octobre 2026</h3>
+            <p>Prix publics par million de tokens, entrée puis sortie, relevés sur les pages des éditeurs. Les noms changent vite : relis la page de l'éditeur avant de choisir.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th scope="col">Éditeur</th><th scope="col">Pour orchestrer</th><th scope="col">Polyvalent</th><th scope="col">Petit et rapide, pour les sous-agents</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Anthropic</th><td>Opus 5.5 · 4 / 20 $<br><span class="small muted">Fable 5.1 · 10 / 50 $, pour le raisonnement le plus exigeant</span></td><td>Sonnet 5.5 · 2 / 10 $</td><td>Haiku 5.5 · 0,10 / 0,50 $</td></tr>
+                  <tr><th scope="row">OpenAI</th><td>gpt-6-astra · 10 / 50 $</td><td>gpt-6.1-sol · 2 / 10 $</td><td>gpt-6-luna · 0,10 / 0,50 $</td></tr>
+                  <tr><th scope="row">Google</th><td>gemini-3.1-pro-preview · 2 / 12 $ (preview)</td><td>gemini-3.5-flash · 1,50 / 9 $</td><td>gemini-3.5-flash-lite · 0,30 / 2,50 $</td></tr>
+                  <tr><th scope="row">Mistral</th><td>Mistral Large 4</td><td>Mistral Medium 3.5</td><td>Mistral Small 4</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted">Sources : <code>docs/research/modeles-2026-10.md</code> du dépôt du kit, relevé le 9 octobre 2026 sur les pages des éditeurs. Le classement en colonnes est le nôtre, d'après la description de chaque éditeur. Les prix de Mistral n'ont pas pu être vérifiés pour une version précise : ils ne sont pas affichés. Les modèles open-weight (Qwen, Llama, Kimi…) n'ont pas été relevés.</p>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
         <article class="lesson" id="m3-quiz">
           <div class="hunk"><span class="at">@@ 03 · quiz @@</span><span>5 questions</span><span class="spacer"></span><span>5 min</span></div>
           <div class="lesson-body">
@@ -1834,7 +1900,7 @@ node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
       <span class="num">lab</span>
       <h1 id="ateliers-title">Tes ateliers : un skill, huit ateliers</h1>
       <p class="promise">Le fil rouge de la formation, au même endroit. Une vraie PR Angular 22, écrite trop vite, avec 27 problèmes cachés et 7 leurres. Tu construis ton skill de review en six versions (v0 à v5), du premier jet à la version partagée, puis tu l'automatises dans le module 3 (ateliers 6 et 7). À chaque atelier, tu le lances, tu le notes, tu suis ton score. Bloqué ? Chaque atelier a son rattrapage.</p>
-      <div class="chips"><span class="chip">⏱ <b>~4 h</b> leçons et ateliers, modules 1 à 3</span><span class="chip">8 ateliers · 2 bonus</span><span class="chip">dépôt : <b>skill-issue-playground</b></span></div>
+      <div class="chips"><span class="chip">⏱ <b>~4 h 30</b> leçons et ateliers, modules 1 à 3</span><span class="chip">8 ateliers · 2 bonus</span><span class="chip">dépôt : <b>skill-issue-playground</b></span></div>
     </header>
 
     <section class="section" aria-labelledby="setup-title" style="margin-top:26px">
