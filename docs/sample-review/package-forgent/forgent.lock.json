@@ -1,0 +1,101 @@
+{
+  "lockfileVersion": 1,
+  "skills": {
+    "angular-review": {
+      "registry": {
+        "name": "agent-skill",
+        "version": "0.5.0",
+        "source": "https://raw.githubusercontent.com/PrincyExaltIT/agent-skill/main/registry.json"
+      },
+      "skillVersion": "2.1.0",
+      "provider": "claude",
+      "installedAt": "2026-10-09T13:01:39.362Z",
+      "files": [
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "e6374054ae8249bba7185ee2dc91ce37b3809fb92b7dc1cd56ce23d03f9cae12"
+        },
+        {
+          "path": "assets/findings.schema.json",
+          "sha256": "2f3da6cc29fb0c3768cc13488276d289b98fd8e09fb736fb1b5bd8b8f2d7f6f2"
+        },
+        {
+          "path": "assets/report-template.md",
+          "sha256": "caeb7ddc5ab3af31bbe6b198ed1f4f0c4690710a92444a3071f5e2ff702a4988"
+        },
+        {
+          "path": "references/A11Y_AND_ERROR_HANDLING_REVIEW.md",
+          "sha256": "155426ea642e7219f30617b44d99d90cf06719c80cb0fcdf17d78392f399915a"
+        },
+        {
+          "path": "references/ARCHITECTURE_CLEAN_CODE_REVIEW.md",
+          "sha256": "51da9e70382abc588250135f9305e4ae4c95378a3ffb6b4f80dedd75b8db2076"
+        },
+        {
+          "path": "references/EMPIRICAL_VALIDATION.md",
+          "sha256": "40b16245932de923c76a138e61949fc7dff901c571f44ffde968cd65e2b89548"
+        },
+        {
+          "path": "references/PERFORMANCE_REVIEW.md",
+          "sha256": "48af8e583af3d2f0d27bcfdb134b612ed326d402dace063b33ee4f10873ccd79"
+        },
+        {
+          "path": "references/PROJECT_COMPLIANCE_REVIEW.md",
+          "sha256": "a698252a4e60dcb20dbb8e2b3f2c4c1d8e83d4c5aebc09460a8a202309103e27"
+        },
+        {
+          "path": "references/REACTIVITY_REVIEW.md",
+          "sha256": "09be7964ab3ce8c0a0535817c388e119cdf0c01c19ffac5fe28c43942f09040f"
+        },
+        {
+          "path": "references/REVIEWER_PROMPT.md",
+          "sha256": "0cee40f6f45a25f6db1a8420df3d2b3089810d17951e9ac1afca69d020185819"
+        },
+        {
+          "path": "references/SECURITY_REVIEW.md",
+          "sha256": "50b08aaa606724ba20cf37c4d534907f60e4e459d9efb41d883887284ec6d377"
+        },
+        {
+          "path": "references/TESTING_REVIEW.md",
+          "sha256": "22fc3ccd817492b1286f179378815a8534eb0994da8f0b49b7d672873479e032"
+        },
+        {
+          "path": "references/VERSION_GATES.md",
+          "sha256": "43a0e323377be02fb50d72f604416adfd6764bc79f1b0610f2ea67cb1c64b809"
+        },
+        {
+          "path": "scripts/findings.mjs",
+          "sha256": "211583ceb9e8c7a356ae6766efa6cd96110bf823744994929b974d8ebc4a230c"
+        },
+        {
+          "path": "scripts/lib/formats.mjs",
+          "sha256": "4286eafbbdae533f8dc178e88a6d7b2a5f77b3b9ad2f6b3cc6c61348deaf18e0"
+        },
+        {
+          "path": "scripts/lib/project.mjs",
+          "sha256": "445ac18e54bf9b24717c43e9e0a1c4507d9c7d26450bd884821e049456afad69"
+        },
+        {
+          "path": "scripts/lib/rules.mjs",
+          "sha256": "9201c69c8fd4cd51ef72b949ef7dc6134c53858d2e800eedde42fc3f5cb3e6b6"
+        },
+        {
+          "path": "scripts/lib/source.mjs",
+          "sha256": "9ce0031a37bc3e0f3880e4c6ea3699fd5b17291327c191c073c3bd5ab756fc78"
+        },
+        {
+          "path": "scripts/scan.mjs",
+          "sha256": "c4598d4adb5c8959f755965628a5aa20e2d716ced43b9e739caea2d07b3304f6"
+        },
+        {
+          "path": "scripts/scope.mjs",
+          "sha256": "6daf25efde675a726b96f9ccb39d096415990d0a08da84eb006964bbb66242cc"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "b71ce6f67f2b9e07c4d98f3085b99f8f22dee3937d560bf7f6366e654c56eab9"
+        }
+      ]
+    }
+  }
+}
