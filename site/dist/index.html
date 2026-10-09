@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#5853ff">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Skill Issue</title>
-<meta name="description" content="Formation en 3 modules et 2 bonus : construire son propre skill de code review Angular, le mesurer sur une vraie PR, le partager à toute l'équipe sur huit harnesses, puis le faire tourner dans le cloud.">
+<meta name="description" content="Formation en 3 modules et 2 bonus : construire son propre skill de code review Angular, le mesurer sur une vraie PR, le partager à toute l'équipe quel que soit son harness (GitHub Copilot, Kilo Code, OpenCode, Claude Code, Codex et bien d'autres), puis le faire tourner dans le cloud.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
@@ -499,7 +499,7 @@ details.more[open] > summary { margin-bottom: 10px; }
         <div class="meta-row">
           <span><b>3</b> modules + <b>2</b> bonus</span>
           <span><b>8</b> ateliers sur une vraie PR</span>
-          <span><b>8</b> harnesses</span>
+          <span><b>ton</b> harness, quel qu'il soit</span>
           <span>Angular <b>22</b> · oct. 2026</span>
         </div>
       </div>
@@ -547,7 +547,7 @@ details.more[open] > summary { margin-bottom: 10px; }
       </div>
       <div class="grid-3">
         <a class="module-card" href="#m1"><span class="num">01</span><h3>Ouvre le capot</h3><p class="sub">Ce qu'est vraiment un skill, l'agent qui l'exécute, et ton premier skill de review en dix lignes.</p><ul><li>Modèle, agent, harness, contexte</li><li>Anatomie d'un dossier de skill</li><li>La description qui déclenche</li><li>Atelier 0 : ta v0, notée sur une vraie PR</li></ul><div class="foot"><span>~75 min</span><span class="lvl base">base</span><span class="lvl core">core</span></div></a>
-        <a class="module-card" href="#m2"><span class="num">02</span><h3>Construis-le, mesure-le</h3><p class="sub">De la v1 à la v5, un dossier qui grandit et un score qui monte.</p><ul><li>Une procédure avec des critères de fin</li><li>Les règles de ton équipe, chargées à la demande</li><li>Des scripts, des exemples, des tests</li><li>Le partager à toute l'équipe, huit harnesses</li></ul><div class="foot"><span>~80 min</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div></a>
+        <a class="module-card" href="#m2"><span class="num">02</span><h3>Construis-le, mesure-le</h3><p class="sub">De la v1 à la v5, un dossier qui grandit et un score qui monte.</p><ul><li>Une procédure avec des critères de fin</li><li>Les règles de ton équipe, chargées à la demande</li><li>Des scripts, des exemples, des tests</li><li>Le partager à toute l'équipe, quel que soit son outil</li></ul><div class="foot"><span>~80 min</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div></a>
         <a class="module-card" href="#m3"><span class="num">03</span><h3>Le flux d'équipe</h3><p class="sub">Ton skill dans le travail de tous les jours.</p><ul><li>Passer le relais : relire, corriger, raconter</li><li>Les écoles : Pocock, Superpowers, spec-driven</li><li>Sous-agents, hook, sécurité</li><li>Le radar d'octobre 2026</li></ul><div class="foot"><span>~90 min</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div></a>
       </div>
       <div class="grid-2" style="margin-top:16px">
@@ -572,11 +572,11 @@ details.more[open] > summary { margin-bottom: 10px; }
     <section class="section" aria-labelledby="harness-title">
       <div class="section-head">
         <p class="eyebrow">Un dossier, tous les outils</p>
-        <h2 id="harness-title">Les harnesses couverts</h2>
-        <p>Documenté pour huit harnesses, mesuré sur deux (Claude Code et Codex) : seul l'endroit où on pose le skill change. Deux dossiers, <code>.agents/skills</code> et <code>.claude/skills</code>, couvrent les huit ; le module 02 te montre comment et dit ce qui est vérifié.</p>
+        <h2 id="harness-title">Le harness de ton équipe, quel qu'il soit</h2>
+        <p>Ton skill suit le standard Agent Skills : il marche dans tout harness qui le lit, et seul l'endroit où on le pose change. Quelques exemples ci-dessous, et bien d'autres selon l'outil de ton équipe, outils maison compris. Huit sont documentés dans la formation, deux mesurés (Claude Code et Codex) ; le module 02 te montre où poser le skill, et quoi vérifier si ton outil n'est pas dans la liste.</p>
       </div>
       <div class="chips">
-        <span class="chip"><b>Claude Code</b></span><span class="chip"><b>OpenAI Codex</b></span><span class="chip"><b>GitHub Copilot</b></span><span class="chip"><b>Cursor</b></span><span class="chip"><b>Gemini CLI / Antigravity</b></span><span class="chip"><b>OpenCode</b></span><span class="chip"><b>Kilo Code</b></span><span class="chip"><b>Continue</b></span><span class="chip">et d'autres outils compatibles <b>agentskills.io</b> (Amp, goose, Cline, Devin Desktop…)</span>
+        <span class="chip"><b>GitHub Copilot</b></span><span class="chip"><b>Kilo Code</b></span><span class="chip"><b>OpenCode</b></span><span class="chip"><b>Claude Code</b></span><span class="chip"><b>OpenAI Codex</b></span><span class="chip"><b>Cursor</b></span><span class="chip"><b>Gemini CLI / Antigravity</b></span><span class="chip"><b>Continue</b></span><span class="chip">et bien d'autres : Amp, goose, Cline, Devin Desktop, ou l'outil maison de ton équipe</span>
       </div>
     </section>
 
@@ -777,7 +777,7 @@ details.more[open] > summary { margin-bottom: 10px; }
               <p class="prompt" aria-live="polite"></p>
               <div class="row"><button class="btn" type="button" data-yes>Oui, revue-angular</button><button class="btn" type="button" data-no>Non</button><span class="score" aria-live="polite">0/0</span></div>
               <p class="fb-line small muted" aria-live="polite"></p>
-              <p class="small muted">Ces 20 demandes sont celles de <code>evals/declenchement.json</code>, dans le skill de référence : tu écriras les tiennes au module 2 et tu les rejoueras. La mesure automatique fonctionne sous Claude Code ; dans les autres harnesses, tu la fais à la main : même phrase, trois essais, tu notes si le skill se charge.</p>
+              <p class="small muted">Ces 20 demandes sont celles de <code>evals/declenchement.json</code>, dans le skill de référence : tu écriras les tiennes au module 2 et tu les rejoueras. La mesure automatique fonctionne sous Claude Code et Codex ; dans les autres harnesses, tu la fais à la main : même phrase, trois essais, tu notes si le skill se charge.</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -882,7 +882,7 @@ disable-model-invocation: true   # extension Claude Code : invocation par /pr-ha
             <p class="small muted">Si un clone répond « not found », le dépôt n'est pas encore ouvert à ton compte : demande un accès en lecture à PrincyExaltIT.</p>
             <p>La branche <code>lab/speaker-spotlight</code> est une pull request écrite dans l'urgence : une page speaker et un formulaire de proposition de talk, en Angular 22. Elle compile. Elle n'est pas prête. Le second dépôt contient le corrigé, rangé hors de portée de l'agent qui relit.</p>
             <h3>2 · Le skill</h3>
-            <p>Crée <code>.claude/skills/revue-angular/SKILL.md</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/SKILL.md</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code) :</p>
+            <p>Crée <code>.claude/skills/revue-angular/SKILL.md</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/SKILL.md</code> (GitHub Copilot, Kilo Code, OpenCode, Codex, Cursor, Gemini CLI et la plupart des autres) :</p>
 <pre class="code" data-lang="md">---
 name: revue-angular
 description: Revue de code Angular des changements d'une branche, d'une PR ou d'une MR. À utiliser quand on demande de relire, reviewer ou vérifier du code Angular avant un merge.
@@ -1236,7 +1236,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
                 <thead><tr><th>Test</th><th>Il attrape</th><th>Comment</th></tr></thead>
                 <tbody>
                   <tr><td><b>Score sur la PR du lab</b></td><td>Une règle qui fait rater des problèmes, un piège qui revient</td><td><code>score.mjs --report</code> après chaque changement de règle ; le rappel ne baisse pas, aucun leurre ne réapparaît</td></tr>
-                  <tr><td><b>Déclenchement</b></td><td>Une description trop vague (le skill ne part pas) ou trop large (il part sur « review mon composant React »)</td><td><code>evals/declenchement.json</code> : 10 demandes qui doivent déclencher, 10 qui ne doivent pas, rejouées trois fois. Automatique sous Claude Code (<code>run-triggers.mjs --cases</code>), à la main ailleurs</td></tr>
+                  <tr><td><b>Déclenchement</b></td><td>Une description trop vague (le skill ne part pas) ou trop large (il part sur « review mon composant React »)</td><td><code>evals/declenchement.json</code> : 10 demandes qui doivent déclencher, 10 qui ne doivent pas, rejouées trois fois. Automatique sous Claude Code et Codex (<code>run-triggers.mjs --cases … --harness claude|codex</code>), à la main ailleurs</td></tr>
                   <tr><td><b>Standard</b></td><td>Un champ inconnu, un fichier référencé absent, un nom qui ne correspond pas au dossier</td><td><code>validate.mjs</code> (et <code>--strict</code> avant de publier)</td></tr>
                 </tbody>
               </table>
@@ -1246,8 +1246,9 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
 <span class="o">✔ revue-angular — N1 ≈ 58 tokens · corps 99 lignes
 0 erreur(s), 0 avertissement(s).</span></pre>
             <p>Les tests de déclenchement suivent la méthode d'agentskills.io : chaque demande est rejouée trois fois, et compte comme déclenchée si le skill est chargé au moins deux fois. Les quasi-positifs (« écris la description de ma PR », « corrige le test qui échoue ») sont les plus utiles : ce sont eux qui attrapent une description trop gourmande. Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill ; sous Windows natif, il faut WSL2.</p>
-            <h3>Mesurer le déclenchement ailleurs que sous Claude Code</h3>
-            <p><code>run-triggers.mjs</code> lance <code>claude -p</code> pour chaque demande et regarde si l'outil Skill est appelé : la mesure automatique ne tourne <b>que sous Claude Code</b>, et elle consomme de vrais tokens (commence par <code>--limit 4</code>). Avec un autre harness, fais la même mesure à la main :</p>
+            <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>Le skill de référence, mesuré dans deux harnesses</b> · 9 octobre 2026, un passage par demande</p><p>Claude Code (claude-opus-5-5) : 19/20. Codex (gpt-5.6-sol) : 18/20. Demandes de review qui déclenchent : 10/10 et 10/10. Les ratés sont des quasi-positifs : « Review mon composant React » chez Claude Code ; « Corrige le test qui échoue dans talk-card.spec.ts », « Review mon composant React » chez Codex. Le mot « review » pèse plus lourd que « Angular » dans la description : c'est exactement ce que la liste négative sert à attraper. À toi de durcir la tienne, puis de remesurer.</p><p class="small muted">Un passage par demande, pas trois : une tendance, pas une moyenne. Les journaux sont dans <code>course/resultats-declenchement.json</code> du dépôt du kit.</p></div></div>
+            <h3>Mesurer le déclenchement dans les autres harnesses</h3>
+            <p><code>run-triggers.mjs</code> lance chaque demande sans interface et regarde si le skill est chargé : sous Claude Code (<code>--harness claude</code>, par défaut), l'outil Skill est appelé ; sous Codex (<code>--harness codex</code>, skill dans <code>.agents/skills/</code>), une commande lit <code>skills/revue-angular/SKILL.md</code>. Elle consomme de vrais tokens : commence par <code>--limit 4</code>. Les autres harnesses n'ont pas de sortie JSON sans interface à lire : fais la même mesure à la main :</p>
             <ol>
               <li>Ouvre une session neuve à la racine du dépôt, sans rien dans le contexte.</li>
               <li>Colle une demande de ton <code>declenchement.json</code>, telle quelle, et rien d'autre.</li>
@@ -1263,7 +1264,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
   "doit_declencher": ["Relis ma branche avant que je la merge sur main", "…"],
   "ne_doit_pas_declencher": ["Écris la description de ma PR", "…"]
 }</pre></li>
-                <li>Mesure-les : <code>run-triggers.mjs</code> sous Claude Code, le protocole à la main dans les autres harnesses. Corrige la description tant que le compte n'y est pas.</li>
+                <li>Mesure-les : <code>run-triggers.mjs</code> sous Claude Code ou Codex, le protocole à la main dans les autres harnesses. Corrige la description tant que le compte n'y est pas.</li>
                 <li>Note ton score de référence sur la PR du lab : c'est la ligne de base des prochaines PR sur le skill.</li>
                 <li>Passe <code>validate.mjs --strict</code>.</li>
               </ol>
@@ -1278,7 +1279,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
         <article class="lesson" id="m2-l7">
           <div class="hunk"><span class="at">@@ 02 · 2.7 @@</span><span>étape 5 · partage</span><span class="spacer"></span><span class="lvl core">core</span><span>12 min</span></div>
           <div class="lesson-body">
-            <h2>Étape 5 · Un dossier, toute l'équipe, huit harnesses</h2>
+            <h2>Étape 5 · Un dossier, toute l'équipe, tous les harnesses</h2>
             <p class="kicker">Un skill dans ton home ne sert qu'à toi. Commité dans le dépôt, il sert à toute l'équipe, évolue avec le code qu'il relit, et se change par pull request comme le reste.</p>
             <p>Le contenu du skill ne change jamais d'un outil à l'autre. Ce qui change : le dossier où le harness le cherche, la façon de l'appeler à la main, et quelques champs facultatifs.</p>
             <div class="tool" id="harness">
@@ -1286,7 +1287,14 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
               <div class="seg" role="tablist" aria-label="Harness"></div>
               <div class="pane" aria-live="polite"></div>
             </div>
-            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Deux dossiers suffisent pour les huit</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode et Kilo Code lisent <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic depuis janvier 2026), pas plus que Continue : eux lisent <code>.claude/skills/</code>. Commite donc le même dossier aux deux endroits, et laisse la CI vérifier qu'ils restent identiques (<code>diff -r</code>). Sur macOS et Linux, un lien symbolique fait aussi l'affaire.</p></div></div>
+            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Deux dossiers suffisent pour tous ces exemples</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode et Kilo Code lisent <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic depuis janvier 2026), pas plus que Continue : eux lisent <code>.claude/skills/</code>. Commite donc le même dossier aux deux endroits, et laisse la CI vérifier qu'ils restent identiques (<code>diff -r</code>). Sur macOS et Linux, un lien symbolique fait aussi l'affaire.</p></div></div>
+            <h3>Ton outil n'est pas dans la matrice ?</h3>
+            <p>La matrice donne des exemples, pas une liste fermée : ton équipe utilise peut-être un autre harness, ou un outil maison. Trois vérifications suffisent.</p>
+            <ol>
+              <li><b>Sa documentation parle-t-elle d'Agent Skills ou de <code>SKILL.md</code> ?</b> Alors il lit un dossier de skills : <code>.agents/skills/</code> le plus souvent, parfois un dossier à lui. Copie le skill là, sans rien changer d'autre.</li>
+              <li><b>Le charge-t-il vraiment ?</b> Une demande de review, et tu regardes s'il ouvre <code>SKILL.md</code> : c'est le protocole manuel de la <a href="#m2-l6">leçon 2.6</a>.</li>
+              <li><b>Il ne connaît pas les skills ?</b> Mets un pointeur dans son fichier d'instructions (<code>AGENTS.md</code> ou son équivalent) : « Pour relire une branche, suis <code>.agents/skills/revue-angular/SKILL.md</code>. » Les scripts, eux, tournent partout : ce sont des scripts Node sans dépendance.</li>
+            </ol>
             <h3>Ce qu'on ajoute au moment de partager</h3>
 <pre class="code" data-lang="yaml">---
 name: revue-angular
@@ -1373,7 +1381,7 @@ metadata:
                   <label><input type="radio" value="c"> Il ignore les pistes, le modèle sait mieux</label>
                 </fieldset>
               </div>
-              <div class="q" data-answer="b" data-why="Claude Code et Continue lisent .claude/skills ; les six autres harnesses lisent .agents/skills. Le même dossier aux deux endroits couvre les huit.">
+              <div class="q" data-answer="b" data-why="Claude Code et Continue lisent .claude/skills ; les six autres harnesses lisent .agents/skills. Le même dossier aux deux endroits couvre tous les harnesses de la matrice.">
                 <fieldset><legend>Ton équipe utilise Claude Code, Codex et Cursor. Où commiter le skill ?</legend>
                   <label><input type="radio" value="a"> Dans .agents/skills/ seulement : c'est le dossier commun</label>
                   <label><input type="radio" value="b"> Dans .agents/skills/ et .claude/skills/, identiques</label>
@@ -1428,7 +1436,7 @@ metadata:
               <video controls preload="metadata" poster="media/v3-flux.jpg" playsinline>
                 <source src="media/v3-flux.mp4" type="video/mp4">
               </video>
-              <div class="video-meta"><b>Vidéo 03 · Le flux d'équipe</b><span>sous-titrée, sans son</span><span>d'après le run de référence du 9 octobre 2026</span></div>
+              <div class="video-meta"><b>Vidéo 03 · Le flux d'équipe</b><span>sous-titrée, sans son</span><span>d'après le run Claude Code du 9 octobre 2026</span></div>
               <div class="chapters"><button type="button" data-t="0">La review</button><button type="button" data-t="14">La correction</button><button type="button" data-t="30">Le récit</button><button type="button" data-t="46">Le hand-off</button></div>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
@@ -1569,7 +1577,20 @@ description: Écrit la description de PR ou de MR d'une branche à partir
               <p class="expect"><b>Fini quand</b> : <code>git log --oneline depart..HEAD</code> montre, après le commit du lab, un commit par finding corrigé, chacun avec sa règle (<code>fix(SIG-01): …</code>) ; les tests sont verts après chacun, ou la chaîne s'est arrêtée sur un test rouge en disant pourquoi ; et <code>.review/PR.md</code> donne un état à chaque finding de <code>REVIEW.md</code>.</p>
               <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs chaine</code> pose les deux skills de référence à côté du tien (ajoute <code>--harness codex</code> si tes skills vivent dans <code>.agents/skills/</code>). Ton dossier actuel est mis de côté dans <code>.review/ancien-skill/</code>. Sous Codex, le skill manuel s'appelle par <code>$corrige-review</code>.</p>
             </div>
-            <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>Le run de référence</b> · 9 octobre 2026, Claude Code, Opus 5.5, sur la PR du lab</p><p>La review garde 5 BLOCKER et 14 MAJOR. <code>corrige-review</code> en fait 17 commits, un par finding ; les autres étaient déjà réglés par un commit précédent, et le skill le dit au lieu d'inventer un commit vide. Les tests passent de 23 à 32, tous verts, le build passe, aucun arrêt. <code>raconte-branche</code> écrit une PR.md qui donne un état à chaque finding, y compris « ouvert, résolu de fait » quand aucun commit ne cite la règle : à toi de confirmer.</p><p class="small muted">Durée 15 min 47, coût 4,53 $ (dont 2,72 $ pour la correction). Les trois fichiers sont dans <code>docs/sample-review/formation/chaine/</code> du dépôt du kit. Un run sur une PR : la preuve que la chaîne tient, pas une moyenne. Lancé sans interface (<code>claude -p</code>, éditions acceptées, outils limités à git, node, npm et à la lecture-écriture de fichiers) ; à l'étape 1, l'appel à l'outil Skill a échoué et le modèle a lu <code>SKILL.md</code> pour suivre la même procédure.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>La même chaîne, deux harnesses</b> · 9 octobre 2026, sur la PR du lab, mêmes skills</p>
+              <div class="table-wrap"><table>
+                <thead><tr><th scope="col"></th><th scope="col">Claude Code · Opus 5.5</th><th scope="col">Codex · gpt-5.6-sol</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">La review</th><td>5 BLOCKER, 14 MAJOR</td><td>5 BLOCKER, 14 MAJOR</td></tr>
+                  <tr><th scope="row">La correction</th><td>17 commits, un par finding</td><td>10 commits, un par finding</td></tr>
+                  <tr><th scope="row">Les tests</th><td>23 → 32 verts</td><td>23 → 25 verts, 1 rouge (non commité)</td></tr>
+                  <tr><th scope="row">L'arrêt</th><td>aucun</td><td>sur un test rouge : Le nouveau test <code>proposal-form.spec.ts</code> expire après 5 secondes.</td></tr>
+                  <tr><th scope="row">Le récit</th><td colspan="2"><code>.review/PR.md</code> écrit dans les deux cas, avec un état pour chaque finding</td></tr>
+                  <tr><th scope="row">Durée</th><td>15 min 47 · 4,53 $</td><td>11 min 01 · inclus dans l'abonnement ChatGPT</td></tr>
+                </tbody>
+              </table></div>
+              <p>Deux comportements justes. Claude Code va au bout. Codex s'arrête après 10 findings : le test qu'il vient d'écrire pour le suivant expire, il ne commite pas, laisse le changement en place et explique. C'est la règle « un test rouge de plus, on s'arrête » qui joue, pas une panne. Un premier essai de Codex, dans son bac à sable par défaut, s'était arrêté encore plus tôt : « Arrêt obligatoire : la sandbox interdit l’écriture dans <code>.git</code>, donc aucun commit ne peut être créé (<code>index.lock: Permission denied</code>). » Le skill l'a dit au lieu de forcer. À retenir : <code>corrige-review</code> commite, il lui faut donc le droit d'écrire dans <code>.git</code>. Avec Codex, lance-le avec un accès complet sur une copie jetable, ou commite toi-même.</p>
+              <p class="small muted">Lancés sans interface, avec les mêmes demandes : Claude Code avec <code>claude -p</code>, éditions acceptées, outils limités à git, node, npm et à la lecture-écriture de fichiers (à l'étape 1, l'appel à l'outil Skill a échoué et le modèle a lu <code>SKILL.md</code> pour suivre la même procédure) ; Codex avec <code>codex exec</code>, accès complet sur un clone jetable. Un run par harness : une preuve que la chaîne tient, pas une moyenne. Les fichiers sont dans <code>docs/sample-review/formation/chaine/</code> du dépôt du kit.</p></div></div>
             <p class="small muted">Le package du bonus fait la même chaîne en anglais, avec un contrat JSON et des scripts qui tiennent les statuts : voir la <a href="#pk-l5">leçon P.5</a>.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -1665,7 +1686,7 @@ node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
             <p class="kicker">Ce qui bouge autour des skills, rangé en quatre anneaux. Cette leçon est la plus datée de la formation : relis-la avec un œil critique dans six mois.</p>
             <div class="radar wide">
               <div class="ring"><h4><i style="background:var(--add)"></i>Adopter</h4>
-                                <div class="item"><b>Skills versionnés dans le repo</b><span><code>.agents/skills/</code> + <code>.claude/skills/</code> commités : les huit harnesses du cours sont couverts.</span><em>tous harnesses</em></div>
+                                <div class="item"><b>Skills versionnés dans le repo</b><span><code>.agents/skills/</code> + <code>.claude/skills/</code> commités : tous les harnesses de la matrice sont couverts.</span><em>tous harnesses</em></div>
                 <div class="item"><b>Le lint à la CI, l'IA sur la correction</b><span>Pratique convergente des outils de review : corriger plutôt que commenter le style, et laisser à l'outillage ce qu'il applique déjà.</span><em>pratique convergente · Pocock</em></div>
                 <div class="item"><b>Vérifier avant de publier</b><span>Une étape qui tente de réfuter chaque finding, avec citation fichier:ligne.</span><em>pratique convergente · /code-review ultra · ton skill, étape 4</em></div>
                 <div class="item"><b>Porte CI non bloquante par défaut</b><span>On ne bloque que ce qu'un script peut affirmer ; le check de Claude Code Review reste « neutral ».</span><em>pratique convergente</em></div>
@@ -1732,6 +1753,7 @@ node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
   ou l'utilisateur dit que ce code ne doit pas sortir, arrête-toi avant de lire et dis-le.</pre>
             <ul>
               <li><b>Ce que pré-autorise <code>allowed-tools</code>.</b> La lecture, rien d'autre. Lancer <code>node</code> ou <code>git</code>, écrire le rapport : ton harness te le demande, ou applique tes propres réglages. En CI, c'est le workflow qui ouvre plus large (<code>--allowedTools</code>), sur une machine jetable.</li>
+              <li><b>Un champ, plusieurs lectures.</b> <code>allowed-tools</code> est un champ expérimental du standard, et <code>Read Grep Glob</code> sont les noms d'outils de Claude Code. Un harness qui ne le lit pas l'ignore sans erreur : ton skill reste portable. Les vrais droits se règlent dans chaque harness (ses permissions, son bac à sable) ; les garde-fous écrits dans le corps du skill, eux, valent partout.</li>
               <li><b>Ce que les garde-fous ne font pas.</b> Ce sont des consignes, pas une barrière : un modèle peut se tromper. Elles réduisent le risque ; les permissions du harness et la relecture humaine font le reste.</li>
             </ul>
             <p class="expect"><b>Fini quand</b> : ton <code>SKILL.md</code> a sa section « Garde-fous » et son <code>allowed-tools</code>, et <code>validate.mjs --strict</code> répond 0 erreur. Le skill de référence de l'étape 5 les contient : <code>node ../skill-issue/course/rattrapage.mjs 5</code>.</p>
@@ -1989,7 +2011,7 @@ node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
           <div class="hunk"><span class="at">@@ cloud · C.2 @@</span><span>GitHub Actions</span><span class="spacer"></span><span class="lvl core">core</span><span>20 min</span></div>
           <div class="lesson-body">
             <h2>Atelier · ta review sur chaque PR GitHub</h2>
-            <p class="kicker">Deux jobs, deux promesses. Le premier tourne pour tout le monde, sans IA ni secret. Le second lance le skill complet dès qu'une clé est configurée.</p>
+            <p class="kicker">Deux jobs, deux promesses. Le premier tourne pour tout le monde, sans IA ni secret. Le second lance le skill complet avec l'agent de ton équipe, Claude Code ou Codex, dès que sa clé est configurée.</p>
             <p class="small muted">Extrait de <a href="https://github.com/PrincyExaltIT/skill-issue/blob/main/course/ci/github/revue-angular.yml" target="_blank" rel="noopener"><code>course/ci/github/revue-angular.yml</code> ↗</a>, raccourci pour la page. Le fichier complet est dans le dépôt du kit : c'est lui que tu copies dans l'atelier.</p>
 <pre class="code" data-lang="yaml · extrait"># extrait de course/ci/github/revue-angular.yml
 on:
@@ -2010,7 +2032,7 @@ jobs:
           node .agents/skills/revue-angular/scripts/perimetre.mjs --base origin/${{ github.base_ref }}
           node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER
 
-  revue-ia:                     # avec IA : le skill complet
+  revue-ia-claude:              # avec IA : le skill complet, par Claude Code
     needs: verifs
     if: ${{ !cancelled() }}     # aussi quand la porte est fermée : c'est là qu'elle sert
     permissions: { contents: read, pull-requests: write, id-token: write }
@@ -2027,12 +2049,20 @@ jobs:
           prompt: /revue-angular Relis cette PR (base : origin/${{ github.base_ref }}).
           claude_args: --allowedTools "Bash(git:*),Bash(node:*),Read,Grep,Glob,Write"
       - run: gh pr comment ${{ github.event.pull_request.number }} --body-file .review/REVIEW.md
-        env: { GH_TOKEN: ${{ github.token }} }</pre>
+        env: { GH_TOKEN: ${{ github.token }} }
+
+  revue-ia-codex:               # le même skill, par Codex (secret OPENAI_API_KEY)
+    # … mêmes needs, if, checkout et publication ; seule l'étape de l'agent change :
+      - uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          prompt: $revue-angular Relis cette PR (base : origin/${{ github.base_ref }}).</pre>
             <ul>
-              <li><b>Le skill par son nom.</b> La doc de l'action le recommande : <code>actions/checkout</code> d'abord, puis <code>prompt: "/nom-du-skill"</code>. Claude Code le lit dans <code>.claude/skills/</code> du dépôt cloné.</li>
+              <li><b>Le skill par son nom, quel que soit l'agent.</b> <code>actions/checkout</code> d'abord, puis le nom du skill dans le prompt : <code>/revue-angular</code> pour Claude Code, qui le lit dans <code>.claude/skills/</code>, <code>$revue-angular</code> pour Codex, qui le lit dans <code>.agents/skills/</code>. Même dossier, même rapport, même étape de publication : garde le job de ton équipe et supprime l'autre.</li>
               <li><b>Le script annote, l'IA commente.</b> En GitHub Actions, <code>verifs.mjs</code> écrit chaque piste en annotation sur le diff (une ligne <code>::error</code> ou <code>::warning</code>), sans rien changer à la commande.</li>
               <li><b>C'est le workflow, pas l'agent, qui publie le commentaire.</b> L'agent écrit <code>.review/REVIEW.md</code> ; une étape ordinaire le publie avec le token du workflow. La liste <code>--allowedTools</code> ne lui donne ni <code>gh</code> ni outil de commentaire.</li>
-              <li><b><code>id-token: write</code></b> : sans <code>github_token</code>, l'action s'authentifie auprès de GitHub comme l'app GitHub de Claude. Avec ce token d'app, elle peut lire et écrire le contenu du dépôt, les issues et les pull requests (les droits qu'elle demande ; l'app officielle en demande davantage). L'agent n'est donc pas « sans accès » à GitHub. Pour la cantonner, passe ton propre <code>github_token</code> (celui du workflow, ou une app limitée à ces droits).</li>
+              <li><b><code>id-token: write</code></b> (job Claude Code) : sans <code>github_token</code>, l'action s'authentifie auprès de GitHub comme l'app GitHub de Claude. Avec ce token d'app, elle peut lire et écrire le contenu du dépôt, les issues et les pull requests (les droits qu'elle demande ; l'app officielle en demande davantage). L'agent n'est donc pas « sans accès » à GitHub. Pour la cantonner, passe ton propre <code>github_token</code> (celui du workflow, ou une app limitée à ces droits).</li>
             </ul>
             <div class="rc"><span class="av" aria-hidden="true">PR</span><div><p class="who"><b>En vrai, sur la PR #4 du dépôt de démo</b></p><p>Le job « Vérifications sans IA » échoue, comme prévu. Les deux copies du skill sont identiques, puis la porte se ferme sur trois BLOCKER (SEC-01, SIG-01, A11Y-02), annotés en rouge sur le diff, avec neuf avertissements MAJOR et les MINOR en notes (dix affichées au plus). Le job « Revue IA » reste vert mais ne fait que signaler l'absence de clé : le dépôt de démo n'a pas de secret, donc l'étape IA n'a jamais tourné en CI chez nous. Avec une clé, le rapport devrait arriver en commentaire, comme le décrit la doc de l'action ; nous ne l'avons pas observé. Le commentaire de la vidéo est une maquette, construite avec un rapport produit en local.</p></div></div>
             <div class="atelier">
@@ -2056,7 +2086,7 @@ jobs:
                 <li style="min-width:0"><b>Ouvre la PR sur ton fork, vers <code>depart</code>.</b> Par défaut, GitHub vise le dépôt d'origine : change-le.
 <pre class="term"><span class="p">$ </span><span class="cmd">gh pr create --repo &lt;ton-compte&gt;/skill-issue-playground --base depart --head ma-revue --fill</span></pre>
                   Sur le site, c'est « Compare &amp; pull request », puis « base repository » = ton fork, base = <code>depart</code>, compare = <code>ma-revue</code>.</li>
-                <li><b>Regarde la porte se fermer</b> (onglet Checks de la PR) et les annotations arriver sur le diff (onglet Files changed). Puis, si tu as une clé : ajoute le secret <code>ANTHROPIC_API_KEY</code> (Settings, Secrets and variables, Actions), installe l'app GitHub de Claude sur ton fork (<code>/install-github-app</code> dans Claude Code, droits admin requis), et relance le job « Revue IA ». Cette dernière étape, nous ne l'avons pas testée : si elle échoue, le journal du job te le dit.</li>
+                <li><b>Regarde la porte se fermer</b> (onglet Checks de la PR) et les annotations arriver sur le diff (onglet Files changed). Puis, si ton équipe a une clé : ajoute le secret <code>ANTHROPIC_API_KEY</code> (Settings, Secrets and variables, Actions) et installe l'app GitHub de Claude sur ton fork (<code>/install-github-app</code> dans Claude Code, droits admin requis), ou le secret <code>OPENAI_API_KEY</code> pour Codex ; puis relance le job « Revue IA » correspondant. Sans clé, la porte suffit à l'atelier. Cette dernière étape, nous ne l'avons pas testée : si elle échoue, le journal du job te le dit.</li>
               </ol>
               <p class="small muted"><b>Pourquoi une branche qui contient le lab ?</b> Les scripts excluent <code>.claude/</code> et <code>.agents/</code> du périmètre. Une PR qui ne contient que le skill et le workflow a donc un périmètre vide : la porte reste verte et tu ne vois rien se fermer.</p>
               <p class="small muted"><b>Aucun run ne démarre ?</b> Sur le dépôt de démo, les premières PR n'ont déclenché aucun run tant qu'aucun workflow n'avait tourné sur un push (voir C.6). Ferme et rouvre la PR. Si rien ne bouge, pousse un commit vide : <code>git commit --allow-empty -m relance &amp;&amp; git push</code>.</p>
@@ -2233,7 +2263,7 @@ revue-angular:ia:
           <div class="hunk"><span class="at">@@ bonus · P.1 @@</span><span>kit/</span><span class="spacer"></span><span class="lvl base">base</span><span>5 min</span></div>
           <div class="lesson-body">
             <h2>Ce qu'il y a dans la boîte</h2>
-            <p class="kicker">Un dépôt, zéro dépendance externe : quatre skills, un installeur pour les huit harnesses, deux pipelines CI, un hook, des gabarits et des evals.</p>
+            <p class="kicker">Un dépôt, zéro dépendance externe : quatre skills, un installeur pour les harnesses de la matrice (huit à ce jour), deux pipelines CI, un hook, des gabarits et des evals.</p>
 <div class="kit-tree"><span class="d">skill-issue/</span>
 ├─ <span class="d">skills/</span>                         <span class="c"># les 4 skills du package, au standard agentskills.io</span>
 │  ├─ <span class="d">angular-review/</span>              <span class="c"># la review : scripts (scope, scan, findings), 10 références, 7 relecteurs</span>
@@ -2252,7 +2282,7 @@ revue-angular:ia:
 ├─ <span class="d">docs/sample-review/</span>             <span class="c"># reviews réelles, notées : package, chaîne, formation</span>
 ├─ <span class="d">site/</span>                           <span class="c"># cette formation (un seul fichier HTML généré)</span>
 └─ <span class="d">studio/</span>                         <span class="c"># les vidéos : scènes HTML rendues image par image</span></div>
-<pre class="term"><span class="cm"># installer le package dans ton projet, pour les huit harnesses</span>
+<pre class="term"><span class="cm"># installer le package dans ton projet, pour tous les harnesses de la matrice</span>
 <span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
 <span class="p">$ </span><span class="cmd">node skill-issue/kit/install.mjs --target ./mon-app-angular</span>
 <span class="cm"># la CI : copier le workflow GitHub (ou inclure le job GitLab)</span>
@@ -2310,7 +2340,7 @@ revue-angular:ia:
                 <source src="media/v2-review.mp4" type="video/mp4">
               </video>
               <div class="video-meta"><b>Vidéo · Le package en action</b><span>sous-titrée, sans son</span></div>
-              <div class="chapters"><button type="button" data-t="0">Un dossier, huit harnesses</button><button type="button" data-t="20">Scope</button><button type="button" data-t="34">Scan</button><button type="button" data-t="50">7 relecteurs</button><button type="button" data-t="68">Vérifier</button><button type="button" data-t="82">Verdict</button></div>
+              <div class="chapters"><button type="button" data-t="0">Un dossier, tous les harnesses</button><button type="button" data-t="20">Scope</button><button type="button" data-t="34">Scan</button><button type="button" data-t="50">7 relecteurs</button><button type="button" data-t="68">Vérifier</button><button type="button" data-t="82">Verdict</button></div>
             </div>
             <h3>De la v1 à la v2 : ce que Princy a changé, et pourquoi</h3>
             <div class="table-wrap">

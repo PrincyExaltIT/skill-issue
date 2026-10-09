@@ -56,7 +56,7 @@
           <div class="hunk"><span class="at">@@ cloud · C.2 @@</span><span>GitHub Actions</span><span class="spacer"></span><span class="lvl core">core</span><span>20 min</span></div>
           <div class="lesson-body">
             <h2>Atelier · ta review sur chaque PR GitHub</h2>
-            <p class="kicker">Deux jobs, deux promesses. Le premier tourne pour tout le monde, sans IA ni secret. Le second lance le skill complet dès qu'une clé est configurée.</p>
+            <p class="kicker">Deux jobs, deux promesses. Le premier tourne pour tout le monde, sans IA ni secret. Le second lance le skill complet avec l'agent de ton équipe, Claude Code ou Codex, dès que sa clé est configurée.</p>
             <p class="small muted">Extrait de <a href="https://github.com/PrincyExaltIT/skill-issue/blob/main/course/ci/github/revue-angular.yml" target="_blank" rel="noopener"><code>course/ci/github/revue-angular.yml</code> ↗</a>, raccourci pour la page. Le fichier complet est dans le dépôt du kit : c'est lui que tu copies dans l'atelier.</p>
 <pre class="code" data-lang="yaml · extrait"># extrait de course/ci/github/revue-angular.yml
 on:
@@ -77,7 +77,7 @@ jobs:
           node .agents/skills/revue-angular/scripts/perimetre.mjs --base origin/${{ github.base_ref }}
           node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER
 
-  revue-ia:                     # avec IA : le skill complet
+  revue-ia-claude:              # avec IA : le skill complet, par Claude Code
     needs: verifs
     if: ${{ !cancelled() }}     # aussi quand la porte est fermée : c'est là qu'elle sert
     permissions: { contents: read, pull-requests: write, id-token: write }
@@ -94,12 +94,20 @@ jobs:
           prompt: /revue-angular Relis cette PR (base : origin/${{ github.base_ref }}).
           claude_args: --allowedTools "Bash(git:*),Bash(node:*),Read,Grep,Glob,Write"
       - run: gh pr comment ${{ github.event.pull_request.number }} --body-file .review/REVIEW.md
-        env: { GH_TOKEN: ${{ github.token }} }</pre>
+        env: { GH_TOKEN: ${{ github.token }} }
+
+  revue-ia-codex:               # le même skill, par Codex (secret OPENAI_API_KEY)
+    # … mêmes needs, if, checkout et publication ; seule l'étape de l'agent change :
+      - uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          prompt: $revue-angular Relis cette PR (base : origin/${{ github.base_ref }}).</pre>
             <ul>
-              <li><b>Le skill par son nom.</b> La doc de l'action le recommande : <code>actions/checkout</code> d'abord, puis <code>prompt: "/nom-du-skill"</code>. Claude Code le lit dans <code>.claude/skills/</code> du dépôt cloné.</li>
+              <li><b>Le skill par son nom, quel que soit l'agent.</b> <code>actions/checkout</code> d'abord, puis le nom du skill dans le prompt : <code>/revue-angular</code> pour Claude Code, qui le lit dans <code>.claude/skills/</code>, <code>$revue-angular</code> pour Codex, qui le lit dans <code>.agents/skills/</code>. Même dossier, même rapport, même étape de publication : garde le job de ton équipe et supprime l'autre.</li>
               <li><b>Le script annote, l'IA commente.</b> En GitHub Actions, <code>verifs.mjs</code> écrit chaque piste en annotation sur le diff (une ligne <code>::error</code> ou <code>::warning</code>), sans rien changer à la commande.</li>
               <li><b>C'est le workflow, pas l'agent, qui publie le commentaire.</b> L'agent écrit <code>.review/REVIEW.md</code> ; une étape ordinaire le publie avec le token du workflow. La liste <code>--allowedTools</code> ne lui donne ni <code>gh</code> ni outil de commentaire.</li>
-              <li><b><code>id-token: write</code></b> : sans <code>github_token</code>, l'action s'authentifie auprès de GitHub comme l'app GitHub de Claude. Avec ce token d'app, elle peut lire et écrire le contenu du dépôt, les issues et les pull requests (les droits qu'elle demande ; l'app officielle en demande davantage). L'agent n'est donc pas « sans accès » à GitHub. Pour la cantonner, passe ton propre <code>github_token</code> (celui du workflow, ou une app limitée à ces droits).</li>
+              <li><b><code>id-token: write</code></b> (job Claude Code) : sans <code>github_token</code>, l'action s'authentifie auprès de GitHub comme l'app GitHub de Claude. Avec ce token d'app, elle peut lire et écrire le contenu du dépôt, les issues et les pull requests (les droits qu'elle demande ; l'app officielle en demande davantage). L'agent n'est donc pas « sans accès » à GitHub. Pour la cantonner, passe ton propre <code>github_token</code> (celui du workflow, ou une app limitée à ces droits).</li>
             </ul>
             <div class="rc"><span class="av" aria-hidden="true">PR</span><div><p class="who"><b>En vrai, sur la PR #4 du dépôt de démo</b></p><p>Le job « Vérifications sans IA » échoue, comme prévu. Les deux copies du skill sont identiques, puis la porte se ferme sur trois BLOCKER (SEC-01, SIG-01, A11Y-02), annotés en rouge sur le diff, avec neuf avertissements MAJOR et les MINOR en notes (dix affichées au plus). Le job « Revue IA » reste vert mais ne fait que signaler l'absence de clé : le dépôt de démo n'a pas de secret, donc l'étape IA n'a jamais tourné en CI chez nous. Avec une clé, le rapport devrait arriver en commentaire, comme le décrit la doc de l'action ; nous ne l'avons pas observé. Le commentaire de la vidéo est une maquette, construite avec un rapport produit en local.</p></div></div>
             <div class="atelier">
@@ -123,7 +131,7 @@ jobs:
                 <li style="min-width:0"><b>Ouvre la PR sur ton fork, vers <code>depart</code>.</b> Par défaut, GitHub vise le dépôt d'origine : change-le.
 <pre class="term"><span class="p">$ </span><span class="cmd">gh pr create --repo &lt;ton-compte&gt;/skill-issue-playground --base depart --head ma-revue --fill</span></pre>
                   Sur le site, c'est « Compare &amp; pull request », puis « base repository » = ton fork, base = <code>depart</code>, compare = <code>ma-revue</code>.</li>
-                <li><b>Regarde la porte se fermer</b> (onglet Checks de la PR) et les annotations arriver sur le diff (onglet Files changed). Puis, si tu as une clé : ajoute le secret <code>ANTHROPIC_API_KEY</code> (Settings, Secrets and variables, Actions), installe l'app GitHub de Claude sur ton fork (<code>/install-github-app</code> dans Claude Code, droits admin requis), et relance le job « Revue IA ». Cette dernière étape, nous ne l'avons pas testée : si elle échoue, le journal du job te le dit.</li>
+                <li><b>Regarde la porte se fermer</b> (onglet Checks de la PR) et les annotations arriver sur le diff (onglet Files changed). Puis, si ton équipe a une clé : ajoute le secret <code>ANTHROPIC_API_KEY</code> (Settings, Secrets and variables, Actions) et installe l'app GitHub de Claude sur ton fork (<code>/install-github-app</code> dans Claude Code, droits admin requis), ou le secret <code>OPENAI_API_KEY</code> pour Codex ; puis relance le job « Revue IA » correspondant. Sans clé, la porte suffit à l'atelier. Cette dernière étape, nous ne l'avons pas testée : si elle échoue, le journal du job te le dit.</li>
               </ol>
               <p class="small muted"><b>Pourquoi une branche qui contient le lab ?</b> Les scripts excluent <code>.claude/</code> et <code>.agents/</code> du périmètre. Une PR qui ne contient que le skill et le workflow a donc un périmètre vide : la porte reste verte et tu ne vois rien se fermer.</p>
               <p class="small muted"><b>Aucun run ne démarre ?</b> Sur le dépôt de démo, les premières PR n'ont déclenché aucun run tant qu'aucun workflow n'avait tourné sur un push (voir C.6). Ferme et rouvre la PR. Si rien ne bouge, pousse un commit vide : <code>git commit --allow-empty -m relance &amp;&amp; git push</code>.</p>

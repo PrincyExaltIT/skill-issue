@@ -266,7 +266,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
                 <thead><tr><th>Test</th><th>Il attrape</th><th>Comment</th></tr></thead>
                 <tbody>
                   <tr><td><b>Score sur la PR du lab</b></td><td>Une règle qui fait rater des problèmes, un piège qui revient</td><td><code>score.mjs --report</code> après chaque changement de règle ; le rappel ne baisse pas, aucun leurre ne réapparaît</td></tr>
-                  <tr><td><b>Déclenchement</b></td><td>Une description trop vague (le skill ne part pas) ou trop large (il part sur « review mon composant React »)</td><td><code>evals/declenchement.json</code> : 10 demandes qui doivent déclencher, 10 qui ne doivent pas, rejouées trois fois. Automatique sous Claude Code (<code>run-triggers.mjs --cases</code>), à la main ailleurs</td></tr>
+                  <tr><td><b>Déclenchement</b></td><td>Une description trop vague (le skill ne part pas) ou trop large (il part sur « review mon composant React »)</td><td><code>evals/declenchement.json</code> : 10 demandes qui doivent déclencher, 10 qui ne doivent pas, rejouées trois fois. Automatique sous Claude Code et Codex (<code>run-triggers.mjs --cases … --harness claude|codex</code>), à la main ailleurs</td></tr>
                   <tr><td><b>Standard</b></td><td>Un champ inconnu, un fichier référencé absent, un nom qui ne correspond pas au dossier</td><td><code>validate.mjs</code> (et <code>--strict</code> avant de publier)</td></tr>
                 </tbody>
               </table>
@@ -276,8 +276,9 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
 <span class="o">✔ revue-angular — N1 ≈ {{TAILLE:n1exact}} tokens · corps {{TAILLE:lignes}} lignes
 0 erreur(s), 0 avertissement(s).</span></pre>
             <p>Les tests de déclenchement suivent la méthode d'agentskills.io : chaque demande est rejouée trois fois, et compte comme déclenchée si le skill est chargé au moins deux fois. Les quasi-positifs (« écris la description de ma PR », « corrige le test qui échoue ») sont les plus utiles : ce sont eux qui attrapent une description trop gourmande. Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill ; sous Windows natif, il faut WSL2.</p>
-            <h3>Mesurer le déclenchement ailleurs que sous Claude Code</h3>
-            <p><code>run-triggers.mjs</code> lance <code>claude -p</code> pour chaque demande et regarde si l'outil Skill est appelé : la mesure automatique ne tourne <b>que sous Claude Code</b>, et elle consomme de vrais tokens (commence par <code>--limit 4</code>). Avec un autre harness, fais la même mesure à la main :</p>
+            <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>Le skill de référence, mesuré dans deux harnesses</b> · {{DECL:date}}, un passage par demande</p><p>Claude Code ({{DECL:harnesses.claude.modele}}) : {{DECL:harnesses.claude.total}}/{{DECL:harnesses.claude.sur}}. Codex ({{DECL:harnesses.codex.modele}}) : {{DECL:harnesses.codex.total}}/{{DECL:harnesses.codex.sur}}. Demandes de review qui déclenchent : {{DECL:harnesses.claude.doit_declencher}}/10 et {{DECL:harnesses.codex.doit_declencher}}/10. Les ratés sont des quasi-positifs : {{DECL:harnesses.claude.erreurs}} chez Claude Code ; {{DECL:harnesses.codex.erreurs}} chez Codex. Le mot « review » pèse plus lourd que « Angular » dans la description : c'est exactement ce que la liste négative sert à attraper. À toi de durcir la tienne, puis de remesurer.</p><p class="small muted">Un passage par demande, pas trois : une tendance, pas une moyenne. Les journaux sont dans <code>course/resultats-declenchement.json</code> du dépôt du kit.</p></div></div>
+            <h3>Mesurer le déclenchement dans les autres harnesses</h3>
+            <p><code>run-triggers.mjs</code> lance chaque demande sans interface et regarde si le skill est chargé : sous Claude Code (<code>--harness claude</code>, par défaut), l'outil Skill est appelé ; sous Codex (<code>--harness codex</code>, skill dans <code>.agents/skills/</code>), une commande lit <code>skills/revue-angular/SKILL.md</code>. Elle consomme de vrais tokens : commence par <code>--limit 4</code>. Les autres harnesses n'ont pas de sortie JSON sans interface à lire : fais la même mesure à la main :</p>
             <ol>
               <li>Ouvre une session neuve à la racine du dépôt, sans rien dans le contexte.</li>
               <li>Colle une demande de ton <code>declenchement.json</code>, telle quelle, et rien d'autre.</li>
@@ -293,7 +294,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
   "doit_declencher": ["Relis ma branche avant que je la merge sur main", "…"],
   "ne_doit_pas_declencher": ["Écris la description de ma PR", "…"]
 }</pre></li>
-                <li>Mesure-les : <code>run-triggers.mjs</code> sous Claude Code, le protocole à la main dans les autres harnesses. Corrige la description tant que le compte n'y est pas.</li>
+                <li>Mesure-les : <code>run-triggers.mjs</code> sous Claude Code ou Codex, le protocole à la main dans les autres harnesses. Corrige la description tant que le compte n'y est pas.</li>
                 <li>Note ton score de référence sur la PR du lab : c'est la ligne de base des prochaines PR sur le skill.</li>
                 <li>Passe <code>validate.mjs --strict</code>.</li>
               </ol>
@@ -308,7 +309,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
         <article class="lesson" id="m2-l7">
           <div class="hunk"><span class="at">@@ 02 · 2.7 @@</span><span>étape 5 · partage</span><span class="spacer"></span><span class="lvl core">core</span><span>12 min</span></div>
           <div class="lesson-body">
-            <h2>Étape 5 · Un dossier, toute l'équipe, huit harnesses</h2>
+            <h2>Étape 5 · Un dossier, toute l'équipe, tous les harnesses</h2>
             <p class="kicker">Un skill dans ton home ne sert qu'à toi. Commité dans le dépôt, il sert à toute l'équipe, évolue avec le code qu'il relit, et se change par pull request comme le reste.</p>
             <p>Le contenu du skill ne change jamais d'un outil à l'autre. Ce qui change : le dossier où le harness le cherche, la façon de l'appeler à la main, et quelques champs facultatifs.</p>
             <div class="tool" id="harness">
@@ -316,7 +317,14 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
               <div class="seg" role="tablist" aria-label="Harness"></div>
               <div class="pane" aria-live="polite"></div>
             </div>
-            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Deux dossiers suffisent pour les huit</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode et Kilo Code lisent <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic depuis janvier 2026), pas plus que Continue : eux lisent <code>.claude/skills/</code>. Commite donc le même dossier aux deux endroits, et laisse la CI vérifier qu'ils restent identiques (<code>diff -r</code>). Sur macOS et Linux, un lien symbolique fait aussi l'affaire.</p></div></div>
+            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Deux dossiers suffisent pour tous ces exemples</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode et Kilo Code lisent <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic depuis janvier 2026), pas plus que Continue : eux lisent <code>.claude/skills/</code>. Commite donc le même dossier aux deux endroits, et laisse la CI vérifier qu'ils restent identiques (<code>diff -r</code>). Sur macOS et Linux, un lien symbolique fait aussi l'affaire.</p></div></div>
+            <h3>Ton outil n'est pas dans la matrice ?</h3>
+            <p>La matrice donne des exemples, pas une liste fermée : ton équipe utilise peut-être un autre harness, ou un outil maison. Trois vérifications suffisent.</p>
+            <ol>
+              <li><b>Sa documentation parle-t-elle d'Agent Skills ou de <code>SKILL.md</code> ?</b> Alors il lit un dossier de skills : <code>.agents/skills/</code> le plus souvent, parfois un dossier à lui. Copie le skill là, sans rien changer d'autre.</li>
+              <li><b>Le charge-t-il vraiment ?</b> Une demande de review, et tu regardes s'il ouvre <code>SKILL.md</code> : c'est le protocole manuel de la <a href="#m2-l6">leçon 2.6</a>.</li>
+              <li><b>Il ne connaît pas les skills ?</b> Mets un pointeur dans son fichier d'instructions (<code>AGENTS.md</code> ou son équivalent) : « Pour relire une branche, suis <code>.agents/skills/revue-angular/SKILL.md</code>. » Les scripts, eux, tournent partout : ce sont des scripts Node sans dépendance.</li>
+            </ol>
             <h3>Ce qu'on ajoute au moment de partager</h3>
 <pre class="code" data-lang="yaml">---
 name: revue-angular
@@ -379,7 +387,7 @@ metadata:
                   <label><input type="radio" value="c"> Il ignore les pistes, le modèle sait mieux</label>
                 </fieldset>
               </div>
-              <div class="q" data-answer="b" data-why="Claude Code et Continue lisent .claude/skills ; les six autres harnesses lisent .agents/skills. Le même dossier aux deux endroits couvre les huit.">
+              <div class="q" data-answer="b" data-why="Claude Code et Continue lisent .claude/skills ; les six autres harnesses lisent .agents/skills. Le même dossier aux deux endroits couvre tous les harnesses de la matrice.">
                 <fieldset><legend>Ton équipe utilise Claude Code, Codex et Cursor. Où commiter le skill ?</legend>
                   <label><input type="radio" value="a"> Dans .agents/skills/ seulement : c'est le dossier commun</label>
                   <label><input type="radio" value="b"> Dans .agents/skills/ et .claude/skills/, identiques</label>

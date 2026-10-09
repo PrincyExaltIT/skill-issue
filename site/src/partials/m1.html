@@ -170,7 +170,7 @@
               <p class="prompt" aria-live="polite"></p>
               <div class="row"><button class="btn" type="button" data-yes>Oui, revue-angular</button><button class="btn" type="button" data-no>Non</button><span class="score" aria-live="polite">0/0</span></div>
               <p class="fb-line small muted" aria-live="polite"></p>
-              <p class="small muted">Ces 20 demandes sont celles de <code>evals/declenchement.json</code>, dans le skill de référence : tu écriras les tiennes au module 2 et tu les rejoueras. La mesure automatique fonctionne sous Claude Code ; dans les autres harnesses, tu la fais à la main : même phrase, trois essais, tu notes si le skill se charge.</p>
+              <p class="small muted">Ces 20 demandes sont celles de <code>evals/declenchement.json</code>, dans le skill de référence : tu écriras les tiennes au module 2 et tu les rejoueras. La mesure automatique fonctionne sous Claude Code et Codex ; dans les autres harnesses, tu la fais à la main : même phrase, trois essais, tu notes si le skill se charge.</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -275,7 +275,7 @@ disable-model-invocation: true   # extension Claude Code : invocation par /pr-ha
             <p class="small muted">Si un clone répond « not found », le dépôt n'est pas encore ouvert à ton compte : demande un accès en lecture à PrincyExaltIT.</p>
             <p>La branche <code>lab/speaker-spotlight</code> est une pull request écrite dans l'urgence : une page speaker et un formulaire de proposition de talk, en Angular 22. Elle compile. Elle n'est pas prête. Le second dépôt contient le corrigé, rangé hors de portée de l'agent qui relit.</p>
             <h3>2 · Le skill</h3>
-            <p>Crée <code>.claude/skills/revue-angular/SKILL.md</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/SKILL.md</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code) :</p>
+            <p>Crée <code>.claude/skills/revue-angular/SKILL.md</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/SKILL.md</code> (GitHub Copilot, Kilo Code, OpenCode, Codex, Cursor, Gemini CLI et la plupart des autres) :</p>
 <pre class="code" data-lang="md">---
 name: revue-angular
 description: Revue de code Angular des changements d'une branche, d'une PR ou d'une MR. À utiliser quand on demande de relire, reviewer ou vérifier du code Angular avant un merge.

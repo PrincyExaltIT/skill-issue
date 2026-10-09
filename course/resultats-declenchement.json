@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-09",
+  "passages_par_demande": 1,
+  "harnesses": {
+    "claude": {
+      "version": "2.1.289 (Claude Code)",
+      "modele": "claude-opus-5-5",
+      "doit_declencher": 10,
+      "ne_doit_pas_declencher": 9,
+      "total": 19,
+      "sur": 20,
+      "erreurs": [
+        "Review mon composant React"
+      ]
+    },
+    "codex": {
+      "version": "codex-cli 0.149.1",
+      "modele": "gpt-5.6-sol",
+      "doit_declencher": 10,
+      "ne_doit_pas_declencher": 8,
+      "total": 18,
+      "sur": 20,
+      "erreurs": [
+        "Corrige le test qui échoue dans talk-card.spec.ts",
+        "Review mon composant React"
+      ]
+    }
+  }
+}

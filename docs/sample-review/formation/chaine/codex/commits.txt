@@ -1,0 +1,11 @@
+087a51e fix(ZL-01): signale la confirmation d'envoi
+9008a00 fix(RX-01): libère l'abonnement du formulaire
+ddc29cd fix(SIG-03): dérive le compteur avec computed
+8ca4e21 fix(SIG-02): met à jour les favoris immuablement
+914f5f9 fix(NG-11): charge la page speaker à la demande
+ddbe09e fix(A11Y-02): rend les talks navigables au clavier
+5c3e3fe fix(A11Y-03): nomme le champ titre
+b1ce996 fix(SIG-01): appelle le signal de favori
+3dd1379 fix(SEC-01): affiche la bio comme texte
+3e89ea9 fix(SIG-04): lie l'abonnement au cycle de vie
+35d2f12 feat: speaker spotlight et proposition de talk

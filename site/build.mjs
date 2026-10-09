@@ -129,13 +129,17 @@ const metric = (model, step, key) => format(results.runs[model]?.[step], key, `$
 // ── The real run of the module 3 chain (course/resultats-chaine.json, collected from the run logs; artefacts in docs/sample-review/formation/chaine/) ──
 // {{CH:commits}}, {{CH:tests_apres.verts}}, {{CH:etapes.corrige.cout}} … ; dates, costs and durations are formatted like the rest.
 const chaine = json(join(repo, 'course', 'resultats-chaine.json'));
-const chaineValue = (path) => {
-  const value = path.split('.').reduce((o, k) => o?.[k], chaine);
-  if (value == null || typeof value === 'object') throw new Error(`resultats-chaine.json : pas de valeur simple pour ${path}`);
-  if (path === 'date') return frDate(parseDate(value, 'resultats-chaine.json « date »'));
+const declenchement = json(join(repo, 'course', 'resultats-declenchement.json'));
+// A value from a results file by dotted path; dates, costs, durations and lists are formatted like the rest of the page.
+const resultValue = (data, file, path) => {
+  const value = path.split('.').reduce((o, k) => o?.[k], data);
+  if (Array.isArray(value)) return value.map((v) => `« ${v} »`).join(', ');
+  if (value == null || typeof value === 'object') throw new Error(`${file} : pas de valeur simple pour ${path}`);
+  if (path.endsWith('date')) return frDate(parseDate(value, `${file} « ${path} »`));
   if (/cout/.test(path)) return `${fr(value)} $`;
   if (/duree/.test(path)) return duree(value);
-  return String(value);
+  // Text written by an agent: escape it, and turn its `code` spans into <code>.
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/`([^`]+)`/g, '<code>$1</code>');
 };
 
 // ── Data: harnesses & triggers ────────────────────────────────────────────
@@ -222,7 +226,8 @@ html = html
   .replaceAll('{{PROGRESSION}}', () => progression)
   .replaceAll('{{CODEX_MODEL}}', results.modeles.codex.id)
   .replace(/\{\{DUREE:([\w+]+)\}\}/g, (_, mods) => moduleDuree(mods))
-  .replace(/\{\{CH:([\w.]+)\}\}/g, (_, path) => chaineValue(path))
+  .replace(/\{\{CH:([\w.]+)\}\}/g, (_, path) => resultValue(chaine, 'resultats-chaine.json', path))
+  .replace(/\{\{DECL:([\w.]+)\}\}/g, (_, path) => resultValue(declenchement, 'resultats-declenchement.json', path))
   .replace(/\{\{TAILLE:(\w+)\}\}/g, (_, k) => { if (!(k in sizes)) throw new Error(`{{TAILLE:${k}}} inconnu`); return sizes[k]; })
   .replace(/\{\{R:(\w+):(\w+):(\w+)\}\}/g, (_, model, step, key) => metric(model, step, key))
   .replace(/\{\{PKG:(\w+):(\w+)\}\}/g, (_, harness, key) => format(results.package[harness], key, `package/${harness}`))

@@ -27,7 +27,7 @@
           <div class="hunk"><span class="at">@@ bonus · P.1 @@</span><span>kit/</span><span class="spacer"></span><span class="lvl base">base</span><span>5 min</span></div>
           <div class="lesson-body">
             <h2>Ce qu'il y a dans la boîte</h2>
-            <p class="kicker">Un dépôt, zéro dépendance externe : quatre skills, un installeur pour les huit harnesses, deux pipelines CI, un hook, des gabarits et des evals.</p>
+            <p class="kicker">Un dépôt, zéro dépendance externe : quatre skills, un installeur pour les harnesses de la matrice (huit à ce jour), deux pipelines CI, un hook, des gabarits et des evals.</p>
 <div class="kit-tree"><span class="d">skill-issue/</span>
 ├─ <span class="d">skills/</span>                         <span class="c"># les 4 skills du package, au standard agentskills.io</span>
 │  ├─ <span class="d">angular-review/</span>              <span class="c"># la review : scripts (scope, scan, findings), 10 références, 7 relecteurs</span>
@@ -46,7 +46,7 @@
 ├─ <span class="d">docs/sample-review/</span>             <span class="c"># reviews réelles, notées : package, chaîne, formation</span>
 ├─ <span class="d">site/</span>                           <span class="c"># cette formation (un seul fichier HTML généré)</span>
 └─ <span class="d">studio/</span>                         <span class="c"># les vidéos : scènes HTML rendues image par image</span></div>
-<pre class="term"><span class="cm"># installer le package dans ton projet, pour les huit harnesses</span>
+<pre class="term"><span class="cm"># installer le package dans ton projet, pour tous les harnesses de la matrice</span>
 <span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
 <span class="p">$ </span><span class="cmd">node skill-issue/kit/install.mjs --target ./mon-app-angular</span>
 <span class="cm"># la CI : copier le workflow GitHub (ou inclure le job GitLab)</span>
@@ -104,7 +104,7 @@
                 <source src="media/v2-review.mp4" type="video/mp4">
               </video>
               <div class="video-meta"><b>Vidéo · Le package en action</b><span>sous-titrée, sans son</span></div>
-              <div class="chapters"><button type="button" data-t="0">Un dossier, huit harnesses</button><button type="button" data-t="20">Scope</button><button type="button" data-t="34">Scan</button><button type="button" data-t="50">7 relecteurs</button><button type="button" data-t="68">Vérifier</button><button type="button" data-t="82">Verdict</button></div>
+              <div class="chapters"><button type="button" data-t="0">Un dossier, tous les harnesses</button><button type="button" data-t="20">Scope</button><button type="button" data-t="34">Scan</button><button type="button" data-t="50">7 relecteurs</button><button type="button" data-t="68">Vérifier</button><button type="button" data-t="82">Verdict</button></div>
             </div>
             <h3>De la v1 à la v2 : ce que Princy a changé, et pourquoi</h3>
             <div class="table-wrap">

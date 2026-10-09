@@ -1,46 +1,87 @@
 {
-  "date": "2026-10-09",
-  "harness": "2.1.289 (Claude Code)",
-  "modele": "claude-opus-5-5",
-  "node": "v24.21.0",
-  "branche": "lab/speaker-spotlight → depart",
-  "review": {
-    "verdict": "à corriger",
-    "blocker": 5,
-    "major": 14,
-    "minor": 15,
-    "info": 1
-  },
-  "a_corriger": 19,
-  "commits": 17,
-  "corriges_dans_pr": 17,
-  "tests_avant": {
-    "verts": 23,
-    "rouges": 0
-  },
-  "tests_apres": {
-    "verts": 32,
-    "rouges": 0
-  },
-  "build_apres": "ok",
-  "arret": "aucun",
-  "etapes": {
-    "revue": {
-      "cout": 1.13,
-      "duree_s": 206,
-      "tours": 30
+  "claude": {
+    "date": "2026-10-09",
+    "harness": "2.1.289 (Claude Code)",
+    "modele": "claude-opus-5-5",
+    "node": "v24.21.0",
+    "branche": "lab/speaker-spotlight → depart",
+    "review": {
+      "verdict": "à corriger",
+      "blocker": 5,
+      "major": 14,
+      "minor": 15,
+      "info": 1
     },
-    "corrige": {
-      "cout": 2.72,
-      "duree_s": 625,
-      "tours": 104
+    "a_corriger": 19,
+    "commits": 17,
+    "corriges_dans_pr": 17,
+    "tests_avant": {
+      "verts": 23,
+      "rouges": 0
     },
-    "raconte": {
-      "cout": 0.68,
-      "duree_s": 116,
-      "tours": 14
-    }
+    "tests_apres": {
+      "verts": 32,
+      "rouges": 0
+    },
+    "build_apres": "ok",
+    "arret": "aucun",
+    "etapes": {
+      "revue": {
+        "cout": 1.13,
+        "duree_s": 206,
+        "tours": 30
+      },
+      "corrige": {
+        "cout": 2.72,
+        "duree_s": 625,
+        "tours": 104
+      },
+      "raconte": {
+        "cout": 0.68,
+        "duree_s": 116,
+        "tours": 14
+      }
+    },
+    "cout_total": 4.53,
+    "duree_totale_s": 947
   },
-  "cout_total": 4.53,
-  "duree_totale_s": 947
+  "codex": {
+    "date": "2026-10-09",
+    "harness": "codex-cli 0.149.1",
+    "modele": "gpt-5.6-sol",
+    "node": "v24.21.0",
+    "branche": "lab/speaker-spotlight → depart",
+    "review": {
+      "verdict": "à corriger",
+      "blocker": 5,
+      "major": 14,
+      "minor": 14,
+      "info": 2
+    },
+    "a_corriger": 19,
+    "commits": 10,
+    "tests_avant": {
+      "verts": 23,
+      "rouges": 0
+    },
+    "tests_apres": {
+      "verts": 25,
+      "rouges": 1
+    },
+    "build_apres": "ok",
+    "arret": "Le nouveau test `proposal-form.spec.ts` expire après 5 secondes.",
+    "essai_bac_a_sable": "Arrêt obligatoire : la sandbox interdit l’écriture dans `.git`, donc aucun commit ne peut être créé (`index.lock: Permission denied`).",
+    "etapes": {
+      "revue": {
+        "duree_s": 311
+      },
+      "corrige": {
+        "duree_s": 269
+      },
+      "raconte": {
+        "duree_s": 81
+      }
+    },
+    "duree_totale_s": 661
+  }
 }
