@@ -1733,7 +1733,7 @@ node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
             <h3>Les skills des autres</h3>
             <ul>
               <li><b>Lire avant d'installer</b>, scripts compris. Un skill sans script se lit en cinq minutes ; un skill avec scripts se relit comme une dépendance.</li>
-              <li><b>Épingler.</b> Une version précise : <code>gh skill install --pin &lt;sha&gt;</code> enregistre la provenance, sans vérifier le contenu. <code>forgent</code>, l'installeur de Princy, va plus loin : il note la sha256 de chaque fichier dans <code>forgent.lock.json</code>, et <code>forgent verify</code> signale toute copie modifiée. skills.sh publie des audits de sécurité.</li>
+              <li><b>Épingler.</b> Une version précise : <code>gh skill install --pin &lt;sha&gt;</code> enregistre la provenance, sans vérifier le contenu. <code>forgent</code>, l'installeur de Princy, va plus loin : <code>forgent show</code> te fait lire le skill et ses scripts avant l'installation, <code>add</code> demande confirmation quand il embarque des scripts, la sha256 de chaque fichier est notée dans <code>forgent.lock.json</code>, et <code>forgent verify</code> signale toute copie modifiée. skills.sh publie des audits de sécurité.</li>
               <li><b>Régler le harness.</b> Claude Code peut refuser des skills (règles <code>Skill()</code> en <code>deny</code>) ou leur interdire le shell (<code>disableSkillShellExecution</code>). Gemini CLI demande ton accord à chaque activation ; OpenCode le fait avec <code>permission.skill: ask</code>.</li>
             </ul>
             <h3>Les garde-fous de ton skill</h3>
@@ -2347,13 +2347,18 @@ revue-angular:ia:
 ├─ <span class="d">docs/sample-review/</span>             <span class="c"># reviews réelles, notées : package, chaîne, formation</span>
 ├─ <span class="d">site/</span>                           <span class="c"># cette formation (un seul fichier HTML généré)</span>
 └─ <span class="d">studio/</span>                         <span class="c"># les vidéos : scènes HTML rendues image par image</span></div>
-<pre class="term"><span class="cm"># le package, depuis le registre public de Princy, pour tous les harnesses</span>
+<pre class="term"><span class="cm"># le lire avant de l'installer : SKILL.md, fichiers, scripts signalés</span>
+<span class="p">$ </span><span class="cmd">npx forgent show angular-review</span>
+<span class="cm"># le package, depuis le registre public de Princy, pour tous les harnesses</span>
 <span class="p">$ </span><span class="cmd">npx forgent add --provider agents,claude --project angular-review review-fix pr-handoff skill-smith</span>
 <span class="p">$ </span><span class="cmd">npx forgent verify</span>
+<span class="cm"># plus tard : ce qui a bougé dans le registre, puis la mise à jour (tes retouches sont protégées)</span>
+<span class="p">$ </span><span class="cmd">npx forgent outdated</span>
+<span class="p">$ </span><span class="cmd">npx forgent update</span>
 <span class="cm"># la CI et le hook : depuis le dépôt du kit</span>
 <span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
 <span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span></pre>
-            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy (1.1 ou plus). Il copie chaque skill depuis le registre public <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a> : <code>agents</code> dans <code>.agents/skills</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code…), <code>claude</code> dans <code>.claude/skills</code>. Il note l'empreinte de chaque fichier et l'endroit de chaque installation dans <code>forgent.lock.json</code> ; <code>verify</code> contrôle toutes tes copies, en CI aussi. Pour épingler une version : <code>angular-review@2.1.0</code>. Le dépôt du kit, lui, sert à la CI et à <code>install.mjs</code> (leçon P.6).</p>
+            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy (1.2 ou plus). Il copie chaque skill depuis le registre public <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a> : <code>agents</code> dans <code>.agents/skills</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code…), <code>claude</code> dans <code>.claude/skills</code>. Il note l'empreinte de chaque fichier et l'endroit de chaque installation dans <code>forgent.lock.json</code> ; <code>verify</code> contrôle toutes tes copies, en CI aussi. Pour épingler une version : <code>angular-review@2.1.0</code>. Le dépôt du kit, lui, sert à la CI et à <code>install.mjs</code> (leçon P.6).</p>
             <p class="small muted">Sur la démo, la branche <code>main</code> a le package déjà installé, comme le ferait une équipe ; <code>feat/speaker-spotlight</code> porte la même PR que le lab.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -2588,7 +2593,7 @@ revue-angular:ia:
         <ul class="small">
           <li><a href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue</a> — la formation, le skill de référence par étape et le package (angular-review 2.1, MIT)</li>
           <li><a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> — le registre de forgent : angular-review 2.1 (le package), la v1 sous l'étiquette <code>angular-review-v1</code> (MIT)</li>
-          <li><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">PrincyExaltIT/forgent</a> — l'installeur de skills de Princy : copie le dossier du skill dans <code>.agents/skills</code> et <code>.claude/skills</code>, lockfile sha256, <code>forgent verify</code> (1.1, octobre 2026)</li>
+          <li><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">PrincyExaltIT/forgent</a> — l'installeur de skills de Princy : copie le dossier du skill dans <code>.agents/skills</code> et <code>.claude/skills</code>, <code>show</code> avant d'installer, lockfile sha256, <code>verify</code>, <code>outdated</code> et <code>update</code> (1.2, octobre 2026)</li>
         </ul>
       </div>
     </div>
