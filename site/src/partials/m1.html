@@ -5,7 +5,7 @@
       <span class="num">01</span>
       <h1 id="m1-title">Ouvre le capot</h1>
       <p class="promise">À la fin de ce module, tu sais ce qu'un skill est vraiment (un dossier, pas un prompt), ce qui se passe dans l'agent quand il se déclenche, et tu as écrit ton premier skill de review : dix lignes, lancées sur une vraie pull request, notées contre un corrigé.</p>
-      <div class="chips"><span class="chip">⏱ <b>~75 min</b> avec l'atelier</span><span class="chip">8 leçons · 1 atelier · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
+      <div class="chips"><span class="chip">⏱ <b>{{DUREE:m1}}</b> avec l'atelier</span><span class="chip">8 leçons · 1 atelier · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
     <div class="module-layout">
@@ -90,7 +90,7 @@
                 <div class="meter-bar" aria-hidden="true"><i class="bad"></i></div>
                 <div class="meter-legend"><span>■ Tout charger d'avance : <b data-k="full">0</b> tokens, soit <b data-k="pct">0 %</b> de la fenêtre avant d'avoir lu une ligne de ton code</span></div>
               </div>
-              <p class="small muted">Hypothèses du simulateur : environ 100 tokens par description (l'ordre de grandeur du standard) et environ 4 500 tokens par corps de skill (le standard recommande moins de 5 000). Le skill que tu vas construire est bien plus léger : environ 100 tokens au niveau 1 et environ 1 200 au niveau 2 (voir la leçon 1.4).</p>
+              <p class="small muted">Hypothèses du simulateur : environ 100 tokens par description (l'ordre de grandeur du standard) et environ 4 500 tokens par corps de skill (le standard recommande moins de 5 000). Le skill que tu vas construire est bien plus léger : environ {{TAILLE:n1}} tokens au niveau 1 et environ {{TAILLE:n2}} au niveau 2 (voir la leçon 1.4).</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -126,10 +126,10 @@
               <table>
                 <thead><tr><th>Étage</th><th>Quoi</th><th>Quand</th><th>revue-angular (étape 5)</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="lvl base">N1</span></td><td><code>name</code> + <code>description</code></td><td>Toujours, dans toutes les sessions</td><td>environ 100 tokens</td></tr>
-                  <tr><td><span class="lvl core">N2</span></td><td>Le corps de <code>SKILL.md</code></td><td>Quand la description correspond à la demande</td><td>environ 1 200 tokens (moins de 100 lignes)</td></tr>
-                  <tr><td><span class="lvl deep">N3</span></td><td>Fichiers de <code>references/</code>, <code>assets/</code></td><td>Quand une étape les pointe</td><td>environ 4 000 tokens au total, chargés par domaine (de 200 à 1 200 par fichier)</td></tr>
-                  <tr><td><span class="lvl">exec</span></td><td><code>scripts/</code></td><td>Exécutés ; seule la sortie entre dans le contexte</td><td>environ 2 500 tokens de code, jamais lus</td></tr>
+                  <tr><td><span class="lvl base">N1</span></td><td><code>name</code> + <code>description</code></td><td>Toujours, dans toutes les sessions</td><td>environ {{TAILLE:n1}} tokens</td></tr>
+                  <tr><td><span class="lvl core">N2</span></td><td>Le corps de <code>SKILL.md</code></td><td>Quand la description correspond à la demande</td><td>environ {{TAILLE:n2}} tokens ({{TAILLE:lignes}} lignes)</td></tr>
+                  <tr><td><span class="lvl deep">N3</span></td><td>Fichiers de <code>references/</code>, <code>assets/</code></td><td>Quand une étape les pointe</td><td>environ {{TAILLE:n3}} tokens au total, chargés par domaine (de {{TAILLE:n3min}} à {{TAILLE:n3max}} par fichier)</td></tr>
+                  <tr><td><span class="lvl">exec</span></td><td><code>scripts/</code></td><td>Exécutés ; seule la sortie entre dans le contexte</td><td>environ {{TAILLE:exec}} tokens de code, jamais lus</td></tr>
                 </tbody>
               </table>
             </div>
@@ -219,7 +219,7 @@
                 </tbody>
               </table>
             </div>
-            <h3>MCP en six lignes</h3>
+            <h3>MCP en trois points</h3>
             <ul>
               <li><b>Ce qu'un serveur expose.</b> Des <i>outils</i> (des fonctions que le modèle appelle), des <i>ressources</i> (des données en lecture, que l'application verse au contexte) et des <i>prompts</i> (des modèles d'instructions que tu invoques toi-même). Le serveur MCP d'Angular (<code>npx -y @angular/cli mcp</code>) expose par exemple <code>get_best_practices</code> et <code>search_documentation</code>.</li>
               <li><b>Qui approuve un appel.</b> Le harness, avec ses permissions, pas le serveur. Le protocole laisse au harness le soin de demander ton accord. En CI, personne ne clique : c'est la liste d'outils autorisés (<code>--allowedTools</code>, avec des noms comme <code>mcp__gitlab</code>) qui décide. Dans une routine Claude Code, les outils des connecteurs, écritures comprises, tournent sans demande de permission.</li>
@@ -300,6 +300,7 @@ Précision {{R:opus:0:precision}} % · Leurres signalés à tort : {{R:opus:0:le
               <span class="tool-title">Atelier 0 · fini quand</span>
               <p class="expect">Ton skill se déclenche, <code>.review/REVIEW.md</code> existe, et ton score de départ est noté dans le tableau des <a href="#ateliers">ateliers</a>. Référence mesurée le {{RESULTS_DATE}} : {{R:opus:0:rappel}} % avec Opus 5.5, {{R:haiku:0:rappel}} % avec Haiku 5.5, qui n'a même pas écrit le fichier. Pourquoi un tel écart, et comment le combler : c'est tout le module 2.</p>
               <p class="small muted">Pas de skill qui se déclenche ? Vérifie que le dossier porte exactement le nom du champ <code>name</code>, puis relance ton harness : la liste des skills est lue au démarrage de la session.</p>
+              <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 0</code> pose la v0 de référence (ajoute <code>--harness codex</code> pour <code>.agents/skills/</code>).</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>

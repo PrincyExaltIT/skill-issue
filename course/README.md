@@ -15,7 +15,7 @@
 
 ## La chaîne du module 3
 
-`chaine/` contient les deux skills de l'atelier 7, qui se passent le relais par des fichiers :
+`chaine/` contient les deux skills de l'atelier 6, qui se passent le relais par des fichiers :
 
 | Skill | Lit | Écrit |
 |---|---|---|
@@ -48,4 +48,4 @@ Ton dossier précédent est mis de côté dans `.review/ancien-skill/<claude|age
 
 ## Les mesures
 
-`resultats.json` contient les scores des runs de référence (9 octobre 2026), lus par le build du site. Les rapports bruts sont dans `docs/sample-review/formation/`. Pour mesurer à nouveau : lancer `/revue-angular` sur `lab/speaker-spotlight` avec le skill d'une étape, puis `node evals/angular-review/score.mjs --report <REVIEW.md> --json`. Les runs de l'étape 5 datent d'avant la section « Garde-fous ».
+`resultats.json` contient les scores des runs de référence (9 octobre 2026), lus par le build du site. `resultats-chaine.json` contient le run réel de la chaîne de l'atelier 6 (review, correction, récit) sur la même PR. Les rapports bruts sont dans `docs/sample-review/formation/`. Pour mesurer à nouveau : lancer `/revue-angular` sur `lab/speaker-spotlight` avec le skill d'une étape, puis `node evals/angular-review/score.mjs --report <REVIEW.md> --json`. Les runs de l'étape 5 datent d'avant la section « Garde-fous ».

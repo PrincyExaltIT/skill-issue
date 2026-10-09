@@ -303,8 +303,8 @@
   const results = data('data-results');
   const tracker = $('#score-tracker');
   if (results && tracker) {
-    const STEPS = ['0', '1', '2', '3', '4'];
-    const LABELS = { 0: 'v0 · dix lignes', 1: 'v1 · procédure', 2: 'v2 · règles', 3: 'v3 · scripts', 4: 'v4 · exemples' };
+    const STEPS = ['0', '1', '2', '3', '4', '5'];
+    const LABELS = { 0: 'v0 · dix lignes', 1: 'v1 · procédure', 2: 'v2 · règles', 3: 'v3 · scripts', 4: 'v4 · exemples', 5: 'v5 · tests et partage' };
     const mine = store.get('scores', {});
     const body = $('tbody', tracker);
     const note = $('.tracker-note', tracker);

@@ -7,7 +7,7 @@ Brief de recherche qui a nourri `angular-review` v2. Vérifié contre les change
 - Dernière stable : **22.2** (`@angular/core` 22.2.1, `@angular/cli` 22.2.2, 30/09/2026). `next` : 22.3.0-next.x.
 - Sorties : v22.0 le 03/06/2026, v22.1 le 29/07/2026, v22.2 le 23/09/2026. Majeures désormais annuelles (v23 vers juin 2027).
 - Support : v22 active jusqu'en 06/2027 puis LTS jusqu'en 06/2028 ; v21 LTS jusqu'en 06/2027 ; v20 LTS jusqu'au 28/11/2026 ; ≤ 19 en fin de vie.
-- v22 exige TypeScript ≥ 6.0 et Node 22.22+ / 24.13.1+ (la CLI 22.2 demande 24.15+ en pratique).
+- v22 exige TypeScript ≥ 6.0. Node : `@angular/cli` 22.2.2 et `@angular/core` 22.2.1 déclarent `engines.node` = `^22.22.3 || ^24.15.0 || >=26.0.0` ; sous ce seuil, `ng` refuse de démarrer (constaté le 9 octobre 2026 avec Node 24.12). Les 22.22+ / 24.13.1+ annoncés pour la 22.0 ne suffisent plus.
 - angular-eslint 22.5.0, flat config uniquement.
 
 ## Ce qui change la review

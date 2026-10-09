@@ -1,0 +1,18 @@
+d9b23c6 fix(SEC-02): supprime SpeakerService et son URL d'API en dur
+5b7991e fix(NG-11): charge la page speaker à la demande
+0637f2d fix(ZL-01): passe la confirmation d'envoi en signal, sans setTimeout
+e5ff83d fix(SIG-03): dérive charCount par computed() au lieu d'un effect
+e48e6e9 fix(RX-01): construit la proposition depuis le formulaire, sans abonnement
+8488929 fix(SIG-02): ajoute un favori avec update() au lieu de muter le tableau
+0b0a11c fix(A11Y-01): ajoute un alt à la photo du speaker
+7fe53a1 fix(NG-07): retire la détection de changement Eager de la page speaker
+0893bb3 fix(RX-03): affiche une erreur avec Réessayer et un speaker introuvable
+560a1b4 fix(ZL-01): dérive le speaker et ses talks de TalksStore en computed()
+3681445 fix(TEST-04): remplace le vrai HttpClient par HttpClientTesting dans le test
+f49791c fix(TEST-01): retire le it.only du test de SpeakerSpotlight
+274ffeb fix(A11Y-03): ajoute un label au champ titre du talk
+afdf422 fix(A11Y-02): fait des talks du speaker des liens vers leur détail
+ab4da80 fix(SIG-01): lit la valeur de isFavorite pour choisir le message de retour
+40daf4d fix(SEC-01): affiche la bio du speaker en texte, sans bypassSecurityTrustHtml
+1ca2bea fix(SIG-04): passe le DestroyRef à takeUntilDestroyed hors contexte d'injection
+35d2f12 feat: speaker spotlight et proposition de talk

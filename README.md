@@ -44,7 +44,7 @@ git checkout lab/speaker-spotlight
 npm install
 ```
 
-Prérequis : Git, Node.js 24.15 ou plus (Angular 22 demande au minimum 22.22 ou 24.13.1 ; 24.15 est recommandé pour la CLI 22.2) et un harness au choix.
+Prérequis : Git, Node.js 24.15 ou plus, ou 22.22.3 ou plus (la CLI Angular 22.2 refuse de démarrer en dessous) et un harness au choix.
 
 Noter une review : `node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md`.
 Rattraper une étape : `node ../skill-issue/course/rattrapage.mjs <0-5> [--harness claude|codex|tous]`.

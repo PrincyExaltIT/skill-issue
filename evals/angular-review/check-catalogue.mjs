@@ -15,7 +15,7 @@ for (const f of readdirSync(join(skill, 'references')).filter((n) => n.endsWith(
   const md = readFileSync(join(skill, 'references', f), 'utf8').replace(/<!--[\s\S]*?-->/g, '');
   for (const sec of md.split(/^### /m).slice(1)) {
     const id = /^(R-[A-Z0-9]+-\d+)\s+—/.exec(sec)?.[1];
-    if (!id) continue;
+    if (!id || /^R-[A-Z0-9]+-\d+\s+—\s*</.test(sec)) continue; // le gabarit vide (« <titre court> ») n'est pas une règle
     const sevLine = /\*\*Sévérité\*\*\s*:\s*(.+)$/m.exec(sec)?.[1] ?? '';
     catalogue.set(id, new Set(sevLine.match(/BLOCKER|MAJOR|MINOR|INFO/g) ?? []));
   }

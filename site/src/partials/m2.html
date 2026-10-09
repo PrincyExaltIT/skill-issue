@@ -5,7 +5,7 @@
       <span class="num">02</span>
       <h1 id="m2-title">Construis-le, mesure-le</h1>
       <p class="promise">Ton skill passe de la v0 à la v5 en cinq étapes : un dossier qui grandit, un score qui monte. À la fin du module, il a une procédure, les règles de ton équipe, des scripts, des exemples et des tests, et il est commité pour toute l'équipe, quel que soit l'outil de chacun.</p>
-      <div class="chips"><span class="chip">⏱ <b>~80 min</b> ateliers compris</span><span class="chip">7 leçons · 5 ateliers · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
+      <div class="chips"><span class="chip">⏱ <b>{{DUREE:m2}}</b> ateliers compris</span><span class="chip">7 leçons · 5 ateliers · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
     <div class="module-layout">
@@ -75,6 +75,7 @@ Fini quand : chaque fichier a été passé au crible des six familles.
 
 ## 4. Écrire le rapport (gabarit assets/rapport.md, gravités, règle de verdict)
 Fini quand : .review/REVIEW.md existe, chaque finding cite fichier:ligne, les compteurs correspondent.</pre>
+            <p class="small muted">Dans le lab, la base s'appelle <code>depart</code> : ta demande la nomme (« avant que je la merge sur depart ») et l'agent remplace <code>main</code>. À partir de l'étape 3, le script prend tout seul la branche par défaut du dépôt.</p>
             <p>Trois choix de conception à retenir :</p>
             <ul>
               <li><b>Le périmètre est le diff.</b> L'agent relit les lignes que la branche ajoute ou modifie ; le reste du projet sert de contexte. Les dossiers d'outillage (<code>.claude</code>, <code>.agents</code>, <code>.review</code>) sortent du diff : ton skill ne se relit pas lui-même.</li>
@@ -127,7 +128,7 @@ avec un DestroyRef injecté fonctionne partout.
               <li><b><code>AGENTS.md</code> prime.</b> Les conventions toujours vraies du dépôt y sont déjà ; tes références les détaillent pour la review, sans les contredire.</li>
             </ul>
             <details class="more"><summary>Le menu de règles candidates, pour qui n'a pas d'équipe</summary>
-              <p>Huit règles prises dans <code>course/revue-angular/etape-2/revue-angular/references/</code> du dépôt du kit. Elles ont été écrites avec le corrigé en main (voir l'encadré de la <a href="#m2-l1">leçon 2.1</a>) : pioche-en cinq, dans deux domaines au moins, reformule-les avec tes mots et ajoute les tiennes.</p>
+              <p>Huit règles prises dans <code>course/revue-angular/etape-2/revue-angular/references/</code> du dépôt du kit. Elles ont été écrites avec le corrigé en main (voir l'encadré de la <a href="#m2-l1">leçon 2.1</a>) : pioches-en cinq, dans deux domaines au moins, reformule-les avec tes mots et ajoute les tiennes.</p>
               <div class="table-wrap">
                 <table>
                   <thead><tr><th>Règle</th><th>Gravité</th><th>À repérer</th></tr></thead>
@@ -272,7 +273,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
             </div>
 <pre class="term"><span class="p">$ </span><span class="cmd">node ../skill-issue/evals/angular-review/run-triggers.mjs --cases .claude/skills/revue-angular/evals/declenchement.json --skill revue-angular --runs 3</span>
 <span class="p">$ </span><span class="cmd">node ../skill-issue/skills/skill-smith/scripts/validate.mjs --strict .claude/skills/revue-angular</span>
-<span class="o">✔ revue-angular — N1 ≈ 58 tokens · corps 92 lignes
+<span class="o">✔ revue-angular — N1 ≈ {{TAILLE:n1exact}} tokens · corps {{TAILLE:lignes}} lignes
 0 erreur(s), 0 avertissement(s).</span></pre>
             <p>Les tests de déclenchement suivent la méthode d'agentskills.io : chaque demande est rejouée trois fois, et compte comme déclenchée si le skill est chargé au moins deux fois. Les quasi-positifs (« écris la description de ma PR », « corrige le test qui échoue ») sont les plus utiles : ce sont eux qui attrapent une description trop gourmande. Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill ; sous Windows natif, il faut WSL2.</p>
             <h3>Mesurer le déclenchement ailleurs que sous Claude Code</h3>
@@ -286,7 +287,12 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
             <div class="atelier">
               <span class="tool-title">Atelier 5a · tes tests</span>
               <ol>
-                <li>Écris <code>evals/declenchement.json</code> : 10 demandes qui doivent déclencher, 10 quasi-positifs qui ne doivent pas.</li>
+                <li>Écris <code>evals/declenchement.json</code> : 10 demandes qui doivent déclencher, 10 quasi-positifs qui ne doivent pas. Les deux clés sont celles que lit <code>run-triggers.mjs</code> :
+<pre class="code" data-lang="json">{
+  "skill": "revue-angular",
+  "doit_declencher": ["Relis ma branche avant que je la merge sur main", "…"],
+  "ne_doit_pas_declencher": ["Écris la description de ma PR", "…"]
+}</pre></li>
                 <li>Mesure-les : <code>run-triggers.mjs</code> sous Claude Code, le protocole à la main dans les autres harnesses. Corrige la description tant que le compte n'y est pas.</li>
                 <li>Note ton score de référence sur la PR du lab : c'est la ligne de base des prochaines PR sur le skill.</li>
                 <li>Passe <code>validate.mjs --strict</code>.</li>
@@ -328,7 +334,7 @@ metadata:
               <li><b>Les extensions dans des fichiers à part.</b> <code>agents/openai.yaml</code> donne à Codex un nom d'affichage ; les autres harnesses l'ignorent.</li>
               <li><b>Une ligne dans <code>AGENTS.md</code></b> pour que tout le monde sache que le skill existe : « Pour une revue de code, utilise le skill <code>revue-angular</code> ; ses règles sont dans <code>references/</code>. »</li>
             </ul>
-            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le même dossier, copié tel quel dans <code>.agents/skills/</code>, lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre. Aucune ligne modifiée entre Claude Code et Codex.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le même dossier (avant l'ajout des garde-fous de la <a href="#m3-l7">leçon 3.7</a>), copié tel quel dans <code>.agents/skills/</code>, lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre. Aucune ligne modifiée entre Claude Code et Codex.</p></div></div>
             <details class="more"><summary>D'où vient le standard Agent Skills</summary>
               <!-- @include partials/m2-standard.html -->
             </details>
@@ -339,7 +345,7 @@ metadata:
                 <li>Depuis <code>depart</code>, crée une branche, copie le skill dans <code>.agents/skills/</code> et <code>.claude/skills/</code>, ajoute la ligne dans <code>AGENTS.md</code>, et ouvre une PR.</li>
                 <li>Demande à un collègue qui utilise un autre outil de lancer la review depuis sa machine. Seul ? Clone ta branche dans un second dossier (<code>git clone --branch ma-branche . ../test-clone</code>), ouvre-le dans un autre harness (Codex si tu as écrit avec Claude Code) et lance la review. Ou laisse la CI du <a href="#cloud">bonus cloud</a> la lancer à ta place.</li>
               </ol>
-              <p class="expect"><b>Fini quand</b> : un collègue, ou ton second clone dans un autre harness, lance ta review sans rien installer d'autre que le dépôt. La version de référence est la branche <code>equipe/main</code> du dépôt de démo.</p>
+              <p class="expect"><b>Fini quand</b> : un collègue, ou ton second clone dans un autre harness, lance ta review sans rien installer d'autre que le dépôt. La version de référence est la branche <code>equipe/main</code> du dépôt de démo. Pour la regarder sans toucher à ton clone (ton skill non suivi bloquerait le changement de branche) : <code>git worktree add ../equipe origin/equipe/main</code>.</p>
               <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5 --harness tous</code> pose le skill dans les deux dossiers, <code>.claude/skills/</code> et <code>.agents/skills/</code>.</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>

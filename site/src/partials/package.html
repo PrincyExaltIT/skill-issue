@@ -5,7 +5,7 @@
       <span class="num">+2</span>
       <h1 id="pkg-title">Le package de Princy</h1>
       <p class="promise">Tu as construit ton skill pièce par pièce. Voici le package de Princy, poussé beaucoup plus loin : {{RULES_TOTAL}} règles, sept relecteurs en sous-agents, un verdict calculé par script, une chaîne review → correction → description de PR, et la CI GitHub et GitLab. À installer tel quel, à forker, ou à piller pour enrichir le tien.</p>
-      <div class="chips"><span class="chip">⏱ <b>~40 min</b></span><span class="chip">6 leçons · 2 vidéos</span><span class="chip">bonus final</span></div>
+      <div class="chips"><span class="chip">⏱ <b>{{DUREE:package}}</b></span><span class="chip">6 leçons · 2 vidéos</span><span class="chip">bonus final</span></div>
       <div class="cta"><a class="btn primary" href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue ↗</a><a class="btn" href="https://github.com/PrincyExaltIT/skill-issue-playground/pull/1" target="_blank" rel="noopener">La PR relue par le package ↗</a></div>
     </header>
 
@@ -166,7 +166,7 @@
               </table>
             </div>
             <p>Deux leçons. <b>Le contrat suffit au relais</b> : Codex a écrit <code>findings.json</code>, Claude Code l'a lu et corrigé, sans adaptation. <b>La chaîne ne merge pas à ta place</b> : l'URL d'API en dur, classée MINOR au premier tour, devient le BLOCKER de la re-review, et deux MAJOR sont nés des corrections elles-mêmes. Le résultat est sur la branche <code>solution/review-fix</code> (<a href="https://github.com/PrincyExaltIT/skill-issue-playground/pull/2" target="_blank" rel="noopener">PR #2</a>).</p>
-            <p class="small muted">C'est la chaîne du package de Princy : <code>angular-review</code>, <code>review-fix</code>, <code>pr-handoff</code>, avec un contrat <code>findings.json</code>. Ta propre chaîne, plus courte, se construit dans le <a href="#m3">module 3</a> (atelier 7).</p>
+            <p class="small muted">C'est la chaîne du package de Princy : <code>angular-review</code>, <code>review-fix</code>, <code>pr-handoff</code>, avec un contrat <code>findings.json</code>. Ta propre chaîne, plus courte, se construit dans le <a href="#m3">module 3</a> (atelier 6).</p>
             <h3>Ce que la vraie CI du package nous a appris</h3>
             <ul>
               <li><b>La porte fait ce qu'elle promet.</b> Sur la PR #1, 44 candidats, mais un seul BLOCKER de confiance haute (R-SIG-010, <code>talk-card.ts:28</code>), et le job échoue. Sur la branche corrigée, la porte passe, alors que la re-review trouve encore un BLOCKER.</li>

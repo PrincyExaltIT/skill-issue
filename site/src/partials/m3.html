@@ -5,7 +5,7 @@
       <span class="num">03</span>
       <h1 id="m3-title">Le flux d'équipe</h1>
       <p class="promise">Ton skill relit bien. Ce module le branche dans le travail de l'équipe : deux skills de plus, à toi, qui corrigent puis racontent la branche, une relecture en parallèle, un garde-fou qui tourne tout seul, des garde-fous de sécurité, et un skill qui vit dans la durée.</p>
-      <div class="chips"><span class="chip">⏱ <b>~90 min</b> avec les ateliers</span><span class="chip">8 leçons · 2 ateliers · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
+      <div class="chips"><span class="chip">⏱ <b>{{DUREE:m3}}</b> avec les ateliers</span><span class="chip">8 leçons · 2 ateliers · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
     <div class="module-layout">
@@ -37,7 +37,7 @@
               <video controls preload="metadata" poster="media/v3-flux.jpg" playsinline>
                 <source src="media/v3-flux.mp4" type="video/mp4">
               </video>
-              <div class="video-meta"><b>Vidéo 03 · Le flux d'équipe</b><span>sous-titrée, sans son</span></div>
+              <div class="video-meta"><b>Vidéo 03 · Le flux d'équipe</b><span>sous-titrée, sans son</span><span>d'après le run de référence du {{CH:date}}</span></div>
               <div class="chapters"><button type="button" data-t="0">La review</button><button type="button" data-t="14">La correction</button><button type="button" data-t="30">Le récit</button><button type="button" data-t="46">Le hand-off</button></div>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
@@ -55,7 +55,7 @@
 
         <!-- 3.3 -->
         <article class="lesson" id="m3-l3">
-          <div class="hunk"><span class="at">@@ 03 · 3.3 @@</span><span>chain · atelier 7</span><span class="spacer"></span><span class="lvl core">core</span><span>30 min</span></div>
+          <div class="hunk"><span class="at">@@ 03 · 3.3 @@</span><span>chain · atelier 6</span><span class="spacer"></span><span class="lvl core">core</span><span>30 min</span></div>
           <div class="lesson-body">
             <h2>Ta chaîne : relire, corriger, raconter</h2>
             <p class="kicker">Ta review s'arrête à un rapport. Le pas suivant est un deuxième skill, court, qui lit ce rapport et corrige. Puis un troisième qui raconte la branche à celui qui la relira.</p>
@@ -129,7 +129,7 @@ description: Écrit la description de PR ou de MR d'une branche à partir
             </ul>
 
             <div class="atelier">
-              <span class="tool-title">Atelier 7 · ta chaîne</span>
+              <span class="tool-title">Atelier 6 · ta chaîne</span>
               <p>But : deux skills de plus, qui se passent le relais par des fichiers. Ta review écrit le rapport, <code>corrige-review</code> en fait des commits, <code>raconte-branche</code> en fait une description de PR.</p>
               <ol>
                 <li>Écris <code>corrige-review/SKILL.md</code> à côté de ton skill, dans <code>.claude/skills/</code> ou <code>.agents/skills/</code>. Manuel, il lit <code>.review/REVIEW.md</code>, corrige les BLOCKER puis les MAJOR un par un, lance les tests après chacun, commite chaque finding avec sa règle dans le message, et s'arrête au premier test rouge.</li>
@@ -146,6 +146,7 @@ description: Écrit la description de PR ou de MR d'une branche à partir
               <p class="expect"><b>Fini quand</b> : <code>git log --oneline depart..HEAD</code> montre, après le commit du lab, un commit par finding corrigé, chacun avec sa règle (<code>fix(SIG-01): …</code>) ; les tests sont verts après chacun, ou la chaîne s'est arrêtée sur un test rouge en disant pourquoi ; et <code>.review/PR.md</code> donne un état à chaque finding de <code>REVIEW.md</code>.</p>
               <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs chaine</code> pose les deux skills de référence à côté du tien (ajoute <code>--harness codex</code> si tes skills vivent dans <code>.agents/skills/</code>). Ton dossier actuel est mis de côté dans <code>.review/ancien-skill/</code>. Sous Codex, le skill manuel s'appelle par <code>$corrige-review</code>.</p>
             </div>
+            <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>Le run de référence</b> · {{CH:date}}, Claude Code, Opus 5.5, sur la PR du lab</p><p>La review garde {{CH:review.blocker}} BLOCKER et {{CH:review.major}} MAJOR. <code>corrige-review</code> en fait {{CH:commits}} commits, un par finding ; les autres étaient déjà réglés par un commit précédent, et le skill le dit au lieu d'inventer un commit vide. Les tests passent de {{CH:tests_avant.verts}} à {{CH:tests_apres.verts}}, tous verts, le build passe, aucun arrêt. <code>raconte-branche</code> écrit une PR.md qui donne un état à chaque finding, y compris « ouvert, résolu de fait » quand aucun commit ne cite la règle : à toi de confirmer.</p><p class="small muted">Durée {{CH:duree_totale_s}}, coût {{CH:cout_total}} (dont {{CH:etapes.corrige.cout}} pour la correction). Les trois fichiers sont dans <code>docs/sample-review/formation/chaine/</code> du dépôt du kit. Un run sur une PR : la preuve que la chaîne tient, pas une moyenne.</p></div></div>
             <p class="small muted">Le package du bonus fait la même chaîne en anglais, avec un contrat JSON et des scripts qui tiennent les statuts : voir la <a href="#pk-l5">leçon P.5</a>.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -187,7 +188,7 @@ description: Écrit la description de PR ou de MR d'une branche à partir
 
         <!-- 3.5 -->
         <article class="lesson" id="m3-l5">
-          <div class="hunk"><span class="at">@@ 03 · 3.5 @@</span><span>hook · atelier 6</span><span class="spacer"></span><span class="lvl core">core</span><span>15 min</span></div>
+          <div class="hunk"><span class="at">@@ 03 · 3.5 @@</span><span>hook · atelier 7</span><span class="spacer"></span><span class="lvl core">core</span><span>15 min</span></div>
           <div class="lesson-body">
             <h2>Le garde-fou automatique : un hook après chaque édition</h2>
             <p class="kicker">Ta review attend qu'on la lance. Un hook, lui, tourne à chaque fois, sans passer par le modèle. Il sert pour ce qui doit arriver à coup sûr.</p>
@@ -216,7 +217,7 @@ node .agents/skills/revue-angular/scripts/perimetre.mjs --base depart --travail 
 node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
             <p class="small muted">Enregistre-le dans <code>.git/hooks/pre-commit</code>, puis <code>chmod +x .git/hooks/pre-commit</code>. Ce dossier n'est pas versionné : pour le partager, commite le fichier dans <code>.githooks/</code> et que chacun lance une fois <code>git config core.hooksPath .githooks</code>.</p>
             <div class="atelier">
-              <span class="tool-title">Atelier 6 · ton garde-fou</span>
+              <span class="tool-title">Atelier 7 · ton garde-fou</span>
               <p>But : voir l'agent corriger un BLOCKER avant même la review, sur une branche qui n'en avait aucun.</p>
               <ol>
                 <li>Pars d'une branche neuve : depuis <code>depart</code>, ou depuis ta branche de l'atelier 5b. Ton skill doit y être (<code>ls .claude/skills/revue-angular</code>) : non suivi par git, il te suit d'une branche à l'autre.</li>

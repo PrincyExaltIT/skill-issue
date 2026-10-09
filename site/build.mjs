@@ -7,6 +7,7 @@
 
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -61,7 +62,7 @@ const lineCount = (p) => read(join(course, p)).split('\n').length;
 const refLines = readdirSync(join(course, 'references')).reduce((n, f) => n + lineCount(join('references', f)), 0);
 const anatomy = [
   { path: 'revue-angular/', name: 'revue-angular/', depth: 0, dir: true, level: 0, role: "Le skill, c'est ce dossier. Son nom est identique au champ <code>name</code> du frontmatter. On le commite dans <code>.agents/skills/</code> et <code>.claude/skills/</code> : rien d'autre à installer." },
-  { path: 'revue-angular/SKILL.md', name: 'SKILL.md', depth: 1, level: 1, role: "Le seul fichier obligatoire. Le <b>frontmatter</b> (name + description, une soixantaine de tokens) est chargé dans <b>toutes</b> les sessions : niveau 1. Le <b>corps</b>, la procédure en 7 étapes, n'arrive que quand la description correspond à la demande : niveau 2.", excerpt: excerpt('SKILL.md', 1, 18) },
+  { path: 'revue-angular/SKILL.md', name: 'SKILL.md', depth: 1, level: 1, role: "Le seul fichier obligatoire. Le <b>frontmatter</b> (name + description, environ {{TAILLE:n1}} tokens) est chargé dans <b>toutes</b> les sessions : niveau 1. Le <b>corps</b>, la procédure en 7 étapes, n'arrive que quand la description correspond à la demande : niveau 2.", excerpt: excerpt('SKILL.md', 1, 18) },
   { path: 'revue-angular/references/', name: 'references/', depth: 1, dir: true, level: 3, role: `Les règles de l'équipe, un fichier par domaine (${refLines} lignes au total). Le <code>SKILL.md</code> dit quand charger chacun : un diff sans template ne charge pas l'accessibilité. Niveau 3.` },
   { path: 'revue-angular/references/angular-22.md', name: 'angular-22.md', depth: 2, level: 3, role: "Composants, templates, routes, formulaires, à jour d'Angular 22 : OnPush par défaut, <code>Eager</code>, control flow, <code>input()</code>, <code>inject()</code>.", excerpt: excerpt('references/angular-22.md', 1, 14) },
   { path: 'revue-angular/references/reactivite.md', name: 'reactivite.md', depth: 2, level: 3, role: "Signals, RxJS et zoneless : les bugs les plus fréquents depuis l'arrivée des signals (NG0203, mutation en place, effect qui dérive un état).", excerpt: excerpt('references/reactivite.md', 1, 12) },
@@ -71,7 +72,7 @@ const anatomy = [
   { path: 'revue-angular/scripts/verifs.mjs', name: 'verifs.mjs', depth: 2, level: 'x', role: "Une table de motifs passée sur les lignes du périmètre : des <b>pistes</b> en moins d'une seconde, sans modèle. En CI, la même commande ferme la porte sur un BLOCKER et annote la PR.", excerpt: excerpt('scripts/verifs.mjs', 14, 30) },
   { path: 'revue-angular/assets/', name: 'assets/', depth: 1, dir: true, level: 3, role: "Ce qui sert à <b>produire</b> la sortie : le gabarit du rapport, et les exemples (bons findings, pièges à écarter)." },
   { path: 'revue-angular/assets/rapport.md', name: 'rapport.md', depth: 2, level: 3, role: "Le gabarit de <code>.review/REVIEW.md</code> : verdict, compteurs, un bloc par finding, et les écartés à la vérification.", excerpt: excerpt('assets/rapport.md', 1, 14) },
-  { path: 'revue-angular/assets/exemples.md', name: 'exemples.md', depth: 2, level: 3, role: "Deux findings modèles pris dans d'autres projets, et les pièges que l'équipe a déjà vus. Quand la review se trompe, on ajoute le cas ici.", excerpt: excerpt('assets/exemples.md', 22, 32) },
+  { path: 'revue-angular/assets/exemples.md', name: 'exemples.md', depth: 2, level: 3, role: "Deux findings modèles inventés hors du lab, et les pièges que l'équipe a déjà vus. Quand la review se trompe, on ajoute le cas ici.", excerpt: excerpt('assets/exemples.md', 22, 32) },
   { path: 'revue-angular/evals/', name: 'evals/', depth: 1, dir: true, level: 0, role: "Les tests du skill : demandes qui doivent (ou ne doivent pas) le déclencher, et comment noter une review. La procédure ne les charge jamais." },
   { path: 'revue-angular/evals/declenchement.json', name: 'declenchement.json', depth: 2, level: 0, role: "10 demandes qui doivent déclencher le skill, 10 quasi-positifs qui ne doivent pas.", excerpt: excerpt('evals/declenchement.json', 1, 9) },
   { path: 'revue-angular/agents/openai.yaml', name: 'agents/openai.yaml', depth: 1, level: 0, role: "Métadonnées d'affichage propres à Codex. Les autres harnesses l'ignorent : c'est une <b>extension</b>, rangée hors du <code>SKILL.md</code> pour qu'il reste standard.", excerpt: read(join(course, 'agents', 'openai.yaml')) },
@@ -125,6 +126,18 @@ const format = (run, key, where) => {
 };
 const metric = (model, step, key) => format(results.runs[model]?.[step], key, `${model}/${step}`);
 
+// ── The real run of the module 3 chain (course/resultats-chaine.json, collected from the run logs; artefacts in docs/sample-review/formation/chaine/) ──
+// {{CH:commits}}, {{CH:tests_apres.verts}}, {{CH:etapes.corrige.cout}} … ; dates, costs and durations are formatted like the rest.
+const chaine = json(join(repo, 'course', 'resultats-chaine.json'));
+const chaineValue = (path) => {
+  const value = path.split('.').reduce((o, k) => o?.[k], chaine);
+  if (value == null || typeof value === 'object') throw new Error(`resultats-chaine.json : pas de valeur simple pour ${path}`);
+  if (path === 'date') return frDate(parseDate(value, 'resultats-chaine.json « date »'));
+  if (/cout/.test(path)) return `${fr(value)} $`;
+  if (/duree/.test(path)) return duree(value);
+  return String(value);
+};
+
 // ── Data: harnesses & triggers ────────────────────────────────────────────
 const cases = json(join(course, 'evals', 'declenchement.json'));
 const triggers = { skill: cases.skill, should_trigger: cases.doit_declencher, should_not_trigger: cases.ne_doit_pas_declencher };
@@ -157,6 +170,38 @@ for (const h of harnesses.list) {
 }
 const harnessesMeasured = harnesses.list.filter((h) => h.status.key === 'mesure').length;
 
+// ── Sizes of the reference skill (etape 5), measured here so the page never types them by hand ──
+// validate.mjs is the single source for N1 and the body's line count; the other levels use the same ratio (3,6 characters per token).
+const validated = execFileSync(process.execPath, [join(repo, 'skills', 'skill-smith', 'scripts', 'validate.mjs'), course], { encoding: 'utf8' });
+const [, n1Exact, bodyLines] = validated.match(/N1 ≈ (\d+) tokens · corps (\d+) lignes/) ?? [];
+if (!n1Exact) throw new Error(`validate.mjs n'a pas donné N1 pour ${course}`);
+const tokensOf = (files) => Math.round(files.reduce((sum, f) => sum + read(f).length, 0) / 3.6);
+const filesIn = (dir) => readdirSync(join(course, dir)).filter((f) => !f.startsWith('.')).map((f) => join(course, dir, f));
+const skillMd = read(join(course, 'SKILL.md'));
+const level3 = [...filesIn('references'), ...filesIn('assets')];
+const nbsp = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+const round = (n, step) => nbsp(Math.round(n / step) * step);
+const sizes = {
+  n1exact: n1Exact, lignes: bodyLines,
+  n1: round(Number(n1Exact), 10),
+  n2: round(skillMd.slice(skillMd.indexOf('---', 3) + 3).length / 3.6, 100),
+  n3: round(tokensOf(level3), 100),
+  n3min: round(Math.min(...level3.map((f) => tokensOf([f]))), 100),
+  n3max: round(Math.max(...level3.map((f) => tokensOf([f]))), 100),
+  exec: round(tokensOf(filesIn('scripts')), 100),
+};
+
+// ── Durations: a module lasts the sum of its lessons' minutes (the « N min » of each hunk header) ──
+// {{DUREE:m2}} → « ~80 min » ; {{DUREE:m1+m2+m3}} → « ~4 h ». Rounded to 5 min, or to the half hour from 100 min.
+const lessonMinutes = (m) => [...read(join(src, 'partials', `${m}.html`)).matchAll(/<div class="hunk">.*?<span>(\d+) min<\/span><\/div>/g)].reduce((sum, x) => sum + Number(x[1]), 0);
+const moduleDuree = (mods) => {
+  const total = mods.split('+').reduce((sum, m) => sum + lessonMinutes(m), 0);
+  if (!total) throw new Error(`{{DUREE:${mods}}} : aucune minute trouvée dans les en-têtes de leçon`);
+  if (total < 100) return `~${Math.round(total / 5) * 5} min`;
+  const half = Math.round(total / 30) / 2;
+  return `~${Math.floor(half)} h${half % 1 ? ' 30' : ''}`;
+};
+
 const dataBlock = (id, value) => `<script type="application/json" id="${id}">${JSON.stringify(value).replace(/</g, '\\u003c')}</script>`;
 // The matrix says when the harnesses were checked: that date is harnesses.json « checked », whichever placeholder the partial uses.
 html = html.replace(/(état vérifié au\s+)\{\{BUILD_DATE\}\}/g, '$1{{HARNESS_DATE}}');
@@ -176,6 +221,9 @@ html = html
   .replaceAll('{{HARNESS_MEASURED}}', String(harnessesMeasured))
   .replaceAll('{{PROGRESSION}}', () => progression)
   .replaceAll('{{CODEX_MODEL}}', results.modeles.codex.id)
+  .replace(/\{\{DUREE:([\w+]+)\}\}/g, (_, mods) => moduleDuree(mods))
+  .replace(/\{\{CH:([\w.]+)\}\}/g, (_, path) => chaineValue(path))
+  .replace(/\{\{TAILLE:(\w+)\}\}/g, (_, k) => { if (!(k in sizes)) throw new Error(`{{TAILLE:${k}}} inconnu`); return sizes[k]; })
   .replace(/\{\{R:(\w+):(\w+):(\w+)\}\}/g, (_, model, step, key) => metric(model, step, key))
   .replace(/\{\{PKG:(\w+):(\w+)\}\}/g, (_, harness, key) => format(results.package[harness], key, `package/${harness}`))
   .replace(/\{\{REP:(\w+):(\w+):(\w+)\}\}/g, (_, model, step, key) => format(results.repetitions[model]?.[step], key, `repetitions/${model}/${step}`));

@@ -2,7 +2,7 @@
 // Rattrapage : copie le skill de référence d'une étape dans le dépôt courant, à la place du tien.
 //   node ../skill-issue/course/rattrapage.mjs <étape 0-5 | chaine> [--harness claude|codex|tous] [--dry-run]
 // 0 à 5  : revue-angular tel qu'il est à la fin de cette étape
-// chaine : les deux skills de l'atelier 7, corrige-review et raconte-branche (revue-angular n'est pas touché)
+// chaine : les deux skills de l'atelier 6, corrige-review et raconte-branche (revue-angular n'est pas touché)
 // claude (défaut) : .claude/skills/ (Claude Code, Continue)
 // codex           : .agents/skills/ (Codex, Copilot, Cursor, Gemini CLI / Antigravity, OpenCode, Kilo Code)
 // tous            : les deux

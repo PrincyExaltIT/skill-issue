@@ -5,7 +5,7 @@
       <span class="num">lab</span>
       <h1 id="ateliers-title">Tes ateliers : un skill, huit ateliers</h1>
       <p class="promise">Le fil rouge de la formation, au même endroit. Une vraie PR Angular 22, écrite trop vite, avec {{R:opus:0:attendus}} problèmes cachés et 7 leurres. Tu construis ton skill de review en six versions (v0 à v5), du premier jet à la version partagée, puis tu l'automatises dans le module 3 (ateliers 6 et 7). À chaque atelier, tu le lances, tu le notes, tu suis ton score. Bloqué ? Chaque atelier a son rattrapage.</p>
-      <div class="chips"><span class="chip">⏱ <b>~4 h</b> leçons et ateliers, modules 1 à 3</span><span class="chip">8 ateliers · 2 bonus</span><span class="chip">dépôt : <b>skill-issue-playground</b></span></div>
+      <div class="chips"><span class="chip">⏱ <b>{{DUREE:m1+m2+m3}}</b> leçons et ateliers, modules 1 à 3</span><span class="chip">8 ateliers · 2 bonus</span><span class="chip">dépôt : <b>skill-issue-playground</b></span></div>
     </header>
 
     <section class="section" aria-labelledby="setup-title" style="margin-top:26px">
@@ -16,7 +16,7 @@
 <span class="p">$ </span><span class="cmd">git checkout depart</span>                 <span class="cm"># la base de la PR, en local</span>
 <span class="p">$ </span><span class="cmd">git checkout lab/speaker-spotlight</span>
 <span class="p">$ </span><span class="cmd">npm install</span></pre>
-      <p class="small muted">Node.js 24.15 conseillé, 24.13.1 au minimum (<code>node --version</code>). Sous Windows, si <code>git clone</code> répond « Filename too long » : <code>git config --global core.longpaths true</code>. Le second dépôt contient le corrigé, le score et le skill de référence : garde-le à côté, jamais dans le dépôt relu. Ton skill vit dans <code>.claude/skills/revue-angular/</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/</code> (les autres harnesses) ; il reste non suivi par git pendant que tu le construis.</p>
+      <p class="small muted">Node.js 24.15 ou plus, ou 22.22.3 ou plus (<code>node --version</code>) : la CLI Angular 22.2 refuse de démarrer en dessous. Sous Windows, si <code>git clone</code> répond « Filename too long » : <code>git config --global core.longpaths true</code>. Si le clone répond « not found », le dépôt n'est pas encore ouvert à ton compte : demande un accès en lecture à PrincyExaltIT. Le second dépôt contient le corrigé, le score et le skill de référence : garde-le à côté, jamais dans le dépôt relu. Ton skill vit dans <code>.claude/skills/revue-angular/</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/</code> (les autres harnesses) ; il reste non suivi par git pendant que tu le construis.</p>
       <p class="small muted">Bloqué à l'atelier N ? <code>node ../skill-issue/course/rattrapage.mjs N</code> remplace ton skill par la version de référence de l'étape N (<code>--harness codex</code> pour <code>.agents/skills/</code>, <code>--harness tous</code> pour les deux dossiers). Ton ancien dossier est mis de côté dans <code>.review/ancien-skill/</code>.</p>
     </section>
 
@@ -87,21 +87,13 @@
         <h3>Atelier 5 · Le tester et le partager</h3>
         <p>Dix demandes qui doivent déclencher le skill et dix qui ne doivent pas (mesure automatique sous Claude Code, protocole à la main ailleurs), le validateur, les métadonnées, puis une PR qui commite le skill dans <code>.agents/skills/</code> et <code>.claude/skills/</code>. <a href="#m2-l6">Leçons 2.6</a> et <a href="#m2-l7">2.7</a></p>
 <pre class="term"><span class="p">$ </span><span class="cmd">node ../skill-issue/skills/skill-smith/scripts/validate.mjs --strict .claude/skills/revue-angular</span></pre>
-        <div class="expect">Au moins 9 réponses justes sur 10 dans chaque liste de déclenchement, 0 erreur au validateur. Puis un collègue, ou ton second clone dans un autre harness, lance ta review sans rien installer d'autre que le dépôt. Version de référence : branche <code>equipe/main</code>.</div>
+        <div class="expect">Au moins 9 réponses justes sur 10 dans chaque liste de déclenchement, 0 erreur au validateur. Puis un collègue, ou ton second clone dans un autre harness, lance ta review sans rien installer d'autre que le dépôt. Version de référence : branche <code>equipe/main</code>, à ouvrir à côté avec <code>git worktree add ../equipe origin/equipe/main</code>.</div>
         <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5 --harness tous</code> (les deux dossiers ; <code>--harness codex</code> pour <code>.agents/skills/</code> seul)</p>
         <label class="check"><input type="checkbox" data-step="a5"> Fait</label>
       </div></div>
 
       <div class="step lesson" id="at-6"><div class="step-body">
-        <h3>Atelier 6 · Le garde-fou automatique</h3>
-        <p>Un hook Claude Code qui lance <code>verifs.mjs</code> après chaque édition de l'agent. <a href="#m3-l5">Leçon 3.5</a></p>
-        <div class="expect">L'agent corrige de lui-même après le message du hook.</div>
-        <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5</code> remet les scripts que le hook appelle (<code>--harness codex</code> pour <code>.agents/skills/</code>) ; le bloc du hook est dans la <a href="#m3-l5">leçon 3.5</a>.</p>
-        <label class="check"><input type="checkbox" data-step="a6"> Fait</label>
-      </div></div>
-
-      <div class="step lesson" id="at-7"><div class="step-body">
-        <h3>Atelier 7 · Ta chaîne</h3>
+        <h3>Atelier 6 · Ta chaîne</h3>
         <p>Deux skills de plus, à toi : <code>corrige-review</code> corrige les findings de <code>.review/REVIEW.md</code>, un commit par finding, tests après chacun ; <code>raconte-branche</code> écrit <code>.review/PR.md</code> à partir des commits et du rapport. <a href="#m3-l3">Leçon 3.3</a></p>
 <pre class="term"><span class="p">$ </span><span class="cmd">git switch -c ma-chaine lab/speaker-spotlight</span>
 <span class="p">&gt; </span><span class="cmd">/revue-angular Relis cette branche avant que je la merge sur depart.</span>
@@ -109,6 +101,14 @@
 <span class="p">&gt; </span><span class="cmd">/raconte-branche Décris cette branche pour sa PR vers depart.</span></pre>
         <div class="expect">Un commit par finding corrigé, avec sa règle dans le message ; les tests verts après chacun, ou un arrêt expliqué ; et un <code>.review/PR.md</code> qui donne un état à chaque finding.</div>
         <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs chaine</code> (<code>--harness codex</code> pour <code>.agents/skills/</code>)</p>
+        <label class="check"><input type="checkbox" data-step="a6"> Fait</label>
+      </div></div>
+
+      <div class="step lesson" id="at-7"><div class="step-body">
+        <h3>Atelier 7 · Le garde-fou automatique</h3>
+        <p>Un hook Claude Code qui lance <code>verifs.mjs</code> après chaque édition de l'agent. <a href="#m3-l5">Leçon 3.5</a></p>
+        <div class="expect">L'agent corrige de lui-même après le message du hook.</div>
+        <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5</code> remet les scripts que le hook appelle (<code>--harness codex</code> pour <code>.agents/skills/</code>) ; le bloc du hook est dans la <a href="#m3-l5">leçon 3.5</a>.</p>
         <label class="check"><input type="checkbox" data-step="a7"> Fait</label>
       </div></div>
     </div>

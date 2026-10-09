@@ -13,5 +13,5 @@ This repo is a training course (learners build their own code-review skill) plus
 - Scripts are Node >= 18 with zero dependencies.
 - One meaning in one place: the finding format lives in `skills/angular-review/references/REVIEWER_PROMPT.md` and `assets/findings.schema.json`.
 - Harness paths live in `kit/harnesses.json` only; the site and the installer read it.
-- Course numbers come from `course/resultats.json`, produced from real runs; the site reads it at build time. Never type a measured number into the site by hand.
+- Course numbers come from `course/resultats.json` (review runs per step) and `course/resultats-chaine.json` (the module 3 chain run), produced from real runs; the site reads them at build time. Token sizes and module durations are computed by the build too. Never type a measured number into the site by hand.
 - `course/revue-angular/etape-N` are snapshots: rules written at step 2 and scripts written at step 3 are copied unchanged to later steps (`check-steps.mjs` enforces it).

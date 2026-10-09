@@ -54,7 +54,7 @@ try {
   rmSync(bac, { recursive: true, force: true });
 }
 
-// The chain of module 3 (atelier 7): two skills named after their folder, reading the report that revue-angular
+// The chain of module 3 (atelier 6): two skills named after their folder, reading the report that revue-angular
 // writes from assets/rapport.md. The template must keep the fields they rely on.
 for (const nom of ['corrige-review', 'raconte-branche']) {
   const f = join(here, 'chaine', nom, 'SKILL.md');
