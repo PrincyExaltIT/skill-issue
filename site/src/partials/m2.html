@@ -1,24 +1,23 @@
 <section class="view" id="m2" hidden aria-labelledby="m2-title">
-  <span hidden data-title="02 · Write once, review everywhere — Skill Issue"></span>
+  <span hidden data-title="02 · Construis-le — Skill Issue"></span>
   <div class="wrap">
     <header class="module-head">
       <span class="num">02</span>
-      <h1 id="m2-title">Write once, review everywhere</h1>
-      <p class="promise">On construit <code>angular-review</code> étape par étape, on le confronte à Angular 22, puis on le pose dans huit harnesses sans changer une ligne. À la fin, tu sais lire, modifier et installer chaque pièce du skill.</p>
-      <div class="chips"><span class="chip">⏱ <b>70 min</b></span><span class="chip">8 leçons · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
+      <h1 id="m2-title">Construis-le, mesure-le</h1>
+      <p class="promise">Ton skill passe de la v0 à la v5 en cinq étapes : un dossier qui grandit, un score qui monte. À la fin du module, il a une procédure, les règles de ton équipe, des scripts, des exemples et des tests, et il est commité pour toute l'équipe, quel que soit l'outil de chacun.</p>
+      <div class="chips"><span class="chip">⏱ <b>~80 min</b> ateliers compris</span><span class="chip">7 leçons · 5 ateliers · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
     <div class="module-layout">
       <nav class="toc" aria-label="Leçons du module 02">
         <span class="toc-title">Leçons</span>
-        <a href="#m2-l1"><span class="k">2.1</span><span>Un standard ouvert</span><span class="ok">✓</span></a>
-        <a href="#m2-l2"><span class="k">2.2</span><span>La matrice des harnesses</span><span class="ok">✓</span></a>
-        <a href="#m2-l3"><span class="k">2.3</span><span>v1 → v2 : autopsie</span><span class="ok">✓</span></a>
-        <a href="#m2-l4"><span class="k">2.4</span><span>Construire, pas à pas</span><span class="ok">✓</span></a>
-        <a href="#m2-l5"><span class="k">2.5</span><span>Ce que le skill vérifie</span><span class="ok">✓</span></a>
-        <a href="#m2-l6"><span class="k">2.6</span><span>Installer partout</span><span class="ok">✓</span></a>
-        <a href="#m2-l7"><span class="k">2.7</span><span>L'écosystème du skill</span><span class="ok">✓</span></a>
-        <a href="#m2-l8"><span class="k">2.8</span><span>Banc d'essai : deux harnesses</span><span class="ok">✓</span></a>
+        <a href="#m2-l1"><span class="k">2.1</span><span>La boucle et le tableau des scores</span><span class="ok">✓</span></a>
+        <a href="#m2-l2"><span class="k">2.2</span><span>Étape 1 · La procédure</span><span class="ok">✓</span></a>
+        <a href="#m2-l3"><span class="k">2.3</span><span>Étape 2 · Les règles de l'équipe</span><span class="ok">✓</span></a>
+        <a href="#m2-l4"><span class="k">2.4</span><span>Étape 3 · Les scripts</span><span class="ok">✓</span></a>
+        <a href="#m2-l5"><span class="k">2.5</span><span>Étape 4 · Savoir dire non</span><span class="ok">✓</span></a>
+        <a href="#m2-l6"><span class="k">2.6</span><span>Étape 5 · Le tester</span><span class="ok">✓</span></a>
+        <a href="#m2-l7"><span class="k">2.7</span><span>Étape 5 · Le partager</span><span class="ok">✓</span></a>
         <a href="#m2-quiz"><span class="k">✎</span><span>Quiz</span><span class="ok">✓</span></a>
         <div class="progress"><i></i></div>
       </nav>
@@ -26,112 +25,201 @@
       <div>
         <!-- 2.1 -->
         <article class="lesson" id="m2-l1">
-          <div class="hunk"><span class="at">@@ 02 · 2.1 @@</span><span>agentskills.io</span><span class="spacer"></span><span class="lvl base">base</span><span>5 min</span></div>
+          <div class="hunk"><span class="at">@@ 02 · 2.1 @@</span><span>build · run · score</span><span class="spacer"></span><span class="lvl base">base</span><span>9 min</span></div>
           <div class="lesson-body">
-            <h2>Un format né chez Anthropic, devenu standard</h2>
-            <!-- @include partials/m2-standard.html -->
+            <h2>Construire, lancer, mesurer : la boucle</h2>
+            <p class="kicker">Personne n'écrit un bon skill du premier coup. On écrit une version, on la lance sur une vraie pull request, on la note, on lit ce qu'elle a raté. Puis on recommence. Exactement comme du code.</p>
+            <ol>
+              <li><b>Modifier</b> le dossier <code>.claude/skills/revue-angular/</code> (ou <code>.agents/skills/</code>).</li>
+              <li><b>Lancer</b> la review sur la PR du lab : <code>/revue-angular Relis cette branche avant que je la merge sur depart.</code></li>
+              <li><b>Noter</b> le rapport contre le corrigé : <code>node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md</code></li>
+              <li><b>Lire les écarts</b> : ce qui manque, ce qui est signalé à tort, ce qui sort du corrigé mais reste peut-être juste.</li>
+            </ol>
+            <p>On a fait l'exercice pour de vrai, le {{RESULTS_DATE}}, avec le skill de référence de chaque étape. Même PR, même phrase, deux modèles : Opus 5.5, le plus fort, et Haiku 5.5, le plus rapide et le moins cher de la famille.</p>
+            {{PROGRESSION}}
+            <div class="rc"><span class="av" aria-hidden="true">≤</span><div><p class="who"><b>Un plafond, pas un objectif</b> · à lire avant les chiffres</p><p>Les règles et les pièges du skill de référence ont été écrits <b>après lecture du corrigé</b> de la PR du lab, puis mesurés sur cette seule PR, avec un run par étape et par modèle. Ces scores disent ce que donne un skill qui connaît déjà les réponses : ils sont une borne haute. Le tien ne les atteindra sans doute pas, et ce n'est pas un échec. Vise un gain net à chaque étape par rapport à <i>ton</i> atelier 0, pas 100 %. Et ne recopie pas dans tes règles les problèmes que le score te dit avoir manqués : tu mesurerais ta mémoire du corrigé, pas ton skill.</p></div></div>
+            <p>Trois leçons sortent de ce tableau, et elles guident tout le module.</p>
+            <ul>
+              <li><b>Un modèle de pointe est déjà un bon relecteur.</b> Avec un skill de dix lignes, Opus trouve {{R:opus:0:rappel}} % des problèmes. Le skill ne lui apprend pas l'Angular ; il lui apprend <i>ton</i> Angular, et il le rend régulier.</li>
+              <li><b>Le skill fait le plus de différence sur un petit modèle.</b> Haiku passe de {{R:haiku:0:rappel}} % à {{R:haiku:4:rappel}} %. Des règles écrites valent mieux qu'un modèle plus gros qui devine.</li>
+              <li><b>Chaque étape a un prix.</b> Plus de fichiers lus, plus de tours, plus de tokens. Mesure-le aussi : une étape qui n'améliore rien se retire.</li>
+            </ul>
+            <div class="rc note"><span class="av" aria-hidden="true">°C</span><div><p class="who"><b>Le score est un thermomètre, pas un juge</b></p><p>Il ne connaît que des emplacements : un problème est trouvé si ta review cite <code>fichier:ligne</code> à deux lignes près. Un finding « hors corrigé » peut être un vrai problème que le corrigé ignore ; un leurre peut être cité pour une autre raison. Le chiffre dit où regarder ; c'est toi qui tranches en lisant.</p></div></div>
+            <div class="video-card">
+              <video controls preload="metadata" poster="media/v2-construire.jpg" playsinline>
+                <source src="media/v2-construire.mp4" type="video/mp4">
+              </video>
+              <div class="video-meta"><b>Vidéo 02 · Construis-le, mesure-le</b><span>sous-titrée, sans son</span></div>
+              <div class="chapters"><button type="button" data-t="0">La boucle</button><button type="button" data-t="12">Procédure</button><button type="button" data-t="24">Règles</button><button type="button" data-t="36">Scripts</button><button type="button" data-t="48">Dire non</button><button type="button" data-t="60">Partager</button></div>
+            </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
 
         <!-- 2.2 -->
         <article class="lesson" id="m2-l2">
-          <div class="hunk"><span class="at">@@ 02 · 2.2 @@</span><span>harness matrix</span><span class="spacer"></span><span class="lvl base">base</span><span>8 min</span></div>
+          <div class="hunk"><span class="at">@@ 02 · 2.2 @@</span><span>étape 1 · procédure</span><span class="spacer"></span><span class="lvl core">core</span><span>10 min</span></div>
           <div class="lesson-body">
-            <h2>Un dossier, huit harnesses : où le poser, comment l'appeler</h2>
-            <p class="kicker">Le contenu du skill ne change jamais. Ce qui change d'un outil à l'autre : le dossier où le harness cherche les skills, la façon de l'appeler à la main, et quelques champs facultatifs.</p>
-            <div class="tool" id="harness">
-              <span class="tool-title">Matrice · état vérifié au {{BUILD_DATE}}</span>
-              <div class="seg" role="tablist" aria-label="Harness"></div>
-              <div class="pane" aria-live="polite"></div>
+            <h2>Étape 1 · Une procédure, pas une intention</h2>
+            <p class="kicker">« Relis ma branche » est une intention. Une procédure dit dans quel ordre travailler, sur quoi, et quand une étape est finie. C'est la différence entre un relecteur qui fait ce qu'il veut et un relecteur sur qui on peut compter.</p>
+            <p>La version 1 découpe la review en quatre étapes, et chacune se termine par un <b>critère de fin</b> que l'agent peut vérifier seul. C'est l'idée la plus rentable de Matt Pocock pour écrire des documents d'agent : un critère flou (« bien comprendre le code ») invite à bâcler pour passer à la suite ; un critère vérifiable (« chaque fichier de la liste a été lu en entier ») force le travail.</p>
+<pre class="code" data-lang="md">## 1. Délimiter le périmètre
+git diff main...HEAD -- . ':!.claude' ':!.agents' ':!.review'
+Fini quand : tu as la liste des fichiers modifiés et, pour chacun, les lignes ajoutées ou modifiées.
+
+## 2. Lire chaque fichier modifié en entier
+Fini quand : chaque fichier de la liste a été lu en entier.
+
+## 3. Chercher les problèmes (six familles : bugs, sécurité, réactivité, a11y, conventions, tests)
+Fini quand : chaque fichier a été passé au crible des six familles.
+
+## 4. Écrire le rapport (gabarit assets/rapport.md, gravités, règle de verdict)
+Fini quand : .review/REVIEW.md existe, chaque finding cite fichier:ligne, les compteurs correspondent.</pre>
+            <p>Trois choix de conception à retenir :</p>
+            <ul>
+              <li><b>Le périmètre est le diff.</b> L'agent relit les lignes que la branche ajoute ou modifie ; le reste du projet sert de contexte. Les dossiers d'outillage (<code>.claude</code>, <code>.agents</code>, <code>.review</code>) sortent du diff : ton skill ne se relit pas lui-même.</li>
+              <li><b>Le rapport a un gabarit.</b> <code>assets/rapport.md</code> fixe la forme : verdict, compteurs, un bloc par finding. Un gabarit dans <code>assets/</code> n'est lu qu'au moment d'écrire : c'est le troisième étage du chargement progressif.</li>
+              <li><b>Le verdict suit une règle, pas une humeur.</b> À corriger dès un BLOCKER ou trois MAJOR. Une règle écrite se discute en équipe ; une impression ne se discute pas.</li>
+            </ul>
+            <div class="rc"><span class="av" aria-hidden="true">H</span><div><p class="who"><b>Ce que la v0 a fait avec Haiku</b> · run du {{RESULTS_DATE}}</p><p>Avec le skill de dix lignes, Haiku a lu le README, compris que la PR venait d'un lab, puis a répondu dans le chat en demandant si la fusion était voulue. Il n'a jamais écrit <code>.review/REVIEW.md</code>, et ne cite que {{R:haiku:0:cites}} emplacements ({{R:haiku:0:rappel}} % de rappel). Avec la procédure et ses critères de fin, il écrit le rapport et monte à {{R:haiku:1:rappel}} %. Un petit modèle ne devine pas ce que tu attends : il faut le lui écrire.</p></div></div>
+            <div class="atelier">
+              <span class="tool-title">Atelier 1 · ta procédure</span>
+              <ol>
+                <li>Découpe ton <code>SKILL.md</code> en étapes numérotées, chacune avec sa ligne « Fini quand ».</li>
+                <li>Crée <code>assets/rapport.md</code> : verdict, compteurs, un bloc par finding avec <code>fichier:ligne</code>.</li>
+                <li>Relance la review, puis note-la.</li>
+              </ol>
+<pre class="term"><span class="p">$ </span><span class="cmd">node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md</span></pre>
+              <p class="expect"><b>Fini quand</b> : le rapport est un fichier, chaque finding cite <code>fichier:ligne</code>, et ton score est noté dans le tableau des <a href="#ateliers">ateliers</a>. Référence mesurée : {{R:opus:1:rappel}} % avec Opus, {{R:haiku:1:rappel}} % avec Haiku.</p>
+              <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 1</code> (ajoute <code>--harness codex</code> si ton skill vit dans <code>.agents/skills/</code>). Ton dossier actuel est mis de côté dans <code>.review/ancien-skill/</code>.</p>
             </div>
-            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>La convergence à surveiller</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code (et Amp, goose, Devin Desktop) lisent un dossier commun, <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic), pas plus que Continue et Cline : eux lisent <code>.claude/skills/</code>. Le kit installe donc dans ces deux dossiers, et couvre les huit harnesses. La matrice vient de <code>kit/harnesses.json</code> : le jour où un chemin change, on modifie ce fichier, pas la formation.</p></div></div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
 
         <!-- 2.3 -->
         <article class="lesson" id="m2-l3">
-          <div class="hunk"><span class="at">@@ 02 · 2.3 @@</span><span>refactor v1 → v2</span><span class="spacer"></span><span class="lvl core">core</span><span>9 min</span></div>
+          <div class="hunk"><span class="at">@@ 02 · 2.3 @@</span><span>étape 2 · references/</span><span class="spacer"></span><span class="lvl core">core</span><span>14 min</span></div>
           <div class="lesson-body">
-            <h2>De la v1 à la v2 : autopsie d'une refonte</h2>
-            <p class="kicker">La v1 d'<code>angular-review</code> vit dans <code>PrincyExaltIT/agent-skill</code> : 106 règles en français tirées d'angular.dev, quatre reviewers en parallèle, un verdict fondé sur des règles. Une très bonne base. Voici ce que la v2 change, et pourquoi.</p>
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Problème v1</th><th>Correction v2</th><th>Principe</th></tr></thead>
-                <tbody>
-                  <tr><td>Un fichier d'entrée par outil (<code>SKILL.md</code>, <code>.prompt.md</code>, <code>.codex.md</code>) ; hors Claude, l'installeur ne copiait qu'un fichier, sans les règles</td><td>Un seul dossier conforme au standard, lu tel quel par chaque harness</td><td>Portabilité par le format, pas par la duplication</td></tr>
-                  <tr><td>Agrégation et verdict décrits en prose, avec des <i>MUST</i></td><td><code>findings.mjs</code> fusionne, dédoublonne, calcule le verdict</td><td>Ce qui doit être exact est du code</td></tr>
-                  <tr><td>Rien n'empêchait un numéro de ligne inventé</td><td>Contrôle de l'extrait cité à ±3 lignes ; rendu refusé tant qu'un candidat n'est pas vérifié</td><td>Des garde-fous plutôt que des consignes</td></tr>
-                  <tr><td>R-PERF-020 « OnPush obligatoire » en MAJOR : faux positif systématique en Angular 22</td><td><code>scope.mjs</code> détecte la version, <code>VERSION_GATES.md</code> adapte les règles, le fichier de bonnes pratiques officiel prime</td><td>Un skill qui vieillit bien délègue les faits datés à leur source</td></tr>
-                  <tr><td>Deux formats de finding contradictoires (orchestrateur vs fichiers de règles), doublons (R-PERF-033 = R-ARCH-012)</td><td>Un seul format dans <code>REVIEWER_PROMPT.md</code>, alias documentés</td><td>Une seule source de vérité</td></tr>
-                  <tr><td>Rapports écrits dans le dossier du skill, partagés entre projets en installation globale</td><td>Tout sort dans <code>.review/</code> à la racine du projet</td><td>Le skill est en lecture seule</td></tr>
-                  <tr><td>Pas de reviewer tests ni signals ; aucun test du skill</td><td>+ <code>REACTIVITY</code> et <code>TESTING</code>, 34 règles ajoutées, fixtures, snapshots, corrigé et score</td><td>Un skill se teste comme du code</td></tr>
-                  <tr><td>Fin de review en impasse</td><td><code>findings.json</code> sert de contrat à <code>review-fix</code>, <code>pr-handoff</code> et à la CI</td><td>Les skills se parlent par des fichiers</td></tr>
-                </tbody>
-              </table>
+            <h2>Étape 2 · Les règles de ton équipe, chargées à la demande</h2>
+            <p class="kicker">Le modèle connaît Angular. Il ne connaît pas tes décisions : ce que ton équipe tolère, ce qu'elle refuse, et pourquoi. C'est là que vit la valeur d'un skill de review.</p>
+            <p>Les règles vont dans <code>references/</code>, <b>un fichier par domaine</b> : <code>angular-22.md</code>, <code>reactivite.md</code>, <code>securite.md</code>, <code>accessibilite.md</code>, <code>tests.md</code>. Chaque règle a le même format court :</p>
+<pre class="code" data-lang="md">### SIG-04 · API à contexte d'injection appelée hors contexte (NG0203) — BLOCKER
+**Pourquoi** : inject(), takeUntilDestroyed() sans argument, toSignal() et effect() exigent un
+contexte d'injection. Dans ngOnInit, une méthode ou un callback, ils lèvent NG0203.
+**À repérer** : ces appels dans un hook ou une méthode. takeUntilDestroyed(this.destroyRef)
+avec un DestroyRef injecté fonctionne partout.
+**Correction** : déplacer l'appel dans un initialiseur de champ, ou passer DestroyRef explicitement.</pre>
+            <p>Le <code>SKILL.md</code> ne copie pas les règles : il dit <b>quand</b> charger chaque fichier. Un diff qui ne touche aucun template ne charge pas l'accessibilité. C'est le chargement progressif appliqué à ta review :</p>
+<pre class="code" data-lang="md">| Le périmètre contient                                   | Charge                        |
+|---------------------------------------------------------|-------------------------------|
+| des composants, services, routes ou formulaires         | references/angular-22.md      |
+| des signals, effect, subscribe, setTimeout, appels HTTP | references/reactivite.md      |
+| du HTML injecté, des URL, du stockage, des redirections | references/securite.md        |
+| des templates (.html ou template:)                      | references/accessibilite.md   |
+| de nouveaux fichiers ou des .spec.ts                    | references/tests.md           |</pre>
+            <h3>Écrire de bonnes règles</h3>
+            <ul>
+              <li><b>Pars de tes vraies reviews.</b> Les dix remarques que ton équipe répète dans les PR sont tes dix premières règles.</li>
+              <li><b>Pas d'équipe sous la main ?</b> Prends deux sources. D'abord les conventions du <code>AGENTS.md</code> du lab (signals, <code>input()</code> et <code>output()</code>, <code>inject()</code>, control flow natif, <code>NgOptimizedImage</code>). Ensuite le menu ci-dessous : des règles candidates tirées des références de l'étape 2.</li>
+              <li><b>Écris aussi ce qui n'est pas un problème.</b> « Un composant sans <code>changeDetection</code> est déjà en OnPush (v22) : rien à signaler » évite un faux positif à chaque PR.</li>
+              <li><b>Date tes faits.</b> En Angular 22, OnPush est le défaut, <code>ChangeDetectionStrategy.Eager</code> remplace <code>Default</code>, et les <code>*ngIf</code> sont dépréciés depuis la v20. Une règle écrite pour la v17 donne de mauvais conseils en v22.</li>
+              <li><b><code>AGENTS.md</code> prime.</b> Les conventions toujours vraies du dépôt y sont déjà ; tes références les détaillent pour la review, sans les contredire.</li>
+            </ul>
+            <details class="more"><summary>Le menu de règles candidates, pour qui n'a pas d'équipe</summary>
+              <p>Huit règles prises dans <code>course/revue-angular/etape-2/revue-angular/references/</code> du dépôt du kit. Elles ont été écrites avec le corrigé en main (voir l'encadré de la <a href="#m2-l1">leçon 2.1</a>) : pioche-en cinq, dans deux domaines au moins, reformule-les avec tes mots et ajoute les tiennes.</p>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Règle</th><th>Gravité</th><th>À repérer</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>SEC-01</b></td><td>BLOCKER</td><td><code>bypassSecurityTrust…</code> : du HTML, une URL ou un style arrive dans la page sans nettoyage</td></tr>
+                    <tr><td><b>SIG-01</b></td><td>BLOCKER</td><td>Un signal lu sans parenthèses dans une condition : on teste la fonction, jamais sa valeur</td></tr>
+                    <tr><td><b>SIG-04</b></td><td>BLOCKER</td><td><code>inject()</code>, <code>toSignal()</code> ou <code>takeUntilDestroyed()</code> sans <code>DestroyRef</code>, appelés hors contexte d'injection (NG0203)</td></tr>
+                    <tr><td><b>A11Y-02</b></td><td>BLOCKER</td><td><code>(click)</code> sur un <code>div</code> ou un <code>span</code> : ni focus ni clavier</td></tr>
+                    <tr><td><b>RX-02</b></td><td>MAJOR</td><td>Un <code>subscribe</code> dans un autre <code>subscribe</code> : <code>switchMap</code> à la place</td></tr>
+                    <tr><td><b>TEST-01</b></td><td>MAJOR</td><td><code>it.only</code>, <code>fit</code>, <code>fdescribe</code> : le reste de la suite ne tourne plus</td></tr>
+                    <tr><td><b>NG-01</b></td><td>MINOR</td><td><code>*ngIf</code>, <code>*ngFor</code> au lieu de <code>@if</code>, <code>@for</code></td></tr>
+                    <tr><td><b>NG-07</b></td><td>MAJOR, ou rien</td><td>La règle « ce n'est pas un problème » : un composant sans <code>changeDetection</code> est déjà en OnPush, seul un <code>Eager</code> explicite se discute</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
+            <div class="rc"><span class="av" aria-hidden="true">%</span><div><p class="who"><b>Le saut du module</b> · run du {{RESULTS_DATE}}</p><p>Avec les références, Opus passe de {{R:opus:1:rappel}} % à {{R:opus:2:rappel}} % de rappel, et Haiku de {{R:haiku:1:rappel}} % à {{R:haiku:2:rappel}} %. Le petit modèle n'a pas appris Angular en une étape : il a reçu la liste de ce que l'équipe vérifie.</p></div></div>
+            <div class="atelier">
+              <span class="tool-title">Atelier 2 · tes règles</span>
+              <ol>
+                <li>Crée <code>references/</code> et écris au moins cinq règles dans deux domaines, au format ci-dessus, dont une règle « ce n'est pas un problème ». Tes sources : les remarques de ton équipe ou, seul, le <code>AGENTS.md</code> du lab et le menu ci-dessus.</li>
+                <li>Ajoute au <code>SKILL.md</code> l'étape « Charger les règles » avec sa table, et demande l'identifiant de la règle dans chaque finding.</li>
+                <li>Relance, note, compare avec l'atelier 1.</li>
+              </ol>
+              <p class="expect"><b>Fini quand</b> : le rapport cite tes identifiants de règles, et les références que le diff ne touche pas ne sont pas chargées. Référence mesurée : {{R:opus:2:rappel}} % avec Opus, {{R:haiku:2:rappel}} % avec Haiku.</p>
+              <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 2</code> (ajoute <code>--harness codex</code> si ton skill vit dans <code>.agents/skills/</code>) · les cinq références complètes : <code>course/revue-angular/etape-2/</code></p>
             </div>
-            <p class="small muted">Ce qui reste de la v1, intact : les identifiants de règles, le format des règles (sévérité, pattern, exemples ❌/✅, source), le reviewer de conformité projet à remplir, la validation empirique avec Playwright, la logique du verdict.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
 
         <!-- 2.4 -->
         <article class="lesson" id="m2-l4">
-          <div class="hunk"><span class="at">@@ 02 · 2.4 @@</span><span>step by step</span><span class="spacer"></span><span class="lvl core">core</span><span>14 min</span></div>
+          <div class="hunk"><span class="at">@@ 02 · 2.4 @@</span><span>étape 3 · scripts/</span><span class="spacer"></span><span class="lvl core">core</span><span>12 min</span></div>
           <div class="lesson-body">
-            <h2>Construire le skill, en six décisions</h2>
-            <h3>1 · Le métier, puis la description</h3>
-            <p>On écrit d'abord ce que le skill fait en une phrase, puis les situations où on veut qu'il se déclenche. La description est écrite en dernier, mais pensée en premier : elle conditionne tout le reste.</p>
-            <h3>2 · Un workflow avec des critères de fin</h3>
-            <p>Le corps de <code>SKILL.md</code> est une suite d'étapes, chacune terminée par une condition vérifiable. « Done when <code>findings.mjs list --status candidate</code> prints nothing » vaut mieux que « vérifie soigneusement » : l'agent sait quand il a fini, et ne saute pas l'étape pour arriver plus vite à la suivante.</p>
-<pre class="code" data-lang="md">### 5. Verify
-Take each candidate and try to **refute** it: version gates, framework defaults,
-project rules, code elsewhere that already handles the case, a path that cannot run.
-[…]
-Done when `node scripts/findings.mjs list --status candidate` prints nothing.</pre>
-            <h3>3 · Les scripts : ce qui doit être exact</h3>
-            <p>Trois scripts Node sans dépendance, chacun avec un rôle unique :</p>
-<pre class="term"><span class="p">$ </span><span class="cmd">node scripts/scope.mjs</span>
-<span class="o">[scope] Angular 22.2.1 | working-tree | 15 file(s) (+466 -2) | base=main -&gt; .review/scope.json</span>
-<span class="p">$ </span><span class="cmd">node scripts/scan.mjs</span>
-<span class="o">BLOCKER R-A11Y-013  src/app/proposals/proposal-form.html:15  Champ de formulaire sans label
-BLOCKER R-ARCH-017  src/app/proposals/proposal-form.ts:47  subscribe sans désabonnement dans un composant/directive
-BLOCKER R-A11Y-005  src/app/speakers/speaker-spotlight.html:22  (click) sur un élément non interactif
-BLOCKER R-SIG-005   src/app/speakers/speaker-spotlight.ts:30  API à contexte d&#x27;injection appelée hors contexte (NG0203)
+            <h2>Étape 3 · Le script trouve, le modèle juge</h2>
+            <p class="kicker">Tout ce qui se décrit par un motif, un script le fait mieux que toi : plus vite, sans fatigue, et deux fois de suite pareil. Garde le modèle pour ce qui demande du jugement.</p>
+            <p>Deux scripts Node, sans dépendance, dans <code>scripts/</code> :</p>
+            <ul>
+              <li><code>perimetre.mjs</code> lit <code>git diff --unified=0</code> et écrit <code>.review/perimetre.json</code> : chaque fichier modifié et ses lignes ajoutées ou modifiées. Plus d'erreur de lecture du diff.</li>
+              <li><code>verifs.mjs</code> passe une table de motifs sur ces lignes et écrit des <b>pistes</b> : <code>bypassSecurityTrust</code>, URL en dur, <code>*ngIf</code>, <code>@Input</code>, <code>any</code>, <code>console.log</code>, image sans <code>alt</code>, clic sur un <code>div</code>, test focalisé, nouveau fichier sans test…</li>
+            </ul>
+<pre class="code" data-lang="js">// Extrait de la table. Une règle : les fichiers visés, un motif, un message. L'identifiant renvoie à references/.
+const REGLES = [
+  { id: 'SEC-01', gravite: 'BLOCKER', fichiers: TS, motif: /bypassSecurityTrust\w*\s*\(/g,
+    message: 'Sanitizer contourné : du HTML, une URL ou un style arrive dans la page sans nettoyage.' },
+  { id: 'SIG-01', gravite: 'BLOCKER', fichiers: TS, motif: signauxNonAppeles,
+    message: 'Signal testé sans être appelé : la condition lit la fonction, jamais sa valeur.' },
+  { id: 'A11Y-02', gravite: 'BLOCKER', fichiers: TEMPLATE, motif: /&lt;(div|span|li|p|img)\b[^&gt;]*?\(click\)\s*=/g,
+    message: 'Clic sur un élément non interactif : ni focus ni clavier.' },
+  // …
+];</pre>
+<pre class="term"><span class="p">$ </span><span class="cmd">node .claude/skills/revue-angular/scripts/perimetre.mjs --base depart</span>
+<span class="o">15 fichier(s) dans le périmètre (base depart) → .review/perimetre.json</span>
+<span class="p">$ </span><span class="cmd">node .claude/skills/revue-angular/scripts/verifs.mjs</span>
+<span class="o">src/app/speakers/speaker-spotlight.html:22 [A11Y-02] BLOCKER — Clic sur un élément non interactif…
+src/app/speakers/speaker-spotlight.ts:34 [SEC-01] BLOCKER — Sanitizer contourné…
+src/app/talks/talk-card.ts:28 [SIG-01] BLOCKER — Signal testé sans être appelé…
 …
-[scan] 44 candidat(s) — BLOCKER:8 MAJOR:11 MINOR:22 INFO:3 — .review/scan.json</span>
-<span class="p">$ </span><span class="cmd">node scripts/findings.mjs merge &amp;&amp; node scripts/findings.mjs render</span></pre>
-            <p class="small muted">Sortie réelle sur la branche de démo <code>feat/speaker-spotlight</code> (8 octobre 2026). Le lab te fait obtenir la tienne.</p>
-            <h3>4 · Les références : un fichier par reviewer</h3>
-            <p>Sept domaines, chacun avec un frontmatter <code>applies_to</code> (les fichiers qui l'activent) et un préfixe de règles. L'orchestrateur n'active que les reviewers concernés par le diff, et chacun ne charge que son fichier. Le format d'une règle reste celui de la v1 :</p>
-<pre class="code" data-lang="md">### R-SIG-005 — API à contexte d'injection appelée hors contexte (NG0203)
-- **Sévérité** : 🔴 BLOCKER
-- **Quoi vérifier** : inject(), toSignal(), effect() et takeUntilDestroyed() sans argument
-  exigent un contexte d'injection […]
-- **Exemple ❌** / **Exemple ✅** / **Source** : https://angular.dev/errors/NG0203</pre>
-            <h3>5 · Un contrat de sortie</h3>
-            <p>Les reviewers écrivent du JSON validé (<code>ruleId</code>, <code>severity</code>, <code>file</code>, <code>line</code>, <code>snippet</code>, <code>message</code>, <code>suggestion</code>…). Le rapport humain est généré à partir de ce JSON, jamais l'inverse : la machine et l'humain lisent la même vérité.</p>
-            <h3>6 · Des evals</h3>
-            <p>Trois niveaux de tests, rangés hors du dossier du skill pour ne jamais être chargés par l'agent : snapshots du scan sur des fixtures (dont un composant propre qui doit rester à zéro), prompts de déclenchement, et un corrigé de la branche de démo pour mesurer le rappel et la précision d'une review complète.</p>
-            <p>Le déclenchement se mesure comme le recommande agentskills.io : chaque prompt rejoué trois fois en headless, déclenché si le taux atteint 0,5, avec autant de quasi-positifs (« crée un composant », « review mon composant React ») que de positifs. <code>run-triggers.mjs</code> le fait avec <code>claude -p</code> ; Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill.</p>
-<pre class="term"><span class="p">$ </span><span class="cmd">node evals/angular-review/run-scan-tests.mjs</span>
-<span class="o">✔ src/app/bad/bad-store.ts — 6 candidat(s)
-✔ src/app/bad/bad-widget.html — 9 candidat(s)
-✔ src/app/bad/bad-widget.ts — 25 candidat(s)
-✔ src/app/clean/talk-card.ts — 0 candidat(s)
-Tous les snapshots passent.</span>
-<span class="p">$ </span><span class="cmd">node evals/angular-review/run-triggers.mjs --cwd ../skill-issue-playground --runs 1 --only 0,10</span>
-<span class="o">✔ 100 %  attendu  « Fais une review de ma branche Angular avant que je merge »
-✔   0 %  interdit  « Crée-moi un composant Angular de liste de talks »
-2/2 correct(s) (100 %). Cible : ≥ 90 % sur les deux listes.</span></pre>
-            <p class="small muted">Sortie réelle d'un test rapide (1 exécution, 2 prompts). Pour une mesure qui compte : <code>--runs 3</code> sur les 20 prompts.</p>
-            <div class="video-card">
-              <video controls preload="metadata" poster="media/v2-review.jpg" playsinline>
-                <source src="media/v2-review.mp4" type="video/mp4">
-              </video>
-              <div class="video-meta"><b>Vidéo 02 · Une review, étape par étape</b><span>sous-titrée, sans son</span></div>
-              <div class="chapters"><button type="button" data-t="0">Un dossier, huit harnesses</button><button type="button" data-t="20">Scope</button><button type="button" data-t="34">Scan</button><button type="button" data-t="50">7 reviewers</button><button type="button" data-t="68">Vérifier</button><button type="button" data-t="82">Verdict</button></div>
+27 piste(s) → .review/verifs.json</span></pre>
+            <p>Une piste n'est pas un finding. Sur la PR du lab, le motif <code>.subscribe(</code> remonte cinq pistes, toutes étiquetées RX-01 par le script. En lisant le code, la review les range autrement. Deux sont des abonnements imbriqués à réécrire (RX-02 dans les références de l'étape 2). Une cache le vrai problème : l'appel hors contexte d'injection (SIG-04). Une est déjà protégée par <code>takeUntilDestroyed(this.destroyRef)</code>. La dernière, sur <code>valueChanges</code>, se discute. Le script ne peut pas faire la différence ; le modèle, si. D'où la consigne du skill : <i>confirme chaque piste en lisant le code, ou écarte-la.</i></p>
+            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Ce que les scripts achètent</b> · run du {{RESULTS_DATE}}</p><p>Le rappel ne bouge presque plus (Opus {{R:opus:3:rappel}} %, Haiku {{R:haiku:3:rappel}} %), la précision monte (Opus {{R:opus:2:precision}} → {{R:opus:3:precision}} %). Le vrai gain est ailleurs : les mêmes pistes à chaque run, et une porte qui tourne <b>sans IA</b> en CI. Tu la brancheras dans le <a href="#cloud">bonus cloud</a>.</p></div></div>
+            <h3>Pas à pas : copier les scripts, ajouter une règle</h3>
+            <p>N'utilise pas le rattrapage pour ça : il remplace tout ton skill. Copie seulement le dossier <code>scripts/</code> de l'étape 3, depuis le dépôt de démo :</p>
+<pre class="term"><span class="cm"># Claude Code, Continue</span>
+<span class="p">$ </span><span class="cmd">cp -r ../skill-issue/course/revue-angular/etape-3/revue-angular/scripts .claude/skills/revue-angular/</span>
+<span class="cm"># Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code</span>
+<span class="p">$ </span><span class="cmd">cp -r ../skill-issue/course/revue-angular/etape-3/revue-angular/scripts .agents/skills/revue-angular/</span></pre>
+            <p>Ouvre ensuite <code>scripts/verifs.mjs</code>, descends au tableau <code>REGLES</code> et ajoute une entrée juste avant le <code>];</code> final. Exemple avec NG-11 (« page chargée d'emblée »), une règle de <code>references/angular-22.md</code> dans le skill de référence :</p>
+<pre class="code" data-lang="js">  { id: 'NG-11', gravite: 'MAJOR', fichiers: /\.routes\.ts$/, motif: /\bcomponent:\s*\w+/g,
+    message: "Page chargée d'emblée : utiliser loadComponent pour la sortir du bundle initial." },</pre>
+            <ul>
+              <li><code>id</code> est l'identifiant de la règle dans <code>references/</code>, celui que le rapport citera. <code>gravite</code> vaut BLOCKER, MAJOR, MINOR ou INFO.</li>
+              <li><code>fichiers</code> est une expression régulière testée sur le chemin du fichier. <code>motif</code> est une expression régulière avec le drapeau <code>g</code>, cherchée dans son texte.</li>
+              <li>Le script ne garde que les correspondances qui tombent sur une ligne ajoutée ou modifiée par la branche.</li>
+            </ul>
+            <p>Relance <code>verifs.mjs</code> : la nouvelle piste sort en une seconde, sans modèle, et le compteur passe de 27 à 28.</p>
+<pre class="term"><span class="p">$ </span><span class="cmd">node .claude/skills/revue-angular/scripts/verifs.mjs</span>
+<span class="o">…
+src/app/app.routes.ts:22 [NG-11] MAJOR — Page chargée d'emblée : utiliser loadComponent pour la sortir du bundle initial.
+…
+28 piste(s) → .review/verifs.json</span></pre>
+            <p>Rien ne sort ? Relance d'abord <code>perimetre.mjs --base depart</code>, puis vérifie que ton motif tombe sur une ligne que la branche a ajoutée.</p>
+            <div class="atelier">
+              <span class="tool-title">Atelier 3 · tes scripts</span>
+              <ol>
+                <li>Copie le dossier <code>scripts/</code> avec la commande ci-dessus, puis ajoute à la table <b>une règle à toi</b>, tirée de tes références.</li>
+                <li>Lance-les à la main : tes pistes sortent en moins d'une seconde, sans modèle.</li>
+                <li>Ajoute au <code>SKILL.md</code> les deux étapes qui les appellent, et la consigne « confirme ou écarte chaque piste ».</li>
+              </ol>
+              <p class="expect"><b>Fini quand</b> : <code>.review/verifs.json</code> existe après la review, et chaque piste se retrouve soit en finding, soit écartée. Référence mesurée : {{R:opus:3:rappel}} % et {{R:opus:3:precision}} % de précision avec Opus.</p>
+              <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 3</code> (ajoute <code>--harness codex</code> si ton skill vit dans <code>.agents/skills/</code>). Il remplace ton skill entier, scripts et <code>SKILL.md</code> compris.</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -139,85 +227,121 @@ Tous les snapshots passent.</span>
 
         <!-- 2.5 -->
         <article class="lesson" id="m2-l5">
-          <div class="hunk"><span class="at">@@ 02 · 2.5 @@</span><span>{{RULES_TOTAL}} règles</span><span class="spacer"></span><span class="lvl core">core</span><span>8 min</span></div>
+          <div class="hunk"><span class="at">@@ 02 · 2.5 @@</span><span>étape 4 · exemples + vérification</span><span class="spacer"></span><span class="lvl core">core</span><span>10 min</span></div>
           <div class="lesson-body">
-            <h2>Ce que le skill vérifie, et ce qu'il laisse au lint</h2>
-            <p class="kicker">{{RULES_TOTAL}} règles au catalogue, dont {{RULES_MECH}} ont un détecteur dans <code>scan.mjs</code>. Les autres demandent du jugement : c'est le travail des reviewers.</p>
-            <div class="tool" id="rules">
-              <span class="tool-title">Catalogue · généré depuis skills/angular-review/references</span>
-              <div class="filters">
-                <div class="field"><label for="rules-q">Rechercher</label><input id="rules-q" type="search" placeholder="NG0203, OnPush, alt, signal…"></div>
-                <div class="field"><label for="rules-sev">Sévérité</label><select id="rules-sev"><option value="">Toutes</option><option>BLOCKER</option><option>MAJOR</option><option>MINOR</option><option>INFO</option></select></div>
-                <div class="field"><label for="rules-domain">Domaine</label><select id="rules-domain"><option value="">Tous</option></select></div>
-                <label class="check"><input id="rules-mech" type="checkbox"> Détectable par script</label>
-              </div>
-              <span class="count"></span>
-              <div class="table-wrap" style="max-height:420px;overflow:auto">
-                <table><thead><tr><th>Règle</th><th>Titre</th><th>Sévérité</th><th>Domaine</th><th>Détection</th></tr></thead><tbody></tbody></table>
-              </div>
+            <h2>Étape 4 · Apprends-lui à dire non</h2>
+            <p class="kicker">Un relecteur qui signale tout ne sert à rien : l'équipe arrête de lire. La dernière qualité d'une review, c'est de savoir écarter ce qui ressemble à un problème et n'en est pas un.</p>
+            <p>Deux ajouts. D'abord <code>assets/exemples.md</code> : deux findings modèles, <b>inventés pour l'exemple, hors du lab</b>, pour montrer la forme sans souffler les réponses, et le tableau des <b>pièges</b> que l'équipe a déjà vus. Ensuite une étape de vérification, où l'agent essaie de <b>réfuter</b> chacun de ses findings :</p>
+<pre class="code" data-lang="md">## 6. Vérifier : réfuter chaque finding
+- Périmètre : la ligne est-elle ajoutée ou modifiée par la branche ? Sinon, elle sort du rapport.
+- Preuve : le code fait-il vraiment ce que tu affirmes ? Suis l'appel jusqu'au bout.
+- Déjà couvert : le framework ou le projet gère-t-il le cas ? Compare avec les pièges de assets/exemples.md.
+- Doublon : un finding par problème et par fichier ; les autres lignes vont dans sa note.
+Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</pre>
+            <p>Les pièges ne sortent pas d'un livre. Ce sont les faux positifs vus dans nos propres runs : la lecture de <code>localStorage</code> à l'initialisation d'un signal (signalée par Opus et par Haiku aux étapes 0 et 1, alors que l'application n'a pas de rendu serveur), et les « fuites » sur des appels HTTP qui se terminent seuls, que le package de Princy a écartées en relisant cette PR. Comme les règles de l'étape 2, ils ont été écrits pour ce lab, corrigé en main (voir l'encadré de la leçon 2.1) : les tiens viendront de tes propres faux positifs. Quand ta review se trompe, tu n'ajoutes pas une règle de plus : tu ajoutes le cas aux exemples.</p>
+            <div class="rc"><span class="av" aria-hidden="true">=</span><div><p class="who"><b>Mesuré, et c'est une leçon</b> · runs du {{RESULTS_DATE}}</p><p>Sur cette PR, l'étape 4 n'a rien gagné de mesurable : {{R:opus:4:rappel}} % de rappel avec Opus, {{R:haiku:4:rappel}} % avec Haiku, et une précision qui recule (Opus {{R:opus:3:precision}} → {{R:opus:4:precision}} %, Haiku {{R:haiku:3:precision}} → {{R:haiku:4:precision}} %). Relancée une seconde fois, elle donne {{REP:opus:4:rappel}} % de rappel et {{REP:opus:4:precision}} % de précision avec Opus, {{REP:haiku:4:rappel}} % et {{REP:haiku:4:precision}} % avec Haiku. Entre deux runs du même skill, le rappel bouge d'un problème et la précision de quelques points : c'est du bruit de mesure, pas l'effet de l'étape. Les leurres avaient déjà disparu à l'étape 2, avec les règles. Et avec Opus, la vérification a coûté des tours ({{R:opus:4:tours}} contre {{R:opus:3:tours}}).</p><p>Ce qu'elle apporte se lit dans le rapport : chaque piste écartée y figure, avec sa raison, et un humain peut la contester. Garde cette étape si tes runs produisent des faux positifs. Sinon, mesure-la avant de la payer à chaque PR.</p></div></div>
+            <div class="atelier">
+              <span class="tool-title">Atelier 4 · tes exemples</span>
+              <ol>
+                <li>Relis tes rapports des ateliers précédents et liste les findings qui t'ont fait lever les yeux au ciel.</li>
+                <li>Écris <code>assets/exemples.md</code> : deux bons findings qui ne viennent pas du lab (invente-les), et tes pièges, une ligne chacun avec la raison de les écarter.</li>
+                <li>Ajoute l'étape « Vérifier » et la section « Écartés à la vérification » au gabarit du rapport.</li>
+              </ol>
+              <p class="expect"><b>Fini quand</b> : chaque piège de ta liste disparaît des findings et réapparaît dans les écartés, avec sa raison.</p>
+              <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 4</code> (ajoute <code>--harness codex</code> si ton skill vit dans <code>.agents/skills/</code>)</p>
             </div>
-            <h3>L'histoire d'OnPush, ou pourquoi un skill doit connaître sa version</h3>
-            <p>Jusqu'à Angular 21, un composant sans <code>ChangeDetectionStrategy.OnPush</code> méritait une remarque. Angular 22 a inversé le défaut : OnPush s'applique sans rien écrire, et <code>ng update</code> ajoute <code>ChangeDetectionStrategy.Eager</code> aux composants qui dépendaient de l'ancien comportement. La même règle, appliquée telle quelle, signale désormais chaque composant correct. La v2 lit la version installée, et sur Angular 22 elle cherche l'inverse : les <code>Eager</code> non justifiés.</p>
-            <div class="rc note"><span class="av" aria-hidden="true">✓</span><div><p class="who"><b>Test terrain</b> · projet de formation <code>playing-cards</code>, Angular 21.2</p><p>Le scan sort 10 candidats en 90 ms, tous réels : un champ de recherche sans label, un output nommé <code>submit</code> comme l'événement natif, un <code>transform</code> d'input qui double les points de vie en mutant l'objet du parent, OnPush absent (à juste titre en v21), des specs qui ne testent que la création. Aucun faux positif. Les imports inutilisés, les <code>readonly</code> manquants et le nommage restent le travail des reviewers.</p></div></div>
-            <h3>Laisser au lint ce qui est au lint</h3>
-            <p>Si le projet utilise angular-eslint, beaucoup de règles mécaniques sont déjà appliquées en CI (<code>prefer-control-flow</code>, <code>prefer-inject</code>, <code>template/alt-text</code>, <code>no-output-native</code>…). Chaque détecteur du scan porte le nom de la règle eslint équivalente : quand le lint est installé, le skill écarte ces candidats et garde son attention pour ce qu'aucun lint ne voit (un <code>effect</code> qui synchronise de l'état, une resource utilisée pour écrire, une bio utilisateur rendue sans sanitizer).</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
 
         <!-- 2.6 -->
         <article class="lesson" id="m2-l6">
-          <div class="hunk"><span class="at">@@ 02 · 2.6 @@</span><span>install</span><span class="spacer"></span><span class="lvl core">core</span><span>6 min</span></div>
+          <div class="hunk"><span class="at">@@ 02 · 2.6 @@</span><span>étape 5 · evals</span><span class="spacer"></span><span class="lvl core">core</span><span>10 min</span></div>
           <div class="lesson-body">
-            <h2>Installer partout, versionner avec le projet</h2>
-            <p class="kicker">Deux portées : <b>projet</b> (le dossier est commité avec le code, toute l'équipe l'a) ou <b>utilisateur</b> (dans ton home, disponible dans tous tes projets). Pour un skill d'équipe, la portée projet gagne : le skill évolue avec le code qu'il review.</p>
-<pre class="term"><span class="cm"># depuis le clone du kit : installe les 4 skills dans le projet cible, pour tous les harnesses</span>
-<span class="p">$ </span><span class="cmd">node kit/install.mjs --target ../mon-projet-angular</span>
-<span class="cm"># seulement Claude Code et Codex, en liens symboliques (les mises à jour du kit se propagent)</span>
-<span class="p">$ </span><span class="cmd">node kit/install.mjs --target ../mon-projet-angular --harness claude,codex --mode link</span>
-<span class="cm"># en portée utilisateur</span>
-<span class="p">$ </span><span class="cmd">node kit/install.mjs --scope user --skills angular-review</span>
-<span class="cm"># avec l'installeur communautaire de Vercel (liens symboliques par défaut, --copy pour copier)</span>
-<span class="p">$ </span><span class="cmd">npx skills add PrincyExaltIT/skill-issue</span>
-<span class="cm"># avec la CLI GitHub (aperçu), en épinglant une version</span>
-<span class="p">$ </span><span class="cmd">gh skill install PrincyExaltIT/skill-issue --pin v1.0.0</span></pre>
-            <p class="small muted"><code>npx skills</code> envoie de la télémétrie par défaut (désactivable avec <code>DISABLE_TELEMETRY=1</code>) et, depuis la version 1.4, affiche l'audit de sécurité skills.sh avant d'installer.</p>
-            <p>L'installeur lit <code>kit/harnesses.json</code>, copie chaque dossier de skill tel quel (sans transformation), puis vérifie chaque installation avec le validateur de <code>skill-smith</code>. <code>--dry-run</code> montre ce qu'il ferait sans rien écrire.</p>
-            <div class="rc"><span class="av" aria-hidden="true">!</span><div><p class="who"><b>Copie ou lien ?</b></p><p>La copie est sûre et portable (Windows sans droits admin, CI). Le lien symbolique évite les versions divergentes quand tu développes le skill lui-même. En équipe : copie commitée dans le repo, mise à jour par PR.</p></div></div>
+            <h2>Étape 5 · Teste ton skill comme du code</h2>
+            <p class="kicker">Ton skill va vivre : quelqu'un ajoutera une règle, raccourcira la description, changera de modèle. Sans tests, tu découvriras la régression dans une PR qui passe sans remarque.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Test</th><th>Il attrape</th><th>Comment</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Score sur la PR du lab</b></td><td>Une règle qui fait rater des problèmes, un piège qui revient</td><td><code>score.mjs --report</code> après chaque changement de règle ; le rappel ne baisse pas, aucun leurre ne réapparaît</td></tr>
+                  <tr><td><b>Déclenchement</b></td><td>Une description trop vague (le skill ne part pas) ou trop large (il part sur « review mon composant React »)</td><td><code>evals/declenchement.json</code> : 10 demandes qui doivent déclencher, 10 qui ne doivent pas, rejouées trois fois. Automatique sous Claude Code (<code>run-triggers.mjs --cases</code>), à la main ailleurs</td></tr>
+                  <tr><td><b>Standard</b></td><td>Un champ inconnu, un fichier référencé absent, un nom qui ne correspond pas au dossier</td><td><code>validate.mjs</code> (et <code>--strict</code> avant de publier)</td></tr>
+                </tbody>
+              </table>
+            </div>
+<pre class="term"><span class="p">$ </span><span class="cmd">node ../skill-issue/evals/angular-review/run-triggers.mjs --cases .claude/skills/revue-angular/evals/declenchement.json --skill revue-angular --runs 3</span>
+<span class="p">$ </span><span class="cmd">node ../skill-issue/skills/skill-smith/scripts/validate.mjs --strict .claude/skills/revue-angular</span>
+<span class="o">✔ revue-angular — N1 ≈ 58 tokens · corps 92 lignes
+0 erreur(s), 0 avertissement(s).</span></pre>
+            <p>Les tests de déclenchement suivent la méthode d'agentskills.io : chaque demande est rejouée trois fois, et compte comme déclenchée si le skill est chargé au moins deux fois. Les quasi-positifs (« écris la description de ma PR », « corrige le test qui échoue ») sont les plus utiles : ce sont eux qui attrapent une description trop gourmande. Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill ; sous Windows natif, il faut WSL2.</p>
+            <h3>Mesurer le déclenchement ailleurs que sous Claude Code</h3>
+            <p><code>run-triggers.mjs</code> lance <code>claude -p</code> pour chaque demande et regarde si l'outil Skill est appelé : la mesure automatique ne tourne <b>que sous Claude Code</b>, et elle consomme de vrais tokens (commence par <code>--limit 4</code>). Avec un autre harness, fais la même mesure à la main :</p>
+            <ol>
+              <li>Ouvre une session neuve à la racine du dépôt, sans rien dans le contexte.</li>
+              <li>Colle une demande de ton <code>declenchement.json</code>, telle quelle, et rien d'autre.</li>
+              <li>Note si le skill est chargé : le harness l'annonce, ou l'agent lit <code>SKILL.md</code>. Ferme la session.</li>
+              <li>Fais les 20 demandes, et rejoue trois fois celles qui hésitent. Une demande compte comme déclenchée si le skill est chargé au moins deux fois sur trois.</li>
+            </ol>
+            <div class="atelier">
+              <span class="tool-title">Atelier 5a · tes tests</span>
+              <ol>
+                <li>Écris <code>evals/declenchement.json</code> : 10 demandes qui doivent déclencher, 10 quasi-positifs qui ne doivent pas.</li>
+                <li>Mesure-les : <code>run-triggers.mjs</code> sous Claude Code, le protocole à la main dans les autres harnesses. Corrige la description tant que le compte n'y est pas.</li>
+                <li>Note ton score de référence sur la PR du lab : c'est la ligne de base des prochaines PR sur le skill.</li>
+                <li>Passe <code>validate.mjs --strict</code>.</li>
+              </ol>
+              <p class="expect"><b>Fini quand</b> : au moins 9 réponses justes sur 10 dans chaque liste (donc 18 sur 20 au minimum), et 0 erreur au validateur.</p>
+              <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5</code> (ajoute <code>--harness codex</code> si ton skill vit dans <code>.agents/skills/</code>) ; le fichier <code>evals/declenchement.json</code> de référence s'y trouve.</p>
+            </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
 
         <!-- 2.7 -->
         <article class="lesson" id="m2-l7">
-          <div class="hunk"><span class="at">@@ 02 · 2.7 @@</span><span>tools</span><span class="spacer"></span><span class="lvl deep">deep</span><span>7 min</span></div>
+          <div class="hunk"><span class="at">@@ 02 · 2.7 @@</span><span>étape 5 · partage</span><span class="spacer"></span><span class="lvl core">core</span><span>12 min</span></div>
           <div class="lesson-body">
-            <h2>Le skill dans son écosystème d'outils</h2>
-            <p class="kicker">Un skill ne fait rien seul : il orchestre les outils que le harness lui donne. Voici ce qu'<code>angular-review</code> touche, et à quel moment.</p>
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Outil</th><th>Utilisé pour</th><th>Étape</th></tr></thead>
-                <tbody>
-                  <tr><td><code>Bash</code> → <code>git</code>, <code>node</code></td><td>Périmètre du diff, scan, fusion, verdict</td><td>1, 2, 4, 6</td></tr>
-                  <tr><td><code>Read</code>, <code>Grep</code>, <code>Glob</code></td><td>Lire le code autour d'un candidat, chercher où une valeur est assainie</td><td>3, 5</td></tr>
-                  <tr><td>Sous-agents</td><td>Un reviewer par domaine, en parallèle, chacun dans son contexte</td><td>3</td></tr>
-                  <tr><td><code>gh</code> / <code>glab</code></td><td>Récupérer la branche d'une PR/MR, publier le rapport</td><td>Arguments, CI</td></tr>
-                  <tr><td><code>@angular/core/resources/best-practices.md</code></td><td>Les bonnes pratiques officielles de la version installée (livrées avec Angular 22)</td><td>1, 3</td></tr>
-                  <tr><td>Serveur MCP Angular CLI (<code>npx -y @angular/cli mcp</code>)</td><td><code>get_best_practices</code>, <code>search_documentation</code>, <code>onpush_zoneless_migration</code> pour argumenter un finding</td><td>3, 5 (optionnel)</td></tr>
-                  <tr><td>Serveur MCP Playwright</td><td>Prouver un finding d'accessibilité dans un vrai navigateur</td><td>Validation empirique (optionnelle)</td></tr>
-                </tbody>
-              </table>
+            <h2>Étape 5 · Un dossier, toute l'équipe, huit harnesses</h2>
+            <p class="kicker">Un skill dans ton home ne sert qu'à toi. Commité dans le dépôt, il sert à toute l'équipe, évolue avec le code qu'il relit, et se change par pull request comme le reste.</p>
+            <p>Le contenu du skill ne change jamais d'un outil à l'autre. Ce qui change : le dossier où le harness le cherche, la façon de l'appeler à la main, et quelques champs facultatifs.</p>
+            <div class="tool" id="harness">
+              <span class="tool-title">Matrice · état vérifié au {{BUILD_DATE}}</span>
+              <div class="seg" role="tablist" aria-label="Harness"></div>
+              <div class="pane" aria-live="polite"></div>
             </div>
-            <p>Angular publie aussi ses propres skills depuis la v22 (<code>npx skills add https://github.com/angular/skills</code> : <code>angular-developer</code> pour écrire du code, <code>angular-new-app</code> pour créer une app). Aucun ne fait de review. Ils sont complémentaires : l'un aide à écrire, le nôtre relit.</p>
-            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
-          </div>
-        </article>
-
-        <!-- 2.8 -->
-        <article class="lesson" id="m2-l8">
-          <div class="hunk"><span class="at">@@ 02 · 2.8 @@</span><span>bench</span><span class="spacer"></span><span class="lvl deep">deep</span><span>8 min</span></div>
-          <div class="lesson-body">
-            <!-- @include partials/m2-bench.html -->
+            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Deux dossiers suffisent pour les huit</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode et Kilo Code lisent <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic depuis janvier 2026), pas plus que Continue : eux lisent <code>.claude/skills/</code>. Commite donc le même dossier aux deux endroits, et laisse la CI vérifier qu'ils restent identiques (<code>diff -r</code>). Sur macOS et Linux, un lien symbolique fait aussi l'affaire.</p></div></div>
+            <h3>Ce qu'on ajoute au moment de partager</h3>
+<pre class="code" data-lang="yaml">---
+name: revue-angular
+description: Revue de code Angular des changements d'une branche, d'une PR ou d'une MR,
+  selon les règles de l'équipe. À utiliser quand on demande de relire, reviewer ou vérifier
+  du code Angular avant un merge.
+license: MIT
+compatibility: Demande git et Node.js 18 ou plus. Fonctionne dans tout harness compatible Agent Skills.
+metadata:
+  version: "1.0.0"     # la version que l'équipe cite dans ses PR sur le skill
+  angular: "22"        # la version d'Angular que les règles décrivent
+---</pre>
+            <ul>
+              <li><b>Des champs du standard seulement</b> dans <code>SKILL.md</code> : <code>name</code>, <code>description</code>, <code>license</code>, <code>compatibility</code>, <code>metadata</code>. Le skill passe partout, et <code>validate.mjs --strict</code> le confirme.</li>
+              <li><b>Les extensions dans des fichiers à part.</b> <code>agents/openai.yaml</code> donne à Codex un nom d'affichage ; les autres harnesses l'ignorent.</li>
+              <li><b>Une ligne dans <code>AGENTS.md</code></b> pour que tout le monde sache que le skill existe : « Pour une revue de code, utilise le skill <code>revue-angular</code> ; ses règles sont dans <code>references/</code>. »</li>
+            </ul>
+            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le même dossier, copié tel quel dans <code>.agents/skills/</code>, lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre. Aucune ligne modifiée entre Claude Code et Codex.</p></div></div>
+            <details class="more"><summary>D'où vient le standard Agent Skills</summary>
+              <!-- @include partials/m2-standard.html -->
+            </details>
+            <div class="atelier">
+              <span class="tool-title">Atelier 5b · partage-le</span>
+              <ol>
+                <li>Ajoute <code>license</code>, <code>compatibility</code> et <code>metadata.version</code>, puis passe <code>validate.mjs --strict</code>.</li>
+                <li>Depuis <code>depart</code>, crée une branche, copie le skill dans <code>.agents/skills/</code> et <code>.claude/skills/</code>, ajoute la ligne dans <code>AGENTS.md</code>, et ouvre une PR.</li>
+                <li>Demande à un collègue qui utilise un autre outil de lancer la review depuis sa machine. Seul ? Clone ta branche dans un second dossier (<code>git clone --branch ma-branche . ../test-clone</code>), ouvre-le dans un autre harness (Codex si tu as écrit avec Claude Code) et lance la review. Ou laisse la CI du <a href="#cloud">bonus cloud</a> la lancer à ta place.</li>
+              </ol>
+              <p class="expect"><b>Fini quand</b> : un collègue, ou ton second clone dans un autre harness, lance ta review sans rien installer d'autre que le dépôt. La version de référence est la branche <code>equipe/main</code> du dépôt de démo.</p>
+              <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5 --harness tous</code> pose le skill dans les deux dossiers, <code>.claude/skills/</code> et <code>.agents/skills/</code>.</p>
+            </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
@@ -228,32 +352,32 @@ Tous les snapshots passent.</span>
           <div class="lesson-body">
             <h2>Quiz du module 02</h2>
             <div class="quiz">
-              <div class="q" data-answer="c" data-why="Sur Angular 22, OnPush est le défaut : réclamer OnPush est un faux positif. Le skill cherche les Eager non justifiés.">
-                <fieldset><legend>Projet en Angular 22.2, composant sans option changeDetection. Que doit dire le skill ?</legend>
-                  <label><input type="radio" value="a"> MAJOR : ajouter OnPush</label>
-                  <label><input type="radio" value="b"> INFO : envisager OnPush</label>
-                  <label><input type="radio" value="c"> Rien : OnPush est déjà le défaut</label>
+              <div class="q" data-answer="b" data-why="Un critère de fin vérifiable (chaque fichier lu, chaque finding avec fichier:ligne) empêche l'agent de passer trop vite à la suite ; c'est ce qui a fait écrire le rapport à Haiku.">
+                <fieldset><legend>Avec la v0, Haiku répondait dans le chat au lieu d'écrire le rapport. Qu'est-ce qui l'a corrigé ?</legend>
+                  <label><input type="radio" value="a"> Un modèle plus gros</label>
+                  <label><input type="radio" value="b"> Des étapes avec un critère « Fini quand » vérifiable</label>
+                  <label><input type="radio" value="c"> Un MUST en majuscules dans la description</label>
                 </fieldset>
               </div>
-              <div class="q" data-answer="a" data-why="Le dossier ne change pas ; seul l'emplacement (et parfois un fichier d'extension comme agents/openai.yaml) varie.">
-                <fieldset><legend>Pour passer le skill de Claude Code à Codex, que modifies-tu ?</legend>
-                  <label><input type="radio" value="a"> Rien dans le skill : on le pose dans le dossier que Codex lit</label>
-                  <label><input type="radio" value="b"> On réécrit SKILL.md au format Codex</label>
-                  <label><input type="radio" value="c"> On le convertit en serveur MCP</label>
+              <div class="q" data-answer="c" data-why="Les références sont lues à la demande, selon ce que le diff touche ; SKILL.md ne garde que la table qui dit quand les charger.">
+                <fieldset><legend>Où vivent les règles de l'équipe ?</legend>
+                  <label><input type="radio" value="a"> Dans la description, pour que le modèle les voie tout le temps</label>
+                  <label><input type="radio" value="b"> Dans le corps de SKILL.md</label>
+                  <label><input type="radio" value="c"> Dans references/, un fichier par domaine, chargé quand le diff le touche</label>
                 </fieldset>
               </div>
-              <div class="q" data-answer="b" data-why="findings.mjs merge compare l'extrait cité au fichier, à ±3 lignes, et marque le finding evidence mismatch.">
-                <fieldset><legend>Un reviewer invente un numéro de ligne. Qui l'attrape ?</legend>
-                  <label><input type="radio" value="a"> Personne, il faut relire le rapport</label>
-                  <label><input type="radio" value="b"> findings.mjs merge, en vérifiant l'extrait cité</label>
-                  <label><input type="radio" value="c"> Le verdict, qui baisse automatiquement</label>
+              <div class="q" data-answer="a" data-why="Le script produit des pistes rapides et répétables ; le modèle confirme ou écarte chacune en lisant le code (un subscribe peut être une fuite ou un appel HTTP qui se termine).">
+                <fieldset><legend>verifs.mjs remonte « subscribe() » sur cinq lignes. Que fait le skill ?</legend>
+                  <label><input type="radio" value="a"> Il confirme ou écarte chaque piste en lisant le code</label>
+                  <label><input type="radio" value="b"> Il transforme les cinq pistes en findings MAJOR</label>
+                  <label><input type="radio" value="c"> Il ignore les pistes, le modèle sait mieux</label>
                 </fieldset>
               </div>
-              <div class="q" data-answer="c" data-why="Les évals restent hors du dossier : elles ne doivent jamais coûter de contexte à l'agent.">
-                <fieldset><legend>Où ranger les tests d'un skill ?</legend>
-                  <label><input type="radio" value="a"> Dans references/, pour que l'agent s'auto-évalue</label>
-                  <label><input type="radio" value="b"> Dans SKILL.md, en fin de fichier</label>
-                  <label><input type="radio" value="c"> À côté du skill (evals/), jamais chargés par l'agent</label>
+              <div class="q" data-answer="b" data-why="Claude Code et Continue lisent .claude/skills ; les six autres harnesses lisent .agents/skills. Le même dossier aux deux endroits couvre les huit.">
+                <fieldset><legend>Ton équipe utilise Claude Code, Codex et Cursor. Où commiter le skill ?</legend>
+                  <label><input type="radio" value="a"> Dans .agents/skills/ seulement : c'est le dossier commun</label>
+                  <label><input type="radio" value="b"> Dans .agents/skills/ et .claude/skills/, identiques</label>
+                  <label><input type="radio" value="c"> Dans le home de chacun</label>
                 </fieldset>
               </div>
             </div>

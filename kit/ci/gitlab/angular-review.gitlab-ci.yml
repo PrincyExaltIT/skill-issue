@@ -35,13 +35,17 @@ angular-review:scan:
 angular-review:ai:
   extends: .angular-review-base
   needs: ["angular-review:scan"]
+  # `rules` replaces the base rules, so the file filter is repeated here. `when: always` keeps the AI review
+  # running when the scan gate fails: that is when it matters most.
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $ANTHROPIC_API_KEY && $GITLAB_REVIEW_TOKEN
+      changes: ["**/*.ts", "**/*.html", "angular.json", "package.json"]
+      when: always
   script:
     - npm install -g @anthropic-ai/claude-code
-    - mkdir -p .claude && cp -r .agents/skills .claude/skills   # Claude Code reads .claude/skills
+    - test -d .claude/skills || (mkdir -p .claude && cp -r .agents/skills .claude/skills)   # Claude Code reads .claude/skills
     - >
-      claude -p "Use the angular-review skill on this merge request. Base: origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+      claude -p "/angular-review Base: origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
       (run scope.mjs with --committed). Application code is read-only."
       --allowedTools "Bash(node:*) Bash(git:*) Read Grep Glob Write"
     - >

@@ -3,81 +3,100 @@
 <link rel="stylesheet" href="../stage.css">
 <style>
   .harness-grid { display: grid; grid-template-columns: repeat(4, auto); gap: 18px 22px; justify-content: center; }
-  .folder { font: 700 40px/1 var(--mono); padding: 22px 30px; border: 2px solid var(--accent); border-radius: 18px; background: #1a0f15; color: var(--ink); }
-  .pipe { display: flex; gap: 18px; align-items: center; justify-content: center; }
-  .stage { font: 700 24px/1.2 var(--mono); padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); }
-  .arrow { color: var(--ink-3); font: 700 30px/1 var(--mono); }
-  .pill { font: 800 22px/1 var(--mono); padding: 10px 16px; border-radius: 999px; }
-  .pill.red { background: #33150f; color: var(--del); } .pill.yellow { background: #2f2810; color: var(--minor); }
+  .folder { font: 700 40px/1 var(--mono); padding: 22px 30px; border: 2px solid var(--accent); border-radius: 18px; background: var(--surface); color: var(--ink); }
+  .step { font: 700 16px/1 var(--mono); padding: 5px 9px; border-radius: 6px; margin-left: 14px; background: var(--surface-2); color: var(--accent); border: 1px solid var(--accent); }
+  .score { display: flex; gap: 20px; align-items: center; }
+  .score .who { width: 150px; flex: none; font: 800 26px/1.1 var(--display); }
+  .score .track { width: 700px; flex: none; height: 46px; border-radius: 12px; background: var(--surface-2); position: relative; overflow: hidden; border: 1px solid var(--line); }
+  .score .track i { position: absolute; left: 0; top: 0; bottom: 0; display: flex; align-items: center; font: 700 15px/1 var(--mono); font-style: normal; padding-left: 12px; white-space: nowrap; }
+  .score .v4 { background: var(--brand); }
+  .score .v0 { background: var(--yellow); color: var(--bg); z-index: 1; }
+  .score .num { width: 130px; flex: none; font: 800 40px/1 var(--display); color: var(--ink); }
+  .pill { font: 800 24px/1 var(--mono); padding: 12px 18px; border-radius: 999px; }
+  .pill.red { background: rgba(255,107,94,.16); color: var(--del); } .pill.green { background: rgba(76,217,160,.16); color: var(--add); }
 </style></head>
-<body data-duration="30">
+<body data-duration="34">
 <div class="brandmark" data-at="0.2">SKILL ISSUE</div>
 
 <!-- 0–3.2 : prompt -->
 <section class="scene" data-at="0" data-dur="0.01" data-until="3.2">
-  <div class="term" style="align-self:flex-start;min-width:900px;font-size:30px;padding:30px 36px"><span class="p">› </span><span data-at="0.4" data-fx="type">fais une review de ma branche</span><span class="cursor" data-pulse></span></div>
+  <div class="term" style="align-self:flex-start;min-width:900px;font-size:30px;padding:30px 36px"><span class="p">› </span><span data-at="0.4" data-fx="type">relis ma branche avant le merge</span><span class="cursor" data-pulse></span></div>
 </section>
 
-<!-- 3.2–7 : the problem -->
+<!-- 3.3–7 : the problem -->
 <section class="scene" data-at="3.3" data-until="7">
   <div class="big" data-at="3.4" data-fx="rise">Ton agent sait coder.</div>
-  <div class="big accent" data-at="4.4" data-fx="rise">Il ne sait pas comment<br>ton équipe code.</div>
+  <div class="big accent" data-at="4.4" data-fx="rise">Il ne sait pas comment<br>ton équipe relit.</div>
 </section>
 
-<!-- 7–10.5 : title -->
+<!-- 7–10.4 : title -->
 <section class="scene center" data-at="7.2" data-until="10.4">
-  <div class="huge" data-at="7.3" data-fx="stretch" data-dur="1.6">SKILL</div>
-  <div class="huge accent" data-at="7.6" data-fx="squeeze" data-dur="1.6">ISSUE</div>
+  <div class="huge" data-at="7.3" data-fx="track" data-dur="1.6">SKILL</div>
+  <div class="huge accent" data-at="7.6" data-fx="zoom" data-dur="1.6">ISSUE</div>
 </section>
 
-<!-- 10.5–15.5 : a folder -->
-<section class="scene" data-at="10.6" data-until="15.4">
+<!-- 10.5–16 : build your own -->
+<section class="scene" data-at="10.6" data-until="15.9">
+  <div class="mid" data-at="10.7" data-fx="rise">Construis <span class="accent">le tien</span>.</div>
   <div class="tree">
-    <div data-at="10.8" data-fx="slide-l">angular-review/</div>
-    <div data-at="11.3" data-fx="slide-l">├─ SKILL.md <span class="lv l1" data-at="12.6" data-fx="pop">N1 toujours</span> <span class="lv l2" data-at="13.0" data-fx="pop">N2 au déclenchement</span></div>
-    <div data-at="11.6" data-fx="slide-l">├─ scripts/ <span class="lv lx" data-at="13.4" data-fx="pop">exécutés</span></div>
-    <div data-at="11.9" data-fx="slide-l">├─ references/ <span class="lv l3" data-at="13.8" data-fx="pop">N3 à la demande</span></div>
-    <div data-at="12.2" data-fx="slide-l">└─ assets/</div>
+    <div data-at="11.2" data-fx="slide-l">revue-angular/</div>
+    <div data-at="11.6" data-fx="slide-l">├─ SKILL.md <span class="step" data-at="11.8" data-fx="pop">v0 · dix lignes</span></div>
+    <div data-at="12.3" data-fx="slide-l">├─ assets/rapport.md <span class="step" data-at="12.5" data-fx="pop">v1 · procédure</span></div>
+    <div data-at="13.0" data-fx="slide-l">├─ references/ <span class="step" data-at="13.2" data-fx="pop">v2 · tes règles</span></div>
+    <div data-at="13.7" data-fx="slide-l">├─ scripts/ <span class="step" data-at="13.9" data-fx="pop">v3 · le script trouve</span></div>
+    <div data-at="14.4" data-fx="slide-l">├─ assets/exemples.md <span class="step" data-at="14.6" data-fx="pop">v4 · savoir dire non</span></div>
+    <div data-at="15.0" data-fx="slide-l">└─ evals/ <span class="step" data-at="15.2" data-fx="pop">v5 · testé, partagé</span></div>
   </div>
 </section>
-<div class="cap" data-at="10.8" data-until="15.3">Un skill n'est pas un prompt. C'est un dossier qui se versionne, se teste et s'installe.</div>
+<div class="cap" data-at="11.0" data-until="15.8">Pas un prompt : un dossier qui grandit, étape par étape.</div>
 
-<!-- 15.5–20.5 : six harnesses -->
-<section class="scene center" data-at="15.6" data-until="20.4">
-  <div class="folder" data-at="15.7" data-fx="pop">angular-review/</div>
+<!-- 16–22.2 : measured -->
+<section class="scene" data-at="16.0" data-until="22.1" style="gap:34px">
+  <div class="eyebrow" data-at="16.1" data-fx="fade">Problèmes trouvés sur une vraie PR · v0 → v4</div>
+  <div class="score" data-at="16.4" data-fx="rise">
+    <span class="who">Haiku 5.5</span>
+    <span class="track"><i class="v4" style="width:93%" data-at="17.6" data-fx="grow" data-dur="1.8"></i><i class="v0" style="width:22%">v0 · 22 %</i></span>
+    <span class="num" data-at="19.2" data-fx="pop">93 %</span>
+  </div>
+  <div class="score" data-at="17.0" data-fx="rise">
+    <span class="who">Opus 5.5</span>
+    <span class="track"><i class="v4" style="width:96%" data-at="18.2" data-fx="grow" data-dur="1.6"></i><i class="v0" style="width:74%">v0 · 74 % avec dix lignes</i></span>
+    <span class="num" data-at="19.6" data-fx="pop">96 %</span>
+  </div>
+</section>
+<div class="cap" data-at="16.4" data-until="22.0">Mesuré, pas promis : avec tes règles, le petit modèle rejoint le grand.</div>
+
+<!-- 22.2–26.6 : shared -->
+<section class="scene center" data-at="22.3" data-until="26.5">
+  <div class="folder" data-at="22.4" data-fx="pop">revue-angular/</div>
   <div class="harness-grid">
-    <span class="chip" data-at="16.4" data-fx="rise">Claude Code</span>
-    <span class="chip" data-at="16.7" data-fx="rise">Codex</span>
-    <span class="chip" data-at="17.0" data-fx="rise">GitHub Copilot</span>
-    <span class="chip" data-at="17.3" data-fx="rise">Cursor</span>
-    <span class="chip" data-at="17.6" data-fx="rise">Gemini / Antigravity</span>
-    <span class="chip" data-at="17.9" data-fx="rise">OpenCode</span>
-    <span class="chip" data-at="18.2" data-fx="rise">Kilo Code</span>
-    <span class="chip" data-at="18.5" data-fx="rise">Continue</span>
+    <span class="chip" data-at="22.9" data-fx="rise">Claude Code</span>
+    <span class="chip" data-at="23.1" data-fx="rise">Codex</span>
+    <span class="chip" data-at="23.3" data-fx="rise">GitHub Copilot</span>
+    <span class="chip" data-at="23.5" data-fx="rise">Cursor</span>
+    <span class="chip" data-at="23.7" data-fx="rise">Gemini / Antigravity</span>
+    <span class="chip" data-at="23.9" data-fx="rise">OpenCode</span>
+    <span class="chip" data-at="24.1" data-fx="rise">Kilo Code</span>
+    <span class="chip" data-at="24.3" data-fx="rise">Continue</span>
   </div>
 </section>
-<div class="cap" data-at="15.8" data-until="20.3">Un seul dossier. Huit harnesses. Zéro ligne réécrite.</div>
+<div class="cap" data-at="22.5" data-until="26.4">Commité dans le dépôt : toute l'équipe l'a, quel que soit son outil.</div>
 
-<!-- 20.5–25.5 : the chain -->
-<section class="scene" data-at="20.6" data-until="25.4">
-  <div class="pipe">
-    <span class="stage" data-at="20.7" data-fx="rise">angular-review</span><span class="arrow" data-at="21.0">→</span>
-    <span class="stage" data-at="21.2" data-fx="rise">review-fix</span><span class="arrow" data-at="21.5">→</span>
-    <span class="stage" data-at="21.7" data-fx="rise">pr-handoff</span><span class="arrow" data-at="22.0">→</span>
-    <span class="stage" data-at="22.2" data-fx="rise">CI</span>
+<!-- 26.6–30.4 : bonus -->
+<section class="scene center" data-at="26.7" data-until="30.3" style="gap:30px">
+  <div class="mid" data-at="26.8" data-fx="rise"><span class="accent">+</span> dans le cloud, sur chaque PR</div>
+  <div class="row" style="justify-content:center">
+    <span class="pill red" data-at="27.4" data-fx="pop">✗ porte fermée · 3 BLOCKER</span>
+    <span class="pill green" data-at="27.9" data-fx="pop">revue IA en commentaire</span>
   </div>
-  <div class="row" style="justify-content:center;margin-top:30px">
-    <span class="pill red" data-at="22.6" data-fx="pop" data-until="24.0">REQUEST_CHANGES · 8 BLOCKER</span>
-    <span class="pill yellow" data-at="24.1" data-fx="pop">21 commits plus tard · 1 BLOCKER</span>
-  </div>
+  <div class="mid" data-at="28.7" data-fx="rise"><span class="accent">+</span> le package, prêt à l'emploi</div>
 </section>
-<div class="cap" data-at="20.8" data-until="25.3">Des skills qui se passent le relais, du diff jusqu'à la CI.</div>
 
-<!-- 25.5–30 : end card -->
-<section class="scene center" data-at="25.6">
-  <div class="big" data-at="25.7" data-fx="stretch" data-dur="1.2">SKILL ISSUE</div>
-  <div class="mid dim" data-at="26.4" data-fx="rise">3 modules · 1 lab · 1 kit</div>
-  <div class="eyebrow" data-at="27.0" data-fx="fade">Angular 22 · Claude Code · Codex · Copilot · Cursor · oct. 2026</div>
+<!-- 30.4–34 : end card -->
+<section class="scene center" data-at="30.5">
+  <div class="big" data-at="30.6" data-fx="track" data-dur="1.2">SKILL ISSUE</div>
+  <div class="mid dim" data-at="31.3" data-fx="rise">3 modules · 8 ateliers · 2 bonus</div>
+  <div class="eyebrow" data-at="31.9" data-fx="fade">Angular 22 · Claude Code · Codex · Copilot · Cursor · oct. 2026</div>
 </section>
 
 <script src="../engine.js"></script>

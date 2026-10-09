@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>v3 — le flux d'équipe</title>
+<link rel="stylesheet" href="../stage.css">
+<style>
+  /* paper = a file on disk (REVIEW.md, PR.md) */
+  .doc { background: var(--paper); color: var(--paper-ink); border-radius: 14px; padding: 18px 28px 20px; font: 400 19px/1.45 var(--body); display: grid; gap: 6px; box-shadow: 0 30px 80px -30px #000; }
+  .doc .file { display: flex; justify-content: space-between; align-items: center; font: 600 16px/1 var(--mono); color: var(--paper-dim); }
+  .doc .tag { font: 700 13px/1 var(--mono); padding: 5px 9px; border-radius: 6px; background: var(--brand); color: #fff; }
+  .doc .verdict { font: 700 20px/1.3 var(--body); color: #B42318; }
+  .doc h4 { margin: 8px 0 0; font: 700 19px/1.3 var(--body); }
+  .doc p { margin: 0; }
+  .doc .sev { font-size: 14px; padding: 5px 8px; }
+  .doc .sev.blocker { color: #C52A1F; }
+  .find { display: grid; grid-template-columns: 108px 82px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 8px 0; border-top: 1px solid var(--paper-line); }
+  .find .id { font: 700 17px/1 var(--mono); }
+  .find .t { font: 500 19px/1.3 var(--body); }
+  .find .at { font: 500 16px/1 var(--mono); color: var(--paper-dim); }
+  .log { display: grid; grid-template-columns: 440px 1fr; gap: 0 18px; }
+  .ok { color: var(--add); font-weight: 700; } .ko { color: var(--del); font-weight: 700; }
+  .stop { display: flex; gap: 16px; align-items: center; }
+  .stop .pill { font: 800 20px/1 var(--mono); padding: 11px 16px; border-radius: 999px; background: rgba(255,107,94,.16); color: var(--del); }
+  .stop .why { font: 500 21px/1.35 var(--body); color: var(--ink-2); }
+  .src { display: grid; gap: 14px; width: 400px; }
+  .src .term { padding: 14px 18px; font-size: 18px; }
+  .src .chip { font-size: 18px; padding: 14px 16px; }
+  .arrow { align-self: center; font: 800 52px/1 var(--display); color: var(--accent); }
+  .pr { width: 590px; }
+  .links { display: grid; grid-template-columns: 1fr 140px 1fr 140px 1fr 140px; align-items: stretch; gap: 0; width: 1070px; }
+  .skill { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 16px 14px; display: grid; gap: 10px; align-content: start; }
+  .skill b { font: 700 18px/1.2 var(--mono); white-space: nowrap; }
+  .skill .what { font: 400 18px/1.35 var(--body); color: var(--ink-2); }
+  .skill .h { font: 600 16px/1 var(--mono); color: var(--brand-text); padding: 6px 10px; border-radius: 8px; border: 1px solid var(--brand); justify-self: start; }
+  .contract { display: grid; align-content: center; justify-items: center; gap: 8px; text-align: center; padding: 0 8px; }
+  .contract .f { font: 700 18px/1.2 var(--mono); color: var(--yellow); }
+  .contract .line { height: 3px; width: 100%; background: var(--pink); transform-origin: left center; border-radius: 2px; position: relative; }
+  .contract .line::after { content: ""; position: absolute; right: -2px; top: -6px; border-left: 12px solid var(--pink); border-top: 7.5px solid transparent; border-bottom: 7.5px solid transparent; }
+  .contract .w { font: 500 15px/1.3 var(--body); color: var(--ink-3); }
+</style></head>
+<body data-duration="60">
+<div class="brandmark">SKILL ISSUE · 03</div>
+
+<!-- A · 0–14 · la review -->
+<div class="chapter" data-at="0.2" data-until="13.6">01 · la review</div>
+<section class="scene" data-at="0" data-dur="0.01" data-until="13.7" style="gap:18px">
+  <div class="mid" data-at="0.3" data-fx="rise"><span class="accent">revue-angular</span> écrit le rapport.</div>
+  <div class="term" style="padding:12px 22px;font-size:19px;width:760px">
+    <div><span class="p">› </span><span data-at="1.2" data-fx="type" data-dur="0.7">/revue-angular</span></div>
+    <div class="o" data-at="2.6">→ .review/REVIEW.md écrit</div>
+  </div>
+  <div class="doc" data-at="3.4" data-fx="rise">
+    <div class="file"><span>.review/REVIEW.md</span><span class="tag" data-at="10.2" data-fx="pop">sortie de l'étape 1</span></div>
+    <div class="verdict" data-at="4.2" data-fx="fade">Verdict : à corriger</div>
+    <div class="find" data-at="5.0" data-fx="slide-l"><span class="sev blocker">BLOCKER</span><span class="id">SIG-01</span><span class="t">Signal testé sans être appelé</span><span class="at">talk-card.ts:28</span></div>
+    <div class="find" data-at="6.6" data-fx="slide-l"><span class="sev blocker">BLOCKER</span><span class="id">SEC-01</span><span class="t">Sanitizer contourné</span><span class="at">speaker-spotlight.ts:34</span></div>
+    <div class="find" data-at="8.2" data-fx="slide-l"><span class="sev blocker">BLOCKER</span><span class="id">A11Y-02</span><span class="t">Clic sur un élément non interactif</span><span class="at">speaker-spotlight.html:22</span></div>
+  </div>
+</section>
+<div class="cap" data-at="4.6" data-until="13.5">Un rapport que n'importe qui peut lire : gravité, identifiant, fichier:ligne.</div>
+
+<!-- B · 14–30 · la correction -->
+<div class="chapter" data-at="14.2" data-until="29.6">02 · la correction</div>
+<section class="scene" data-at="14.0" data-until="29.7" style="gap:20px">
+  <div class="mid" data-at="14.3" data-fx="rise"><span class="accent">corrige-review</span> : un finding, un commit.</div>
+  <div class="term" style="font-size:19px;padding:18px 24px">
+    <div><span class="p">› </span><span data-at="15.2" data-fx="type" data-dur="0.7">/corrige-review</span></div>
+    <div class="log">
+      <span data-at="16.8" data-fx="fade">SIG-01 · talk-card.ts:28</span><span data-at="17.8" data-fx="fade"><span class="ok">✓ tests</span>  <span class="o">commit</span> fix(SIG-01): appelle le signal</span>
+      <span data-at="19.4" data-fx="fade">SEC-01 · speaker-spotlight.ts:34</span><span data-at="20.4" data-fx="fade"><span class="ok">✓ tests</span>  <span class="o">commit</span> fix(SEC-01): sanitizer par défaut</span>
+      <span data-at="22.0" data-fx="fade">A11Y-02 · speaker-spotlight.html:22</span><span data-at="23.2" data-fx="fade"><span class="ko">✗ tests rouges</span>  <span class="o">rien n'est commité</span></span>
+    </div>
+  </div>
+  <div class="stop" data-at="25.0" data-fx="rise"><span class="pill">■ ARRÊT</span><span class="why" data-at="25.6" data-fx="fade">Test rouge : il s'arrête et explique, il ne force pas.</span></div>
+  <div class="dim" data-at="27.4" data-fx="fade" style="font:500 20px/1.4 var(--body)">A11Y-02 revient à un humain.</div>
+</section>
+<div class="cap" data-at="15.6" data-until="29.5">Le plus petit changement, un test, un commit. Jamais un test rouge contourné.</div>
+
+<!-- C · 30–46 · le récit -->
+<div class="chapter" data-at="30.2" data-until="45.6">03 · le récit</div>
+<section class="scene" data-at="30.0" data-until="45.7" style="gap:22px">
+  <div class="mid" data-at="30.3" data-fx="rise"><span class="accent">raconte-branche</span> écrit le récit.</div>
+  <div class="row" style="gap:20px;align-items:center;flex-wrap:nowrap">
+    <div class="src">
+      <div class="term" data-at="31.4" data-fx="slide-l"><div><span class="p">$ </span>git log --oneline</div><div class="o">fix(SEC-01): sanitizer par défaut</div><div class="o">fix(SIG-01): appelle le signal</div></div>
+      <div class="chip" data-at="32.4" data-fx="slide-l">.review/REVIEW.md</div>
+    </div>
+    <div class="arrow" data-at="33.4" data-fx="fade">→</div>
+    <div class="doc pr" data-at="33.8" data-fx="rise">
+      <div class="file"><span>.review/PR.md</span><span class="tag" data-at="42.0" data-fx="pop">sortie de l'étape 3</span></div>
+      <h4 data-at="34.6" data-fx="fade">Ce qui change</h4>
+      <p data-at="35.2" data-fx="fade">SIG-01 et SEC-01 corrigés, un commit chacun.</p>
+      <h4 data-at="37.2" data-fx="fade">Reste ouvert</h4>
+      <p data-at="37.8" data-fx="fade" style="color:#B42318;font-weight:600">A11Y-02 : tests rouges, décision humaine.</p>
+      <h4 data-at="39.8" data-fx="fade">Comment tester</h4>
+      <p data-at="40.4" data-fx="fade">npm test</p>
+    </div>
+  </div>
+</section>
+<div class="cap" data-at="31.8" data-until="45.5">Le récit vient des faits : les commits et le rapport, pas la conversation.</div>
+
+<!-- D · 46–60 · le hand-off -->
+<div class="chapter" data-at="46.2" data-until="53.6">04 · le hand-off</div>
+<section class="scene" data-at="46.0" data-until="53.9" style="gap:30px">
+  <div class="mid" data-at="46.3" data-fx="rise">Chaque étape lit un fichier,<br><span class="accent">et en écrit un autre.</span></div>
+  <div class="links">
+    <div class="skill" data-at="47.6" data-fx="rise"><b>revue-angular</b><span class="what">lit le diff</span><span class="h" data-at="48.2" data-fx="pop">Claude Code</span></div>
+    <div class="contract" data-at="48.0"><span class="f">REVIEW.md</span><span class="line" data-at="48.2" data-fx="grow" data-dur="0.6"></span><span class="w">id · fichier:ligne · gravité</span></div>
+    <div class="skill" data-at="48.8" data-fx="rise"><b>corrige-review</b><span class="what">corrige, teste, commite</span><span class="h" data-at="49.4" data-fx="pop">Codex</span></div>
+    <div class="contract" data-at="49.6"><span class="f">commits</span><span class="line" data-at="49.8" data-fx="grow" data-dur="0.6"></span><span class="w">un par finding</span></div>
+    <div class="skill" data-at="50.4" data-fx="rise"><b>raconte-branche</b><span class="what">raconte la branche</span><span class="h" data-at="51.0" data-fx="pop">Cursor</span></div>
+    <div class="contract" data-at="51.2"><span class="f">PR.md</span><span class="line" data-at="51.4" data-fx="grow" data-dur="0.6"></span><span class="w">pour le relecteur</span></div>
+  </div>
+  <div class="dim" data-at="52.2" data-fx="fade" style="font:500 22px/1.4 var(--body)">Aucun skill n'appelle l'autre : n'importe quel outil reprend à l'étape suivante.</div>
+</section>
+<div class="cap" data-at="47.0" data-until="53.5">Trois contrats sur disque : REVIEW.md, les commits, PR.md.</div>
+<section class="scene center" data-at="54.2" style="gap:18px">
+  <div class="eyebrow" data-at="54.4" data-fx="fade">Skill Issue</div>
+  <div class="big" data-at="54.7" data-fx="track" data-dur="1.1" style="font-size:58px">Le flux d'équipe <span class="accent">· module 3</span></div>
+  <div class="mono dim" data-at="55.8" data-fx="rise" style="font-size:22px">revue-angular → corrige-review → raconte-branche</div>
+</section>
+
+<script src="../engine.js"></script>
+</body></html>

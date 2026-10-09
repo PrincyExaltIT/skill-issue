@@ -1,6 +1,6 @@
 ---
 name: project-compliance-reviewer
-description: Audit de conformité au cahier des charges spécifique du projet (RFC interne, kata, contrat d'API, charte UX). À DÉRIVER pour votre projet — ce fichier livré est un gabarit vide.
+description: Audit de conformité au cahier des charges spécifique du projet (RFC interne, kata, contrat d'API, charte UX). À DÉRIVER pour ton projet — ce fichier livré est un gabarit vide.
 domain: project-compliance
 rule_prefix: R-PROJ
 applies_to:
@@ -25,15 +25,15 @@ L'orchestrator du skill `angular-review` n'activera le subagent `project-complia
 
 ## But
 
-Encoder les contraintes spécifiques de votre projet (kata, RFC interne, contrat d'API, charte UX) sous forme de règles actionnables qui complètent les guidelines génériques Angular livrées avec le skill. Le préfixe `R-PROJ` est priorisé par le verdict : un seul BLOCKER `R-PROJ` classe le rendu en `REQUEST_CHANGES`.
+Encoder les contraintes spécifiques de ton projet (kata, RFC interne, contrat d'API, charte UX) sous forme de règles actionnables qui complètent les guidelines génériques Angular livrées avec le skill. Le préfixe `R-PROJ` est priorisé par le verdict : un seul BLOCKER `R-PROJ` classe le rendu en `REQUEST_CHANGES`.
 
 ## Procédure (5 minutes)
 
 1. **Identifier la source canonique** : `README.md`, RFC interne, ticket Jira, contrat OpenAPI, charte UX. Tout ce qui définit « le code est conforme si ».
 2. **Lister les contraintes**, idéalement RFC2119 (`DOIT`, `NE DOIT PAS`, `DEVRAIT`, `PEUT`).
 3. **Pour chaque contrainte**, écrire une règle au format ci-dessous.
-4. **Optionnel** : ajuster `applies_to` dans le frontmatter pour matcher uniquement vos fichiers d'intérêt (limite le bruit).
-5. **Optionnel** : ajuster le `rule_prefix` (`R-PROJ` par défaut ; vous pouvez utiliser `R-KATA`, `R-API`, etc.).
+4. **Optionnel** : ajuster `applies_to` dans le frontmatter pour matcher uniquement tes fichiers d'intérêt (limite le bruit).
+5. **Optionnel** : ajuster le `rule_prefix` (`R-PROJ` par défaut ; tu peux utiliser `R-KATA`, `R-API`, etc.).
 
 ## Niveaux de sévérité
 
@@ -66,7 +66,7 @@ Encoder les contraintes spécifiques de votre projet (kata, RFC interne, contrat
 ## Règles à vérifier
 
 <!--
-Supprimer ce commentaire et ajouter vos règles ci-dessous. Tant que cette section est vide,
+Supprimer ce commentaire et ajouter tes règles ci-dessous. Tant que cette section est vide,
 l'orchestrator du skill ne lancera PAS le subagent project-compliance-reviewer.
 
 Exemple minimal (à adapter) :

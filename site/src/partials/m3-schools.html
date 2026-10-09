@@ -1,18 +1,19 @@
             <h2>Les écoles du moment : comment les autres enchaînent leurs skills</h2>
-            <p class="kicker">Trois approches dominent fin 2026. Elles se disputent une question : qui tient le processus, le framework ou l'ingénieur ?</p>
+            <p class="kicker">Quatre façons d'enchaîner des skills, relevées en octobre 2026. Elles se disputent une question : qui tient le processus, le framework ou l'ingénieur ?</p>
             <div class="grid-2">
               <div class="rc"><span class="av" aria-hidden="true">MP</span><div>
                 <p class="who"><b>Matt Pocock</b> · <a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a> · MIT</p>
-                <p>Des skills petits, faciles à adapter et composables, qui laissent l'ingénieur aux commandes. Une chaîne typique : <code>grill-me</code> (un interrogatoire sans relâche pour durcir un plan) → <code>to-spec</code> → <code>to-tickets</code> → <code>implement</code> ou <code>tdd</code> → <code>code-review</code> → <code>handoff</code>.</p>
-                <p>Son <code>code-review</code> sépare deux axes jamais fusionnés : <b>Standards</b> (le code respecte-t-il les règles du repo ?) et <b>Spec</b> (fait-il ce que le ticket demandait ?), chacun dans un sous-agent. Son <code>handoff</code> compacte la conversation en un document pour l'agent suivant, avec les skills à appeler.</p>
-                <p>Détail parlant : <code>to-spec</code>, <code>to-tickets</code> et <code>implement</code> sont déclarés manuels (<code>disable-model-invocation: true</code>). C'est l'humain qui fait avancer la chaîne d'une étape à l'autre.</p>
+                <p>Des skills petits et composables, et l'ingénieur aux commandes. Le motif : durcir le plan en se faisant interroger, l'écrire en spec, le découper en tickets, implémenter en TDD, puis relire. Au 8 octobre 2026, la chaîne s'appelait <code>grill-me</code> → <code>to-spec</code> → <code>to-tickets</code> → <code>implement</code>. Les noms bougent vite (<code>to-prd</code> est devenu <code>to-spec</code>, <code>review</code> est devenu <code>code-review</code>) : retiens le motif, et regarde le dépôt pour les noms du jour.</p>
+                <p>Son <code>code-review</code> sépare deux axes jamais fusionnés : <b>Standards</b> (le code respecte-t-il les règles du repo ?) et <b>Spec</b> (fait-il ce que le ticket demandait ?), chacun dans un sous-agent. Et il saute ce que l'outillage applique déjà.</p>
+                <p>Une règle de composition : un skill manuel peut appeler des skills automatiques, jamais un autre skill manuel. C'est l'humain qui fait avancer la chaîne d'une étape manuelle à la suivante.</p>
               </div></div>
               <!-- @include partials/m3-schools-others.html -->
             </div>
-            <h3>Ce que le kit en retient</h3>
+            <h3>Ce que tu en retiens pour ton skill</h3>
             <ul>
-              <li><b>Petit et composable</b> (Pocock) : quatre skills d'une étape chacun, qu'on peut utiliser seuls.</li>
-              <li><b>Des artefacts comme contrats</b> (spec-driven) : <code>findings.json</code>, <code>FIXES.md</code>, <code>PR_BODY.md</code>.</li>
-              <li><b>Des axes séparés</b> (Pocock) : un reviewer par domaine, et les règles du projet au-dessus des règles génériques. L'axe « Spec » est le reviewer projet : on y encode le ticket ou le cahier des charges.</li>
-              <li><b>Capitaliser</b> (compound engineering) : chaque candidat écarté garde sa raison ; ces raisons nourrissent les règles et les evals de la version suivante.</li>
+              <li><b>Petit et composable</b> (Pocock) : ton skill fait une étape, relire, et laisse corriger et raconter à <code>corrige-review</code> et <code>raconte-branche</code>.</li>
+              <li><b>L'humain fait avancer la chaîne</b> (Pocock) : <code>corrige-review</code> est manuel, tu le lances quand tu as lu le rapport.</li>
+              <li><b>Des artefacts comme contrats</b> (spec-driven) : <code>.review/REVIEW.md</code>, avec un emplacement, une règle et une gravité par finding, se lit par un humain comme par le skill suivant.</li>
+              <li><b>Des axes séparés</b> (Pocock) : un fichier de règles par domaine, et les conventions du projet (<code>AGENTS.md</code>) au-dessus des règles génériques. Pour vérifier le respect d'une spec ou d'un ticket, un axe à part.</li>
+              <li><b>Capitaliser</b> (compound engineering) : chaque faux positif devient un piège dans <code>exemples.md</code>, chaque remarque répétée en review humaine devient une règle.</li>
             </ul>

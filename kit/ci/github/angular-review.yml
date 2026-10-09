@@ -3,7 +3,7 @@
 #   1. scan  — deterministic, no AI, no secret. Annotates the PR diff and uploads SARIF. Fails only on high-confidence BLOCKERs.
 #   2. ai-review — runs the full angular-review skill with Claude Code, then posts .review/REVIEW.md as a PR comment.
 #      Skipped automatically when the ANTHROPIC_API_KEY secret is not configured.
-# Prerequisite: the skill is versioned in the repo (node kit/install.mjs --target . --harness claude,agents).
+# Prerequisite: the skill is versioned in the repo (node kit/install.mjs --target . --harness claude,codex).
 
 name: angular-review
 
@@ -59,6 +59,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write     # post the report as a PR comment
+      id-token: write          # claude-code-action authenticates through the Claude GitHub App (OIDC)
     env:
       HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
     steps:
@@ -72,13 +73,19 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # A repo skill is invoked by name; Claude Code reads it from .claude/skills/ in the checkout.
           prompt: |
-            Use the angular-review skill on this pull request.
+            /angular-review
             Base branch: origin/${{ github.base_ref }} (run scope.mjs with --committed --base origin/${{ github.base_ref }}).
-            Application code is read-only. When .review/REVIEW.md is rendered, post it as ONE comment:
-            gh pr comment ${{ github.event.pull_request.number }} --body-file .review/REVIEW.md
+            Application code is read-only.
           claude_args: >-
-            --allowedTools "Bash(node:*),Bash(git:*),Bash(gh pr comment:*),Read,Grep,Glob,Write"
+            --allowedTools "Bash(node:*),Bash(git:*),Read,Grep,Glob,Write"
+      # Posting is a plain step with the workflow token: deterministic, and no GitHub credential inside the agent.
+      - if: env.HAS_KEY == 'true'
+        name: Publier le rapport
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr comment ${{ github.event.pull_request.number }} --body-file .review/REVIEW.md
 
 # Variante Codex : remplacer l'étape claude-code-action par openai/codex-action (clé OPENAI_API_KEY),
 # avec le même prompt — le skill est lu depuis .agents/skills/ par Codex. Voir kit/README.md.

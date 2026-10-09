@@ -7,19 +7,20 @@
   .box b { font: 700 24px/1.2 var(--mono); }
   .box .out { font: 500 18px/1.35 var(--mono); color: var(--add); }
   .box .what { font: 400 18px/1.35 var(--body); color: var(--ink-2); }
-  .baton { position: absolute; top: -26px; left: 0; font: 700 17px/1 var(--mono); padding: 8px 12px; border-radius: 999px; background: var(--accent); color: #12060a; box-shadow: 0 0 30px -4px var(--accent); }
-  .diffcard { font: 400 21px/1.6 var(--mono); border-radius: 14px; overflow: hidden; border: 1px solid #1c2533; }
-  .diffcard div { padding: 2px 18px; background: #080b10; }
-  .diffcard .d { background: #2a1210; color: #ffb3a8; }
-  .diffcard .a { background: #0f2a1c; color: #a8f0c8; }
+  .ride { position: absolute; top: -26px; left: 0; }
+  .baton { position: static; display: inline-block; font: 700 17px/1 var(--mono); padding: 8px 12px; border-radius: 999px; background: var(--accent); color: var(--bg); box-shadow: 0 0 30px -4px var(--accent); }
+  .diffcard { font: 400 21px/1.6 var(--mono); border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+  .diffcard div { padding: 2px 18px; background: var(--term); }
+  .diffcard .d { background: rgba(255,107,94,.14); color: #ffb3a8; }
+  .diffcard .a { background: rgba(76,217,160,.14); color: #a8f0c8; }
   .progress { height: 18px; border-radius: 9px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }
   .progress i { display: block; height: 100%; background: var(--add); }
-  .doc { background: #f4f6f9; color: #10151c; border-radius: 14px; padding: 22px 28px; font: 400 20px/1.5 var(--body); display: grid; gap: 8px; box-shadow: 0 30px 80px -30px #000; }
+  .doc { background: var(--paper); color: var(--paper-ink); border-radius: 14px; padding: 22px 28px; font: 400 20px/1.5 var(--body); display: grid; gap: 8px; box-shadow: 0 30px 80px -30px #000; }
   .doc h4 { margin: 6px 0 0; font: 700 22px/1.2 var(--body); }
   .checks { display: grid; gap: 12px; }
   .check { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font: 500 21px/1.3 var(--body); }
   .ok { color: var(--add); font-weight: 800; } .skip { color: var(--ink-3); font-weight: 800; }
-  .anno { border-left: 4px solid var(--major); background: #2a1c10; padding: 12px 16px; border-radius: 0 10px 10px 0; font: 500 19px/1.4 var(--mono); color: #ffd9b8; }
+  .anno { border-left: 4px solid var(--major); background: rgba(255,154,82,.14); padding: 12px 16px; border-radius: 0 10px 10px 0; font: 500 19px/1.4 var(--mono); color: #ffd9b8; }
 </style></head>
 <body data-duration="70">
 <div class="brandmark">SKILL ISSUE · 03</div>
@@ -33,7 +34,7 @@
     <div class="box" data-at="2.4" data-fx="rise"><b>review-fix</b><span class="what">corrige un par un</span><span class="out">statuts<br>FIXES.md</span></div>
     <div class="box" data-at="2.8" data-fx="rise"><b>pr-handoff</b><span class="what">raconte la branche</span><span class="out">PR_BODY.md<br>HANDOFF.md</span></div>
     <div class="box" data-at="3.2" data-fx="rise"><b>CI</b><span class="what">rejoue le scan</span><span class="out">annotations<br>Code Quality</span></div>
-    <span class="baton" data-at="4.5" data-fx="pop" id="baton">findings.json</span>
+    <span class="ride" id="baton"><span class="baton" data-at="4.5" data-fx="pop">findings.json</span></span>
   </div>
 </section>
 <div class="cap" data-at="5.0" data-until="17.5">Aucun skill n'importe le code d'un autre : ils partagent un format de fichier, et chacun peut évoluer seul.</div>
@@ -66,7 +67,7 @@
 <div class="chapter" data-at="36.0" data-until="51.6">03 · pr-handoff</div>
 <section class="scene" data-at="36.0" data-until="51.7" style="gap:18px">
   <div class="doc">
-    <div style="font:600 15px/1 var(--mono);color:#6d7889" data-at="36.3">.review/PR_BODY.md</div>
+    <div style="font:600 15px/1 var(--mono);color:var(--paper-dim)" data-at="36.3">.review/PR_BODY.md</div>
     <div data-at="36.6" data-fx="fade" style="font-weight:700;color:#b42318">⚠ À ne pas merger en l'état</div>
     <h4 data-at="36.8" data-fx="rise">Pourquoi</h4><div data-at="37.3" data-fx="fade">Une page speaker et un formulaire de proposition de talk, puis 21 commits de correction.</div>
     <h4 data-at="38.4" data-fx="rise">Review automatique</h4><div data-at="38.9" data-fx="fade">Review initiale (Codex) : 🔴 8 BLOCKER · review-fix : 21 corrections · re-review : 🔴 1 BLOCKER, 2 MAJOR</div>
@@ -90,7 +91,7 @@
 <div class="cap" data-at="52.6" data-until="65.4">La porte déterministe est nécessaire, pas suffisante : la review et l'humain restent dans la boucle.</div>
 <section class="scene center" data-at="65.8">
   <div class="mono" data-at="66.0" data-fx="rise" style="font-size:26px">node kit/install.mjs --target ./ton-app</div>
-  <div class="big" data-at="66.6" data-fx="stretch" data-dur="1.0">SKILL ISSUE</div>
+  <div class="big" data-at="66.6" data-fx="track" data-dur="1.0">SKILL ISSUE</div>
 </section>
 
 <script src="../engine.js"></script>

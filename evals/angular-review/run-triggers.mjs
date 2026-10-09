@@ -3,6 +3,7 @@
 // and check whether the model loads the skill. Each query runs --runs times; it "triggers" when the rate ≥ 0.5.
 //
 //   node evals/angular-review/run-triggers.mjs --cwd ../skill-issue-playground [--runs 3] [--model sonnet] [--limit 4] [--only 0,10]
+//   your own skill: --cases .claude/skills/revue-angular/evals/declenchement.json --skill revue-angular
 //
 // Needs the skill installed in <cwd>/.claude/skills. Costs real tokens: start with --limit.
 // The run stops after the first turns (--max-turns 2): we only look at whether the Skill tool was called.
@@ -20,11 +21,12 @@ const runs = Number(arg('runs', 3));
 const limit = Number(arg('limit', Infinity));
 const model = arg('model', null);
 const skill = arg('skill', 'angular-review');
-const set = JSON.parse(readFileSync(join(here, 'triggers.json'), 'utf8'));
+const set = JSON.parse(readFileSync(arg('cases') ? resolve(arg('cases')) : join(here, 'triggers.json'), 'utf8'));
 
+// English keys (kit) or French keys (the course skill's evals/declenchement.json).
 const cases = [
-  ...set.should_trigger.map((q) => ({ q, expected: true })),
-  ...set.should_not_trigger.map((q) => ({ q, expected: false })),
+  ...(set.should_trigger ?? set.doit_declencher).map((q) => ({ q, expected: true })),
+  ...(set.should_not_trigger ?? set.ne_doit_pas_declencher).map((q) => ({ q, expected: false })),
 ].filter((_, i) => !arg('only') || String(arg('only')).split(',').map(Number).includes(i)).slice(0, limit);
 
 let correct = 0;

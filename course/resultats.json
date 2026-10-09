@@ -1,0 +1,301 @@
+{
+  "date": "9 octobre 2026",
+  "pr": "lab/speaker-spotlight → depart : 15 fichiers, +466 −2",
+  "methode": "Un run headless par étape et par modèle, avec la même phrase : « /revue-angular Relis cette branche avant que je la merge sur depart. » Note par emplacement (score.mjs --report) contre le corrigé : 27 problèmes à trouver, 7 leurres.",
+  "modeles": {
+    "opus": {
+      "nom": "Opus 5.5",
+      "harness": "Claude Code 2.1.289",
+      "id": "claude-opus-5-5"
+    },
+    "haiku": {
+      "nom": "Haiku 5.5",
+      "harness": "Claude Code 2.1.289",
+      "id": "claude-haiku-5-5"
+    },
+    "codex": {
+      "nom": "gpt-5.6-sol",
+      "harness": "Codex CLI 0.149.1",
+      "id": "gpt-5.6-sol (effort medium)"
+    }
+  },
+  "runs": {
+    "opus": {
+      "0": {
+        "rappel": 74,
+        "trouves": 20,
+        "attendus": 27,
+        "precision": 84,
+        "cites": 32,
+        "leurres": 1,
+        "manques": [
+          "S03",
+          "S04",
+          "S12",
+          "S14",
+          "S15",
+          "S23",
+          "S30"
+        ],
+        "rapport": "fichier",
+        "secondes": 133,
+        "tours": 10,
+        "cout": 0.71
+      },
+      "1": {
+        "rappel": 74,
+        "trouves": 20,
+        "attendus": 27,
+        "precision": 92,
+        "cites": 25,
+        "leurres": 0,
+        "manques": [
+          "S03",
+          "S04",
+          "S06",
+          "S09",
+          "S12",
+          "S15",
+          "S30"
+        ],
+        "rapport": "fichier",
+        "secondes": 190,
+        "tours": 16,
+        "cout": 0.96
+      },
+      "2": {
+        "rappel": 100,
+        "trouves": 27,
+        "attendus": 27,
+        "precision": 94,
+        "cites": 31,
+        "leurres": 0,
+        "manques": [],
+        "rapport": "fichier",
+        "secondes": 166,
+        "tours": 21,
+        "cout": 0.88
+      },
+      "3": {
+        "rappel": 100,
+        "trouves": 27,
+        "attendus": 27,
+        "precision": 97,
+        "cites": 33,
+        "leurres": 0,
+        "manques": [],
+        "rapport": "fichier",
+        "secondes": 166,
+        "tours": 28,
+        "cout": 0.93
+      },
+      "4": {
+        "rappel": 96,
+        "trouves": 26,
+        "attendus": 27,
+        "precision": 94,
+        "cites": 33,
+        "leurres": 0,
+        "manques": [
+          "S15"
+        ],
+        "rapport": "fichier",
+        "secondes": 234,
+        "tours": 45,
+        "cout": 1.26
+      }
+    },
+    "haiku": {
+      "0": {
+        "rappel": 22,
+        "trouves": 6,
+        "attendus": 27,
+        "precision": 100,
+        "cites": 6,
+        "leurres": 0,
+        "manques": [
+          "S02",
+          "S03",
+          "S04",
+          "S06",
+          "S07",
+          "S08",
+          "S09",
+          "S10",
+          "S11",
+          "S12",
+          "S14",
+          "S15",
+          "S16",
+          "S18",
+          "S19",
+          "S22",
+          "S23",
+          "S24",
+          "S25",
+          "S26",
+          "S30"
+        ],
+        "rapport": "chat",
+        "secondes": 81,
+        "tours": 11,
+        "cout": null
+      },
+      "1": {
+        "rappel": 59,
+        "trouves": 16,
+        "attendus": 27,
+        "precision": 90,
+        "cites": 21,
+        "leurres": 1,
+        "manques": [
+          "S03",
+          "S04",
+          "S06",
+          "S09",
+          "S11",
+          "S12",
+          "S14",
+          "S15",
+          "S23",
+          "S25",
+          "S30"
+        ],
+        "rapport": "fichier",
+        "secondes": 143,
+        "tours": 20,
+        "cout": null
+      },
+      "2": {
+        "rappel": 96,
+        "trouves": 26,
+        "attendus": 27,
+        "precision": 94,
+        "cites": 33,
+        "leurres": 0,
+        "manques": [
+          "S15"
+        ],
+        "rapport": "fichier",
+        "secondes": 174,
+        "tours": 24,
+        "cout": null
+      },
+      "3": {
+        "rappel": 96,
+        "trouves": 26,
+        "attendus": 27,
+        "precision": 97,
+        "cites": 34,
+        "leurres": 0,
+        "manques": [
+          "S30"
+        ],
+        "rapport": "fichier",
+        "secondes": 177,
+        "tours": 37,
+        "cout": null
+      },
+      "4": {
+        "rappel": 93,
+        "trouves": 25,
+        "attendus": 27,
+        "precision": 94,
+        "cites": 31,
+        "leurres": 0,
+        "manques": [
+          "S12",
+          "S15"
+        ],
+        "rapport": "fichier",
+        "secondes": 159,
+        "tours": 33,
+        "cout": null
+      }
+    },
+    "codex": {
+      "5": {
+        "rappel": 93,
+        "trouves": 25,
+        "attendus": 27,
+        "precision": 97,
+        "cites": 30,
+        "leurres": 0,
+        "manques": [
+          "S09",
+          "S30"
+        ],
+        "rapport": "fichier",
+        "secondes": 677,
+        "tours": null,
+        "cout": null
+      }
+    }
+  },
+  "repetitions": {
+    "opus": {
+      "4": {
+        "rappel": 96,
+        "trouves": 26,
+        "attendus": 27,
+        "precision": 97,
+        "cites": 34,
+        "leurres": 0,
+        "manques": [
+          "S15"
+        ],
+        "rapport": "fichier",
+        "secondes": 240,
+        "tours": 31,
+        "cout": 1.2
+      }
+    },
+    "haiku": {
+      "4": {
+        "rappel": 96,
+        "trouves": 26,
+        "attendus": 27,
+        "precision": 97,
+        "cites": 30,
+        "leurres": 0,
+        "manques": [
+          "S09"
+        ],
+        "rapport": "fichier",
+        "secondes": 235,
+        "tours": 35,
+        "cout": null
+      }
+    }
+  },
+  "package": {
+    "claude": {
+      "rappel": 96,
+      "trouves": 26,
+      "attendus": 27,
+      "precision": 100,
+      "cites": 26,
+      "leurres": 0,
+      "manques": [
+        "S04"
+      ],
+      "rapport": "fichier",
+      "secondes": 270,
+      "tours": 33,
+      "cout": 1.59
+    },
+    "codex": {
+      "rappel": 100,
+      "trouves": 27,
+      "attendus": 27,
+      "precision": 100,
+      "cites": 33,
+      "leurres": 0,
+      "manques": [],
+      "rapport": "fichier",
+      "secondes": 720,
+      "tours": null,
+      "cout": null
+    }
+  }
+}

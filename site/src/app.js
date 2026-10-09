@@ -9,11 +9,22 @@
   };
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  // ── Router: #accueil, #m1, #m2, #m3, #lab, #kit, #ressources (+ #m2-l3 deep links) ──
+  // ── Router: the hash is either the id of a view (a <section class="view">: one per tab in the nav) or the id
+  // of any element inside a view (a lesson, a tool, an atelier…). The view to show is the target's nearest .view
+  // ancestor, so deep links work whatever the id prefix is. The set of views comes from the DOM, never from this
+  // file; build.mjs fails the build when an href="#x" has no target inside a view. ──
   const VIEWS = $$('.view').map((v) => v.id);
+  const currentView = () => $('.view:not([hidden])')?.id ?? null;
+  const decodeHash = (h) => { try { return decodeURIComponent(h); } catch { return h; } };
+  function viewFor(id) {
+    if (VIEWS.includes(id)) return id;
+    const el = document.getElementById(id);
+    if (!el) return null;                                   // unknown anchor
+    return el.closest('.view')?.id ?? currentView();        // outside every view (e.g. #main, the skip link): stay where we are
+  }
   function route() {
-    const hash = (location.hash || '#accueil').slice(1);
-    const viewId = VIEWS.find((v) => hash === v || hash.startsWith(v + '-')) ?? 'accueil';
+    const hash = decodeHash((location.hash || '#accueil').slice(1));
+    const viewId = viewFor(hash) ?? 'accueil';
     $$('.view').forEach((v) => { v.hidden = v.id !== viewId; });
     $$('.tab').forEach((t) => { if (t.getAttribute('href') === '#' + viewId) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
     const target = hash !== viewId ? document.getElementById(hash) : null;
@@ -217,23 +228,34 @@
     draw();
   }
 
-  // ── Harness matrix ──
+  // ── Harness matrix: one pane per harness + an at-a-glance status table (measured run vs documented only) ──
+  // `status` is computed by build.mjs from course/resultats.json; the page never decides it.
   const harnesses = data('data-harnesses');
   const hTool = $('#harness');
   if (harnesses && hTool && harnesses.list?.length) {
     const seg = $('.seg', hTool);
     const pane = $('.pane', hTool);
+    const badge = (s) => (s ? `<span class="lvl${s.key === 'mesure' ? ' base' : ''}">${esc(s.label)}</span>` : '');
+    const statusText = (s) => (s ? `${badge(s)} <span class="small muted">${esc(s.detail)}</span>` : '');
     harnesses.list.forEach((h, i) => {
       const b = document.createElement('button');
       b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = h.name;
       b.addEventListener('click', () => show(i));
       seg.append(b);
     });
+    const overview = document.createElement('div');
+    overview.className = 'table-wrap';
+    const pad = 'style="padding:6px 12px"'; // compact rows: eight harnesses must not double the height of the tool
+    overview.innerHTML = `<table><caption class="sr-only">Statut de chaque harness : mesuré par un run, ou documenté seulement</caption>
+      <thead><tr><th scope="col" ${pad}>Harness</th><th scope="col" ${pad}>Statut</th></tr></thead>
+      <tbody>${harnesses.list.map((h) => `<tr><th scope="row" ${pad}>${esc(h.name)}</th><td ${pad}>${badge(h.status)}${h.status?.short ? ` <span class="small muted">${esc(h.status.short)}</span>` : ''}</td></tr>`).join('')}</tbody></table>`;
+    hTool.append(overview);
     function show(i) {
       $$('button', seg).forEach((b, j) => b.setAttribute('aria-selected', String(i === j)));
       const h = harnesses.list[i];
       const row = (k, v) => (v ? `<tr><th scope="row">${k}</th><td>${v}</td></tr>` : '');
       pane.innerHTML = `<div class="table-wrap"><table><tbody>
+        ${row('Statut', statusText(h.status))}
         ${row('Support SKILL.md', esc(h.support))}
         ${row('Skills projet', (h.project || []).map((p) => `<code>${esc(p)}</code>`).join('<br>'))}
         ${row('Skills utilisateur', (h.user || []).map((p) => `<code>${esc(p)}</code>`).join('<br>'))}
@@ -260,7 +282,7 @@
       const ok = c.yes === yes;
       done++; if (ok) good++;
       fb.textContent = ok ? (c.yes ? '✓ Oui : la description couvre ce cas.' : '✓ Non : hors périmètre, un autre skill (ou aucun) doit répondre.')
-        : (c.yes ? '✗ Si : la description nomme ce déclencheur (review, audit, PR/MR, « is it good Angular »).' : '✗ Non : la description ne doit pas capter ce cas — sinon le skill se déclenche à tort.');
+        : (c.yes ? '✗ Si : la description nomme ce déclencheur (relire, reviewer, vérifier, PR/MR, avant un merge).' : '✗ Non : la description ne doit pas capter ce cas — sinon le skill se déclenche à tort.');
       score.textContent = `${good}/${done}`;
       i++;
       setTimeout(next, 1700);
@@ -276,6 +298,38 @@
     cb.checked = Boolean(steps[cb.dataset.step]);
     cb.addEventListener('change', () => { steps[cb.dataset.step] = cb.checked; store.set('lab', steps); });
   });
+
+  // ── Score tracker (per viewer): the learner's recall per step, next to the measured reference runs ──
+  const results = data('data-results');
+  const tracker = $('#score-tracker');
+  if (results && tracker) {
+    const STEPS = ['0', '1', '2', '3', '4'];
+    const LABELS = { 0: 'v0 · dix lignes', 1: 'v1 · procédure', 2: 'v2 · règles', 3: 'v3 · scripts', 4: 'v4 · exemples' };
+    const mine = store.get('scores', {});
+    const body = $('tbody', tracker);
+    const note = $('.tracker-note', tracker);
+    const ref = (model, s) => results.runs[model]?.[s]?.rappel;
+    const refresh = () => {
+      const filled = STEPS.filter((s) => Number.isFinite(mine[s]?.r));
+      if (!filled.length) { note.textContent = "Reporte ton premier score après l'atelier 0."; return; }
+      const first = mine[filled[0]].r;
+      const last = mine[filled[filled.length - 1]].r;
+      note.textContent = filled.length === 1 ? `Point de départ : ${first} %.` : `De ${first} % à ${last} %, en ${filled.length} mesures.`;
+    };
+    body.innerHTML = STEPS.map((s) => `<tr><th scope="row">${LABELS[s]}</th>`
+      + `<td><input type="number" min="0" max="100" inputmode="numeric" data-k="r" data-s="${s}" aria-label="Ton rappel, ${LABELS[s]}" value="${mine[s]?.r ?? ''}"></td>`
+      + `<td><input type="number" min="0" max="7" inputmode="numeric" data-k="l" data-s="${s}" aria-label="Tes leurres, ${LABELS[s]}" value="${mine[s]?.l ?? ''}"></td>`
+      + `<td>${ref('opus', s) ?? '—'} %</td><td>${ref('haiku', s) ?? '—'} %</td></tr>`).join('');
+    body.addEventListener('input', (e) => {
+      const el = e.target.closest('input[data-s]');
+      if (!el) return;
+      const v = el.value === '' ? undefined : Math.max(0, Math.min(Number(el.max), Number(el.value)));
+      mine[el.dataset.s] = { ...(mine[el.dataset.s] ?? {}), [el.dataset.k]: v };
+      store.set('scores', mine);
+      refresh();
+    });
+    refresh();
+  }
 
   // ── Video chapters ──
   $$('.video-card').forEach((card) => {

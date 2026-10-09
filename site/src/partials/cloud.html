@@ -1,0 +1,272 @@
+<section class="view" id="cloud" hidden aria-labelledby="cloud-title">
+  <span hidden data-title="Bonus · Dans le cloud — Skill Issue"></span>
+  <div class="wrap">
+    <header class="module-head">
+      <span class="num">+1</span>
+      <h1 id="cloud-title">Il relit pendant que tu dors</h1>
+      <p class="promise">Ton skill est dans le dépôt. Faisons-le tourner sans le poste de personne : sur chaque pull request, dans ta CI ou chez les relecteurs hébergés de GitHub, OpenAI, Anthropic et GitLab. Et sachons ce que chacun lit vraiment de ton travail.</p>
+      <div class="chips"><span class="chip">⏱ <b>~64 min</b></span><span class="chip">6 leçons · 1 atelier · 1 vidéo · 1 quiz</span><span class="chip">bonus</span></div>
+      <div class="cta"><a class="btn primary" href="https://github.com/PrincyExaltIT/skill-issue-playground/pull/4" target="_blank" rel="noopener">La PR relue en CI ↗</a><a class="btn" href="https://github.com/PrincyExaltIT/skill-issue/tree/main/course/ci" target="_blank" rel="noopener">Les gabarits CI ↗</a></div>
+    </header>
+
+    <div class="module-layout">
+      <nav class="toc" aria-label="Leçons du bonus cloud">
+        <span class="toc-title">Leçons</span>
+        <a href="#cl-l1"><span class="k">C.1</span><span>Trois façons d'y aller</span><span class="ok">✓</span></a>
+        <a href="#cl-l2"><span class="k">C.2</span><span>Ta review en CI GitHub</span><span class="ok">✓</span></a>
+        <a href="#cl-l3"><span class="k">C.3</span><span>La même sur GitLab</span><span class="ok">✓</span></a>
+        <a href="#cl-l4"><span class="k">C.4</span><span>Les relecteurs hébergés</span><span class="ok">✓</span></a>
+        <a href="#cl-l5"><span class="k">C.5</span><span>Agents et sessions cloud</span><span class="ok">✓</span></a>
+        <a href="#cl-l6"><span class="k">C.6</span><span>Pièges et coûts</span><span class="ok">✓</span></a>
+        <a href="#cl-quiz"><span class="k">✎</span><span>Quiz</span><span class="ok">✓</span></a>
+        <div class="progress"><i></i></div>
+      </nav>
+
+      <div>
+        <!-- C.1 -->
+        <article class="lesson" id="cl-l1">
+          <div class="hunk"><span class="at">@@ cloud · C.1 @@</span><span>panorama</span><span class="spacer"></span><span class="lvl base">base</span><span>8 min</span></div>
+          <div class="lesson-body">
+            <h2>Trois façons de faire tourner ta review sans ton poste</h2>
+            <p class="kicker">Le skill ne change pas. Ce qui change : qui lance l'agent, avec quelle clé, et ce que l'outil lit de ton dépôt. Relu le 9 octobre 2026 sur les pages des éditeurs (documentation, annonces). Ce qui vient de la presse ou de nos propres essais est signalé comme tel.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Famille</th><th>Exemples</th><th>Lit ton skill ?</th><th>Ce que tu paies</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Ta CI</b></td><td>GitHub Actions avec <code>anthropics/claude-code-action@v1</code> ou <code>openai/codex-action@v1</code> ; GitLab CI avec <code>claude -p</code></td><td><b>Oui</b>, tel quel : la CI lance <code>/revue-angular</code> sur le dépôt cloné</td><td>Minutes de CI + tokens de ta clé d'API (ou ton abonnement avec un token <code>claude setup-token</code>)</td></tr>
+                  <tr><td><b>Relecteurs hébergés</b></td><td>Copilot code review, <code>@codex review</code>, Claude Code Review (<code>@claude review</code>), GitLab Duo</td><td><b>Copilot : oui</b>, d'après sa documentation (nuance en C.4). Les autres lisent leurs propres fichiers d'instructions</td><td>Au run : Copilot de 0,05 $ (Lite) à 5 $ (Balanced, le mode par défaut) ; Claude Code Review, 15 à 25 $ en moyenne</td></tr>
+                  <tr><td><b>Agents cloud</b></td><td>Claude Code on the web (<code>claude --cloud</code>), routines déclenchées par une PR, <code>/code-review ultra</code></td><td><b>Oui</b> pour les sessions et routines (<code>.claude/skills</code> du dépôt cloné) ; l'ultra a sa propre flotte</td><td>Ton forfait ; l'ultra : 3 runs offerts, puis 5 à 25 $ environ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Commence par ta CI</b></p><p>C'est la seule famille qui lance <i>exactement</i> ton skill, partout, avec une porte sans IA que tout le monde peut faire tourner sans secret. Les relecteurs hébergés viennent en plus, pour un deuxième regard.</p></div></div>
+            <div class="video-card">
+              <video controls preload="metadata" poster="media/v4-cloud.jpg" playsinline>
+                <source src="media/v4-cloud.mp4" type="video/mp4">
+              </video>
+              <div class="video-meta"><b>Vidéo · Il relit pendant que tu dors</b><span>sous-titrée, sans son</span><span>le commentaire de PR est une maquette : rapport produit en local</span></div>
+              <div class="chapters"><button type="button" data-t="0">Sans ton poste</button><button type="button" data-t="12">La porte sans IA</button><button type="button" data-t="26">La revue IA</button><button type="button" data-t="40">Les relecteurs hébergés</button></div>
+            </div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- C.2 -->
+        <article class="lesson" id="cl-l2">
+          <div class="hunk"><span class="at">@@ cloud · C.2 @@</span><span>GitHub Actions</span><span class="spacer"></span><span class="lvl core">core</span><span>20 min</span></div>
+          <div class="lesson-body">
+            <h2>Atelier · ta review sur chaque PR GitHub</h2>
+            <p class="kicker">Deux jobs, deux promesses. Le premier tourne pour tout le monde, sans IA ni secret. Le second lance le skill complet dès qu'une clé est configurée.</p>
+            <p class="small muted">Extrait de <a href="https://github.com/PrincyExaltIT/skill-issue/blob/main/course/ci/github/revue-angular.yml" target="_blank" rel="noopener"><code>course/ci/github/revue-angular.yml</code> ↗</a>, raccourci pour la page. Le fichier complet est dans le dépôt du kit : c'est lui que tu copies dans l'atelier.</p>
+<pre class="code" data-lang="yaml · extrait"># extrait de course/ci/github/revue-angular.yml
+on:
+  pull_request:
+
+jobs:
+  verifs:                       # sans IA : la porte
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0        # le périmètre a besoin de l'ancêtre commun
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: diff -r .agents/skills/revue-angular .claude/skills/revue-angular
+      - run: |
+          node .agents/skills/revue-angular/scripts/perimetre.mjs --base origin/${{ github.base_ref }}
+          node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER
+
+  revue-ia:                     # avec IA : le skill complet
+    needs: verifs
+    if: ${{ !cancelled() }}     # aussi quand la porte est fermée : c'est là qu'elle sert
+    permissions: { contents: read, pull-requests: write, id-token: write }
+    env:
+      HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    steps:
+      # sans clé : un simple message. Avec clé, chaque étape suivante porte
+      # « if: env.HAS_KEY == 'true' » (le fichier complet les écrit toutes).
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: /revue-angular Relis cette PR (base : origin/${{ github.base_ref }}).
+          claude_args: --allowedTools "Bash(git:*),Bash(node:*),Read,Grep,Glob,Write"
+      - run: gh pr comment ${{ github.event.pull_request.number }} --body-file .review/REVIEW.md
+        env: { GH_TOKEN: ${{ github.token }} }</pre>
+            <ul>
+              <li><b>Le skill par son nom.</b> La doc de l'action le recommande : <code>actions/checkout</code> d'abord, puis <code>prompt: "/nom-du-skill"</code>. Claude Code le lit dans <code>.claude/skills/</code> du dépôt cloné.</li>
+              <li><b>Le script annote, l'IA commente.</b> En GitHub Actions, <code>verifs.mjs</code> écrit chaque piste en annotation sur le diff (une ligne <code>::error</code> ou <code>::warning</code>), sans rien changer à la commande.</li>
+              <li><b>C'est le workflow, pas l'agent, qui publie le commentaire.</b> L'agent écrit <code>.review/REVIEW.md</code> ; une étape ordinaire le publie avec le token du workflow. La liste <code>--allowedTools</code> ne lui donne ni <code>gh</code> ni outil de commentaire.</li>
+              <li><b><code>id-token: write</code></b> : sans <code>github_token</code>, l'action s'authentifie auprès de GitHub comme l'app GitHub de Claude. Avec ce token d'app, elle peut lire et écrire le contenu du dépôt, les issues et les pull requests (les droits qu'elle demande ; l'app officielle en demande davantage). L'agent n'est donc pas « sans accès » à GitHub. Pour la cantonner, passe ton propre <code>github_token</code> (celui du workflow, ou une app limitée à ces droits).</li>
+            </ul>
+            <div class="rc"><span class="av" aria-hidden="true">PR</span><div><p class="who"><b>En vrai, sur la PR #4 du dépôt de démo</b></p><p>Le job « Vérifications sans IA » échoue, comme prévu. Les deux copies du skill sont identiques, puis la porte se ferme sur trois BLOCKER (SEC-01, SIG-01, A11Y-02), annotés en rouge sur le diff, avec neuf avertissements MAJOR et les MINOR en notes (dix affichées au plus). Le job « Revue IA » reste vert mais ne fait que signaler l'absence de clé : le dépôt de démo n'a pas de secret, donc l'étape IA n'a jamais tourné en CI chez nous. Avec une clé, le rapport devrait arriver en commentaire, comme le décrit la doc de l'action ; nous ne l'avons pas observé. Le commentaire de la vidéo est une maquette, construite avec un rapport produit en local.</p></div></div>
+            <div class="atelier">
+              <span class="tool-title">Atelier cloud · ta PR relue en CI</span>
+              <p class="small muted">Il te faut : les deux dépôts de l'atelier 0 côte à côte (<code>skill-issue-playground</code> et <code>skill-issue</code>), un skill avec ses scripts (atelier 3 au moins ; sinon le skill de référence, voir le rattrapage), et un compte GitHub. Compte 20 minutes.</p>
+              <ol>
+                <li><b>Fork avec toutes les branches.</b> Sur la page de <code>PrincyExaltIT/skill-issue-playground</code>, clique sur Fork. Le formulaire propose « Copy the … branch only » (le nom de la branche par défaut, ici <code>depart</code>), cochée par défaut : <b>décoche-la</b>. Sinon ton fork n'a ni <code>lab/speaker-spotlight</code> ni <code>equipe/…</code>, et il n'y a rien à relire.</li>
+                <li><b>Active les workflows.</b> GitHub les désactive sur les forks : onglet Actions de ton fork, puis « I understand my workflows, go ahead and enable them ».</li>
+                <li style="min-width:0"><b>Clone ton fork</b> dans un dossier à part, place-toi sur la PR du lab et crée ta branche : elle portera le lab, ton skill et le workflow.
+<pre class="term"><span class="p">$ </span><span class="cmd">git clone https://github.com/&lt;ton-compte&gt;/skill-issue-playground.git mon-fork</span>
+<span class="p">$ </span><span class="cmd">cd mon-fork</span>
+<span class="p">$ </span><span class="cmd">git checkout lab/speaker-spotlight</span>   <span class="cm"># la PR du lab</span>
+<span class="p">$ </span><span class="cmd">git checkout -b ma-revue</span></pre></li>
+                <li style="min-width:0"><b>Ajoute ton skill, dans les deux dossiers, et le workflow</b>, puis pousse.
+<pre class="term"><span class="p">$ </span><span class="cmd">mkdir -p .claude/skills .agents/skills .github/workflows</span>
+<span class="p">$ </span><span class="cmd">cp -r ../skill-issue-playground/.claude/skills/revue-angular .claude/skills/</span>   <span class="cm"># ton skill (.agents/skills/ si tu es sous Codex)</span>
+<span class="p">$ </span><span class="cmd">cp -r .claude/skills/revue-angular .agents/skills/</span>
+<span class="p">$ </span><span class="cmd">cp ../skill-issue/course/ci/github/revue-angular.yml .github/workflows/</span>
+<span class="p">$ </span><span class="cmd">git add .claude .agents .github &amp;&amp; git commit -m "ci: la revue-angular de l'équipe"</span>
+<span class="p">$ </span><span class="cmd">git push -u origin ma-revue</span></pre></li>
+                <li style="min-width:0"><b>Ouvre la PR sur ton fork, vers <code>depart</code>.</b> Par défaut, GitHub vise le dépôt d'origine : change-le.
+<pre class="term"><span class="p">$ </span><span class="cmd">gh pr create --repo &lt;ton-compte&gt;/skill-issue-playground --base depart --head ma-revue --fill</span></pre>
+                  Sur le site, c'est « Compare &amp; pull request », puis « base repository » = ton fork, base = <code>depart</code>, compare = <code>ma-revue</code>.</li>
+                <li><b>Regarde la porte se fermer</b> (onglet Checks de la PR) et les annotations arriver sur le diff (onglet Files changed). Puis, si tu as une clé : ajoute le secret <code>ANTHROPIC_API_KEY</code> (Settings, Secrets and variables, Actions), installe l'app GitHub de Claude sur ton fork (<code>/install-github-app</code> dans Claude Code, droits admin requis), et relance le job « Revue IA ». Cette dernière étape, nous ne l'avons pas testée : si elle échoue, le journal du job te le dit.</li>
+              </ol>
+              <p class="small muted"><b>Pourquoi une branche qui contient le lab ?</b> Les scripts excluent <code>.claude/</code> et <code>.agents/</code> du périmètre. Une PR qui ne contient que le skill et le workflow a donc un périmètre vide : la porte reste verte et tu ne vois rien se fermer.</p>
+              <p class="small muted"><b>Aucun run ne démarre ?</b> Sur le dépôt de démo, les premières PR n'ont déclenché aucun run tant qu'aucun workflow n'avait tourné sur un push (voir C.6). Ferme et rouvre la PR. Si rien ne bouge, pousse un commit vide : <code>git commit --allow-empty -m relance &amp;&amp; git push</code>.</p>
+              <p class="small muted"><b>Tu as forké sans décocher la case ?</b> Rapatrie les deux branches depuis le dépôt d'origine, dans ton clone du fork : <code>git remote add upstream https://github.com/PrincyExaltIT/skill-issue-playground.git &amp;&amp; git fetch upstream &amp;&amp; git push origin upstream/lab/speaker-spotlight:refs/heads/lab/speaker-spotlight upstream/equipe/speaker-spotlight:refs/heads/equipe/speaker-spotlight</code></p>
+              <p class="expect"><b>Fini quand</b> : la porte est rouge sur ta PR (avec le skill de référence : SEC-01, SIG-01 et A11Y-02 ; avec le tien, tes règles BLOCKER), les annotations sont sur le diff, et, si tu as mis une clé, le commentaire de la revue IA cite des <code>fichier:ligne</code> que tu retrouves dans ton rapport local (<code>.review/REVIEW.md</code>).</p>
+              <p class="small muted">Rattrapage : ton skill n'est pas prêt ? Dans <code>mon-fork</code>, <code>node ../skill-issue/course/rattrapage.mjs 5 --harness tous</code> met le skill de référence dans les deux dossiers (ton clone <code>skill-issue-playground</code> n'est pas touché). Ou, après le clone (étape 3), prends la branche toute faite : <code>git checkout equipe/speaker-spotlight</code> porte le lab, le skill de référence et le workflow, et elle est déjà dans ton fork. Ouvre alors la PR (étape 5) avec <code>--head equipe/speaker-spotlight</code>.</p>
+            </div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- C.3 -->
+        <article class="lesson" id="cl-l3">
+          <div class="hunk"><span class="at">@@ cloud · C.3 @@</span><span>GitLab CI</span><span class="spacer"></span><span class="lvl core">core</span><span>7 min</span></div>
+          <div class="lesson-body">
+            <h2>La même chose sur GitLab</h2>
+            <p class="kicker">Même skill, mêmes scripts, deux jobs dans <code>.gitlab-ci.yml</code>. L'intégration de Claude Code dans GitLab CI/CD est en bêta et maintenue par GitLab. <b>Gabarit non exécuté à ce jour</b> : aucun pipeline GitLab n'a tourné avec, nous l'avons écrit d'après la documentation.</p>
+<pre class="code" data-lang="yaml">variables:
+  GIT_DEPTH: "0"                # GitLab clone en profondeur limitée par défaut
+
+revue-angular:verifs:
+  image: node:24
+  rules: [{ if: $CI_PIPELINE_SOURCE == "merge_request_event" }]
+  script:
+    - git fetch origin "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
+    - node .agents/skills/revue-angular/scripts/perimetre.mjs --base "origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
+    - node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER
+
+revue-angular:ia:
+  rules: [{ if: $CI_PIPELINE_SOURCE == "merge_request_event" &amp;&amp; $ANTHROPIC_API_KEY &amp;&amp; $GITLAB_REVIEW_TOKEN }]
+  script:
+    - npm install -g @anthropic-ai/claude-code
+    - claude -p "/revue-angular Relis cette MR (base : origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME)." --permission-mode acceptEdits --allowedTools …
+    - curl … --data-urlencode "body@.review/REVIEW.md" "$CI_API_V4_URL/projects/$CI_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID/notes"</pre>
+            <ul>
+              <li><b>Variables masquées</b> : <code>ANTHROPIC_API_KEY</code>, et un token de projet de scope <code>api</code> pour écrire la note (ici <code>GITLAB_REVIEW_TOKEN</code>).</li>
+              <li><b>Déclencher par un commentaire</b> : la doc de Claude Code pour GitLab décrit aussi un webhook qui lance le pipeline quand un commentaire de MR contient <code>@claude</code>.</li>
+              <li><b>Le gabarit complet</b> (non exécuté à ce jour) est dans <code>course/ci/gitlab/revue-angular.gitlab-ci.yml</code> ; il est commité sur la branche <code>equipe/main</code> du dépôt de démo. Pour passer le dépôt sur GitLab : <code>glab auth login</code>, puis <code>bash kit/gitlab-mirror.sh &lt;groupe&gt;</code>.</li>
+            </ul>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- C.4 -->
+        <article class="lesson" id="cl-l4">
+          <div class="hunk"><span class="at">@@ cloud · C.4 @@</span><span>hosted reviewers</span><span class="spacer"></span><span class="lvl core">core</span><span>10 min</span></div>
+          <div class="lesson-body">
+            <h2>Les relecteurs hébergés : brancher tes règles</h2>
+            <p class="kicker">Chaque éditeur propose son relecteur sur les PR. Aucun ne lit tes règles par magie : voici où chacun va les chercher.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Relecteur</th><th>Se déclenche</th><th>Lit</th><th>Pour y mettre tes règles</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Copilot code review</b><br><span class="small muted">Pro, Pro+, Max, Business, Enterprise</span></td><td>Copilot en relecteur de la PR, à la main ou par ruleset</td><td>Les skills de <code>.github/skills/</code>, <code>.claude/skills/</code> et <code>.agents/skills/</code> (documentation des skills Copilot), <code>AGENTS.md</code>, <code>.github/copilot-instructions.md</code>. Skills et MCP en revue de code : GA du 29 juillet 2026, annoncée pour <code>.github/skills/</code></td><td><b>En principe rien à faire</b> : ton skill est déjà dans <code>.agents/skills/</code>. S'il ne se déclenche pas en revue de code, copie-le dans <code>.github/skills/</code></td></tr>
+                  <tr><td><b>Codex</b> <code>@codex review</code><br><span class="small muted">GitHub ; GitLab en bêta</span></td><td>Un commentaire, ou automatiquement selon tes réglages</td><td>La section <code>## Code Review Rules</code> d'<code>AGENTS.md</code> ; ne remonte que les P0 et P1 sur GitHub</td><td>Résume tes règles BLOCKER et MAJOR dans cette section ; la lecture des skills par la revue cloud n'est pas documentée</td></tr>
+                  <tr><td><b>Claude Code Review</b> <code>@claude review</code><br><span class="small muted">Team et Enterprise, en preview</span></td><td>À la création de la PR, à chaque push, ou à la main</td><td><code>CLAUDE.md</code> et <code>REVIEW.md</code> à la racine</td><td>Un <code>REVIEW.md</code> qui renvoie à tes références et fixe les sévérités ; son check reste neutre, il ne bloque jamais</td></tr>
+                  <tr><td><b>GitLab Duo Code Review</b><br><span class="small muted">Premium ou Ultimate, plus l'add-on GitLab Duo Enterprise pour les instructions</span></td><td><code>@GitLabDuo</code>, ou à l'ouverture de la MR</td><td><code>.gitlab/duo/mr-review-instructions.yaml</code></td><td>Des groupes d'instructions filtrés par fichiers (<code>**/*.ts</code>) : recopie tes règles par domaine</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted">Plans Copilot : la page de concepts de GitHub cite Pro, Pro+ et Max, plus Business ou Enterprise ; l'annonce de GA du 29 juillet 2026 liste Pro, Pro+, Business et Enterprise, sans Max. Vérifie ton plan sur la page des plans de GitHub. GitLab : l'agentic Code Review Flow n'a pas besoin de l'add-on mais consomme des GitLab Credits.</p>
+            <div class="rc"><span class="av" aria-hidden="true">!</span><div><p class="who"><b>Une PR peut réécrire les règles qui la relisent</b></p><p>Copilot lit ses instructions et ses skills dans la branche de la PR, pas dans la branche cible. Protège <code>.agents/skills/</code>, <code>.claude/skills/</code> et <code>.github/</code> avec un CODEOWNERS : toute modification des règles passe par les propriétaires du skill.</p></div></div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- C.5 -->
+        <article class="lesson" id="cl-l5">
+          <div class="hunk"><span class="at">@@ cloud · C.5 @@</span><span>cloud agents</span><span class="spacer"></span><span class="lvl deep">deep</span><span>8 min</span></div>
+          <div class="lesson-body">
+            <h2>Agents et sessions cloud</h2>
+            <p class="kicker">Dernière marche : un agent complet, sur une machine distante, qui clone ton dépôt et y trouve ton skill.</p>
+            <ul>
+              <li><b>Claude Code on the web</b> : des sessions Claude Code sur l'infrastructure d'Anthropic, lancées depuis claude.ai/code, l'app desktop ou <code>claude --cloud</code>. Elles clonent le dépôt GitHub et chargent les skills de son <code>.claude/skills/</code> ; tes skills personnels restent sur ta machine. GitLab et Bitbucket ne sont pas clonés.</li>
+              <li><b>Les routines</b> : un prompt, des dépôts et des déclencheurs (planning, appel d'API, événement GitHub comme l'ouverture d'une PR), exécutés dans le cloud. Une routine « à chaque PR, lance <code>/revue-angular</code> » est ta CI sans fichier de CI. Attention : les connecteurs branchés sont inclus par défaut, et leurs outils d'écriture tournent sans demande de permission. Retire ceux dont la review n'a pas besoin.</li>
+              <li><b><code>/code-review ultra</code></b> : une flotte d'agents dans le cloud, qui reproduit chaque finding avant de le publier (5 à 10 minutes). <code>claude ultrareview --json</code> le lance depuis une CI. Ce n'est pas ton skill qui tourne : c'est un deuxième avis, à comparer au tien.</li>
+              <li><b>Codex cloud et les Dots d'OpenAI</b> : les tâches Codex tournent aussi dans des environnements distants. D'après la presse (SiliconANGLE, 29 septembre 2026), OpenAI aurait présenté à son DevDay des « Dots », des agents permanents. Nous n'avons trouvé aucune page d'OpenAI à ce sujet, ni sur leur usage pour la review de code.</li>
+            </ul>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- C.6 -->
+        <article class="lesson" id="cl-l6">
+          <div class="hunk"><span class="at">@@ cloud · C.6 @@</span><span>pitfalls · costs</span><span class="spacer"></span><span class="lvl core">core</span><span>7 min</span></div>
+          <div class="lesson-body">
+            <h2>Pièges, sécurité et coûts</h2>
+            <ul>
+              <li><b>Forks</b> : GitHub ne transmet pas les secrets aux workflows lancés par une PR de fork. Ta porte sans IA tourne quand même ; la revue IA, non. Sur un dépôt public, c'est le comportement attendu.</li>
+              <li><b>Bots</b> : l'action Claude refuse les PR ouvertes par un bot (Dependabot, Renovate) sauf s'il figure dans <code>allowed_bots</code>.</li>
+              <li><b><code>pull_request_target</code></b> : ne l'utilise pas pour lancer un agent sur le code d'une PR. Il donne des droits d'écriture et des secrets à un code non relu.</li>
+              <li><b>Annotations</b> : sur nos runs, GitHub n'a affiché que dix annotations par niveau et par étape, ce que confirme la <a href="https://docs.github.com/en/rest/checks/runs" target="_blank" rel="noopener">documentation de l'API Checks</a> (10 avertissements et 10 erreurs par étape pour GitHub Actions). Trie tes pistes par gravité, et publie la liste complète ailleurs (résumé du job ou commentaire).</li>
+              <li><b>Dépôt neuf</b> : sur le dépôt de démo, les premières PR n'ont déclenché aucun run tant qu'aucun workflow n'avait tourné sur un push. Fermer et rouvrir la PR a ensuite suffi. C'est une observation, pas un comportement que GitHub documente.</li>
+              <li><b>Données</b> : un relecteur hébergé envoie ton code à son fournisseur. Vérifie que c'est permis pour ce dépôt avant de l'activer.</li>
+            </ul>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Option</th><th>Coût documenté</th></tr></thead>
+                <tbody>
+                  <tr><td>Ta CI avec Claude Code</td><td>Minutes de CI + tokens API ; notre review complète locale (étape 4, Opus 5.5) a coûté {{R:opus:4:cout}} $ et duré {{R:opus:4:duree}}</td></tr>
+                  <tr><td>Copilot code review</td><td>Estimations de GitHub : 0,05 à 1 $ en mode Lite, 0,25 à 5 $ en mode Balanced, plus les minutes Actions sur un dépôt privé depuis le 1<sup>er</sup> juin 2026</td></tr>
+                  <tr><td>Claude Code Review</td><td>15 à 25 $ par review en moyenne, en crédits d'usage ; le mode « à chaque push » multiplie le coût</td></tr>
+                  <tr><td><code>/code-review ultra</code></td><td>3 runs offerts par compte (Pro, Max), puis environ 5 à 25 $</td></tr>
+                  <tr><td><code>@codex review</code></td><td>Compté dans l'usage « Code Review » du forfait ; pas de montant par review publié</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- Quiz -->
+        <article class="lesson" id="cl-quiz">
+          <div class="hunk"><span class="at">@@ cloud · quiz @@</span><span>3 questions</span><span class="spacer"></span><span>4 min</span></div>
+          <div class="lesson-body">
+            <h2>Quiz du bonus cloud</h2>
+            <div class="quiz">
+              <div class="q" data-answer="a" data-why="La porte sans IA n'a besoin d'aucun secret : elle tourne sur toutes les PR, forks compris. La revue IA a besoin de la clé, que GitHub ne passe pas aux forks.">
+                <fieldset><legend>Une PR arrive d'un fork. Qu'est-ce qui tourne ?</legend>
+                  <label><input type="radio" value="a"> Les vérifications sans IA, pas la revue IA</label>
+                  <label><input type="radio" value="b"> Les deux, avec la clé du dépôt</label>
+                  <label><input type="radio" value="c"> Rien du tout</label>
+                </fieldset>
+              </div>
+              <div class="q" data-answer="c" data-why="Copilot code review lit les skills du dépôt : sa documentation liste .github/skills, .claude/skills et .agents/skills, et la revue de code les prend en charge depuis la GA du 29 juillet 2026 (annoncée pour .github/skills). Les autres lisent leurs propres fichiers : CLAUDE.md et REVIEW.md, AGENTS.md, un YAML.">
+                <fieldset><legend>Quel relecteur hébergé lit ton skill tel quel ?</legend>
+                  <label><input type="radio" value="a"> Claude Code Review</label>
+                  <label><input type="radio" value="b"> GitLab Duo</label>
+                  <label><input type="radio" value="c"> Copilot code review</label>
+                </fieldset>
+              </div>
+              <div class="q" data-answer="b" data-why="C'est le workflow, pas l'agent, qui publie : l'agent écrit le rapport, une étape ordinaire le commente avec le token du workflow. L'action a pourtant son propre token d'app GitHub ; ici, la liste d'outils de l'agent ne lui donne pas de quoi commenter.">
+                <fieldset><legend>Qui publie le rapport en commentaire de la PR ?</legend>
+                  <label><input type="radio" value="a"> L'agent, avec un token qu'on lui donne</label>
+                  <label><input type="radio" value="b"> Une étape du workflow, après l'agent</label>
+                  <label><input type="radio" value="c"> Personne, il faut le copier à la main</label>
+                </fieldset>
+              </div>
+            </div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

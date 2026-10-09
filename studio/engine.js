@@ -1,6 +1,7 @@
 // engine.js — a tiny, seekable motion timeline for rendering videos frame by frame.
 // Markup: any element with data-at="<s>" appears at that time; data-until="<s>" makes it leave.
-//   data-fx      fade | rise | pop | wipe | type | grow | blur | slide-l | slide-r | stretch   (entrance)
+//   data-fx      fade | rise | pop | wipe | type | grow | blur | slide-l | slide-r | track | zoom   (entrance)
+//                track = letter-spacing closes from wide to the element's own value; zoom = scale 1.2 -> 1 (no width axis needed)
 //   data-dur     entrance duration (s), default 0.5 (type: 0.035 s per character)
 //   data-count   "from:to" number tween between data-at and data-at + data-dur, formatted fr-FR
 // Everything becomes a paused CSS/Web Animation; window.__seek(t) moves the playhead deterministically.
@@ -13,8 +14,7 @@
     blur: [{ opacity: 0, filter: 'blur(14px)' }, { opacity: 1, filter: 'blur(0)' }],
     'slide-l': [{ opacity: 0, transform: 'translateX(-60px)' }, { opacity: 1, transform: 'none' }],
     'slide-r': [{ opacity: 0, transform: 'translateX(60px)' }, { opacity: 1, transform: 'none' }],
-    stretch: [{ fontStretch: '55%', opacity: 0 }, { fontStretch: '125%', opacity: 1 }],
-    squeeze: [{ fontStretch: '150%', opacity: 0 }, { fontStretch: '62%', opacity: 1 }],
+    zoom: [{ opacity: 0, transform: 'scale(1.22)' }, { opacity: 1, transform: 'none' }],
     grow: [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
   };
   const EASE = 'cubic-bezier(.2,.8,.2,1)';
@@ -35,9 +35,16 @@
         el.style.verticalAlign = 'bottom';
         anims.push(el.animate([{ width: '0ch' }, { width: n + 'ch' }], { duration: dur * 1000, delay: at * 1000, fill: 'both', easing: `steps(${n}, end)` }));
         anims.push(el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: at * 1000, fill: 'both' }));
+      } else if (fx === 'track') {
+        // letter-spacing from wide to the element's own tracking, fading in
+        const cs = getComputedStyle(el);
+        const ls = parseFloat(cs.letterSpacing) || 0;
+        const wide = ls + parseFloat(cs.fontSize) * 0.28;
+        anims.push(el.animate([{ opacity: 0, letterSpacing: wide + 'px' }, { opacity: 1, letterSpacing: ls + 'px' }], { duration: Number(el.dataset.dur || 0.9) * 1000, delay: at * 1000, fill: 'both', easing: EASE }));
       } else {
         const dur = Number(el.dataset.dur || 0.5);
         if (fx === 'grow') el.style.transformOrigin = el.dataset.origin || 'left center';
+        if (fx === 'zoom') el.style.transformOrigin = el.dataset.origin || 'center center';
         anims.push(el.animate(FX[fx] || FX.fade, { duration: dur * 1000, delay: at * 1000, fill: 'both', easing: EASE }));
       }
       if (el.dataset.until) {

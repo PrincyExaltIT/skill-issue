@@ -1,87 +1,98 @@
 # Skill Issue
 
-> Ton agent sait coder. Il ne sait pas comment **ton équipe** code.
+> Ton agent sait coder. Il ne sait pas comment **ton équipe** relit.
 
-Formation en trois modules et kit prêt à l'emploi : construire un **Agent Skill** complet (scripts, références, evals) à partir d'un cas réel, la review de code Angular, le faire tourner sur huit harnesses, puis le chaîner dans un workflow qui va du diff à la CI.
+Formation en trois modules et deux bonus : **construire son propre skill de code review** (cas Angular 22), le mesurer sur une vraie pull request, et le partager à toute l'équipe, quel que soit son outil. Bonus : le faire tourner dans le cloud, puis prendre le package prêt à l'emploi de Princy.
 
-- **La formation** : `site/dist/index.html` (un seul fichier, à ouvrir dans un navigateur), avec 4 vidéos dans `site/dist/media/`.
-- **Le kit** : 4 skills au standard [agentskills.io](https://agentskills.io), un installeur multi-harness, des pipelines GitHub Actions et GitLab CI, un hook Claude Code, des gabarits `AGENTS.md`.
-- **La démo** : [PrincyExaltIT/skill-issue-playground](https://github.com/PrincyExaltIT/skill-issue-playground), une app Angular 22 avec une branche `feat/speaker-spotlight` truffée de problèmes à faire trouver au skill.
+- **La formation** : `site/dist/index.html` (un seul fichier, à ouvrir dans un navigateur), avec ses vidéos dans `site/dist/media/`.
+- **Le terrain** : [PrincyExaltIT/skill-issue-playground](https://github.com/PrincyExaltIT/skill-issue-playground), une app Angular 22 et une pull request écrite trop vite (`lab/speaker-spotlight`, à relire depuis `depart`).
+- **Le skill de référence** : `course/revue-angular/etape-0` à `etape-5`, le même skill aux six étapes de la formation, avec un script de rattrapage.
+- **Le package** (bonus final) : `skills/` et `kit/`, quatre skills au standard [agentskills.io](https://agentskills.io), un installeur pour huit harnesses, la CI GitHub et GitLab.
 
-## Les skills
+## Le parcours
 
-| Skill | Rôle | Entrée → sortie |
+| | Titre | Ce que tu fais |
 |---|---|---|
-| [`angular-review`](skills/angular-review/SKILL.md) | Review d'un diff Angular 17 → 22 : scripts pour le périmètre, le scan et le verdict ; 7 reviewers spécialisés pour le jugement | diff → `.review/REVIEW.md`, `.review/findings.json` |
-| [`review-fix`](skills/review-fix/SKILL.md) | Corrige les findings un par un, build et test après chacun | `findings.json` → code corrigé, `.review/FIXES.md` |
-| [`pr-handoff`](skills/pr-handoff/SKILL.md) | Description de PR/MR et note de passation, à partir des faits de la branche (invocation manuelle) | branche + review → `PR_BODY.md`, `HANDOFF.md` |
-| [`skill-smith`](skills/skill-smith/SKILL.md) | Crée, valide et installe un nouveau skill | besoin → dossier de skill validé |
+| Module 1 | Ouvre le capot | Bases agentiques, anatomie d'un skill, chargement progressif ; atelier 0 : ton skill en dix lignes, noté |
+| Module 2 | Construis-le, mesure-le | Procédure, règles de l'équipe, scripts, exemples, tests, partage : un atelier par étape |
+| Module 3 | Le flux d'équipe | Passage de relais, sous-agents, hook, sécurité des skills tiers, faire vivre le skill |
+| Bonus +1 | Il relit pendant que tu dors | Le même skill en CI GitHub et GitLab, chez les relecteurs hébergés, dans les agents cloud |
+| Bonus +2 | Le package de Princy | Prêt à installer : environ 140 règles, sept relecteurs, une chaîne complète, comparé à ton skill |
 
-`angular-review` v2 succède à la v1 de [PrincyExaltIT/agent-skill](https://github.com/PrincyExaltIT/agent-skill) : mêmes identifiants de règles et même logique de verdict, mais un seul dossier portable, des scripts déterministes, la prise en compte de la version d'Angular (OnPush par défaut en v22), deux nouveaux domaines (réactivité, tests) et des evals.
+## Ce que le skill change, mesuré
 
-## Résultats réels
+Le skill de référence lancé à chaque étape sur la PR du lab, le 9 octobre 2026, noté par emplacement contre le corrigé (27 problèmes à trouver, 7 leurres) :
 
-La même phrase (« Fais une review de cette branche avant que je la merge sur main ») sur la branche de démo, le 8 octobre 2026, notée contre le corrigé `evals/angular-review/playground-key.json` :
+| Étape | Opus 5.5 | Haiku 5.5 |
+|---|---|---|
+| v0 · dix lignes | 74 % | 22 % |
+| v1 · procédure | 74 % | 59 % |
+| v2 · règles de l'équipe | 100 % | 96 % |
+| v3 · scripts | 100 % | 96 % |
+| v4 · exemples et vérification | 96 % | 93 % |
 
-| | Scan seul | Claude Code (Opus 5.5) | Codex (gpt-5.6-sol) |
-|---|---|---|---|
-| Rappel (27 attendus) | 96 % | 96 % | 100 % |
-| Précision | 100 % | 100 % | 100 % |
-| Leurres signalés | 0/7 | 0/7 | 0/7 |
-| Durée | 90 ms | 4 min 30 | ≈ 12 min |
+Même dossier lancé avec Codex (gpt-5.6-sol) : 93 %. Le détail (précision, leurres, tours, coût) et les rapports bruts : [`course/resultats.json`](course/resultats.json), [`docs/sample-review/formation/`](docs/sample-review/formation/).
 
-Rapports complets et transcriptions résumées : [`docs/sample-review/`](docs/sample-review/).
-
-## Installer
+## Démarrer la formation
 
 ```bash
-# dans un projet Angular, pour tous les harnesses (portée projet, à commiter)
-node kit/install.mjs --target ../mon-app-angular
+git clone https://github.com/PrincyExaltIT/skill-issue-playground.git
+git clone https://github.com/PrincyExaltIT/skill-issue.git
+cd skill-issue-playground
+git checkout depart                 # la base de la PR, en local
+git checkout lab/speaker-spotlight
+npm install
+```
 
-# seulement certains harnesses, en liens symboliques
+Prérequis : Git, Node.js 24.15 ou plus (Angular 22 demande au minimum 22.22 ou 24.13.1 ; 24.15 est recommandé pour la CLI 22.2) et un harness au choix.
+
+Noter une review : `node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md`.
+Rattraper une étape : `node ../skill-issue/course/rattrapage.mjs <0-5> [--harness claude|codex|tous]`.
+
+## Installer le package (bonus)
+
+```bash
+node kit/install.mjs --target ../mon-app-angular                                   # pour les huit harnesses
 node kit/install.mjs --target ../mon-app-angular --harness claude,codex --mode link
-
-# où chaque harness cherche ses skills
-node kit/install.mjs --list
+node kit/install.mjs --list                                                         # où chaque harness cherche ses skills
 ```
 
 Ou avec l'installeur communautaire : `npx skills add PrincyExaltIT/skill-issue`.
 
-Ajouter `.review/` au `.gitignore` du projet.
+| Skill | Rôle |
+|---|---|
+| [`angular-review`](skills/angular-review/SKILL.md) | Review d'un diff Angular 17 → 22 : scripts pour le périmètre, le scan et le verdict ; sept relecteurs pour le jugement |
+| [`review-fix`](skills/review-fix/SKILL.md) | Corrige les findings un par un, build et test après chacun |
+| [`pr-handoff`](skills/pr-handoff/SKILL.md) | Description de PR/MR et note de passation (invocation manuelle) |
+| [`skill-smith`](skills/skill-smith/SKILL.md) | Crée, valide et installe un nouveau skill |
 
 ## CI
 
-- GitHub : copier [`kit/ci/github/angular-review.yml`](kit/ci/github/angular-review.yml) dans `.github/workflows/`. Le scan déterministe annote la PR sans IA ni secret et liste tous les candidats dans le résumé du job ; la review complète tourne si le secret `ANTHROPIC_API_KEY` existe.
-- GitLab : inclure [`kit/ci/gitlab/angular-review.gitlab-ci.yml`](kit/ci/gitlab/angular-review.gitlab-ci.yml). Rapport Code Quality dans la MR ; note IA si `ANTHROPIC_API_KEY` et `GITLAB_REVIEW_TOKEN` sont définis.
+- **Ton skill** : [`course/ci/github/revue-angular.yml`](course/ci/github/revue-angular.yml) et [`course/ci/gitlab/revue-angular.gitlab-ci.yml`](course/ci/gitlab/revue-angular.gitlab-ci.yml). Vérifications sans IA (porte sur les BLOCKER, annotations), puis revue IA si `ANTHROPIC_API_KEY` existe. Démo : la PR #4 du dépôt de démo.
+- **Le package** : [`kit/ci/github/angular-review.yml`](kit/ci/github/angular-review.yml) (variante Codex : [`angular-review-codex.yml`](kit/ci/github/angular-review-codex.yml)) et [`kit/ci/gitlab/angular-review.gitlab-ci.yml`](kit/ci/gitlab/angular-review.gitlab-ci.yml).
 - Miroir GitLab des deux dépôts : `glab auth login`, puis `bash kit/gitlab-mirror.sh <groupe-ou-utilisateur>` depuis la racine de chaque dépôt.
-- Variante Codex pour GitHub : [`kit/ci/github/angular-review-codex.yml`](kit/ci/github/angular-review-codex.yml) (job agent en lecture seule, job séparé pour commenter).
-- Dépannage : sur un fork, les workflows sont désactivés tant qu'on ne les active pas dans l'onglet Actions. Sur le playground (dépôt neuf), les premières PR n'ont créé aucun run jusqu'au premier run déclenché par un push ; ensuite, fermer et rouvrir la PR a suffi.
+- Dépannage : sur un fork, les workflows sont désactivés tant qu'on ne les active pas dans l'onglet Actions. Sur un dépôt neuf, les premières PR peuvent ne créer aucun run avant le premier workflow déclenché par un push ; fermer et rouvrir la PR suffit ensuite.
 
-## Développer le kit
+## Développer
 
 ```bash
-npm test               # valide les 4 skills + snapshots du scan (fixtures)
-npm run build:site     # régénère site/dist/index.html depuis les fichiers du kit
+npm test               # valide les skills (package et étapes du cours) + snapshots du scan
+npm run build:site     # régénère site/dist/index.html depuis les sources et course/resultats.json
 npm run render:videos  # re-rend les vidéos (Python + Playwright + ffmpeg)
-```
-
-Mesurer une review complète sur la démo :
-
-```bash
-node evals/angular-review/score.mjs --findings ../skill-issue-playground/.review/findings.json
 ```
 
 ## Structure
 
 ```
-skills/          les 4 skills (le dossier EST le skill)
-kit/             installeur, harnesses.json, CI GitHub/GitLab, hook, gabarits
-evals/           fixtures, snapshots, prompts de déclenchement, corrigé de la démo, score
+course/          le skill de référence étape par étape, le rattrapage, la CI du bonus cloud, les résultats mesurés
+evals/           corrigé de la PR du lab, score.mjs, déclenchement, fixtures et snapshots du package
+skills/          le package : les 4 skills (le dossier EST le skill)
+kit/             installeur, harnesses.json, CI GitHub/GitLab du package, hook, gabarits
 site/            la formation (sources + build → dist/index.html)
-studio/          les vidéos (scènes HTML + rendu image par image)
-docs/research/   les notes de recherche sourcées qui ont nourri la formation
+studio/          les vidéos (scènes HTML rendues image par image)
+docs/            notes de recherche sourcées, reviews réelles notées
 ```
 
 ## Licence
 
-MIT. Les règles héritées de la v1 viennent de [PrincyExaltIT/agent-skill](https://github.com/PrincyExaltIT/agent-skill) (MIT).
+MIT. Les règles héritées de la v1 du package viennent de [PrincyExaltIT/agent-skill](https://github.com/PrincyExaltIT/agent-skill) (MIT).

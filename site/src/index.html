@@ -2,12 +2,13 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta name="theme-color" content="#5853ff">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Skill Issue</title>
-<meta name="description" content="Formation en 3 modules : construire un Agent Skill complet de review de code Angular, le porter sur huit harnesses et le chaîner dans un workflow, du commit au merge.">
+<meta name="description" content="Formation en 3 modules et 2 bonus : construire son propre skill de code review Angular, le mesurer sur une vraie PR, le partager à toute l'équipe sur huit harnesses, puis le faire tourner dans le cloud.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 <style>
 /* @styles */
 </style>
@@ -16,14 +17,15 @@
 <a class="sr-only" href="#main">Aller au contenu</a>
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#accueil" aria-label="Skill Issue, accueil"><b>SKILL ISSUE</b><span>formation · agent skills</span></a>
+    <a class="brand" href="#accueil" aria-label="Skill Issue, accueil"><b>Skill <i>Issue</i></b><span>formation · agent skills</span></a>
     <nav class="tabs" aria-label="Modules">
       <a class="tab" href="#accueil"><span class="dot"></span>README.md</a>
-      <a class="tab" href="#m1" data-module="m1"><span class="dot"></span>01-anatomie.md <span class="done-mark" hidden>✓</span></a>
-      <a class="tab" href="#m2" data-module="m2"><span class="dot"></span>02-portabilite.md <span class="done-mark" hidden>✓</span></a>
-      <a class="tab" href="#m3" data-module="m3"><span class="dot"></span>03-workflows.md <span class="done-mark" hidden>✓</span></a>
-      <a class="tab" href="#lab"><span class="dot"></span>lab.sh</a>
-      <a class="tab" href="#kit"><span class="dot"></span>kit/</a>
+      <a class="tab" href="#m1" data-module="m1"><span class="dot"></span>01-capot.md <span class="done-mark" hidden>✓</span></a>
+      <a class="tab" href="#m2" data-module="m2"><span class="dot"></span>02-construire.md <span class="done-mark" hidden>✓</span></a>
+      <a class="tab" href="#m3" data-module="m3"><span class="dot"></span>03-equipe.md <span class="done-mark" hidden>✓</span></a>
+      <a class="tab" href="#ateliers"><span class="dot"></span>ateliers.sh</a>
+      <a class="tab" href="#cloud" data-module="cloud"><span class="dot"></span>+cloud.yml <span class="done-mark" hidden>✓</span></a>
+      <a class="tab" href="#package" data-module="package"><span class="dot"></span>+package/ <span class="done-mark" hidden>✓</span></a>
       <a class="tab" href="#ressources"><span class="dot"></span>sources.bib</a>
     </nav>
     <div class="tools">
@@ -42,8 +44,9 @@
 <!-- @include partials/m1.html -->
 <!-- @include partials/m2.html -->
 <!-- @include partials/m3.html -->
-<!-- @include partials/lab.html -->
-<!-- @include partials/kit.html -->
+<!-- @include partials/ateliers.html -->
+<!-- @include partials/cloud.html -->
+<!-- @include partials/package.html -->
 <!-- @include partials/resources.html -->
 </main>
 
@@ -57,7 +60,7 @@
 <footer class="footer">
   <div class="wrap">
     <span><b>Skill Issue</b> · formation conçue par Princy A. avec Claude · contenu à jour au {{BUILD_DATE}}</span>
-    <span>Kit : <a href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue</a> · Démo : <a href="https://github.com/PrincyExaltIT/skill-issue-playground" target="_blank" rel="noopener">skill-issue-playground</a></span>
+    <span>Formation et package : <a href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue</a> · Démo : <a href="https://github.com/PrincyExaltIT/skill-issue-playground" target="_blank" rel="noopener">skill-issue-playground</a></span>
   </div>
 </footer>
 

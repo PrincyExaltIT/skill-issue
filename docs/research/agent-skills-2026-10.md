@@ -46,3 +46,12 @@ Extensions notables : Claude Code (`disable-model-invocation`, `user-invocable`,
 - `skill-creator` (anthropics/skills) : `run_eval.py`, `run_loop.py`, `improve_description.py`…
 - `claude plugin eval` (Claude Code ≥ 2.1.269) : graders `regex`, `tool_used`, `tool_order`, `file_exists`, `llm`, `baseline` ; 3 exécutions avec et sans le plugin ; sous Windows natif, Bash demande WSL2.
 - `/skill-doctor` : coût en contexte et usage de chaque skill.
+
+## Vérifications complémentaires (9 octobre 2026)
+
+Faits cités par le module 01, relus à la source ce jour-là.
+
+- **Budget de la liste des skills, Codex** : « at most 2% of the model's context window, or 8,000 characters when the context window is unknown » — learn.chatgpt.com/docs/build-skills. Claude Code : 1 % (voir `kit/harnesses.json`).
+- **MCP, ce qu'un serveur expose** : trois briques, les outils (appelés par le modèle), les ressources (données en lecture, choisies par l'application) et les prompts (modèles que l'utilisateur invoque). Les outils « may require user consent prior to execution » ; approbation et permissions relèvent de l'application — modelcontextprotocol.io/docs/learn/server-concepts. Côté harness : liste d'outils autorisés `mcp__<serveur>` (voir `cloud-2026-10.md`, b2) ; en routine, les outils des connecteurs s'exécutent sans demande de permission (d17).
+- **Matt Pocock, `writing-for-agents`** (github.com/mattpocock/skills, skill invocable par le modèle) : « context pointer » (référence qui nomme un contenu hors contexte, dont la formulation décide quand l'agent va le chercher), « context load » (coût du matériel toujours chargé sur la fenêtre de l'agent) et « cognitive load » (coût côté humain : « the human is the index »). Les « router skills » sont traités dans `SKILL-MECHANICS.md` ; le dépôt contient `ask-matt`, « a router over the user-invoked skills ». Les noms de ses skills bougent (voir `workflows-2026-10.md`).
+- **Tokens du skill de référence** (étape 5) : mesurés en caractères / 4, voir la leçon 1.4 (description et frontmatter environ 100 tokens, corps environ 1 200, `references/` et `assets/` environ 4 000, `scripts/` environ 2 500).

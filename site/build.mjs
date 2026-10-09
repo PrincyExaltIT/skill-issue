@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // build.mjs — assemble the course into ONE self-contained HTML file.
 //   node site/build.mjs        -> site/dist/index.html (full document) + site/dist/artifact.html (body-only variant)
-// Data shown on the site (rules, skill anatomy, harnesses, triggers) is READ from the kit itself,
-// so the course cannot drift from the skill it teaches.
+// Data shown on the site (the reference skill, its measured scores, harnesses, triggers, the package's rules) is READ
+// from the repository itself, so the course cannot drift from what it teaches. Dates come from the data too (never from
+// the clock), so the same inputs always give the same page. The build fails on a broken in-page link (see checkAnchors).
 
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -12,7 +13,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const repo = join(here, '..');
 const src = join(here, 'src');
 const dist = join(here, 'dist');
-const skill = join(repo, 'skills', 'angular-review');
+const skill = join(repo, 'skills', 'angular-review');                       // the package (bonus)
+const course = join(repo, 'course', 'revue-angular', 'etape-5', 'revue-angular'); // the skill learners build
 mkdirSync(dist, { recursive: true });
 
 const read = (p) => readFileSync(p, 'utf8');
@@ -53,46 +55,175 @@ for (const f of readdirSync(join(skill, 'references')).filter((n) => n.endsWith(
 }
 rules.sort((a, b) => a.id.localeCompare(b.id, 'en', { numeric: true }));
 
-// ── Data: anatomy of the angular-review skill, with real excerpts ─────────
-const excerpt = (p, from = 1, to = 18) => read(join(skill, p)).split('\n').slice(from - 1, to).join('\n');
-const mechCount = new Set(RULES.map((r) => r.id)).size;
+// ── Data: anatomy of the reference skill (step 5), with real excerpts ─────
+const excerpt = (p, from = 1, to = 18) => read(join(course, p)).split('\n').slice(from - 1, to).join('\n');
+const lineCount = (p) => read(join(course, p)).split('\n').length;
+const refLines = readdirSync(join(course, 'references')).reduce((n, f) => n + lineCount(join('references', f)), 0);
 const anatomy = [
-  { path: 'angular-review/', name: 'angular-review/', depth: 0, dir: true, level: 0, role: "Le skill, c'est ce dossier. Son nom doit être identique au champ <code>name</code> du frontmatter. On le copie (ou on le lie) dans le dossier de skills du harness : rien d'autre à installer." },
-  { path: 'angular-review/SKILL.md', name: 'SKILL.md', depth: 1, level: 1, role: "Le seul fichier obligatoire. Le <b>frontmatter</b> (name + description, ~100 tokens) est chargé dans <b>toutes</b> les sessions : c'est le niveau 1. Le <b>corps</b> (le workflow en 6 étapes) n'est chargé que quand la description correspond à la demande : niveau 2.", excerpt: excerpt('SKILL.md', 1, 16) },
-  { path: 'angular-review/scripts/', name: 'scripts/', depth: 1, dir: true, level: 'x', role: "Ce qui doit être <b>exact</b> est du code, pas de la prose. Les scripts sont <b>exécutés</b> : seul leur résultat entre dans le contexte, jamais leur source. Node ≥ 18, zéro dépendance." },
-  { path: 'angular-review/scripts/scope.mjs', name: 'scope.mjs', depth: 2, level: 'x', role: "Délimite le diff (merge-base, CI GitHub/GitLab, staged) et détecte le contexte Angular : version, OnPush par défaut (v22), zoneless, SSR, runner de tests, fichier de bonnes pratiques officiel. Écrit <code>.review/scope.json</code>.", excerpt: excerpt('scripts/scope.mjs', 1, 12) },
-  { path: 'angular-review/scripts/scan.mjs', name: 'scan.mjs', depth: 2, level: 'x', role: `Passe mécanique : ${mechCount} règles détectables par heuristique, <b>sur les lignes modifiées uniquement</b>. Produit des candidats, pas des verdicts. Exporte aussi en SARIF (GitHub), Code Quality (GitLab) et annotations : c'est la porte CI sans IA.`, excerpt: excerpt('scripts/scan.mjs', 1, 10) },
-  { path: 'angular-review/scripts/findings.mjs', name: 'findings.mjs', depth: 2, level: 'x', role: "La moitié déterministe de la review : fusion et dédoublonnage, <b>vérification anti-hallucination</b> (l'extrait cité doit exister à la ligne indiquée), décisions keep/dismiss, verdict calculé, rendu du rapport. Refuse de rendre tant qu'un candidat n'est pas vérifié.", excerpt: excerpt('scripts/findings.mjs', 1, 14) },
-  { path: 'angular-review/scripts/lib/', name: 'lib/  (rules, source, project, formats)', depth: 2, dir: true, level: 'x', role: "Le catalogue des règles mécaniques (<code>rules.mjs</code>), un mini-lecteur de code TS/HTML (pas un parseur : assez bon pour pointer une ligne), la détection projet et les formats CI." },
-  { path: 'angular-review/references/', name: 'references/', depth: 1, dir: true, level: 3, role: "Le savoir, découpé par domaine. ~2 500 lignes au total, mais un reviewer ne charge <b>que son fichier</b>, et seulement si un fichier modifié correspond à son <code>applies_to</code>. C'est le niveau 3." },
-  { path: 'angular-review/references/SECURITY_REVIEW.md', name: 'SECURITY_REVIEW.md', depth: 2, level: 3, role: '23 règles R-SEC (XSS, sanitizer, CSP, XSRF, SSR, secrets). Héritées de la v1, format de sortie unifié.', excerpt: excerpt('references/SECURITY_REVIEW.md', 1, 16) },
-  { path: 'angular-review/references/REACTIVITY_REVIEW.md', name: 'REACTIVITY_REVIEW.md', depth: 2, level: 3, role: 'Nouveau en v2 : signals, contexte d\'injection (NG0203), resources, RxJS. Les bugs les plus fréquents depuis l\'arrivée des signals.', excerpt: excerpt('references/REACTIVITY_REVIEW.md', 1, 18) },
-  { path: 'angular-review/references/…', name: '… ARCHITECTURE, PERFORMANCE, A11Y, TESTING, PROJECT', depth: 2, level: 3, role: 'Un fichier par reviewer. <code>PROJECT_COMPLIANCE_REVIEW.md</code> est le gabarit que l\'équipe remplit avec ses propres règles (R-PROJ) : le reviewer ne s\'active que s\'il contient au moins une règle.' },
-  { path: 'angular-review/references/VERSION_GATES.md', name: 'VERSION_GATES.md', depth: 2, level: 3, role: "Ce qui change d'Angular 17 à 22 et quelles règles en dépendent. Exemple : sur Angular 22, OnPush est le défaut — réclamer OnPush devient un faux positif.", excerpt: excerpt('references/VERSION_GATES.md', 1, 8) },
-  { path: 'angular-review/references/REVIEWER_PROMPT.md', name: 'REVIEWER_PROMPT.md', depth: 2, level: 3, role: 'Le prompt envoyé à chaque sous-agent reviewer, et la seule définition du format de sortie (source unique de vérité).', excerpt: excerpt('references/REVIEWER_PROMPT.md', 1, 10) },
-  { path: 'angular-review/assets/', name: 'assets/', depth: 1, dir: true, level: 3, role: "Ce qui sert à <b>produire</b> la sortie sans être lu comme instruction : gabarit du rapport, schéma JSON du contrat <code>findings.json</code>." },
-  { path: 'angular-review/assets/report-template.md', name: 'report-template.md', depth: 2, level: 3, role: 'Le gabarit du rapport en français, rempli par findings.mjs.', excerpt: excerpt('assets/report-template.md', 1, 10) },
-  { path: 'angular-review/assets/findings.schema.json', name: 'findings.schema.json', depth: 2, level: 3, role: 'Le contrat de hand-off entre angular-review (écrit), review-fix et pr-handoff (lisent) et la CI.' },
-  { path: 'angular-review/agents/openai.yaml', name: 'agents/openai.yaml', depth: 1, level: 0, role: "Métadonnées d'affichage propres à Codex (nom, description courte). Les autres harnesses l'ignorent : c'est une <b>extension</b>, pas le standard." },
-  { path: 'evals/angular-review/', name: '../evals/ (hors du skill)', depth: 0, dir: true, level: 0, role: "Les tests du skill vivent <b>à côté</b>, pas dedans : fixtures + snapshots du scan, prompts de déclenchement, corrigé de la démo et script de score (rappel / précision). Ils ne sont jamais chargés par l'agent." },
+  { path: 'revue-angular/', name: 'revue-angular/', depth: 0, dir: true, level: 0, role: "Le skill, c'est ce dossier. Son nom est identique au champ <code>name</code> du frontmatter. On le commite dans <code>.agents/skills/</code> et <code>.claude/skills/</code> : rien d'autre à installer." },
+  { path: 'revue-angular/SKILL.md', name: 'SKILL.md', depth: 1, level: 1, role: "Le seul fichier obligatoire. Le <b>frontmatter</b> (name + description, une soixantaine de tokens) est chargé dans <b>toutes</b> les sessions : niveau 1. Le <b>corps</b>, la procédure en 7 étapes, n'arrive que quand la description correspond à la demande : niveau 2.", excerpt: excerpt('SKILL.md', 1, 18) },
+  { path: 'revue-angular/references/', name: 'references/', depth: 1, dir: true, level: 3, role: `Les règles de l'équipe, un fichier par domaine (${refLines} lignes au total). Le <code>SKILL.md</code> dit quand charger chacun : un diff sans template ne charge pas l'accessibilité. Niveau 3.` },
+  { path: 'revue-angular/references/angular-22.md', name: 'angular-22.md', depth: 2, level: 3, role: "Composants, templates, routes, formulaires, à jour d'Angular 22 : OnPush par défaut, <code>Eager</code>, control flow, <code>input()</code>, <code>inject()</code>.", excerpt: excerpt('references/angular-22.md', 1, 14) },
+  { path: 'revue-angular/references/reactivite.md', name: 'reactivite.md', depth: 2, level: 3, role: "Signals, RxJS et zoneless : les bugs les plus fréquents depuis l'arrivée des signals (NG0203, mutation en place, effect qui dérive un état).", excerpt: excerpt('references/reactivite.md', 1, 12) },
+  { path: 'revue-angular/references/…', name: '… securite.md, accessibilite.md, tests.md', depth: 2, level: 3, role: "Même format partout : un identifiant, une gravité, <b>Pourquoi</b>, <b>À repérer</b>, <b>Correction</b>. Les identifiants sont ceux que cite le rapport et que reprend le script." },
+  { path: 'revue-angular/scripts/', name: 'scripts/', depth: 1, dir: true, level: 'x', role: "Ce qui doit être <b>exact</b> est du code, pas de la prose. Les scripts sont <b>exécutés</b> : seule leur sortie entre dans le contexte. Node 18 ou plus, zéro dépendance." },
+  { path: 'revue-angular/scripts/perimetre.mjs', name: 'perimetre.mjs', depth: 2, level: 'x', role: "Lit <code>git diff --unified=0</code> et écrit <code>.review/perimetre.json</code> : chaque fichier modifié et ses lignes ajoutées ou modifiées, sans les dossiers d'outillage.", excerpt: excerpt('scripts/perimetre.mjs', 1, 12) },
+  { path: 'revue-angular/scripts/verifs.mjs', name: 'verifs.mjs', depth: 2, level: 'x', role: "Une table de motifs passée sur les lignes du périmètre : des <b>pistes</b> en moins d'une seconde, sans modèle. En CI, la même commande ferme la porte sur un BLOCKER et annote la PR.", excerpt: excerpt('scripts/verifs.mjs', 14, 30) },
+  { path: 'revue-angular/assets/', name: 'assets/', depth: 1, dir: true, level: 3, role: "Ce qui sert à <b>produire</b> la sortie : le gabarit du rapport, et les exemples (bons findings, pièges à écarter)." },
+  { path: 'revue-angular/assets/rapport.md', name: 'rapport.md', depth: 2, level: 3, role: "Le gabarit de <code>.review/REVIEW.md</code> : verdict, compteurs, un bloc par finding, et les écartés à la vérification.", excerpt: excerpt('assets/rapport.md', 1, 14) },
+  { path: 'revue-angular/assets/exemples.md', name: 'exemples.md', depth: 2, level: 3, role: "Deux findings modèles pris dans d'autres projets, et les pièges que l'équipe a déjà vus. Quand la review se trompe, on ajoute le cas ici.", excerpt: excerpt('assets/exemples.md', 22, 32) },
+  { path: 'revue-angular/evals/', name: 'evals/', depth: 1, dir: true, level: 0, role: "Les tests du skill : demandes qui doivent (ou ne doivent pas) le déclencher, et comment noter une review. La procédure ne les charge jamais." },
+  { path: 'revue-angular/evals/declenchement.json', name: 'declenchement.json', depth: 2, level: 0, role: "10 demandes qui doivent déclencher le skill, 10 quasi-positifs qui ne doivent pas.", excerpt: excerpt('evals/declenchement.json', 1, 9) },
+  { path: 'revue-angular/agents/openai.yaml', name: 'agents/openai.yaml', depth: 1, level: 0, role: "Métadonnées d'affichage propres à Codex. Les autres harnesses l'ignorent : c'est une <b>extension</b>, rangée hors du <code>SKILL.md</code> pour qu'il reste standard.", excerpt: read(join(course, 'agents', 'openai.yaml')) },
 ];
 
+// ── Data: measured scores of the reference skill ─────────────────────────
+const results = json(join(repo, 'course', 'resultats.json'));
+const harnesses = json(join(repo, 'kit', 'harnesses.json'));
+
+// ── Dates: from the data, written in French in prose ("9 octobre 2026"), never from the clock ──
+const MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+const parseDate = (text, where) => {
+  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(text).trim());
+  const fr = /^(\d{1,2})(?:er)?\s+(\p{L}+)\s+(\d{4})$/u.exec(String(text).trim());
+  const [y, m, d] = iso ? [+iso[1], +iso[2] - 1, +iso[3]] : fr ? [+fr[3], MONTHS.indexOf(fr[2].toLowerCase()), +fr[1]] : [NaN, -1, NaN];
+  const date = new Date(Date.UTC(y, m, d));
+  if (m < 0 || date.getUTCMonth() !== m || date.getUTCDate() !== d) throw new Error(`${where} : date illisible « ${text} » (attendu 2026-10-08 ou « 8 octobre 2026 »)`);
+  return date;
+};
+const frDate = (date) => `${date.getUTCDate() === 1 ? '1er' : date.getUTCDate()} ${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+const harnessDate = parseDate(harnesses.checked, 'kit/harnesses.json « checked »');
+const resultsDate = parseDate(results.date, 'course/resultats.json « date »');
+const latestDate = new Date(Math.max(harnessDate, resultsDate));  // every other "à jour au" stamp
+
+const STEPS = [
+  { n: '0', what: 'Le squelette : dix lignes' },
+  { n: '1', what: 'La procédure et le gabarit' },
+  { n: '2', what: "Les règles de l'équipe" },
+  { n: '3', what: 'Les scripts' },
+  { n: '4', what: 'Exemples et vérification' },
+];
+const fr = (v) => String(v).replace('.', ',');
+const bar = (v, cls) => (v == null ? '<td>—</td>' : `<td><span class="bar ${cls}"><i style="width:${v}%"></i><b>${v} %</b></span></td>`);
+const progression = `<div class="table-wrap scoreboard"><table>
+  <caption>Mesuré le ${frDate(resultsDate)} sur la PR du lab, avec ${results.modeles.opus.harness}. Une ligne = un run par modèle.</caption>
+  <thead><tr><th scope="col">Étape</th><th scope="col">Rappel · Opus 5.5</th><th scope="col">Rappel · Haiku 5.5</th><th scope="col">Précision O / H</th><th scope="col">Leurres O / H</th><th scope="col">Tours O / H</th><th scope="col">Coût Opus</th></tr></thead>
+  <tbody>
+${STEPS.map(({ n, what }) => {
+  const o = results.runs.opus[n] ?? {};
+  const h = results.runs.haiku[n] ?? {};
+  return `    <tr><th scope="row"><span class="mono">v${n}</span> · ${what}</th>${bar(o.rappel, 'o')}${bar(h.rappel, 'h')}<td>${o.precision ?? '—'} / ${h.precision ?? '—'} %</td><td>${o.leurres ?? '—'} / ${h.leurres ?? '—'}</td><td>${o.tours ?? '—'} / ${h.tours ?? '—'}</td><td>${o.cout == null ? '—' : fr(o.cout) + ' $'}</td></tr>`;
+}).join('\n')}
+    <tr class="ref"><th scope="row">Le package de Princy <span class="small muted">(bonus)</span></th>${bar(results.package.claude.rappel, 'o')}<td>—</td><td>${results.package.claude.precision} % · Codex ${results.package.codex.rappel} %</td><td>${results.package.claude.leurres}</td><td>${results.package.claude.tours}</td><td>${fr(results.package.claude.cout)} $</td></tr>
+  </tbody></table></div>
+<p class="small muted">${results.methode} Haiku 5.5 à l'étape 0 n'a pas écrit de rapport : sa réponse dans le chat a été notée. Coûts Haiku non affichés : Claude Code ne connaissait pas encore son tarif sur ce poste. Les rapports bruts sont dans <code>docs/sample-review/formation/</code>.</p>`;
+const duree = (s) => (s < 60 ? `${s} s` : `${Math.floor(s / 60)} min ${String(s % 60).padStart(2, '0')}`);
+const format = (run, key, where) => {
+  const value = key === 'duree' ? run?.secondes : run?.[key];
+  if (value == null) throw new Error(`resultats.json : pas de valeur ${where}/${key}`);
+  return key === 'duree' ? duree(value) : key === 'cout' ? fr(value) : String(value);
+};
+const metric = (model, step, key) => format(results.runs[model]?.[step], key, `${model}/${step}`);
+
 // ── Data: harnesses & triggers ────────────────────────────────────────────
-const harnesses = existsSync(join(repo, 'kit', 'harnesses.json')) ? json(join(repo, 'kit', 'harnesses.json')) : { list: [] };
-const triggers = json(join(repo, 'evals', 'angular-review', 'triggers.json'));
-const keyPath = join(repo, 'evals', 'angular-review', 'playground-key.json');
-const labIssues = existsSync(keyPath) ? json(keyPath).issues.length : 'une vingtaine de';
+const cases = json(join(course, 'evals', 'declenchement.json'));
+const triggers = { skill: cases.skill, should_trigger: cases.doit_declencher, should_not_trigger: cases.ne_doit_pas_declencher };
+// Lab PR: the key lists 27 problems to find (mustFind: true), optional findings the score ignores (mustFind: false) and the decoys.
+const key = json(join(repo, 'evals', 'angular-review', 'playground-key.json'));
+const labIssues = key.issues.filter((i) => i.mustFind === true).length;
+const labDecoys = key.decoys.length;
+// The score of every run is out of the same number of problems as the key: a stale key or a stale run fails the build.
+const allRuns = [
+  ...Object.entries(results.runs).flatMap(([m, steps]) => Object.entries(steps).map(([step, r]) => [`runs/${m}/${step}`, r])),
+  ...Object.entries(results.repetitions ?? {}).flatMap(([m, steps]) => Object.entries(steps).map(([step, r]) => [`repetitions/${m}/${step}`, r])),
+  ...Object.entries(results.package ?? {}).map(([h, r]) => [`package/${h}`, r]),
+];
+for (const [where, r] of allRuns) {
+  if (r.attendus !== labIssues) throw new Error(`resultats.json : ${where} attend ${r.attendus} problèmes, le corrigé (playground-key.json, mustFind) en compte ${labIssues}`);
+}
+
+// ── Harness status: « Mesuré » when resultats.json holds runs of that harness, « Documenté » otherwise ──
+// A model entry of results.modeles belongs to a harness when its `harness` string starts with the harness id
+// ("Claude Code 2.1.289" -> claude, "Codex CLI 0.149.1" -> codex); results.package is keyed by harness id.
+for (const h of harnesses.list) {
+  const models = Object.entries(results.modeles).filter(([, m]) => m.harness.toLowerCase().startsWith(h.id));
+  const runs = models.reduce((n, [model]) => n + Object.keys(results.runs[model] ?? {}).length + Object.keys(results.repetitions?.[model] ?? {}).length, 0)
+    + (results.package?.[h.id] ? 1 : 0);
+  const versions = [...new Set(models.map(([, m]) => m.harness))].join(', ');
+  // `short` goes next to the badge in the overview table, `detail` in the harness pane.
+  h.status = runs > 0 ? { key: 'mesure', label: 'Mesuré', short: `${runs} run${runs > 1 ? 's' : ''}`, detail: `${runs} run${runs > 1 ? 's' : ''} · ${versions}` }
+    : /code source/i.test(h.note ?? '') ? { key: 'documente', label: 'Documenté', short: 'lu dans le code source', detail: `lu dans le code source de ${h.name}, faute de documentation publiée ; aucun run` }
+    : { key: 'documente', label: 'Documenté', short: '', detail: "d'après les sources citées ci-dessous ; aucun run" };
+}
+const harnessesMeasured = harnesses.list.filter((h) => h.status.key === 'mesure').length;
 
 const dataBlock = (id, value) => `<script type="application/json" id="${id}">${JSON.stringify(value).replace(/</g, '\\u003c')}</script>`;
+// The matrix says when the harnesses were checked: that date is harnesses.json « checked », whichever placeholder the partial uses.
+html = html.replace(/(état vérifié au\s+)\{\{BUILD_DATE\}\}/g, '$1{{HARNESS_DATE}}');
 // Function replacers: a string replacement would interpret "$$", "$&"… inside the injected code.
 html = html
-  .replace('<!-- @data -->', () => [dataBlock('data-rules', rules), dataBlock('data-anatomy', anatomy), dataBlock('data-harnesses', harnesses), dataBlock('data-triggers', triggers)].join('\n'))
+  .replace('<!-- @data -->', () => [dataBlock('data-rules', rules), dataBlock('data-anatomy', anatomy), dataBlock('data-harnesses', harnesses), dataBlock('data-triggers', triggers), dataBlock('data-results', results)].join('\n'))
   .replace('/* @styles */', () => read(join(src, 'styles.css')))
   .replace('/* @script */', () => read(join(src, 'app.js')))
   .replaceAll('{{RULES_TOTAL}}', String(rules.length))
   .replaceAll('{{RULES_MECH}}', String(rules.filter((r) => r.mechanical).length))
-  .replaceAll('{{BUILD_DATE}}', new Date().toISOString().slice(0, 10))
-  .replaceAll('{{LAB_ISSUES}}', String(labIssues));
+  .replaceAll('{{BUILD_DATE}}', frDate(latestDate))          // "à jour au": the most recent of harnesses.json « checked » and resultats.json « date »
+  .replaceAll('{{HARNESS_DATE}}', frDate(harnessDate))       // harnesses.json « checked »
+  .replaceAll('{{RESULTS_DATE}}', frDate(resultsDate))       // resultats.json « date »
+  .replaceAll('{{LAB_ISSUES}}', String(labIssues))           // key issues with mustFind: true
+  .replaceAll('{{LAB_DECOYS}}', String(labDecoys))           // key decoys
+  .replaceAll('{{HARNESS_TOTAL}}', String(harnesses.list.length))
+  .replaceAll('{{HARNESS_MEASURED}}', String(harnessesMeasured))
+  .replaceAll('{{PROGRESSION}}', () => progression)
+  .replaceAll('{{CODEX_MODEL}}', results.modeles.codex.id)
+  .replace(/\{\{R:(\w+):(\w+):(\w+)\}\}/g, (_, model, step, key) => metric(model, step, key))
+  .replace(/\{\{PKG:(\w+):(\w+)\}\}/g, (_, harness, key) => format(results.package[harness], key, `package/${harness}`))
+  .replace(/\{\{REP:(\w+):(\w+):(\w+)\}\}/g, (_, model, step, key) => format(results.repetitions[model]?.[step], key, `repetitions/${model}/${step}`));
+
+const left = html.match(/\{\{[A-Za-z_:0-9]+\}\}/g);
+if (left) throw new Error(`placeholders non remplacés : ${[...new Set(left)].join(', ')}`);
+
+// ── Check: every in-page link (<a href="#x">) lands on an element inside a view ──
+// The router shows the view that contains the target, so a link to a missing id, or to an id outside every
+// <… class="view"> (apart from the skip-link target), would silently land on the wrong page.
+const SKIP_LINK_TARGETS = new Set(['main']);
+const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+function checkAnchors(page) {
+  const text = page.replace(/<!--[\s\S]*?-->|<(script|style)\b[\s\S]*?<\/\1\s*>/gi, ''); // inline JS/CSS and comments are not markup
+  const attrOf = (attrs, name) => { const m = new RegExp(`(?:^|\\s)${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, 'i').exec(attrs); return m ? (m[1] ?? m[2]) : null; };
+  const owner = new Map();            // id -> id of the view that contains it ('' = outside every view)
+  const duplicates = new Set();
+  const links = [];
+  const open = [];                    // open elements: { tag, view } (view = the element's id when it is a view, else '')
+  const TAG = /<(\/?)([a-zA-Z][\w:-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g;
+  for (let m; (m = TAG.exec(text));) {
+    const [, closing, name, attrs] = m;
+    const tag = name.toLowerCase();
+    if (closing) { const i = open.findLastIndex((e) => e.tag === tag); if (i >= 0) open.length = i; continue; }
+    const id = attrOf(attrs, 'id');
+    const isView = Boolean(id) && (attrOf(attrs, 'class') ?? '').split(/\s+/).includes('view');
+    const view = isView ? id : (open.findLast((e) => e.view)?.view ?? '');
+    if (id) { if (owner.has(id)) duplicates.add(id); else owner.set(id, view); }
+    const href = tag === 'a' ? attrOf(attrs, 'href') : null;
+    if (href && href.startsWith('#') && href.length > 1) { let target = href.slice(1); try { target = decodeURIComponent(target); } catch { /* keep raw */ } links.push(target); }
+    if (!VOID_TAGS.has(tag) && !attrs.trimEnd().endsWith('/')) open.push({ tag, view: isView ? id : '' });
+  }
+  const missing = [...new Set(links.filter((id) => !owner.has(id)))];
+  const outside = [...new Set(links.filter((id) => owner.has(id) && !owner.get(id) && !SKIP_LINK_TARGETS.has(id)))];
+  if (missing.length || outside.length) {
+    // Point at the source file (partial) and line of each offending link: the page is assembled from several files.
+    const files = [join(src, 'index.html'), ...readdirSync(join(src, 'partials')).map((f) => join(src, 'partials', f))];
+    const where = (id) => files.flatMap((f) => read(f).split('\n').flatMap((line, i) => (line.includes(`href="#${id}"`) ? [`${f.slice(src.length + 1).replaceAll('\\', '/')}:${i + 1}`] : []))).join(', ');
+    throw new Error([
+      `liens internes cassés : ${missing.length + outside.length} cible(s) sur ${new Set(links).size} ancres distinctes`,
+      ...missing.map((id) => `  #${id} : aucun élément avec cet id (liens : ${where(id) || '?'})`),
+      ...outside.map((id) => `  #${id} : l'élément existe mais hors de toute section .view, le routeur ne peut pas l'afficher (liens : ${where(id) || '?'})`),
+    ].join('\n'));
+  }
+  if (duplicates.size) console.warn(`attention : ids en double (le routeur prend le premier) : ${[...duplicates].map((d) => '#' + d).join(', ')}`);
+  return new Set(links).size;
+}
+const anchorsChecked = checkAnchors(html);
 
 writeFileSync(join(dist, 'index.html'), html);
 
@@ -102,4 +233,4 @@ const body = /<body[^>]*>([\s\S]*)<\/body>/.exec(html)[1];
 writeFileSync(join(dist, 'artifact.html'), head.trim() + '\n' + body.trim() + '\n');
 
 const size = (p) => (statSync(p).size / 1024).toFixed(0) + ' KB';
-console.log(`site/dist/index.html ${size(join(dist, 'index.html'))} · artifact.html ${size(join(dist, 'artifact.html'))} · ${rules.length} règles (${rules.filter((r) => r.mechanical).length} mécaniques) · ${anatomy.length} nœuds · ${harnesses.list.length} harnesses`);
+console.log(`site/dist/index.html ${size(join(dist, 'index.html'))} · artifact.html ${size(join(dist, 'artifact.html'))} · ${rules.length} règles (${rules.filter((r) => r.mechanical).length} mécaniques) · ${anatomy.length} nœuds · ${harnesses.list.length} harnesses (${harnessesMeasured} mesurés) · ${anchorsChecked} ancres internes vérifiées`);

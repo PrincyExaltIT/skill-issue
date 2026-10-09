@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>v4 — il relit pendant que tu dors</title>
+<link rel="stylesheet" href="../stage.css">
+<style>
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 1060px; }
+  .fam { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 16px; display: grid; gap: 8px; min-height: 150px; }
+  .fam b { font: 800 22px/1.1 var(--display); }
+  .fam .ex { font: 500 15px/1.4 var(--mono); color: var(--ink-2); }
+  .fam .reads { font: 700 15px/1 var(--mono); }
+  .yes { color: var(--add); } .part { color: var(--minor); }
+  .checks { display: grid; gap: 10px; width: 1060px; }
+  .check { display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font: 500 19px/1.3 var(--body); }
+  .ok { color: var(--add); font-weight: 800; } .ko { color: var(--del); font-weight: 800; } .skip { color: var(--ink-3); font-weight: 800; }
+  .anno { border-left: 4px solid var(--del); background: rgba(255,107,94,.14); padding: 9px 14px; border-radius: 0 10px 10px 0; font: 500 16px/1.35 var(--mono); color: #ffc4bb; width: 1060px; }
+  .yaml { font: 400 16px/1.5 var(--mono); background: var(--term); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; width: 1060px; color: var(--ink-2); }
+  .yaml .k { color: var(--accent); } .yaml .c { color: var(--ink-3); }
+  .comment { width: 1060px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--paper); color: var(--paper-ink); box-shadow: 0 30px 80px -30px #000; }
+  .comment .bar { background: #E3E3F7; padding: 10px 16px; font: 600 15px/1.2 var(--mono); color: #4A4A80; height: auto; border-radius: 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; overflow: visible; }
+  .comment .mockup { font-size: 15px; flex: none; }
+  .comment .body { padding: 14px 18px; display: grid; gap: 6px; font: 400 17px/1.45 var(--body); }
+  .comment h4 { margin: 0; font: 800 19px/1.2 var(--body); }
+  .comment .counts { font: 700 16px/1 var(--mono); }
+  .rows { display: grid; gap: 10px; width: 1060px; }
+  .rrow { display: grid; grid-template-columns: 270px 1fr; gap: 16px; align-items: center; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  .rrow b { font: 800 19px/1.2 var(--display); }
+  .rrow span { font: 500 16px/1.35 var(--mono); color: var(--ink-2); }
+</style></head>
+<body data-duration="54">
+<div class="brandmark">SKILL ISSUE · BONUS</div>
+
+<!-- A · 0–12 · sans ton poste -->
+<div class="chapter" data-at="0.2" data-until="11.6">01 · sans ton poste</div>
+<section class="scene" data-at="0" data-dur="0.01" data-until="11.7" style="gap:26px">
+  <div class="mid" data-at="0.3" data-fx="rise">Ton skill est dans le dépôt.<br><span class="accent">Fais-le tourner sur chaque PR.</span></div>
+  <div class="three">
+    <div class="fam" data-at="2.2" data-fx="rise"><b>Ta CI</b><span class="ex">GitHub Actions · GitLab CI</span><span class="reads yes">✓ lance ton skill tel quel</span></div>
+    <div class="fam" data-at="2.7" data-fx="rise"><b>Relecteurs hébergés</b><span class="ex">Copilot · Codex · Claude · Duo</span><span class="reads part">◐ Copilot lit ton skill</span></div>
+    <div class="fam" data-at="3.2" data-fx="rise"><b>Agents cloud</b><span class="ex">Claude Code on the web · routines</span><span class="reads yes">✓ lisent .claude/skills</span></div>
+  </div>
+</section>
+<div class="cap" data-at="4.0" data-until="11.5">Même skill, trois façons de le lancer sans le poste de personne.</div>
+
+<!-- B · 12–26 · la porte sans IA -->
+<div class="chapter" data-at="12.0" data-until="25.6">02 · la porte sans IA</div>
+<section class="scene" data-at="12.0" data-until="25.7" style="gap:14px">
+  <div class="checks">
+    <div class="check" data-at="12.4" data-fx="slide-l"><span class="ok">✓</span><span>Les deux copies du skill sont identiques</span><span class="dim mono" style="font-size:15px">diff -r</span></div>
+    <div class="check" data-at="13.2" data-fx="slide-l"><span class="ko">✗</span><span>Périmètre et vérifications · porte fermée sur 3 BLOCKER</span><span class="dim mono" style="font-size:15px">verifs.mjs</span></div>
+  </div>
+  <div class="anno" data-at="14.6" data-fx="wipe">speaker-spotlight.ts:34 · SEC-01 · Sanitizer contourné</div>
+  <div class="anno" data-at="15.2" data-fx="wipe">talk-card.ts:28 · SIG-01 · Signal testé sans être appelé</div>
+  <div class="anno" data-at="15.8" data-fx="wipe">speaker-spotlight.html:22 · A11Y-02 · Clic sur un élément non interactif</div>
+  <div class="small dim" data-at="17.4" data-fx="fade" style="font:500 17px/1.4 var(--body)">PR #4 du dépôt de démo, 9 octobre 2026 : les annotations arrivent sur le diff.</div>
+</section>
+<div class="cap" data-at="12.6" data-until="25.5">Sans IA, sans secret : sur toutes les PR, forks compris.</div>
+
+<!-- C · 26–40 · la revue IA -->
+<div class="chapter" data-at="26.0" data-until="39.6">03 · la revue IA</div>
+<section class="scene" data-at="26.0" data-until="39.7" style="gap:16px">
+  <div class="yaml" data-at="26.3" data-fx="rise">
+    <div><span class="k">uses:</span> anthropics/claude-code-action@v1</div>
+    <div><span class="k">prompt:</span> /revue-angular Relis cette PR (base : origin/${{ github.base_ref }}).</div>
+    <div class="c"># puis une étape ordinaire publie .review/REVIEW.md en commentaire</div>
+  </div>
+  <div class="comment" data-at="28.6" data-fx="rise">
+    <div class="bar"><span>commentaire de PR · le rapport d'un run réel de l'étape 4</span><span class="mockup">maquette · rapport produit en local</span></div>
+    <div class="body">
+      <h4>Verdict : à corriger</h4>
+      <span class="counts">🔴 5 BLOCKER · 🟠 15 MAJOR · 🟡 14 MINOR · 🔵 1 INFO</span>
+      <span data-at="30.2" data-fx="fade">BLOCKER · SIG-04 · La page speaker plante à l'ouverture (NG0203)</span>
+      <span data-at="30.6" data-fx="fade">BLOCKER · SEC-01 · XSS stockée via la bio du speaker</span>
+    </div>
+  </div>
+</section>
+<div class="cap" data-at="26.6" data-until="39.5">Avec ta clé : l'agent écrit le rapport, le workflow le publie.</div>
+
+<!-- D · 40–54 · relecteurs hébergés -->
+<div class="chapter" data-at="40.0" data-until="53.6">04 · les relecteurs hébergés</div>
+<section class="scene" data-at="40.0" data-until="50.6" style="gap:12px">
+  <div class="rows">
+    <div class="rrow" data-at="40.3" data-fx="slide-l"><b>Copilot code review</b><span class="yes">lit .agents/skills/ et .claude/skills/</span></div>
+    <div class="rrow" data-at="40.9" data-fx="slide-l"><b>@codex review</b><span>lit AGENTS.md · « ## Code Review Rules »</span></div>
+    <div class="rrow" data-at="41.5" data-fx="slide-l"><b>@claude review</b><span>lit CLAUDE.md et REVIEW.md</span></div>
+    <div class="rrow" data-at="42.1" data-fx="slide-l"><b>GitLab Duo</b><span>lit .gitlab/duo/mr-review-instructions.yaml</span></div>
+  </div>
+</section>
+<div class="cap" data-at="40.5" data-until="50.5">Chacun lit ses fichiers : branche tes règles là où il regarde.</div>
+<section class="scene center" data-at="50.8">
+  <div class="big" data-at="51.0" data-fx="blur" data-dur="0.8">Il relit pendant<br><span class="accent">que tu dors.</span></div>
+</section>
+
+<script src="../engine.js"></script>
+</body></html>

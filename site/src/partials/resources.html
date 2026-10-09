@@ -4,7 +4,7 @@
     <header class="module-head">
       <span class="num">bib</span>
       <h1 id="res-title">Sources et glossaire</h1>
-      <p class="promise">Chaque affirmation datée de la formation vient d'une source primaire, vérifiée le {{BUILD_DATE}}. Les notes complètes sont dans <code>docs/research/</code> du kit.</p>
+      <p class="promise">Chaque affirmation datée de la formation renvoie à une source datée : primaire quand elle existe (documentation, changelog, dépôt), sinon signalée comme presse ou blog (TechCrunch, Simon Willison). Les notes de recherche sont du 8 octobre 2026 (le chapitre cloud : 9 octobre). Elles disent aussi ce qui n'a pas pu être vérifié. Elles sont dans <code>docs/research/</code> du kit.</p>
     </header>
 
     <div class="grid-2" style="margin-top:26px">
@@ -31,9 +31,20 @@
         <!-- @include partials/resources-people.html -->
       </div>
       <div class="tool">
-        <span class="tool-title">Héritage du kit</span>
+        <span class="tool-title">La review dans le cloud (notes du 9 octobre 2026)</span>
         <ul class="small">
-          <li><a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> — angular-review v1 (106 règles, MIT)</li>
+          <li><a href="https://code.claude.com/docs/en/github-actions" target="_blank" rel="noopener">claude-code-action</a> · <a href="https://code.claude.com/docs/en/gitlab-ci-cd" target="_blank" rel="noopener">Claude Code pour GitLab CI/CD</a> · <a href="https://github.com/openai/codex-action" target="_blank" rel="noopener">codex-action</a></li>
+          <li><a href="https://code.claude.com/docs/en/code-review" target="_blank" rel="noopener">Claude Code Review</a> · <a href="https://code.claude.com/docs/en/ultrareview" target="_blank" rel="noopener">ultrareview</a> · <a href="https://code.claude.com/docs/en/routines" target="_blank" rel="noopener">routines</a> · <a href="https://code.claude.com/docs/en/claude-code-on-the-web" target="_blank" rel="noopener">Claude Code on the web</a></li>
+          <li><a href="https://docs.github.com/en/copilot/concepts/agents/code-review" target="_blank" rel="noopener">Copilot code review</a> · <a href="https://github.blog/changelog/2026-07-29-copilot-code-review-agent-skills-and-mcp-now-generally-available/" target="_blank" rel="noopener">skills et MCP en GA (29/07/2026)</a></li>
+          <li><a href="https://learn.chatgpt.com/docs/third-party/github" target="_blank" rel="noopener">Codex sur GitHub</a> · <a href="https://learn.chatgpt.com/docs/third-party/gitlab" target="_blank" rel="noopener">Codex sur GitLab</a> · <a href="https://docs.gitlab.com/user/gitlab_duo/customize_duo/review_instructions/" target="_blank" rel="noopener">instructions de GitLab Duo Code Review</a></li>
+          <li>Fiche complète, avec le statut de chaque fait : <code>docs/research/cloud-2026-10.md</code></li>
+        </ul>
+      </div>
+      <div class="tool">
+        <span class="tool-title">Le package et son héritage</span>
+        <ul class="small">
+          <li><a href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue</a> — la formation, le skill de référence par étape et le package (angular-review 2.1, MIT)</li>
+          <li><a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> — angular-review v1, le point de départ du package (MIT)</li>
           <li><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">PrincyExaltIT/forgent</a> — installeur de skills avec lockfile sha256</li>
         </ul>
       </div>
@@ -48,12 +59,14 @@
             <tr><th scope="row">Agent</th><td>Un modèle dans une boucle : contexte → réponse ou appel d'outil → exécution → résultat ajouté au contexte.</td></tr>
             <tr><th scope="row">Skill</th><td>Un dossier avec un <code>SKILL.md</code> (frontmatter + instructions) et, au besoin, des scripts, des références et des ressources.</td></tr>
             <tr><th scope="row">Progressive disclosure</th><td>Charger les informations par étages : description toujours, corps au déclenchement, fichiers à la demande.</td></tr>
-            <tr><th scope="row">Contrat (hand-off)</th><td>Le fichier qu'une étape laisse à la suivante, au format stable : ici <code>.review/findings.json</code>.</td></tr>
-            <tr><th scope="row">Candidat</th><td>Un problème possible trouvé par le scan ou un reviewer, avant vérification.</td></tr>
-            <tr><th scope="row">Finding</th><td>Un candidat gardé à la vérification : règle, ligne, extrait cité, conséquence, correctif.</td></tr>
+            <tr><th scope="row">Contrat (hand-off)</th><td>Le fichier qu'une étape laisse à la suivante, au format stable : <code>.review/REVIEW.md</code> pour ton skill, <code>.review/findings.json</code> pour le package.</td></tr>
+            <tr><th scope="row">Piste</th><td>Ce que remonte un script de vérification : un motif sur une ligne modifiée, à confirmer ou à écarter en lisant le code. Le package dit « candidat ».</td></tr>
+            <tr><th scope="row">Finding</th><td>Un problème gardé après vérification : emplacement <code>fichier:ligne</code>, règle, gravité, correction.</td></tr>
+            <tr><th scope="row">Rappel, précision, leurre</th><td>Le rappel compte les problèmes du corrigé que la review trouve ; la précision, les emplacements cités que le corrigé explique ; un leurre est un code correct qui ressemble à un problème.</td></tr>
+            <tr><th scope="row">Critère de fin</th><td>La condition vérifiable qui clôt une étape d'un skill (« Fini quand… ») : elle empêche l'agent de passer trop vite à la suite.</td></tr>
             <tr><th scope="row">Version gate</th><td>Une règle qui ne s'applique qu'à certaines versions d'Angular (ex. OnPush par défaut en v22).</td></tr>
             <tr><th scope="row">Eval</th><td>Un test du skill : déclenchement, snapshots du scan, rappel et précision sur un corrigé.</td></tr>
-            <tr><th scope="row">MCP</th><td>Model Context Protocol : un standard pour exposer des outils et des données externes à un agent.</td></tr>
+            <tr><th scope="row">MCP</th><td>Model Context Protocol : un standard par lequel un serveur expose à un agent des outils (appelés par le modèle), des ressources (données en lecture) et des prompts (modèles que tu invoques). C'est le harness qui demande, ou non, ton accord pour chaque appel.</td></tr>
           </tbody>
         </table>
       </div>

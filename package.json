@@ -2,12 +2,14 @@
   "name": "skill-issue",
   "version": "1.0.0",
   "private": true,
-  "description": "Formation et kit : construire, porter et chaîner des Agent Skills — cas réel : review de code Angular.",
+  "description": "Formation : construire son propre skill de code review (Angular), le mesurer, le partager à toute l'équipe ; le package prêt à l'emploi en bonus.",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "node evals/angular-review/check-catalogue.mjs && node evals/angular-review/run-scan-tests.mjs && node skills/skill-smith/scripts/validate.mjs skills/angular-review skills/review-fix skills/pr-handoff skills/skill-smith",
+    "test": "node evals/angular-review/check-catalogue.mjs && node evals/angular-review/run-scan-tests.mjs && node skills/skill-smith/scripts/validate.mjs skills/angular-review skills/review-fix skills/pr-handoff skills/skill-smith && node skills/skill-smith/scripts/validate.mjs course/revue-angular/etape-0/revue-angular course/revue-angular/etape-1/revue-angular course/revue-angular/etape-2/revue-angular course/revue-angular/etape-3/revue-angular course/revue-angular/etape-4/revue-angular course/chaine/corrige-review course/chaine/raconte-branche && node skills/skill-smith/scripts/validate.mjs --strict course/revue-angular/etape-5/revue-angular && node course/check-steps.mjs",
     "test:update": "node evals/angular-review/run-scan-tests.mjs --update",
     "build:site": "node site/build.mjs",
     "render:videos": "python studio/render.py",

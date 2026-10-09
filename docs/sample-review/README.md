@@ -1,4 +1,19 @@
-# Reviews réelles de la branche de démo
+# Reviews réelles, notées
+
+## La formation : le skill de référence, étape par étape
+
+Le skill `revue-angular` de chaque étape (`course/revue-angular/etape-N`), lancé sur `lab/speaker-spotlight` le 9 octobre 2026 avec Claude Code (Opus 5.5 et Haiku 5.5) et Codex (gpt-5.6-sol), noté par emplacement (`score.mjs --report`). Rapports bruts : [`formation/`](formation/). Chiffres : [`course/resultats.json`](../../course/resultats.json).
+
+| Étape | Opus 5.5 | Haiku 5.5 |
+|---|---|---|
+| v0 · dix lignes | 74 % | 22 % (réponse dans le chat, pas de rapport) |
+| v1 · procédure | 74 % | 59 % |
+| v2 · règles | 100 % | 96 % |
+| v3 · scripts | 100 % | 96 % |
+| v4 · exemples et vérification | 96 % (relancé : 96 %) | 93 % (relancé : 96 %) |
+| v5 · même dossier avec Codex | 93 % | |
+
+## Le package
 
 La même phrase, le même skill, deux harnesses, le 8 octobre 2026. Scores contre le corrigé `evals/angular-review/playground-key.json`.
 

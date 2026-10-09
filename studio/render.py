@@ -19,8 +19,11 @@ OUT = ROOT.parent / 'site' / 'dist' / 'media'
 FPS = 30
 # name -> time (s) of the poster frame
 VIDEOS = {
+    'v3-flux': 53.0,
     'v0-trailer': 8.6,
+    'v4-cloud': 1.0,
     'v1-anatomie': 46.0,
+    'v2-construire': 1.0,
     'v2-review': 90.0,
     'v3-chain': 30.0,
 }

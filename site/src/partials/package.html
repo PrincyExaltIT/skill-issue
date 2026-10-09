@@ -1,0 +1,218 @@
+<section class="view" id="package" hidden aria-labelledby="pkg-title">
+  <span hidden data-title="Bonus · Le package — Skill Issue"></span>
+  <div class="wrap">
+    <header class="module-head">
+      <span class="num">+2</span>
+      <h1 id="pkg-title">Le package de Princy</h1>
+      <p class="promise">Tu as construit ton skill pièce par pièce. Voici le package de Princy, poussé beaucoup plus loin : {{RULES_TOTAL}} règles, sept relecteurs en sous-agents, un verdict calculé par script, une chaîne review → correction → description de PR, et la CI GitHub et GitLab. À installer tel quel, à forker, ou à piller pour enrichir le tien.</p>
+      <div class="chips"><span class="chip">⏱ <b>~40 min</b></span><span class="chip">6 leçons · 2 vidéos</span><span class="chip">bonus final</span></div>
+      <div class="cta"><a class="btn primary" href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue ↗</a><a class="btn" href="https://github.com/PrincyExaltIT/skill-issue-playground/pull/1" target="_blank" rel="noopener">La PR relue par le package ↗</a></div>
+    </header>
+
+    <div class="module-layout">
+      <nav class="toc" aria-label="Leçons du bonus package">
+        <span class="toc-title">Leçons</span>
+        <a href="#pk-l1"><span class="k">P.1</span><span>Ce qu'il y a dans la boîte</span><span class="ok">✓</span></a>
+        <a href="#pk-l2"><span class="k">P.2</span><span>Ton skill contre le package</span><span class="ok">✓</span></a>
+        <a href="#pk-l3"><span class="k">P.3</span><span>Comment il est construit</span><span class="ok">✓</span></a>
+        <a href="#pk-l4"><span class="k">P.4</span><span>{{RULES_TOTAL}} règles</span><span class="ok">✓</span></a>
+        <a href="#pk-l5"><span class="k">P.5</span><span>La chaîne en vrai</span><span class="ok">✓</span></a>
+        <a href="#pk-l6"><span class="k">P.6</span><span>L'adopter en équipe</span><span class="ok">✓</span></a>
+        <div class="progress"><i></i></div>
+      </nav>
+
+      <div>
+        <!-- P.1 -->
+        <article class="lesson" id="pk-l1">
+          <div class="hunk"><span class="at">@@ bonus · P.1 @@</span><span>kit/</span><span class="spacer"></span><span class="lvl base">base</span><span>5 min</span></div>
+          <div class="lesson-body">
+            <h2>Ce qu'il y a dans la boîte</h2>
+            <p class="kicker">Un dépôt, zéro dépendance externe : quatre skills, un installeur pour les huit harnesses, deux pipelines CI, un hook, des gabarits et des evals.</p>
+<div class="kit-tree"><span class="d">skill-issue/</span>
+├─ <span class="d">skills/</span>                         <span class="c"># les 4 skills du package, au standard agentskills.io</span>
+│  ├─ <span class="d">angular-review/</span>              <span class="c"># la review : scripts (scope, scan, findings), 10 références, 7 relecteurs</span>
+│  ├─ <span class="d">review-fix/</span>                  <span class="c"># corrige les findings un par un, build et test après chacun</span>
+│  ├─ <span class="d">pr-handoff/</span>                  <span class="c"># description de PR/MR et note de passation (invocation manuelle)</span>
+│  └─ <span class="d">skill-smith/</span>                 <span class="c"># crée et valide des skills : new-skill.mjs, validate.mjs</span>
+├─ <span class="d">kit/</span>
+│  ├─ install.mjs                  <span class="c"># installe dans .agents/skills, .claude/skills… (copie ou lien)</span>
+│  ├─ harnesses.json               <span class="c"># où chaque harness cherche ses skills, daté</span>
+│  ├─ <span class="d">ci/github/</span>                   <span class="c"># scan sans IA (annotations, résumé, porte), review IA Claude ou Codex</span>
+│  ├─ <span class="d">ci/gitlab/</span>                   <span class="c"># Code Quality dans la MR, note IA optionnelle</span>
+│  ├─ <span class="d">hooks/</span>                       <span class="c"># Claude Code : scan après chaque édition de l'agent</span>
+│  └─ <span class="d">templates/</span>                   <span class="c"># AGENTS.md et CLAUDE.md pour un projet Angular</span>
+├─ <span class="d">course/</span>                         <span class="c"># la formation : revue-angular étape par étape, rattrapage, CI du bonus cloud</span>
+├─ <span class="d">evals/angular-review/</span>           <span class="c"># fixtures, snapshots, corrigé de la démo, score.mjs, run-triggers.mjs</span>
+├─ <span class="d">docs/sample-review/</span>             <span class="c"># reviews réelles, notées : package, chaîne, formation</span>
+├─ <span class="d">site/</span>                           <span class="c"># cette formation (un seul fichier HTML généré)</span>
+└─ <span class="d">studio/</span>                         <span class="c"># les vidéos : scènes HTML rendues image par image</span></div>
+<pre class="term"><span class="cm"># installer le package dans ton projet, pour les huit harnesses</span>
+<span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
+<span class="p">$ </span><span class="cmd">node skill-issue/kit/install.mjs --target ./mon-app-angular</span>
+<span class="cm"># la CI : copier le workflow GitHub (ou inclure le job GitLab)</span>
+<span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span></pre>
+            <p class="small muted">Sur la démo, la branche <code>main</code> a le package déjà installé, comme le ferait une équipe ; <code>feat/speaker-spotlight</code> porte la même PR que le lab.</p>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- P.2 -->
+        <article class="lesson" id="pk-l2">
+          <div class="hunk"><span class="at">@@ bonus · P.2 @@</span><span>benchmark</span><span class="spacer"></span><span class="lvl core">core</span><span>8 min</span></div>
+          <div class="lesson-body">
+            <h2>Ton skill contre le package</h2>
+            <p class="kicker">Même PR, même corrigé, même façon de noter. La question n'est pas « lequel gagne », mais « qu'est-ce que la machinerie en plus achète ».</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th></th><th>Ton skill · étape 4<br><span class="small muted">Opus 5.5</span></th><th>Ton skill · étape 4<br><span class="small muted">Haiku 5.5</span></th><th>Package<br><span class="small muted">Claude Code · Opus 5.5</span></th><th>Package<br><span class="small muted">Codex · gpt-5.6-sol</span></th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Rappel (27 attendus)</th><td>{{R:opus:4:rappel}} %</td><td>{{R:haiku:4:rappel}} %</td><td>{{PKG:claude:rappel}} %</td><td>{{PKG:codex:rappel}} %</td></tr>
+                  <tr><th scope="row">Précision</th><td>{{R:opus:4:precision}} %</td><td>{{R:haiku:4:precision}} %</td><td>{{PKG:claude:precision}} %</td><td>{{PKG:codex:precision}} %</td></tr>
+                  <tr><th scope="row">Leurres signalés</th><td>{{R:opus:4:leurres}} / 7</td><td>{{R:haiku:4:leurres}} / 7</td><td>{{PKG:claude:leurres}} / 7</td><td>{{PKG:codex:leurres}} / 7</td></tr>
+                  <tr><th scope="row">Durée</th><td>{{R:opus:4:duree}}</td><td>{{R:haiku:4:duree}}</td><td>{{PKG:claude:duree}}</td><td>≈ {{PKG:codex:duree}}</td></tr>
+                  <tr><th scope="row">Taille du skill</th><td colspan="2">1 SKILL.md, 5 références, 2 scripts, 2 assets</td><td colspan="2">1 SKILL.md, 10 références, 3 scripts + 4 modules, 7 relecteurs</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Sur cette PR, le skill de l'étape 4 fait presque jeu égal avec le package. Prudence : ses règles ont été écrites après lecture du corrigé de cette PR, donc la comparaison lui est favorable ; sur un autre code, l'écart reste à mesurer. Ce que le package ajoute ne se voit de toute façon pas dans un seul score :</p>
+            <ul>
+              <li><b>Une sortie machine.</b> <code>findings.json</code> valide un schéma ; <code>review-fix</code>, <code>pr-handoff</code> et la CI le lisent. Ton rapport Markdown s'arrête à l'humain.</li>
+              <li><b>Des garde-fous par script.</b> L'extrait cité par chaque finding est vérifié à la ligne annoncée, le verdict est calculé, le rendu est refusé tant qu'un candidat n'est pas tranché.</li>
+              <li><b>La version d'Angular.</b> Le package lit la version installée (17 à 22) et adapte ses règles ; ton skill décrit Angular 22, point.</li>
+              <li><b>L'échelle.</b> {{RULES_TOTAL}} règles chargées par domaine, chacune dans le contexte du relecteur qui en a besoin.</li>
+            </ul>
+            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>La bonne lecture</b></p><p>Commence par ton skill : il dit ce que <i>ton</i> équipe vérifie, et tu sais pourquoi chaque ligne est là. Prends dans le package ce dont tu as besoin au moment où tu en as besoin : la sortie JSON quand tu chaînes, les gardes-fous quand un faux finding passe, les règles d'un domaine quand ton équipe y trébuche.</p></div></div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- P.3 -->
+        <article class="lesson" id="pk-l3">
+          <div class="hunk"><span class="at">@@ bonus · P.3 @@</span><span>architecture</span><span class="spacer"></span><span class="lvl deep">deep</span><span>8 min</span></div>
+          <div class="lesson-body">
+            <h2>Comment il est construit</h2>
+            <p class="kicker">Les mêmes idées que ton skill, poussées au bout : un orchestrateur, des scripts pour tout ce qui doit être exact, des relecteurs pour tout ce qui demande du jugement.</p>
+            <div class="pipeline wide" role="list">
+              <div class="stage" role="listitem"><span class="who">1 · Scope</span><span class="what">scope.mjs : diff, version d'Angular, zoneless, SSR, runner de tests.</span><span class="out">scope.json</span></div>
+              <div class="stage" role="listitem"><span class="who">2 · Scan</span><span class="what">scan.mjs : {{RULES_MECH}} détecteurs, avec leur niveau de confiance.</span><span class="out">scan.json</span></div>
+              <div class="stage" role="listitem"><span class="who">3 · Review</span><span class="what">Sept relecteurs, un par domaine, en sous-agents quand le harness le permet.</span><span class="out">reviewers/*.json</span></div>
+              <div class="stage" role="listitem"><span class="who">4-5 · Merge, Verify</span><span class="what">Fusion, contrôle des extraits, réfutation de chaque candidat.</span><span class="out">findings.json</span></div>
+              <div class="stage" role="listitem"><span class="who">6 · Report</span><span class="what">Verdict calculé, rendu du rapport.</span><span class="out">REVIEW.md</span></div>
+            </div>
+            <div class="video-card">
+              <video controls preload="metadata" poster="media/v2-review.jpg" playsinline>
+                <source src="media/v2-review.mp4" type="video/mp4">
+              </video>
+              <div class="video-meta"><b>Vidéo · Le package en action</b><span>sous-titrée, sans son</span></div>
+              <div class="chapters"><button type="button" data-t="0">Un dossier, huit harnesses</button><button type="button" data-t="20">Scope</button><button type="button" data-t="34">Scan</button><button type="button" data-t="50">7 relecteurs</button><button type="button" data-t="68">Vérifier</button><button type="button" data-t="82">Verdict</button></div>
+            </div>
+            <h3>De la v1 à la v2 : ce que Princy a changé, et pourquoi</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Problème v1</th><th>Correction v2</th><th>Principe</th></tr></thead>
+                <tbody>
+                  <tr><td>Un fichier d'entrée par outil ; hors Claude, l'installeur ne copiait qu'un fichier, sans les règles</td><td>Un seul dossier conforme au standard, lu tel quel par chaque harness</td><td>Portabilité par le format, pas par la duplication</td></tr>
+                  <tr><td>Agrégation et verdict décrits en prose, avec des <i>MUST</i></td><td><code>findings.mjs</code> fusionne, dédoublonne, calcule le verdict</td><td>Ce qui doit être exact est du code</td></tr>
+                  <tr><td>Rien n'empêchait un numéro de ligne inventé</td><td>Contrôle de l'extrait cité à ±3 lignes ; rendu refusé tant qu'un candidat n'est pas vérifié</td><td>Des garde-fous plutôt que des consignes</td></tr>
+                  <tr><td>« OnPush obligatoire » en MAJOR : faux positif systématique en Angular 22</td><td>La version est détectée, <code>VERSION_GATES.md</code> adapte les règles</td><td>Un skill qui vieillit bien délègue les faits datés à leur source</td></tr>
+                  <tr><td>Pas de relecteur tests ni signals ; aucun test du skill</td><td>+ <code>REACTIVITY</code> et <code>TESTING</code>, 34 règles ajoutées, fixtures, snapshots, corrigé et score</td><td>Un skill se teste comme du code</td></tr>
+                  <tr><td>Fin de review en impasse</td><td><code>findings.json</code> sert de contrat à <code>review-fix</code>, <code>pr-handoff</code> et à la CI</td><td>Les skills se parlent par des fichiers</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- P.4 -->
+        <article class="lesson" id="pk-l4">
+          <div class="hunk"><span class="at">@@ bonus · P.4 @@</span><span>{{RULES_TOTAL}} règles</span><span class="spacer"></span><span class="lvl core">core</span><span>6 min</span></div>
+          <div class="lesson-body">
+            <h2>Ce que le package vérifie, et ce qu'il laisse au lint</h2>
+            <p class="kicker">{{RULES_TOTAL}} règles au catalogue, dont {{RULES_MECH}} ont un détecteur dans <code>scan.mjs</code>. Cherche celles qui manquent à ton skill : c'est le moyen le plus rapide de l'enrichir.</p>
+            <div class="tool" id="rules">
+              <span class="tool-title">Catalogue · généré depuis skills/angular-review/references</span>
+              <div class="filters">
+                <div class="field"><label for="rules-q">Rechercher</label><input id="rules-q" type="search" placeholder="NG0203, OnPush, alt, signal…"></div>
+                <div class="field"><label for="rules-sev">Sévérité</label><select id="rules-sev"><option value="">Toutes</option><option>BLOCKER</option><option>MAJOR</option><option>MINOR</option><option>INFO</option></select></div>
+                <div class="field"><label for="rules-domain">Domaine</label><select id="rules-domain"><option value="">Tous</option></select></div>
+                <label class="check"><input id="rules-mech" type="checkbox"> Détectable par script</label>
+              </div>
+              <span class="count"></span>
+              <div class="table-wrap" style="max-height:420px;overflow:auto">
+                <table><thead><tr><th>Règle</th><th>Titre</th><th>Sévérité</th><th>Domaine</th><th>Détection</th></tr></thead><tbody></tbody></table>
+              </div>
+            </div>
+            <p>Si le projet utilise angular-eslint, beaucoup de règles mécaniques tournent déjà en CI (<code>prefer-control-flow</code>, <code>prefer-inject</code>, <code>template/alt-text</code>, <code>no-output-native</code>…). Chaque détecteur du package porte le nom de la règle eslint équivalente : quand le lint est installé, la review garde son attention pour ce qu'aucun lint ne voit.</p>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- P.5 -->
+        <article class="lesson" id="pk-l5">
+          <div class="hunk"><span class="at">@@ bonus · P.5 @@</span><span>chain · CI</span><span class="spacer"></span><span class="lvl core">core</span><span>8 min</span></div>
+          <div class="lesson-body">
+            <h2>La chaîne et la CI, en vrai</h2>
+            <p class="kicker">Le 8 octobre 2026, la chaîne complète du package a tourné sur la PR de démo. Elle a corrigé beaucoup, et elle a eu l'honnêteté de dire qu'il ne fallait pas merger.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Étape</th><th>Harness</th><th>Résultat</th><th>Durée · coût</th></tr></thead>
+                <tbody>
+                  <tr><td><code>angular-review</code></td><td>Codex</td><td><span class="sev blocker">REQUEST_CHANGES</span> 8 BLOCKER, 13 MAJOR, 16 MINOR</td><td>≈ 12 min · quota ChatGPT</td></tr>
+                  <tr><td><code>review-fix</code> (BLOCKER + MAJOR)</td><td>Claude Code</td><td>21 commits, un par finding, chacun avec un test de régression</td><td>21 min · 6,08 $</td></tr>
+                  <tr><td><code>angular-review</code> (re-review)</td><td>Claude Code</td><td><span class="sev blocker">REQUEST_CHANGES</span> 1 BLOCKER, 2 MAJOR, 15 MINOR</td><td>2,7 min · 5,69 $</td></tr>
+                  <tr><td><code>pr-handoff</code></td><td>Claude Code</td><td>Description de PR « à ne pas merger en l'état », décisions listées pour l'humain</td><td>1,7 min · 0,71 $</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Deux leçons. <b>Le contrat suffit au relais</b> : Codex a écrit <code>findings.json</code>, Claude Code l'a lu et corrigé, sans adaptation. <b>La chaîne ne merge pas à ta place</b> : l'URL d'API en dur, classée MINOR au premier tour, devient le BLOCKER de la re-review, et deux MAJOR sont nés des corrections elles-mêmes. Le résultat est sur la branche <code>solution/review-fix</code> (<a href="https://github.com/PrincyExaltIT/skill-issue-playground/pull/2" target="_blank" rel="noopener">PR #2</a>).</p>
+            <p class="small muted">C'est la chaîne du package de Princy : <code>angular-review</code>, <code>review-fix</code>, <code>pr-handoff</code>, avec un contrat <code>findings.json</code>. Ta propre chaîne, plus courte, se construit dans le <a href="#m3">module 3</a> (atelier 7).</p>
+            <h3>Ce que la vraie CI du package nous a appris</h3>
+            <ul>
+              <li><b>La porte fait ce qu'elle promet.</b> Sur la PR #1, 44 candidats, mais un seul BLOCKER de confiance haute (R-SIG-010, <code>talk-card.ts:28</code>), et le job échoue. Sur la branche corrigée, la porte passe, alors que la re-review trouve encore un BLOCKER.</li>
+              <li><b>Les annotations sont plafonnées.</b> Sur nos runs, GitHub n'en a affiché que dix par niveau et par étape : 9 MAJOR sur 11 manquaient. D'où le tri par sévérité et le résumé du job, qui liste tout.</li>
+              <li><b>Le SARIF a ses conditions.</b> L'upload demande la permission <code>actions: read</code>, et le code scanning d'un dépôt privé demande GitHub Code Security : le package n'envoie le SARIF que sur un dépôt public, ou si <code>ANGULAR_REVIEW_SARIF</code> vaut <code>true</code>.</li>
+              <li><b>Les avertissements vieillissent vite.</b> Sur nos runs, GitHub a signalé des actions encore en Node 20 (dépréciées) et CodeQL v3 en fin de vie en décembre 2026 : le package est passé à <code>checkout@v7</code>, <code>setup-node@v7</code> et <code>upload-sarif@v4</code>.</li>
+            </ul>
+            <div class="video-card">
+              <video controls preload="metadata" poster="media/v3-chain.jpg" playsinline>
+                <source src="media/v3-chain.mp4" type="video/mp4">
+              </video>
+              <div class="video-meta"><b>Vidéo · La chaîne du package</b><span>sous-titrée, sans son</span><span>la ligne GitLab décrit le gabarit, non exécuté à ce jour</span></div>
+              <div class="chapters"><button type="button" data-t="0">Le relais</button><button type="button" data-t="18">review-fix</button><button type="button" data-t="36">pr-handoff</button><button type="button" data-t="52">En CI</button></div>
+            </div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- P.6 -->
+        <article class="lesson" id="pk-l6">
+          <div class="hunk"><span class="at">@@ bonus · P.6 @@</span><span>adoption</span><span class="spacer"></span><span class="lvl base">base</span><span>5 min</span></div>
+          <div class="lesson-body">
+            <h2>L'adopter en équipe</h2>
+<pre class="term"><span class="cm"># seulement Claude Code et Codex, en liens symboliques (les mises à jour du package se propagent)</span>
+<span class="p">$ </span><span class="cmd">node kit/install.mjs --target ../mon-app --harness claude,codex --mode link</span>
+<span class="cm"># en portée utilisateur, pour tous tes projets</span>
+<span class="p">$ </span><span class="cmd">node kit/install.mjs --scope user --skills angular-review</span>
+<span class="cm"># où chaque harness cherche ses skills</span>
+<span class="p">$ </span><span class="cmd">node kit/install.mjs --list</span></pre>
+            <ol>
+              <li><b>Ajoute tes règles maison</b> dans <code>references/PROJECT_COMPLIANCE_REVIEW.md</code> (préfixe R-PROJ) : le relecteur projet s'active dès la première règle, et un BLOCKER R-PROJ suffit à demander des changements. Reprends celles de ton skill : le format diffère un peu, la conversion tient en trois lignes.
+                <ol type="a">
+                  <li><b>Titre</b> : <code>### SIG-04 · titre — BLOCKER</code> devient <code>### R-PROJ-001 — titre</code> (préfixe <code>R-PROJ-</code> et trois chiffres, « — » au lieu de « · », plus de gravité dans le titre).</li>
+                  <li><b>Gravité</b> : le mot de fin de titre passe sur sa propre ligne, <code>- **Sévérité** : 🔴 BLOCKER</code> (🟠 MAJOR, 🟡 MINOR, 🔵 INFO).</li>
+                  <li><b>Corps</b> : ton <b>À repérer</b> devient <code>- **Quoi vérifier** :</code> (et <code>- **Pattern à flag** :</code> s'il y a un motif), ta <b>Correction</b> devient <code>- **Exemple ✅** :</code>, ton <b>Pourquoi</b> devient <code>- **Note** :</code>. Ajoute <code>- **Référence** :</code>, la source de la règle (une ligne de ton <code>AGENTS.md</code>, par exemple).</li>
+                </ol>
+                Place-les sous « Règles à vérifier », en dehors du commentaire d'exemple : le relecteur projet ne s'active que s'il trouve au moins une règle.</li>
+              <li><b>Branche la CI en mode non bloquant</b> pendant deux semaines, et lis les candidats écartés : ils disent où les règles sont trop larges.</li>
+              <li><b>Mesure à chaque modification de règle</b> avec <code>evals/</code> : le composant propre doit rester à zéro, le corrigé de démo ne doit pas perdre de rappel.</li>
+              <li><b>Sur GitLab</b> : <code>glab auth login</code>, puis <code>bash kit/gitlab-mirror.sh &lt;groupe&gt;</code> pour recopier le dépôt, et inclure <code>kit/ci/gitlab/angular-review.gitlab-ci.yml</code>. Ce gabarit n'a pas été exécuté à ce jour : lis-le avant de t'y fier.</li>
+            </ol>
+            <p class="small muted">Le package succède à <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> (v1) : mêmes identifiants de règles, même logique de verdict. Licence MIT.</p>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

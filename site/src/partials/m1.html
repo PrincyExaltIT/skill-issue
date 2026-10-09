@@ -4,8 +4,8 @@
     <header class="module-head">
       <span class="num">01</span>
       <h1 id="m1-title">Ouvre le capot</h1>
-      <p class="promise">À la fin de ce module, tu sais ce qu'un skill est vraiment (un dossier, pas un prompt), ce qui se passe dans l'agent quand il se déclenche, et pourquoi la moitié d'un bon skill est du code.</p>
-      <div class="chips"><span class="chip">⏱ <b>45 min</b></span><span class="chip">8 leçons · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
+      <p class="promise">À la fin de ce module, tu sais ce qu'un skill est vraiment (un dossier, pas un prompt), ce qui se passe dans l'agent quand il se déclenche, et tu as écrit ton premier skill de review : dix lignes, lancées sur une vraie pull request, notées contre un corrigé.</p>
+      <div class="chips"><span class="chip">⏱ <b>~75 min</b> avec l'atelier</span><span class="chip">8 leçons · 1 atelier · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
     <div class="module-layout">
@@ -19,6 +19,7 @@
         <a href="#m1-l6"><span class="k">1.6</span><span>Prose ou script ?</span><span class="ok">✓</span></a>
         <a href="#m1-l7"><span class="k">1.7</span><span>Skill, MCP, hook… qui fait quoi</span><span class="ok">✓</span></a>
         <a href="#m1-l8"><span class="k">1.8</span><span>Qui appuie sur le bouton ?</span><span class="ok">✓</span></a>
+        <a href="#m1-l9"><span class="k">1.9</span><span>Atelier 0 · ton skill v0</span><span class="ok">✓</span></a>
         <a href="#m1-quiz"><span class="k">✎</span><span>Quiz</span><span class="ok">✓</span></a>
         <div class="progress"><i></i></div>
       </nav>
@@ -78,7 +79,7 @@
           <div class="lesson-body">
             <h2>Le contexte est un budget, pas un sac</h2>
             <p class="kicker">Tout ce que l'agent « sait » pendant une tâche tient dans sa fenêtre de contexte : instructions système, définitions d'outils, fichiers de mémoire, schémas MCP, conversation, fichiers lus, sorties de commandes.</p>
-            <p>Chaque token coûte trois fois : en argent, en latence, et en qualité. Plus le contexte est long et hétérogène, plus l'attention du modèle se dilue ; les équipes qui écrivent des agents appellent ça le <i>context rot</i>. Un <code>CLAUDE.md</code> de 900 lignes qui explique la review, les migrations, les releases et le style CSS est lu à <b>chaque</b> tour, même pour renommer une variable.</p>
+            <p>Chaque token coûte trois fois : en argent, en latence, et en qualité. Plus le contexte est long et hétérogène, plus l'attention du modèle se dilue ; on parle parfois de <i>context rot</i>. Un <code>CLAUDE.md</code> de 900 lignes qui explique la review, les migrations, les releases et le style CSS est lu à <b>chaque</b> tour, même pour renommer une variable.</p>
             <p>La réponse des skills : ce qui est toujours chargé doit être minuscule, tout le reste se charge à la demande. Joue avec le nombre de skills installés :</p>
             <div class="tool" id="meter">
               <span class="tool-title">Simulateur · fenêtre de 200 000 tokens</span>
@@ -89,7 +90,7 @@
                 <div class="meter-bar" aria-hidden="true"><i class="bad"></i></div>
                 <div class="meter-legend"><span>■ Tout charger d'avance : <b data-k="full">0</b> tokens, soit <b data-k="pct">0 %</b> de la fenêtre avant d'avoir lu une ligne de ton code</span></div>
               </div>
-              <p class="small muted">Hypothèses : ~100 tokens par description, ~4 500 tokens par corps de skill. Notre <code>angular-review</code> mesure ~150 tokens au niveau 1 et ~1 600 au niveau 2.</p>
+              <p class="small muted">Hypothèses du simulateur : environ 100 tokens par description (l'ordre de grandeur du standard) et environ 4 500 tokens par corps de skill (le standard recommande moins de 5 000). Le skill que tu vas construire est bien plus léger : environ 100 tokens au niveau 1 et environ 1 200 au niveau 2 (voir la leçon 1.4).</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -102,9 +103,9 @@
             <h2>Un skill est un dossier</h2>
             <p class="kicker">La définition du standard tient en une phrase : un dossier qui contient un fichier <code>SKILL.md</code>, et éventuellement des scripts, des références et des ressources.</p>
             <p><code>SKILL.md</code> commence par un frontmatter YAML, puis des instructions en Markdown. Deux champs sont obligatoires : <code>name</code> (64 caractères max, minuscules, chiffres et tirets, identique au nom du dossier) et <code>description</code> (1 024 caractères max). Le standard prévoit aussi <code>license</code>, <code>compatibility</code>, <code>metadata</code> et, à titre expérimental, <code>allowed-tools</code>. Chaque harness peut ajouter ses propres champs ; les autres les ignorent.</p>
-            <p>Clique dans l'arborescence du vrai skill <code>angular-review</code>. L'étiquette indique quand chaque fichier entre dans le contexte.</p>
+            <p>Clique dans l'arborescence du skill que tu vas construire pendant la formation, <code>revue-angular</code>, dans sa version finale. L'étiquette indique quand chaque fichier entre dans le contexte.</p>
             <div class="tool" id="anatomy">
-              <span class="tool-title">Explorateur · skills/angular-review</span>
+              <span class="tool-title">Explorateur · course/revue-angular/etape-5</span>
               <div class="explorer">
                 <div class="tree" role="tree" aria-label="Fichiers du skill"></div>
                 <div class="pane" aria-live="polite"></div>
@@ -123,16 +124,17 @@
             <p class="kicker">La <i>progressive disclosure</i> est l'idée centrale des skills : l'agent ne paie en contexte que ce dont la tâche du moment a besoin.</p>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Étage</th><th>Quoi</th><th>Quand</th><th>angular-review</th></tr></thead>
+                <thead><tr><th>Étage</th><th>Quoi</th><th>Quand</th><th>revue-angular (étape 5)</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="lvl base">N1</span></td><td><code>name</code> + <code>description</code></td><td>Toujours, dans toutes les sessions</td><td>~150 tokens</td></tr>
-                  <tr><td><span class="lvl core">N2</span></td><td>Le corps de <code>SKILL.md</code></td><td>Quand la description correspond à la demande</td><td>~1 600 tokens (104 lignes)</td></tr>
-                  <tr><td><span class="lvl deep">N3</span></td><td>Fichiers de <code>references/</code>, <code>assets/</code></td><td>Quand une étape les pointe</td><td>~37 000 tokens au total, chargés par domaine</td></tr>
-                  <tr><td><span class="lvl">exec</span></td><td><code>scripts/</code></td><td>Exécutés ; seule la sortie entre dans le contexte</td><td>~22 000 tokens de code, jamais lus</td></tr>
+                  <tr><td><span class="lvl base">N1</span></td><td><code>name</code> + <code>description</code></td><td>Toujours, dans toutes les sessions</td><td>environ 100 tokens</td></tr>
+                  <tr><td><span class="lvl core">N2</span></td><td>Le corps de <code>SKILL.md</code></td><td>Quand la description correspond à la demande</td><td>environ 1 200 tokens (moins de 100 lignes)</td></tr>
+                  <tr><td><span class="lvl deep">N3</span></td><td>Fichiers de <code>references/</code>, <code>assets/</code></td><td>Quand une étape les pointe</td><td>environ 4 000 tokens au total, chargés par domaine (de 200 à 1 200 par fichier)</td></tr>
+                  <tr><td><span class="lvl">exec</span></td><td><code>scripts/</code></td><td>Exécutés ; seule la sortie entre dans le contexte</td><td>environ 2 500 tokens de code, jamais lus</td></tr>
                 </tbody>
               </table>
             </div>
-            <p>Concrètement, quand tu tapes « fais une review de ma branche » : le modèle voit 40 descriptions, reconnaît celle d'<code>angular-review</code>, demande au harness de lire <code>SKILL.md</code>, lance <code>scope.mjs</code> (il ne reçoit que le JSON de sortie), puis ne charge <code>REACTIVITY_REVIEW.md</code> que parce qu'un fichier avec des signals a changé. Et avec des sous-agents, chaque fichier de règles est chargé dans le contexte du reviewer qui en a besoin, pas dans celui de l'orchestrateur.</p>
+            <p class="small muted">Ordres de grandeur : le nombre de caractères des fichiers de <code>course/revue-angular/etape-5</code>, divisé par 4. Un vrai tokenizer donnera un peu plus, surtout en français.</p>
+            <p>Concrètement, quand tu tapes « relis ma branche avant le merge » : le modèle voit la liste des descriptions de tes skills, reconnaît celle de <code>revue-angular</code>, demande au harness de lire <code>SKILL.md</code>, lance <code>perimetre.mjs</code> (il ne reçoit que sa sortie), puis ne charge <code>reactivite.md</code> que parce qu'un fichier avec des signals a changé. Le package du bonus final pousse l'idée plus loin : avec des sous-agents, chaque fichier de règles est chargé dans le contexte du relecteur qui en a besoin, pas dans celui de l'orchestrateur.</p>
             <div class="video-card">
               <video controls preload="metadata" poster="media/v1-anatomie.jpg" playsinline>
                 <source src="media/v1-anatomie.mp4" type="video/mp4">
@@ -150,26 +152,25 @@
           <div class="lesson-body">
             <h2>La description fait tout le déclenchement</h2>
             <p class="kicker">Avant de décider, le modèle ne voit que la description. Si elle est floue, le skill ne se déclenche pas, ou se déclenche à tort.</p>
-            <p>Une bonne description fait deux choses : elle dit <b>ce que fait</b> le skill, puis elle liste <b>les cas</b> où l'utiliser, avec les mots que tes collègues tapent vraiment. Matt Pocock décrit la description comme un « pointeur de contexte » : c'est sa formulation, plus que la qualité du contenu pointé, qui décide si l'agent ira le chercher. D'où trois règles :</p>
+            <p>Une bonne description fait deux choses : elle dit <b>ce que fait</b> le skill, puis elle liste <b>les cas</b> où l'utiliser, avec les mots que tes collègues tapent vraiment. Matt Pocock parle de « pointeur de contexte » : une référence qui nomme un contenu hors contexte. La formulation de la description décide donc quand l'agent ira chercher ce contenu. D'où trois règles :</p>
             <ul>
               <li>Mettre les mots déclencheurs en tête (<i>review</i>, <i>audit</i>, <i>PR/MR</i>).</li>
               <li>Un déclencheur par cas réel ; les synonymes d'un même cas ne font qu'ajouter du bruit.</li>
               <li>Écrire à la troisième personne, sans répéter ce que le corps détaille.</li>
             </ul>
-            <p class="small muted">Les harnesses rationnent cet espace : Claude Code plafonne la liste des skills à 1 % de la fenêtre et tronque chaque description à 1 536 caractères ; Codex garde la liste sous 2 % du contexte. Une description bavarde n'est pas seulement inefficace, elle peut être coupée.</p>
+            <p class="small muted">Les harnesses rationnent cet espace. Claude Code plafonne la liste des skills à 1 % de la fenêtre et tronque la description (avec <code>when_to_use</code>) à 1 536 caractères. Codex limite la liste à 2 % de la fenêtre au plus, ou à 8 000 caractères quand la taille est inconnue. Une description bavarde n'est pas seulement inefficace, elle peut être coupée.</p>
 <pre class="code" data-lang="diff"><span class="cm"># avant : vague, aucun cas d'usage</span>
-<span style="color:#ff7a6b">- description: Helps with Angular code quality.</span>
+<span style="color:#ff7a6b">- description: Aide sur la qualité du code Angular.</span>
 <span class="cm"># après : ce que ça fait + quand l'utiliser</span>
-<span style="color:#4cc38a">+ description: Senior-level review of Angular changes — a branch, a PR/MR,</span>
-<span style="color:#4cc38a">+   staged files or a commit range — […] Use when asked to review, audit or</span>
-<span style="color:#4cc38a">+   check Angular code, a pull or merge request before merge, or whether a</span>
-<span style="color:#4cc38a">+   change is good Angular.</span></pre>
+<span style="color:#4cc38a">+ description: Revue de code Angular des changements d'une branche, d'une PR ou</span>
+<span style="color:#4cc38a">+   d'une MR, selon les règles de l'équipe. À utiliser quand on demande de relire,</span>
+<span style="color:#4cc38a">+   reviewer ou vérifier du code Angular avant un merge.</span></pre>
             <div class="trigger-card" id="trigger-game">
               <span class="tool-title">Jeu · le skill se déclenche-t-il ?</span>
               <p class="prompt" aria-live="polite"></p>
-              <div class="row"><button class="btn" type="button" data-yes>Oui, angular-review</button><button class="btn" type="button" data-no>Non</button><span class="score" aria-live="polite">0/0</span></div>
+              <div class="row"><button class="btn" type="button" data-yes>Oui, revue-angular</button><button class="btn" type="button" data-no>Non</button><span class="score" aria-live="polite">0/0</span></div>
               <p class="fb-line small muted" aria-live="polite"></p>
-              <p class="small muted">Ces 20 prompts sont ceux de <code>evals/angular-review/triggers.json</code> : on les rejoue dans chaque harness pour mesurer le taux de déclenchement.</p>
+              <p class="small muted">Ces 20 demandes sont celles de <code>evals/declenchement.json</code>, dans le skill de référence : tu écriras les tiennes au module 2 et tu les rejoueras. La mesure automatique fonctionne sous Claude Code ; dans les autres harnesses, tu la fais à la main : même phrase, trois essais, tu notes si le skill se charge.</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -185,40 +186,45 @@
               <div class="rc"><span class="av" aria-hidden="true">✎</span><div><p class="who"><b>Prose</b> · liberté haute</p><p>Ce qui demande du jugement : est-ce que cet <code>effect</code> est un vrai effet de bord ? Ce subscribe peut-il fuir ? Ce composant est-il trop gros ?</p></div></div>
               <div class="rc note"><span class="av" aria-hidden="true">{}</span><div><p class="who"><b>Script</b> · liberté nulle</p><p>Ce qui doit être exact, répétable ou vérifiable : le périmètre du diff, les numéros de ligne, le schéma de sortie, le verdict, les formats CI.</p></div></div>
             </div>
-            <p>La v1 de notre skill écrivait le calcul du verdict en prose, avec un avertissement : « Step 4 MUST execute before Step 5 […] that is a fatal error ». Un <i>MUST</i> en majuscules dans un skill signale presque toujours une étape qui devrait être du code. En v2, le verdict est une fonction :</p>
-<pre class="code" data-lang="js">/** v1 verdict rules, now executed by code instead of prose. */
-function verdictOf(findings, projectPrefix) {
-  const blockers = findings.filter((f) =&gt; f.severity === 'BLOCKER');
-  if (blockers.some((f) =&gt; f.ruleId.startsWith(projectPrefix))) return 'REQUEST_CHANGES';
-  if (blockers.length &gt;= 1) return 'REQUEST_CHANGES';
-  if (findings.filter((f) =&gt; f.severity === 'MAJOR').length &gt;= 3) return 'REQUEST_CHANGES';
-  if (findings.length === 0) return 'APPROVE';
-  return 'COMMENT';
+            <p>Dans le skill que tu vas construire, la règle « pas de <code>console.log</code> oublié » existe d'abord en prose, à l'étape 2, dans <code>references/angular-22.md</code> (règle NG-05) : le modèle la lit, et la suit quand il y pense. À l'étape 3, la même règle devient une ligne de la table <code>REGLES</code> de <code>scripts/verifs.mjs</code> :</p>
+<pre class="code" data-lang="js">{ id: 'NG-05', gravite: 'MINOR', fichiers: TS, motif: /\bconsole\.(log|debug)\s*\(|\bdebugger\b/g,
+  message: 'Trace de débogage oubliée.' },</pre>
+            <p>Le script trouve chaque occurrence sur les lignes modifiées, à chaque run, en moins d'une seconde. Le modèle n'a plus qu'à confirmer ou à écarter la piste en lisant le code. Même idée pour la porte de CI : ce n'est pas une phrase en majuscules dans <code>SKILL.md</code>, c'est un code de sortie.</p>
+<pre class="code" data-lang="js">if (seuil &amp;&amp; pistes.some((p) =&gt; GRAVITES.indexOf(p.gravite) &lt;= GRAVITES.indexOf(seuil))) {
+  console.error(`Porte fermée : au moins une piste ${seuil} ou plus grave.`);
+  process.exit(1);
 }</pre>
-            <p>Autre script garde-fou : <code>findings.mjs merge</code> vérifie que l'extrait de code cité par chaque finding existe bien à ±3 lignes de la ligne annoncée. Un finding halluciné ressort marqué <code>evidence mismatch</code> avant d'arriver dans le rapport.</p>
+            <p>Un <i>MUST</i> en majuscules dans un skill est souvent le signe d'une étape qui devrait être du code.</p>
+            <p>Au module 2, c'est l'étape 3 : <code>perimetre.mjs</code> lit le diff à la place du modèle, <code>verifs.mjs</code> repère les motifs connus, et le modèle garde le jugement.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
 
         <!-- 1.7 -->
         <article class="lesson" id="m1-l7">
-          <div class="hunk"><span class="at">@@ 01 · 1.7 @@</span><span>écosystème</span><span class="spacer"></span><span class="lvl core">core</span><span>6 min</span></div>
+          <div class="hunk"><span class="at">@@ 01 · 1.7 @@</span><span>écosystème</span><span class="spacer"></span><span class="lvl core">core</span><span>8 min</span></div>
           <div class="lesson-body">
             <h2>Skill, AGENTS.md, MCP, sous-agent, hook : qui fait quoi</h2>
             <p class="kicker">Les skills ne remplacent rien. Ils prennent une place précise à côté des autres briques du harness.</p>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Brique</th><th>Chargée</th><th>Sert à</th><th>Dans le kit</th></tr></thead>
+                <thead><tr><th>Brique</th><th>Chargée</th><th>Sert à</th><th>Dans ta review</th></tr></thead>
                 <tbody>
-                  <tr><td><b>AGENTS.md / CLAUDE.md</b></td><td>Toujours</td><td>Ce qui est toujours vrai dans ce repo : stack, commandes, conventions</td><td><code>kit/templates/AGENTS.md</code></td></tr>
-                  <tr><td><b>Skill</b></td><td>Description toujours, le reste à la demande</td><td>Un savoir-faire procédural réutilisable</td><td><code>angular-review</code> &amp; co</td></tr>
-                  <tr><td><b>Serveur MCP</b></td><td>Schémas d'outils au démarrage, appels à la demande</td><td>Accéder à un système : API, navigateur, ticketing</td><td>MCP Angular CLI, Playwright</td></tr>
-                  <tr><td><b>Sous-agent</b></td><td>À la demande, dans un contexte séparé</td><td>Paralléliser, isoler une tâche bavarde</td><td>Les 7 reviewers</td></tr>
-                  <tr><td><b>Hook</b></td><td>Sur un événement, sans passer par le modèle</td><td>Ce qui doit arriver à coup sûr : format, lint, garde-fous</td><td><code>kit/hooks/</code> : scan après chaque édition</td></tr>
-                  <tr><td><b>Commande slash</b></td><td>À la main</td><td>Un raccourci de prompt</td><td>Remplacée par les skills invoqués à la main</td></tr>
+                  <tr><td><b>AGENTS.md / CLAUDE.md</b></td><td>Toujours</td><td>Ce qui est toujours vrai dans ce repo : stack, commandes, conventions</td><td>Les conventions du dépôt de démo, que ta revue applique</td></tr>
+                  <tr><td><b>Skill</b></td><td>Description toujours, le reste à la demande</td><td>Un savoir-faire procédural réutilisable</td><td><code>revue-angular</code>, que tu construis</td></tr>
+                  <tr><td><b>Serveur MCP</b></td><td>Schémas d'outils au démarrage, appels à la demande</td><td>Accéder à un système : API, navigateur, ticketing</td><td>Le serveur MCP d'Angular CLI ou celui de Playwright, en option</td></tr>
+                  <tr><td><b>Sous-agent</b></td><td>À la demande, dans un contexte séparé</td><td>Paralléliser, isoler une tâche bavarde</td><td>Un relecteur par domaine (module 3)</td></tr>
+                  <tr><td><b>Hook</b></td><td>Sur un événement, sans passer par le modèle</td><td>Ce qui doit arriver à coup sûr : format, lint, garde-fous</td><td><code>verifs.mjs</code> après chaque édition de l'agent (module 3)</td></tr>
+                  <tr><td><b>Commande slash</b></td><td>À la main</td><td>Un raccourci de prompt</td><td><code>/revue-angular</code> : le même skill, appelé par son nom</td></tr>
                 </tbody>
               </table>
             </div>
+            <h3>MCP en six lignes</h3>
+            <ul>
+              <li><b>Ce qu'un serveur expose.</b> Des <i>outils</i> (des fonctions que le modèle appelle), des <i>ressources</i> (des données en lecture, que l'application verse au contexte) et des <i>prompts</i> (des modèles d'instructions que tu invoques toi-même). Le serveur MCP d'Angular (<code>npx -y @angular/cli mcp</code>) expose par exemple <code>get_best_practices</code> et <code>search_documentation</code>.</li>
+              <li><b>Qui approuve un appel.</b> Le harness, avec ses permissions, pas le serveur. Le protocole laisse au harness le soin de demander ton accord. En CI, personne ne clique : c'est la liste d'outils autorisés (<code>--allowedTools</code>, avec des noms comme <code>mcp__gitlab</code>) qui décide. Dans une routine Claude Code, les outils des connecteurs, écritures comprises, tournent sans demande de permission.</li>
+              <li><b>Une règle de sécurité.</b> Un serveur MCP est du code que tu lances avec tes droits. C'est la même règle de confiance que pour un skill tiers (module 3) : tu le lis, tu épingles sa version, et tu retires ce dont le run n'a pas besoin.</li>
+            </ul>
             <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Règle de poche</b></p><p>Toujours vrai : AGENTS.md. Une procédure : un skill. Un accès à un système : MCP. Doit arriver à coup sûr : un hook. Trop gros pour le contexte principal : un sous-agent.</p></div></div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -230,8 +236,8 @@ function verdictOf(findings, projectPrefix) {
           <div class="lesson-body">
             <h2>Qui appuie sur le bouton : l'agent ou toi ?</h2>
             <p class="kicker">Un skill déclenché par le modèle coûte sa description dans chaque session. Un skill déclenché à la main ne coûte rien en contexte, mais c'est toi qui dois te souvenir qu'il existe.</p>
-            <p>Matt Pocock formalise ce choix dans son skill <code>writing-for-agents</code> : <b>charge de contexte</b> pour l'agent contre <b>charge cognitive</b> pour l'humain. Quand les skills manuels deviennent trop nombreux pour s'en souvenir, il propose un <i>router skill</i> : un seul skill manuel qui liste les autres et dit quand prendre lequel.</p>
-            <p>Dans le kit, <code>angular-review</code> et <code>review-fix</code> se déclenchent seuls ; <code>pr-handoff</code> est manuel, parce qu'écrire la description d'une PR est une décision. Dans Claude Code, cela s'écrit avec un champ propre au harness :</p>
+            <p>Matt Pocock formalise ce choix dans son skill <code>writing-for-agents</code> (dépôt <code>mattpocock/skills</code>, état du 9 octobre 2026 : les noms de ses skills changent vite) : la <b>charge de contexte</b> pèse sur la fenêtre de l'agent, la <b>charge cognitive</b> pèse sur l'humain, qui doit savoir quels documents existent et quand les prendre. Quand les skills manuels deviennent trop nombreux pour s'en souvenir, il passe par un <i>router skill</i> : un seul skill manuel qui sert d'index aux autres (dans son dépôt, <code>ask-matt</code>).</p>
+            <p>Ta revue se déclenche seule : c'est ce qu'on veut quand quelqu'un demande « tu peux relire ma PR ? ». Dans le package de Princy, <code>pr-handoff</code> est au contraire manuel, parce qu'écrire la description d'une PR est une décision. Dans Claude Code, cela s'écrit avec un champ propre au harness :</p>
 <pre class="code" data-lang="yaml">---
 name: pr-handoff
 description: Write the pull/merge request description and a handoff note […]
@@ -249,6 +255,52 @@ disable-model-invocation: true   # extension Claude Code : invocation par /pr-ha
               </table>
             </div>
             <div class="rc"><span class="av" aria-hidden="true">!</span><div><p class="who"><b>Le prix d'une extension</b></p><p>Un champ hors standard est ignoré par les harnesses qui ne le connaissent pas, mais il est <b>refusé</b> par le validateur officiel <code>skills-ref</code> et par l'upload sur claude.ai. Deux stratégies : un <code>SKILL.md</code> strictement standard, avec le comportement réglé dans la configuration de chaque harness (<code>agents/openai.yaml</code>, réglages Claude Code) ; ou des champs d'extension, plus simples pour l'équipe mais non publiables tels quels. <code>validate.mjs --strict</code> te dit dans quel camp est ton skill.</p></div></div>
+            <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
+          </div>
+        </article>
+
+        <!-- 1.9 -->
+        <article class="lesson" id="m1-l9">
+          <div class="hunk"><span class="at">@@ 01 · 1.9 @@</span><span>atelier 0 · v0</span><span class="spacer"></span><span class="lvl base">base</span><span>15 min</span></div>
+          <div class="lesson-body">
+            <h2>Atelier 0 · Ton premier skill de review, en dix lignes</h2>
+            <p class="kicker">Assez de théorie. Tu vas écrire le plus petit skill qui marche, le lancer sur une vraie pull request, et le noter. Ce score de départ, tu vas le faire monter pendant tout le module 2.</p>
+            <h3>1 · Le terrain</h3>
+<pre class="term"><span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue-playground.git</span>
+<span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
+<span class="p">$ </span><span class="cmd">cd skill-issue-playground</span>
+<span class="p">$ </span><span class="cmd">git checkout depart</span>                 <span class="cm"># la base de la PR, en local</span>
+<span class="p">$ </span><span class="cmd">git checkout lab/speaker-spotlight</span>
+<span class="p">$ </span><span class="cmd">npm install</span></pre>
+            <p>La branche <code>lab/speaker-spotlight</code> est une pull request écrite dans l'urgence : une page speaker et un formulaire de proposition de talk, en Angular 22. Elle compile. Elle n'est pas prête. Le second dépôt contient le corrigé, rangé hors de portée de l'agent qui relit.</p>
+            <h3>2 · Le skill</h3>
+            <p>Crée <code>.claude/skills/revue-angular/SKILL.md</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/SKILL.md</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code) :</p>
+<pre class="code" data-lang="md">---
+name: revue-angular
+description: Revue de code Angular des changements d'une branche, d'une PR ou d'une MR. À utiliser quand on demande de relire, reviewer ou vérifier du code Angular avant un merge.
+---
+
+# Revue Angular
+
+Relis les changements de la branche courante par rapport à sa branche de base : `main`, ou celle que l'utilisateur nomme.
+
+Pour chaque problème, donne :
+- l'emplacement `chemin/du/fichier.ts:ligne` ;
+- la gravité : BLOCKER, MAJOR, MINOR ou INFO ;
+- le problème et la correction proposée.
+
+Écris le rapport dans `.review/REVIEW.md` et termine par un verdict : à merger, à discuter ou à corriger.</pre>
+            <h3>3 · Lancer, puis noter</h3>
+            <p>Dans ton harness, ouvert à la racine du dépôt : <code>/revue-angular Relis cette branche avant que je la merge sur depart.</code> (Codex : <code>$revue-angular</code> ; ailleurs, la phrase seule suffit si la description fait son travail.) Puis :</p>
+<pre class="term"><span class="p">$ </span><span class="cmd">node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md</span>
+<span class="o">…
+Rappel {{R:opus:0:rappel}} % ({{R:opus:0:trouves}}/27) · …
+Précision {{R:opus:0:precision}} % · Leurres signalés à tort : {{R:opus:0:leurres}}/7</span></pre>
+            <div class="atelier">
+              <span class="tool-title">Atelier 0 · fini quand</span>
+              <p class="expect">Ton skill se déclenche, <code>.review/REVIEW.md</code> existe, et ton score de départ est noté dans le tableau des <a href="#ateliers">ateliers</a>. Référence mesurée le {{RESULTS_DATE}} : {{R:opus:0:rappel}} % avec Opus 5.5, {{R:haiku:0:rappel}} % avec Haiku 5.5, qui n'a même pas écrit le fichier. Pourquoi un tel écart, et comment le combler : c'est tout le module 2.</p>
+              <p class="small muted">Pas de skill qui se déclenche ? Vérifie que le dossier porte exactement le nom du champ <code>name</code>, puis relance ton harness : la liste des skills est lue au démarrage de la session.</p>
+            </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
@@ -274,7 +326,7 @@ disable-model-invocation: true   # extension Claude Code : invocation par /pr-ha
                 </fieldset>
               </div>
               <div class="q" data-answer="a" data-why="Ce qui doit être exact et répétable (périmètre, numéros de ligne, verdict) passe dans un script ; le jugement reste en prose.">
-                <fieldset><legend>Le verdict d'une review dépend de règles fixes (≥ 1 BLOCKER → REQUEST_CHANGES). Où l'écrire ?</legend>
+                <fieldset><legend>Le verdict d'une review dépend de règles fixes (≥ 1 BLOCKER → à corriger). Où l'écrire ?</legend>
                   <label><input type="radio" value="a"> Dans un script appelé par le skill</label>
                   <label><input type="radio" value="b"> Dans SKILL.md, en majuscules pour que le modèle respecte</label>
                   <label><input type="radio" value="c"> Dans AGENTS.md</label>

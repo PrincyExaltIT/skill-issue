@@ -95,7 +95,8 @@ function validate(dir) {
   for (const r of body.matchAll(/`((?:scripts|references|assets)\/[^`\s]+)`/g)) refs.add(r[1]);
   for (const r of body.matchAll(/node\s+((?:scripts)\/[\w./-]+\.m?js)/g)) refs.add(r[1]);
   for (const ref of refs) {
-    if (/^(https?:|mailto:)/.test(ref) || ref.includes('<') || ref.startsWith('..')) continue;
+    // Skip URLs, placeholders (<file>, …, *) and paths outside the skill.
+    if (/^(https?:|mailto:)/.test(ref) || /[<…*]/.test(ref) || ref.startsWith('..')) continue;
     const clean = ref.replace(/[),.;:]+$/, '');
     if (!existsSync(join(dir, clean))) errors.push(`fichier référencé introuvable : ${clean}`);
   }

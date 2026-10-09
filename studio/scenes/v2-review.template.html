@@ -7,7 +7,7 @@
   .invokes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .inv { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 16px 18px; display: grid; gap: 8px; }
   .inv b { font: 600 18px/1.2 var(--body); color: var(--ink-2); }
-  .inv code { font: 700 22px/1.2 var(--mono); color: var(--ink); }
+  .inv code { font: 700 20px/1.2 var(--mono); color: var(--ink); white-space: nowrap; }
   .flags { display: flex; flex-wrap: wrap; gap: 12px; }
   .flag { font: 600 19px/1 var(--mono); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
   .flag .y { color: var(--add); } .flag .n { color: var(--ink-3); }
@@ -24,12 +24,12 @@
   .vrow { display: grid; grid-template-columns: 110px 1fr 200px; gap: 14px; align-items: center; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font: 500 19px/1.35 var(--body); }
   .vrow .id { font: 700 18px/1 var(--mono); color: var(--ink-2); }
   .keep { color: var(--add); font: 800 19px/1 var(--mono); } .drop { color: var(--ink-3); font: 800 19px/1 var(--mono); } .bad { color: var(--del); font: 800 19px/1 var(--mono); }
-  .report { background: #f4f6f9; color: #10151c; border-radius: 16px; padding: 26px 32px; display: grid; gap: 14px; box-shadow: 0 30px 80px -30px #000; }
+  .report { background: var(--paper); color: var(--paper-ink); border-radius: 16px; padding: 26px 32px; display: grid; gap: 14px; box-shadow: 0 30px 80px -30px #000; }
   .report h3 { margin: 0; font: 800 30px/1.1 var(--display); }
   .verdict { font: 800 24px/1 var(--mono); color: #b42318; }
   .counts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: center; }
-  .counts div { border: 1px solid #d3dae3; border-radius: 10px; padding: 12px; font: 800 34px/1 var(--display); }
-  .counts span { display: block; font: 700 14px/1 var(--mono); margin-top: 6px; color: #6d7889; }
+  .counts div { border: 1px solid var(--paper-line); border-radius: 10px; padding: 12px; font: 800 34px/1 var(--display); }
+  .counts span { display: block; font: 700 14px/1 var(--mono); margin-top: 6px; color: var(--paper-dim); }
 </style></head>
 <body data-duration="95">
 <div class="brandmark">SKILL ISSUE · 02</div>
@@ -103,7 +103,7 @@
 <div class="chapter" data-at="82.0">06 · verdict</div>
 <section class="scene" data-at="82.0" style="gap:18px">
   <div class="report" data-at="82.3" data-fx="rise">
-    <div style="font:600 15px/1 var(--mono);color:#6d7889">.review/REVIEW.md</div>
+    <div style="font:600 15px/1 var(--mono);color:var(--paper-dim)">.review/REVIEW.md</div>
     <h3>Review Angular — feat/speaker-spotlight → main</h3>
     <div class="verdict" data-at="83.4" data-fx="pop">🔴 REQUEST_CHANGES — corrections nécessaires avant merge</div>
     <div class="counts">
