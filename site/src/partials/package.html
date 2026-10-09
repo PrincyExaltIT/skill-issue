@@ -50,7 +50,12 @@
 <span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
 <span class="p">$ </span><span class="cmd">node skill-issue/kit/install.mjs --target ./mon-app-angular</span>
 <span class="cm"># la CI : copier le workflow GitHub (ou inclure le job GitLab)</span>
-<span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span></pre>
+<span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span>
+<span class="cm"># ou seulement le skill, depuis le registre de Princy, avec forgent (sha256 de chaque fichier dans forgent.lock.json)</span>
+<span class="p">$ </span><span class="cmd">npx forgent add --provider claude --dest .agents/skills angular-review</span>
+<span class="p">$ </span><span class="cmd">npx forgent add --provider claude --dest .claude/skills angular-review</span>
+<span class="p">$ </span><span class="cmd">npx forgent verify --provider claude --dest .agents/skills</span></pre>
+            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy : il copie le dossier du skill depuis le registre <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a>, garde l'empreinte de chaque fichier, et <code>verify</code> contrôle ta copie. <code>--provider claude</code> ne choisit que la forme « dossier » : le contenu est le même pour tous les harnesses.</p>
             <p class="small muted">Sur la démo, la branche <code>main</code> a le package déjà installé, comme le ferait une équipe ; <code>feat/speaker-spotlight</code> porte la même PR que le lab.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -208,7 +213,7 @@
               <li><b>Mesure à chaque modification de règle</b> avec <code>evals/</code> : le composant propre doit rester à zéro, le corrigé de démo ne doit pas perdre de rappel.</li>
               <li><b>Sur GitLab</b> : <code>glab auth login</code>, puis <code>bash kit/gitlab-mirror.sh &lt;groupe&gt;</code> pour recopier le dépôt, et inclure <code>kit/ci/gitlab/angular-review.gitlab-ci.yml</code>. Ce gabarit n'a pas été exécuté à ce jour : lis-le avant de t'y fier.</li>
             </ol>
-            <p class="small muted">Le package succède à <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> (v1) : mêmes identifiants de règles, même logique de verdict. Licence MIT.</p>
+            <p class="small muted">Le package a remplacé la v1 dans le registre <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> : mêmes identifiants de règles, même logique de verdict ; la v1 reste installable sous l'étiquette <code>angular-review-v1</code>. Licence MIT.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>

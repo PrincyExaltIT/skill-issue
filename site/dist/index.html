@@ -1734,7 +1734,7 @@ node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
             <h3>Les skills des autres</h3>
             <ul>
               <li><b>Lire avant d'installer</b>, scripts compris. Un skill sans script se lit en cinq minutes ; un skill avec scripts se relit comme une dépendance.</li>
-              <li><b>Épingler.</b> Une version précise : <code>gh skill install --pin &lt;sha&gt;</code> enregistre la provenance, sans vérifier le contenu. skills.sh publie des audits de sécurité.</li>
+              <li><b>Épingler.</b> Une version précise : <code>gh skill install --pin &lt;sha&gt;</code> enregistre la provenance, sans vérifier le contenu. <code>forgent</code>, l'installeur de Princy, va plus loin : il note la sha256 de chaque fichier dans <code>forgent.lock.json</code>, et <code>forgent verify</code> signale toute copie modifiée. skills.sh publie des audits de sécurité.</li>
               <li><b>Régler le harness.</b> Claude Code peut refuser des skills (règles <code>Skill()</code> en <code>deny</code>) ou leur interdire le shell (<code>disableSkillShellExecution</code>). Gemini CLI demande ton accord à chaque activation ; OpenCode le fait avec <code>permission.skill: ask</code>.</li>
             </ul>
             <h3>Les garde-fous de ton skill</h3>
@@ -2352,7 +2352,12 @@ revue-angular:ia:
 <span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
 <span class="p">$ </span><span class="cmd">node skill-issue/kit/install.mjs --target ./mon-app-angular</span>
 <span class="cm"># la CI : copier le workflow GitHub (ou inclure le job GitLab)</span>
-<span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span></pre>
+<span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span>
+<span class="cm"># ou seulement le skill, depuis le registre de Princy, avec forgent (sha256 de chaque fichier dans forgent.lock.json)</span>
+<span class="p">$ </span><span class="cmd">npx forgent add --provider claude --dest .agents/skills angular-review</span>
+<span class="p">$ </span><span class="cmd">npx forgent add --provider claude --dest .claude/skills angular-review</span>
+<span class="p">$ </span><span class="cmd">npx forgent verify --provider claude --dest .agents/skills</span></pre>
+            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy : il copie le dossier du skill depuis le registre <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a>, garde l'empreinte de chaque fichier, et <code>verify</code> contrôle ta copie. <code>--provider claude</code> ne choisit que la forme « dossier » : le contenu est le même pour tous les harnesses.</p>
             <p class="small muted">Sur la démo, la branche <code>main</code> a le package déjà installé, comme le ferait une équipe ; <code>feat/speaker-spotlight</code> porte la même PR que le lab.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -2510,7 +2515,7 @@ revue-angular:ia:
               <li><b>Mesure à chaque modification de règle</b> avec <code>evals/</code> : le composant propre doit rester à zéro, le corrigé de démo ne doit pas perdre de rappel.</li>
               <li><b>Sur GitLab</b> : <code>glab auth login</code>, puis <code>bash kit/gitlab-mirror.sh &lt;groupe&gt;</code> pour recopier le dépôt, et inclure <code>kit/ci/gitlab/angular-review.gitlab-ci.yml</code>. Ce gabarit n'a pas été exécuté à ce jour : lis-le avant de t'y fier.</li>
             </ol>
-            <p class="small muted">Le package succède à <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> (v1) : mêmes identifiants de règles, même logique de verdict. Licence MIT.</p>
+            <p class="small muted">Le package a remplacé la v1 dans le registre <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> : mêmes identifiants de règles, même logique de verdict ; la v1 reste installable sous l'étiquette <code>angular-review-v1</code>. Licence MIT.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
@@ -2586,8 +2591,8 @@ revue-angular:ia:
         <span class="tool-title">Le package et son héritage</span>
         <ul class="small">
           <li><a href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue</a> — la formation, le skill de référence par étape et le package (angular-review 2.1, MIT)</li>
-          <li><a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> — angular-review v1, le point de départ du package (MIT)</li>
-          <li><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">PrincyExaltIT/forgent</a> — installeur de skills avec lockfile sha256</li>
+          <li><a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> — le registre de forgent : angular-review 2.1 (le package), la v1 sous l'étiquette <code>angular-review-v1</code> (MIT)</li>
+          <li><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">PrincyExaltIT/forgent</a> — l'installeur de skills de Princy : copie depuis un registre, lockfile sha256, <code>forgent verify</code></li>
         </ul>
       </div>
     </div>

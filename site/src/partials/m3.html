@@ -270,7 +270,7 @@ node .agents/skills/revue-angular/scripts/verifs.mjs --echec-sur BLOCKER</pre>
             <h3>Les skills des autres</h3>
             <ul>
               <li><b>Lire avant d'installer</b>, scripts compris. Un skill sans script se lit en cinq minutes ; un skill avec scripts se relit comme une dépendance.</li>
-              <li><b>Épingler.</b> Une version précise : <code>gh skill install --pin &lt;sha&gt;</code> enregistre la provenance, sans vérifier le contenu. skills.sh publie des audits de sécurité.</li>
+              <li><b>Épingler.</b> Une version précise : <code>gh skill install --pin &lt;sha&gt;</code> enregistre la provenance, sans vérifier le contenu. <code>forgent</code>, l'installeur de Princy, va plus loin : il note la sha256 de chaque fichier dans <code>forgent.lock.json</code>, et <code>forgent verify</code> signale toute copie modifiée. skills.sh publie des audits de sécurité.</li>
               <li><b>Régler le harness.</b> Claude Code peut refuser des skills (règles <code>Skill()</code> en <code>deny</code>) ou leur interdire le shell (<code>disableSkillShellExecution</code>). Gemini CLI demande ton accord à chaque activation ; OpenCode le fait avec <code>permission.skill: ask</code>.</li>
             </ul>
             <h3>Les garde-fous de ton skill</h3>
