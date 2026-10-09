@@ -95,4 +95,4 @@ docs/            notes de recherche sourcées, reviews réelles notées
 
 ## Licence
 
-MIT. Les règles héritées de la v1 du package viennent de [PrincyExaltIT/agent-skill](https://github.com/PrincyExaltIT/agent-skill) (MIT). Le package y est publié en 2.1 (`npx forgent add --provider agents,claude --project angular-review`, avec [forgent](https://github.com/PrincyExaltIT/forgent) 1.1 ou plus) ; la v1 reste sous l'étiquette `angular-review-v1`.
+MIT. Les règles héritées de la v1 du package viennent de [PrincyExaltIT/agent-skill](https://github.com/PrincyExaltIT/agent-skill) (MIT). Le package y est publié (angular-review 2.1, review-fix, pr-handoff, skill-smith) : `npx forgent add --provider agents,claude --project angular-review review-fix pr-handoff skill-smith`, avec [forgent](https://github.com/PrincyExaltIT/forgent) 1.1 ou plus ; la v1 reste sous l'étiquette `angular-review-v1`.
