@@ -2354,10 +2354,9 @@ revue-angular:ia:
 <span class="cm"># la CI : copier le workflow GitHub (ou inclure le job GitLab)</span>
 <span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span>
 <span class="cm"># ou seulement le skill, depuis le registre de Princy, avec forgent (sha256 de chaque fichier dans forgent.lock.json)</span>
-<span class="p">$ </span><span class="cmd">npx forgent add --provider claude --dest .agents/skills angular-review</span>
-<span class="p">$ </span><span class="cmd">npx forgent add --provider claude --dest .claude/skills angular-review</span>
-<span class="p">$ </span><span class="cmd">npx forgent verify --provider claude --dest .agents/skills</span></pre>
-            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy : il copie le dossier du skill depuis le registre <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a>, garde l'empreinte de chaque fichier, et <code>verify</code> contrôle ta copie. <code>--provider claude</code> ne choisit que la forme « dossier » : le contenu est le même pour tous les harnesses.</p>
+<span class="p">$ </span><span class="cmd">npx forgent add --provider agents,claude --project angular-review</span>
+<span class="p">$ </span><span class="cmd">npx forgent verify</span></pre>
+            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy : il copie le dossier du skill depuis le registre <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a>, garde l'empreinte de chaque fichier et l'endroit de chaque installation, et <code>verify</code> contrôle toutes tes copies. <code>agents</code> pose le dossier dans <code>.agents/skills</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code…), <code>claude</code> dans <code>.claude/skills</code> : à deux, ils couvrent tous les harnesses. Il faut forgent 1.1 ou plus.</p>
             <p class="small muted">Sur la démo, la branche <code>main</code> a le package déjà installé, comme le ferait une équipe ; <code>feat/speaker-spotlight</code> porte la même PR que le lab.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -2592,7 +2591,7 @@ revue-angular:ia:
         <ul class="small">
           <li><a href="https://github.com/PrincyExaltIT/skill-issue" target="_blank" rel="noopener">PrincyExaltIT/skill-issue</a> — la formation, le skill de référence par étape et le package (angular-review 2.1, MIT)</li>
           <li><a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">PrincyExaltIT/agent-skill</a> — le registre de forgent : angular-review 2.1 (le package), la v1 sous l'étiquette <code>angular-review-v1</code> (MIT)</li>
-          <li><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">PrincyExaltIT/forgent</a> — l'installeur de skills de Princy : copie depuis un registre, lockfile sha256, <code>forgent verify</code></li>
+          <li><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">PrincyExaltIT/forgent</a> — l'installeur de skills de Princy : copie le dossier du skill dans <code>.agents/skills</code> et <code>.claude/skills</code>, lockfile sha256, <code>forgent verify</code> (1.1, octobre 2026)</li>
         </ul>
       </div>
     </div>
