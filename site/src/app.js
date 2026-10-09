@@ -169,7 +169,7 @@
       b.type = 'button'; b.setAttribute('role', 'treeitem'); b.setAttribute('aria-selected', 'false');
       b.style.setProperty('--d', node.depth);
       const [cls, label] = LV[node.level] ?? ['', ''];
-      b.innerHTML = `<span class="ind"></span>${node.dir ? '▸' : '·'} ${esc(node.name)}${label ? `<span class="lv ${cls}" title="${esc(label)}">${esc(label.split(' · ')[0])}</span>` : ''}`;
+      b.innerHTML = `<span class="ind"></span>${node.dir ? '▸' : '·'} <span class="nm">${esc(node.name)}</span>${label ? `<span class="lv ${cls}" title="${esc(label)}">${esc(label.split(' · ')[0])}</span>` : ''}`;
       b.addEventListener('click', () => select(i));
       tree.append(b);
     });
@@ -309,6 +309,8 @@
     const body = $('tbody', tracker);
     const note = $('.tracker-note', tracker);
     const ref = (model, s) => results.runs[model]?.[s]?.rappel;
+    // v5 has no Claude reference run: show the Codex run of the same folder instead.
+    const cell = (model, s) => (ref(model, s) != null ? `${ref(model, s)} %` : model === 'opus' && ref('codex', s) != null ? `Codex ${ref('codex', s)} %` : '—');
     const refresh = () => {
       const filled = STEPS.filter((s) => Number.isFinite(mine[s]?.r));
       if (!filled.length) { note.textContent = "Reporte ton premier score après l'atelier 0."; return; }
@@ -319,7 +321,7 @@
     body.innerHTML = STEPS.map((s) => `<tr><th scope="row">${LABELS[s]}</th>`
       + `<td><input type="number" min="0" max="100" inputmode="numeric" data-k="r" data-s="${s}" aria-label="Ton rappel, ${LABELS[s]}" value="${mine[s]?.r ?? ''}"></td>`
       + `<td><input type="number" min="0" max="7" inputmode="numeric" data-k="l" data-s="${s}" aria-label="Tes leurres, ${LABELS[s]}" value="${mine[s]?.l ?? ''}"></td>`
-      + `<td>${ref('opus', s) ?? '—'} %</td><td>${ref('haiku', s) ?? '—'} %</td></tr>`).join('');
+      + `<td>${cell('opus', s)}</td><td>${cell('haiku', s)}</td></tr>`).join('');
     body.addEventListener('input', (e) => {
       const el = e.target.closest('input[data-s]');
       if (!el) return;

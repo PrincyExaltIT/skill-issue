@@ -66,9 +66,9 @@
   <div class="term" style="font-size:19px;padding:18px 24px">
     <div><span class="p">› </span><span data-at="15.2" data-fx="type" data-dur="0.7">/corrige-review</span></div>
     <div class="log">
-      <span data-at="16.8" data-fx="fade">SIG-04 · speaker-spotlight.ts:30</span><span data-at="17.8" data-fx="fade"><span class="ok">✓ tests</span>  <span class="o">commit</span> fix(SIG-04): passe le DestroyRef</span>
-      <span data-at="19.4" data-fx="fade">SEC-01 · speaker-spotlight.ts:34</span><span data-at="20.4" data-fx="fade"><span class="ok">✓ tests</span>  <span class="o">commit</span> fix(SEC-01): bio en texte</span>
-      <span data-at="22.0" data-fx="fade">SIG-01 · talk-card.ts:28</span><span data-at="23.2" data-fx="fade"><span class="ok">✓ tests</span>  <span class="o">commit</span> fix(SIG-01): lit isFavorite()</span>
+      <span data-at="16.8" data-fx="fade">SIG-04 · speaker-spotlight.ts:30</span><span data-at="17.8" data-fx="fade"><span class="ok">✓ tests</span>  <span class="o">commit</span> fix(SIG-04): passe le DestroyRef…</span>
+      <span data-at="19.4" data-fx="fade">SEC-01 · speaker-spotlight.ts:34</span><span data-at="20.4" data-fx="fade"><span class="ok">✓ tests</span>  <span class="o">commit</span> fix(SEC-01): affiche la bio…</span>
+      <span data-at="22.0" data-fx="fade">SIG-01 · talk-card.ts:28</span><span data-at="23.2" data-fx="fade"><span class="ok">✓ tests</span>  <span class="o">commit</span> fix(SIG-01): lit la valeur…</span>
     </div>
   </div>
   <div class="stop ok" data-at="25.0" data-fx="rise"><span class="pill">✓ 17 COMMITS</span><span class="why" data-at="25.6" data-fx="fade">Tests : 23 → 32, tous verts. Build OK. Aucun arrêt.</span></div>
@@ -82,7 +82,7 @@
   <div class="mid" data-at="30.3" data-fx="rise"><span class="accent">raconte-branche</span> écrit le récit.</div>
   <div class="row" style="gap:20px;align-items:center;flex-wrap:nowrap">
     <div class="src">
-      <div class="term" data-at="31.4" data-fx="slide-l"><div><span class="p">$ </span>git log --oneline</div><div class="o">fix(SIG-01): lit isFavorite()</div><div class="o">fix(SEC-01): bio en texte</div><div class="o">fix(SIG-04): passe le DestroyRef</div><div class="o">… 14 de plus</div></div>
+      <div class="term" data-at="31.4" data-fx="slide-l"><div><span class="p">$ </span>git log --oneline</div><div class="o">fix(SIG-01): lit la valeur…</div><div class="o">fix(SEC-01): affiche la bio…</div><div class="o">fix(SIG-04): passe le DestroyRef…</div><div class="o">… 14 de plus</div></div>
       <div class="chip" data-at="32.4" data-fx="slide-l">.review/REVIEW.md</div>
     </div>
     <div class="arrow" data-at="33.4" data-fx="fade">→</div>
@@ -91,7 +91,7 @@
       <h4 data-at="34.6" data-fx="fade">Ce qui change</h4>
       <p data-at="35.2" data-fx="fade">Page speaker et formulaire de talk. 17 findings corrigés, un commit chacun.</p>
       <h4 data-at="37.2" data-fx="fade">Reste ouvert</h4>
-      <p data-at="37.8" data-fx="fade" style="font-weight:600">18 findings, dont 11 « résolus de fait » à confirmer.</p>
+      <p data-at="37.8" data-fx="fade" style="font-weight:600">18 ouverts, dont 9 « résolus de fait » (et 2 en partie) à confirmer.</p>
       <h4 data-at="39.8" data-fx="fade">Comment tester</h4>
       <p data-at="40.4" data-fx="fade">npm test, npm run build, puis la page /speakers/:id.</p>
     </div>
@@ -111,7 +111,7 @@
     <div class="skill" data-at="50.4" data-fx="rise"><b>raconte-branche</b><span class="what">raconte la branche</span><span class="h" data-at="51.0" data-fx="pop">Cursor</span></div>
     <div class="contract" data-at="51.2"><span class="f">PR.md</span><span class="line" data-at="51.4" data-fx="grow" data-dur="0.6"></span><span class="w">pour le relecteur</span></div>
   </div>
-  <div class="dim" data-at="52.2" data-fx="fade" style="font:500 22px/1.4 var(--body)">Aucun skill n'appelle l'autre : n'importe quel outil reprend à l'étape suivante.</div>
+  <div class="dim" data-at="52.2" data-fx="fade" style="font:500 22px/1.4 var(--body)">Aucun skill n'appelle l'autre : chaque étape peut changer d'outil (outils donnés en exemple).</div>
 </section>
 <div class="cap" data-at="47.0" data-until="53.5">Trois contrats sur disque : REVIEW.md, les commits, PR.md.</div>
 <section class="scene center" data-at="54.2" style="gap:18px">

@@ -6,7 +6,7 @@ Formation en trois modules et deux bonus : **construire son propre skill de code
 
 - **La formation** : `site/dist/index.html` (un seul fichier, à ouvrir dans un navigateur), avec ses vidéos dans `site/dist/media/`.
 - **Le terrain** : [PrincyExaltIT/skill-issue-playground](https://github.com/PrincyExaltIT/skill-issue-playground), une app Angular 22 et une pull request écrite trop vite (`lab/speaker-spotlight`, à relire depuis `depart`).
-- **Le skill de référence** : `course/revue-angular/etape-0` à `etape-5`, le même skill aux six étapes de la formation, avec un script de rattrapage.
+- **Le skill de référence** : `course/revue-angular/etape-0` à `etape-5`, le même skill aux six étapes de la formation, avec un script de rattrapage ; `course/chaine/` pour les deux skills de la chaîne (atelier 6), dont le run réel est dans `course/resultats-chaine.json`.
 - **Le package** (bonus final) : `skills/` et `kit/`, quatre skills au standard [agentskills.io](https://agentskills.io), un installeur pour huit harnesses, la CI GitHub et GitLab.
 
 ## Le parcours
@@ -44,10 +44,10 @@ git checkout lab/speaker-spotlight
 npm install
 ```
 
-Prérequis : Git, Node.js 24.15 ou plus, ou 22.22.3 ou plus (la CLI Angular 22.2 refuse de démarrer en dessous) et un harness au choix.
+Prérequis : Git, Node.js 24.15 ou plus, ou 22.22.3 ou plus (la CLI Angular 22.2 refuse de démarrer en dessous) et un harness au choix. Si un clone répond « not found », le dépôt n'est pas encore ouvert à ton compte : demande un accès en lecture à PrincyExaltIT.
 
 Noter une review : `node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md`.
-Rattraper une étape : `node ../skill-issue/course/rattrapage.mjs <0-5> [--harness claude|codex|tous]`.
+Rattraper une étape : `node ../skill-issue/course/rattrapage.mjs <0-5 | chaine> [--harness claude|codex|tous]` (`chaine` pose les deux skills de l'atelier 6).
 
 ## Installer le package (bonus)
 

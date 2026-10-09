@@ -277,7 +277,8 @@ td code { white-space: nowrap; }
 .tree button:hover { background: var(--surface-2); color: var(--ink); }
 .tree button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: inset 2px 0 0 var(--accent); }
 .tree button:focus-visible { outline: 2px solid var(--accent); }
-.tree .lv { margin-left: auto; font-size: .66rem; padding: 2px 5px; border-radius: 4px; background: var(--surface-2); color: var(--ink-3); }
+.tree .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.tree .lv { flex: none; margin-left: auto; font-size: .66rem; padding: 2px 5px; border-radius: 4px; background: var(--surface-2); color: var(--ink-3); }
 .tree .lv.l1 { color: var(--add); } .tree .lv.l2 { color: var(--sev-major); } .tree .lv.l3 { color: var(--sev-info); }
 .tree .ind { display: inline-block; width: calc(var(--d, 0) * 14px); flex: none; }
 .pane { display: grid; gap: 10px; align-content: start; min-width: 0; }
@@ -424,6 +425,9 @@ body.present .view { padding-bottom: 90px; }
 .atelier { display: grid; gap: 10px; border: 2px dashed var(--pink); border-radius: 14px; padding: 16px 18px; background: var(--surface); }
 .atelier > .tool-title { color: var(--title); font-weight: 700; }
 .atelier ol { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+.atelier, .atelier ol { grid-template-columns: minmax(0, 1fr); }
+.atelier li { min-width: 0; }
+.atelier pre { overflow-x: auto; }
 .scoreboard caption { caption-side: top; text-align: left; font-size: .85rem; color: var(--ink-3); padding: 0 0 8px; }
 .scoreboard th[scope=row], #score-tracker th[scope=row] { text-transform: none; letter-spacing: 0; font: 600 .92rem/1.3 var(--font-body); color: var(--ink); white-space: nowrap; }
 .scoreboard tr.ref > * { border-top: 2px solid var(--line); color: var(--ink-2); }

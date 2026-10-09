@@ -192,7 +192,7 @@ src/app/talks/talk-card.ts:28 [SIG-01] BLOCKER — Signal testé sans être appe
             <p>Une piste n'est pas un finding. Sur la PR du lab, le motif <code>.subscribe(</code> remonte cinq pistes, toutes étiquetées RX-01 par le script. En lisant le code, la review les range autrement. Deux sont des abonnements imbriqués à réécrire (RX-02 dans les références de l'étape 2). Une cache le vrai problème : l'appel hors contexte d'injection (SIG-04). Une est déjà protégée par <code>takeUntilDestroyed(this.destroyRef)</code>. La dernière, sur <code>valueChanges</code>, se discute. Le script ne peut pas faire la différence ; le modèle, si. D'où la consigne du skill : <i>confirme chaque piste en lisant le code, ou écarte-la.</i></p>
             <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Ce que les scripts achètent</b> · run du {{RESULTS_DATE}}</p><p>Le rappel ne bouge presque plus (Opus {{R:opus:3:rappel}} %, Haiku {{R:haiku:3:rappel}} %), la précision monte (Opus {{R:opus:2:precision}} → {{R:opus:3:precision}} %). Le vrai gain est ailleurs : les mêmes pistes à chaque run, et une porte qui tourne <b>sans IA</b> en CI. Tu la brancheras dans le <a href="#cloud">bonus cloud</a>.</p></div></div>
             <h3>Pas à pas : copier les scripts, ajouter une règle</h3>
-            <p>N'utilise pas le rattrapage pour ça : il remplace tout ton skill. Copie seulement le dossier <code>scripts/</code> de l'étape 3, depuis le dépôt de démo :</p>
+            <p>N'utilise pas le rattrapage pour ça : il remplace tout ton skill. Copie seulement le dossier <code>scripts/</code> de l'étape 3, depuis le dépôt du kit :</p>
 <pre class="term"><span class="cm"># Claude Code, Continue</span>
 <span class="p">$ </span><span class="cmd">cp -r ../skill-issue/course/revue-angular/etape-3/revue-angular/scripts .claude/skills/revue-angular/</span>
 <span class="cm"># Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code</span>
@@ -342,7 +342,7 @@ metadata:
               <span class="tool-title">Atelier 5b · partage-le</span>
               <ol>
                 <li>Ajoute <code>license</code>, <code>compatibility</code> et <code>metadata.version</code>, puis passe <code>validate.mjs --strict</code>.</li>
-                <li>Depuis <code>depart</code>, crée une branche, copie le skill dans <code>.agents/skills/</code> et <code>.claude/skills/</code>, ajoute la ligne dans <code>AGENTS.md</code>, et ouvre une PR.</li>
+                <li>Depuis <code>depart</code>, crée une branche, copie le skill dans <code>.agents/skills/</code> et <code>.claude/skills/</code>, ajoute la ligne dans <code>AGENTS.md</code>, et ouvre une PR sur ton fork (ou ton propre dépôt).</li>
                 <li>Demande à un collègue qui utilise un autre outil de lancer la review depuis sa machine. Seul ? Clone ta branche dans un second dossier (<code>git clone --branch ma-branche . ../test-clone</code>), ouvre-le dans un autre harness (Codex si tu as écrit avec Claude Code) et lance la review. Ou laisse la CI du <a href="#cloud">bonus cloud</a> la lancer à ta place.</li>
               </ol>
               <p class="expect"><b>Fini quand</b> : un collègue, ou ton second clone dans un autre harness, lance ta review sans rien installer d'autre que le dépôt. La version de référence est la branche <code>equipe/main</code> du dépôt de démo. Pour la regarder sans toucher à ton clone (ton skill non suivi bloquerait le changement de branche) : <code>git worktree add ../equipe origin/equipe/main</code>.</p>
