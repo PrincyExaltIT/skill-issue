@@ -4,7 +4,7 @@
 
 Formation en trois modules et deux bonus : **construire son propre skill de code review** (cas Angular 22), le mesurer sur une vraie pull request, et le partager à toute l'équipe, quel que soit son outil. Bonus : le faire tourner dans le cloud, puis prendre le package prêt à l'emploi de Princy.
 
-- **La formation** : `site/dist/index.html` (un seul fichier, à ouvrir dans un navigateur), avec ses vidéos dans `site/dist/media/`.
+- **La formation** : en ligne sur https://princyexaltit.github.io/skill-issue-site/ (GitHub Pages, dépôt public [PrincyExaltIT/skill-issue-site](https://github.com/PrincyExaltIT/skill-issue-site)) ; en local, `site/dist/index.html` (un seul fichier) avec ses vidéos dans `site/dist/media/`. Pour mettre le site en ligne à jour : `node site/build.mjs`, copier `site/dist/index.html` et `site/dist/media/` dans `skill-issue-site`, commiter, pousser.
 - **Le terrain** : [PrincyExaltIT/skill-issue-playground](https://github.com/PrincyExaltIT/skill-issue-playground), une app Angular 22 et une pull request écrite trop vite (`lab/speaker-spotlight`, à relire depuis `depart`).
 - **Le skill de référence** : `course/revue-angular/etape-0` à `etape-5`, le même skill aux six étapes de la formation, avec un script de rattrapage ; `course/chaine/` pour les deux skills de la chaîne (atelier 6), dont le run réel est dans `course/resultats-chaine.json`.
 - **Le package** (bonus final) : `skills/` et `kit/`, quatre skills au standard [agentskills.io](https://agentskills.io), un installeur pour les harnesses de la matrice (huit à ce jour), la CI GitHub et GitLab.
