@@ -44,7 +44,7 @@ git checkout lab/speaker-spotlight
 npm install
 ```
 
-Prérequis : Git, Node.js 24.15 ou plus, ou 22.22.3 ou plus (la CLI Angular 22.2 refuse de démarrer en dessous) et un harness au choix. Si un clone répond « not found », le dépôt n'est pas encore ouvert à ton compte : demande un accès en lecture à PrincyExaltIT.
+Prérequis : Git, Node.js 24.15 ou plus, ou 22.22.3 ou plus (la CLI Angular 22.2 refuse de démarrer en dessous) et un harness au choix.
 
 Noter une review : `node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md`.
 Rattraper une étape : `node ../skill-issue/course/rattrapage.mjs <0-5 | chaine> [--harness claude|codex|tous]` (`chaine` pose les deux skills de l'atelier 6).

@@ -598,7 +598,7 @@ details.more[open] > summary { margin-bottom: 10px; }
         <h2 id="prereq-title">Prérequis</h2>
       </div>
       <div class="grid-2">
-        <div class="tool"><span class="tool-title">Sur ta machine</span><ul><li>Git et Node.js 24.15 ou plus, ou 22.22.3 ou plus : la CLI Angular 22.2 refuse de démarrer en dessous</li><li>Si un clone répond « not found », le dépôt n'est pas encore ouvert à ton compte : demande un accès en lecture à PrincyExaltIT.</li><li>Au moins un harness : Claude Code, Codex, Copilot (VS Code), Cursor, Gemini CLI…</li><li>Optionnel : <code>gh</code> ou <code>glab</code> pour le bonus cloud</li></ul></div>
+        <div class="tool"><span class="tool-title">Sur ta machine</span><ul><li>Git et Node.js 24.15 ou plus, ou 22.22.3 ou plus : la CLI Angular 22.2 refuse de démarrer en dessous</li><li>Au moins un harness : Claude Code, Codex, Copilot (VS Code), Cursor, Gemini CLI…</li><li>Optionnel : <code>gh</code> ou <code>glab</code> pour le bonus cloud</li></ul></div>
         <div class="tool"><span class="tool-title">Dans ta tête</span><ul><li>Angular moderne (signals, control flow) : des bases suffisent</li><li>Avoir déjà demandé du code à un assistant IA</li><li>Aucune expérience des skills nécessaire</li></ul></div>
       </div>
     </section>
@@ -879,7 +879,6 @@ disable-model-invocation: true   # extension Claude Code : invocation par /pr-ha
 <span class="p">$ </span><span class="cmd">git checkout depart</span>                 <span class="cm"># la base de la PR, en local</span>
 <span class="p">$ </span><span class="cmd">git checkout lab/speaker-spotlight</span>
 <span class="p">$ </span><span class="cmd">npm install</span></pre>
-            <p class="small muted">Si un clone répond « not found », le dépôt n'est pas encore ouvert à ton compte : demande un accès en lecture à PrincyExaltIT.</p>
             <p>La branche <code>lab/speaker-spotlight</code> est une pull request écrite dans l'urgence : une page speaker et un formulaire de proposition de talk, en Angular 22. Elle compile. Elle n'est pas prête. Le second dépôt contient le corrigé, rangé hors de portée de l'agent qui relit.</p>
             <h3>2 · Le skill</h3>
             <p>Crée <code>.claude/skills/revue-angular/SKILL.md</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/SKILL.md</code> (GitHub Copilot, Kilo Code, OpenCode, Codex, Cursor, Gemini CLI et la plupart des autres) :</p>
@@ -1911,7 +1910,7 @@ model = "gpt-6-luna"</pre>
 <span class="p">$ </span><span class="cmd">git checkout depart</span>                 <span class="cm"># la base de la PR, en local</span>
 <span class="p">$ </span><span class="cmd">git checkout lab/speaker-spotlight</span>
 <span class="p">$ </span><span class="cmd">npm install</span></pre>
-      <p class="small muted">Node.js 24.15 ou plus, ou 22.22.3 ou plus (<code>node --version</code>) : la CLI Angular 22.2 refuse de démarrer en dessous. Sous Windows, si <code>git clone</code> répond « Filename too long » : <code>git config --global core.longpaths true</code>. Si le clone répond « not found », le dépôt n'est pas encore ouvert à ton compte : demande un accès en lecture à PrincyExaltIT. Le second dépôt contient le corrigé, le score et le skill de référence : garde-le à côté, jamais dans le dépôt relu. Ton skill vit dans <code>.claude/skills/revue-angular/</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/</code> (les autres harnesses) ; il reste non suivi par git pendant que tu le construis.</p>
+      <p class="small muted">Node.js 24.15 ou plus, ou 22.22.3 ou plus (<code>node --version</code>) : la CLI Angular 22.2 refuse de démarrer en dessous. Sous Windows, si <code>git clone</code> répond « Filename too long » : <code>git config --global core.longpaths true</code>. Le second dépôt contient le corrigé, le score et le skill de référence : garde-le à côté, jamais dans le dépôt relu. Ton skill vit dans <code>.claude/skills/revue-angular/</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/</code> (les autres harnesses) ; il reste non suivi par git pendant que tu le construis.</p>
       <p class="small muted">Bloqué à l'atelier N ? <code>node ../skill-issue/course/rattrapage.mjs N</code> remplace ton skill par la version de référence de l'étape N (<code>--harness codex</code> pour <code>.agents/skills/</code>, <code>--harness tous</code> pour les deux dossiers). Ton ancien dossier est mis de côté dans <code>.review/ancien-skill/</code>.</p>
     </section>
 
@@ -2354,7 +2353,7 @@ revue-angular:ia:
 <span class="cm"># la CI et le hook : depuis le dépôt du kit</span>
 <span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
 <span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span></pre>
-            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy (1.1 ou plus). Il copie chaque skill depuis le registre public <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a> : <code>agents</code> dans <code>.agents/skills</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code…), <code>claude</code> dans <code>.claude/skills</code>. Il note l'empreinte de chaque fichier et l'endroit de chaque installation dans <code>forgent.lock.json</code> ; <code>verify</code> contrôle toutes tes copies, en CI aussi. Pour épingler une version : <code>angular-review@2.1.0</code>. Le dépôt du kit, lui, sert à la CI et à <code>install.mjs</code> (leçon P.6) : si son clone répond « not found », demande un accès en lecture à PrincyExaltIT.</p>
+            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy (1.1 ou plus). Il copie chaque skill depuis le registre public <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a> : <code>agents</code> dans <code>.agents/skills</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code…), <code>claude</code> dans <code>.claude/skills</code>. Il note l'empreinte de chaque fichier et l'endroit de chaque installation dans <code>forgent.lock.json</code> ; <code>verify</code> contrôle toutes tes copies, en CI aussi. Pour épingler une version : <code>angular-review@2.1.0</code>. Le dépôt du kit, lui, sert à la CI et à <code>install.mjs</code> (leçon P.6).</p>
             <p class="small muted">Sur la démo, la branche <code>main</code> a le package déjà installé, comme le ferait une équipe ; <code>feat/speaker-spotlight</code> porte la même PR que le lab.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
