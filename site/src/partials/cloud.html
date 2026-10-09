@@ -148,7 +148,8 @@ jobs:
           <div class="hunk"><span class="at">@@ cloud · C.3 @@</span><span>GitLab CI</span><span class="spacer"></span><span class="lvl core">core</span><span>7 min</span></div>
           <div class="lesson-body">
             <h2>La même chose sur GitLab</h2>
-            <p class="kicker">Même skill, mêmes scripts, deux jobs dans <code>.gitlab-ci.yml</code>. L'intégration de Claude Code dans GitLab CI/CD est en bêta et maintenue par GitLab. <b>Gabarit non exécuté à ce jour</b> : aucun pipeline GitLab n'a tourné avec, nous l'avons écrit d'après la documentation.</p>
+            <p class="kicker">Même skill, mêmes scripts, deux jobs dans <code>.gitlab-ci.yml</code>. L'intégration de Claude Code dans GitLab CI/CD est en bêta et maintenue par GitLab. Le job sans IA a tourné pour de vrai le 9 octobre 2026 sur gitlab.com : la <a href="https://gitlab.com/PrincyExaltIT/skill-issue-playground/-/merge_requests/1" target="_blank" rel="noopener">MR !1 du dépôt de démo</a> a calculé son périmètre (15 fichiers), trouvé les 3 BLOCKER et fermé la porte en 24 secondes, comme sur GitHub. Le job IA, lui, n'a jamais tourné : il faut une clé, et le dépôt de démo n'en a pas.</p>
+            <p class="small muted">Un compte gitlab.com tout neuf doit d'abord vérifier son identité (téléphone ou carte) : sans ça, chaque pipeline échoue avant le premier job, avec « the user not being verified ».</p>
 <pre class="code" data-lang="yaml">variables:
   GIT_DEPTH: "0"                # GitLab clone en profondeur limitée par défaut
 
@@ -169,7 +170,7 @@ revue-angular:ia:
             <ul>
               <li><b>Variables masquées</b> : <code>ANTHROPIC_API_KEY</code>, et un token de projet de scope <code>api</code> pour écrire la note (ici <code>GITLAB_REVIEW_TOKEN</code>).</li>
               <li><b>Déclencher par un commentaire</b> : la doc de Claude Code pour GitLab décrit aussi un webhook qui lance le pipeline quand un commentaire de MR contient <code>@claude</code>.</li>
-              <li><b>Le gabarit complet</b> (non exécuté à ce jour) est dans <code>course/ci/gitlab/revue-angular.gitlab-ci.yml</code> ; il est commité sur la branche <code>equipe/main</code> du dépôt de démo. Pour passer le dépôt sur GitLab : <code>glab auth login</code>, puis <code>bash kit/gitlab-mirror.sh &lt;groupe&gt;</code>.</li>
+              <li><b>Le gabarit complet</b> est dans <code>course/ci/gitlab/revue-angular.gitlab-ci.yml</code> ; il est commité sur la branche <code>equipe/main</code> du dépôt de démo, recopié sur <a href="https://gitlab.com/PrincyExaltIT/skill-issue-playground" target="_blank" rel="noopener">gitlab.com/PrincyExaltIT/skill-issue-playground</a>. Pour recopier ton propre dépôt : <code>glab auth login</code>, puis <code>bash kit/gitlab-mirror.sh &lt;groupe&gt;</code>.</li>
             </ul>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
