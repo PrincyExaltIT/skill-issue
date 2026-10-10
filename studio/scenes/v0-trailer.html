@@ -11,7 +11,8 @@
   .score .track i { position: absolute; left: 0; top: 0; bottom: 0; display: flex; align-items: center; font: 700 15px/1 var(--mono); font-style: normal; padding-left: 12px; white-space: nowrap; }
   .score .v4 { background: var(--brand); }
   .score .v0 { background: var(--yellow); color: var(--bg); z-index: 1; }
-  .score .num { width: 130px; flex: none; font: 800 40px/1 var(--display); color: var(--ink); }
+  .score .num { width: 130px; flex: none; font: 800 40px/1 var(--display); color: var(--ink); white-space: nowrap; }
+  .score .num small { font-size: 26px; }
   .pill { font: 800 24px/1 var(--mono); padding: 12px 18px; border-radius: 999px; }
   .pill.red { background: rgba(255,107,94,.16); color: var(--del); } .pill.green { background: rgba(76,217,160,.16); color: var(--add); }
 </style></head>
@@ -40,7 +41,7 @@
   <div class="mid" data-at="10.7" data-fx="rise">Construis <span class="accent">le tien</span>.</div>
   <div class="tree">
     <div data-at="11.2" data-fx="slide-l">revue-angular/</div>
-    <div data-at="11.6" data-fx="slide-l">├─ SKILL.md <span class="step" data-at="11.8" data-fx="pop">v0 · dix lignes</span></div>
+    <div data-at="11.6" data-fx="slide-l">├─ SKILL.md <span class="step" data-at="11.8" data-fx="pop">v0 · une dizaine de lignes</span></div>
     <div data-at="12.3" data-fx="slide-l">├─ assets/rapport.md <span class="step" data-at="12.5" data-fx="pop">v1 · procédure</span></div>
     <div data-at="13.0" data-fx="slide-l">├─ references/ <span class="step" data-at="13.2" data-fx="pop">v2 · tes règles</span></div>
     <div data-at="13.7" data-fx="slide-l">├─ scripts/ <span class="step" data-at="13.9" data-fx="pop">v3 · le script trouve</span></div>
@@ -48,7 +49,7 @@
     <div data-at="15.0" data-fx="slide-l">└─ evals/ <span class="step" data-at="15.2" data-fx="pop">v5 · testé, partagé</span></div>
   </div>
 </section>
-<div class="cap" data-at="11.0" data-until="15.8">Pas un prompt : un dossier qui grandit, étape par étape.</div>
+<div class="cap" data-at="11.0" data-until="15.8">Un dossier qui grandit, étape par étape.</div>
 
 <!-- 16–22.2 : measured -->
 <section class="scene" data-at="16.0" data-until="22.1" style="gap:34px">
@@ -56,15 +57,15 @@
   <div class="score" data-at="16.4" data-fx="rise">
     <span class="who">Haiku 5.5</span>
     <span class="track"><i class="v4" style="width:93%" data-at="17.6" data-fx="grow" data-dur="1.8"></i><i class="v0" style="width:22%">v0 · 22 %</i></span>
-    <span class="num" data-at="19.2" data-fx="pop">93 %</span>
+    <span class="num" data-at="19.2" data-fx="pop">93 <small>à 96 %</small></span>
   </div>
   <div class="score" data-at="17.0" data-fx="rise">
     <span class="who">Opus 5.5</span>
-    <span class="track"><i class="v4" style="width:96%" data-at="18.2" data-fx="grow" data-dur="1.6"></i><i class="v0" style="width:74%">v0 · 74 % avec dix lignes</i></span>
+    <span class="track"><i class="v4" style="width:96%" data-at="18.2" data-fx="grow" data-dur="1.6"></i><i class="v0" style="width:74%">v0 · 74 % avec une dizaine de lignes</i></span>
     <span class="num" data-at="19.6" data-fx="pop">96 %</span>
   </div>
 </section>
-<div class="cap" data-at="16.4" data-until="22.0">Mesuré, pas promis : avec tes règles, le petit modèle rejoint le grand.</div>
+<div class="cap" data-at="16.4" data-until="22.0">Mesuré sur une vraie PR : avec tes règles, le petit modèle rejoint le grand.</div>
 
 <!-- 22.2–26.6 : shared -->
 <section class="scene center" data-at="22.3" data-until="26.5">

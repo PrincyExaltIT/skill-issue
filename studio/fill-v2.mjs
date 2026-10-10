@@ -2,7 +2,7 @@
 // fill-v2.mjs — inject a REAL review run into the v2 video template.
 //   node studio/fill-v2.mjs ../skill-issue-playground/.review
 // Reads scope.json, scan.json and findings.json produced by the angular-review skill on the demo branch.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -20,10 +20,16 @@ const lanesDef = [
   ['angular-security-reviewer', 'R-SEC'], ['angular-architecture-reviewer', 'R-ARCH'], ['angular-reactivity-reviewer', 'R-SIG|R-RX'],
   ['angular-performance-reviewer', 'R-PERF'], ['angular-a11y-error-reviewer', 'R-A11Y|R-ERR'], ['angular-testing-reviewer', 'R-TEST'], ['project-compliance-reviewer', 'R-PROJ'],
 ];
-const all = [...findings.findings, ...findings.dismissed];
-const lanes = lanesDef.map(([name, prefix], i) => {
-  const n = all.filter((f) => new RegExp(`^(${prefix})-`).test(f.ruleId)).length;
-  const off = prefix === 'R-PROJ';
+// Each lane shows what that reviewer reported (reviewers/<name>.json); a reviewer with no file did not run.
+const reported = (name) => {
+  const file = join(dir, 'reviewers', `${name}.json`);
+  if (!existsSync(file)) return null;
+  const r = JSON.parse(readFileSync(file, 'utf8'));
+  return (Array.isArray(r) ? r : r.findings ?? r.candidates ?? []).length;
+};
+const lanes = lanesDef.map(([name], i) => {
+  const n = reported(name);
+  const off = n === null;
   const at = (51.6 + i * 0.35).toFixed(2);
   const dur = (2.5 + ((i * 7) % 5) * 0.6).toFixed(1);
   return `    <div class="lane${off ? ' off' : ''}" data-at="${at}" data-fx="slide-l"><span>${name}</span><span class="track">${off ? '<i style="transform:scaleX(0)"></i>' : `<i data-at="${(Number(at) + 0.4).toFixed(2)}" data-fx="grow" data-dur="${dur}"></i>`}</span><span class="n">${off ? 'inactif' : `<span data-at="${(Number(at) + 0.4 + Number(dur)).toFixed(2)}">${n} constat${n > 1 ? 's' : ''}</span>`}</span></div>`;

@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="../stage.css">
 <style>
   .paths { display: grid; gap: 14px; font: 500 26px/1.3 var(--mono); }
-  .paths .who { color: var(--ink-2); font: 400 20px/1.3 var(--body); margin-left: 18px; }
+  .paths > div { display: flex; align-items: baseline; }
+  .paths .who { flex: 1; color: var(--ink-2); font: 400 20px/1.3 var(--body); margin-left: 18px; }
   .invokes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .inv { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 16px 18px; display: grid; gap: 8px; }
   .inv b { font: 600 18px/1.2 var(--body); color: var(--ink-2); }
@@ -37,10 +38,10 @@
 <!-- A · 0–20 · un dossier, plusieurs harnesses -->
 <div class="chapter" data-at="0.2" data-until="19.6">01 · un dossier, plusieurs harnesses</div>
 <section class="scene" data-at="0" data-dur="0.01" data-until="19.7" style="gap:26px">
-  <div class="mid" data-at="0.3" data-fx="rise">Le même dossier, posé là où chaque outil regarde.</div>
+  <div class="mid" data-at="0.3" data-fx="rise">Le même dossier, posé là où les outils regardent.</div>
   <div class="paths">
-    <div data-at="1.6" data-fx="slide-l">.agents/skills/angular-review/<span class="who">Codex · Copilot · Cursor · Gemini CLI · OpenCode</span></div>
-    <div data-at="2.4" data-fx="slide-l">.claude/skills/angular-review/<span class="who">Claude Code</span></div>
+    <div data-at="1.6" data-fx="slide-l">.agents/skills/angular-review/<span class="who">Codex · Copilot (agent) · Cursor · Gemini CLI · OpenCode · et l'outil de ton équipe</span></div>
+    <div data-at="2.4" data-fx="slide-l">.claude/skills/angular-review/<span class="who">Claude Code · et l'outil de ton équipe</span></div>
     <div data-at="3.2" data-fx="slide-l">~/.config/…/skills/angular-review/<span class="who">portée utilisateur</span></div>
   </div>
   <div class="invokes">
@@ -80,9 +81,9 @@
 <div class="cap" data-at="36.0" data-until="49.5">{{MECH}} règles détectables par script. Le reste demande du jugement.</div>
 
 <!-- D · 50–68 · 7 reviewers -->
-<div class="chapter" data-at="50.0" data-until="67.6">04 · sept reviewers</div>
+<div class="chapter" data-at="50.0" data-until="67.6">04 · six reviewers, un inactif</div>
 <section class="scene" data-at="50.0" data-until="67.7" style="gap:20px">
-  <div class="mid" data-at="50.2" data-fx="rise">Un reviewer par domaine, chacun dans son contexte.</div>
+  <div class="mid" data-at="50.2" data-fx="rise">Un reviewer par domaine,<br>avec seulement ses règles.</div>
   <div class="lanes">
 {{LANES}}
   </div>

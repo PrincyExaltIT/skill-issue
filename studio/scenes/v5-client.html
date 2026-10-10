@@ -29,11 +29,12 @@
   .doc { background: var(--paper); color: var(--paper-ink); border-radius: 14px; padding: 16px; min-height: 150px; display: grid; gap: 8px; align-content: start; box-shadow: 0 24px 60px -30px #000; }
   .doc b { font: 700 16px/1.2 var(--mono); }
   .doc span { font: 500 15px/1.35 var(--body); color: var(--paper-dim); }
-  .score { width: 1000px; display: grid; grid-template-columns: 250px 1fr 120px; gap: 16px; align-items: center; }
+  .score { width: 1000px; display: grid; grid-template-columns: 250px 1fr 160px; gap: 16px; align-items: center; }
   .score .who { font: 800 22px/1 var(--display); }
   .score .track { height: 40px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); position: relative; overflow: hidden; }
   .score .track i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--brand); }
-  .score .num { font: 800 34px/1 var(--display); }
+  .score .num { font: 800 34px/1 var(--display); white-space: nowrap; }
+  .score .num small { font-size: 22px; }
 </style></head>
 <body data-duration="70">
 <div class="brandmark">SKILL ISSUE · MODULE 4</div>
@@ -59,7 +60,7 @@
   <div class="flow">
     <div class="node" data-at="13.2" data-fx="rise"><b>Le dépôt</b><span>SKILL.md, règles, scripts : des fichiers relus en MR</span></div>
     <div class="node" data-at="14.0" data-fx="rise"><b>Le poste</b><span>l'outil déjà validé lit le skill, les scripts tournent en local</span></div>
-    <div class="node model" data-at="14.8" data-fx="rise"><b>Le modèle</b><span>reçoit le contexte selon le contrat signé par la DSI</span></div>
+    <div class="node model" data-at="14.8" data-fx="rise"><b>Le modèle</b><span>reçoit le contexte, selon le contrat de l'outil</span></div>
   </div>
   <div class="gate" data-at="16.4" data-fx="wipe"><b>CI</b> la porte sans IA rejoue les scripts : rien ne part vers un modèle <span class="tag">0 secret</span></div>
 </section>
@@ -82,7 +83,7 @@
     <div class="check" data-at="40.4" data-fx="slide-l"><span class="ok">✓</span><span>Des données de test synthétiques, jamais de vrais clients</span></div>
     <div class="check" data-at="41.4" data-fx="slide-l"><span class="ok">✓</span><span>Le diff est une donnée à relire, jamais une instruction</span></div>
     <div class="check" data-at="42.4" data-fx="slide-l"><span class="ok">✓</span><span>Les skills tiers relus, épinglés, vérifiés par empreinte (forgent verify)</span></div>
-    <div class="check" data-at="43.4" data-fx="slide-l"><span class="ok">✓</span><span>Des permissions au plus juste pour l'agent de review : son rapport dans .review/, rien d'autre</span></div>
+    <div class="check" data-at="43.4" data-fx="slide-l"><span class="ok">✓</span><span>Des permissions au plus juste pour l'agent :<br>lire, lancer ses scripts, écrire dans .review/ seulement</span></div>
     <div class="check" data-at="44.4" data-fx="slide-l"><span class="ko">✗</span><span>Des secrets en CI sur les merge requests de fork</span></div>
   </div>
 </section>
@@ -97,7 +98,7 @@
     <div class="doc" data-at="55.8" data-fx="pop"><b>plan-pilote.md</b><span>une équipe, des mesures, des critères</span></div>
   </div>
   <div class="score" data-at="57.4" data-fx="rise"><span class="who">Sans règles (v0)</span><span class="track"><i data-at="57.6" data-fx="grow" data-dur="1.2" style="width:22%"></i></span><span class="num"><span data-at="57.6" data-count="0:22" data-dur="1.2" data-suffix=" %">0</span></span></div>
-  <div class="score" data-at="58.6" data-fx="rise"><span class="who">Avec les règles (v4)</span><span class="track"><i data-at="58.8" data-fx="grow" data-dur="1.4" style="width:93%;background:var(--add)"></i></span><span class="num"><span data-at="58.8" data-count="0:93" data-dur="1.4" data-suffix=" %">0</span></span></div>
+  <div class="score" data-at="58.6" data-fx="rise"><span class="who">Avec les règles (v4)</span><span class="track"><i data-at="58.8" data-fx="grow" data-dur="1.4" style="width:93%;background:var(--add)"></i></span><span class="num"><span data-at="58.8" data-count="0:93" data-dur="1.4">0</span><small class="small" data-at="60.2" data-fx="fade"> à 96 %</small></span></div>
   <div class="small dim" data-at="60.6" data-fx="fade" style="font:500 17px/1.4 var(--body)">Exemple mesuré : Haiku sur la PR du lab. Le score du pilote, tu le mesures chez le client.</div>
 </section>
 
