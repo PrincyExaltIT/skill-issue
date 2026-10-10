@@ -4148,6 +4148,9 @@ revue-angular:ia:
   // to the mission sheet), "plan" (tick the measures of the proposal), "end" (verdict and the sheet to download).
   // Each choice moves the trust of the people in the room; Skillou comments as a coach. The run is saved per viewer. ──
   const MISSION = data('data-mission');
+  // Inside the claude.ai viewer, a file is offered through the downloads capability; elsewhere, a plain blob link.
+  let saver = null;
+  if (window.claude?.use) window.claude.use('downloads').then((d) => { saver = d; }).catch(() => {});
   $$('.game[data-game]').forEach((box) => {
     const G = MISSION?.games?.[box.dataset.game];
     if (!G) return;
@@ -4240,9 +4243,11 @@ revue-angular:ia:
         const v = S.verdicts.find((x) => (x.when ?? []).every(([id, op, n]) => (op === '>=' ? (st.trust[id] ?? 0) >= n : (st.trust[id] ?? 0) < n))) ?? S.verdicts[S.verdicts.length - 1];
         if (!st.log.some((e) => e.verdict)) { push({ who: v.who, html: `<p>${v.say}</p>`, verdict: true }); push({ who: 'skillou', html: `<p>${v.coach}</p>`, mood: v.mood, cls: 'coach' }); renderLog(); }
         act.innerHTML = `<div class="end"><p><b>${esc(v.title)}</b></p><button class="btn primary" type="button" data-dl>Télécharger ma fiche mission (.md)</button> <a class="btn" href="${S.link}">${esc(S.linkText)}</a></div>`;
-        $('[data-dl]', act).onclick = () => {
+        $('[data-dl]', act).onclick = async () => {
+          const filename = `fiche-mission-${box.dataset.game}.md`;
+          if (saver) { try { await saver.save({ filename, data: sheet() }); } catch { /* declined or unavailable: nothing to retry */ } return; }
           const url = URL.createObjectURL(new Blob([sheet()], { type: 'text/markdown' }));
-          const a = document.createElement('a'); a.href = url; a.download = `fiche-mission-${box.dataset.game}.md`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+          const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
         };
       }
     }
