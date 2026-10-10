@@ -1,0 +1,713 @@
+<section class="view" id="mission" hidden aria-labelledby="mission-title">
+  <span hidden data-title="00 · La mission — Skill Issue"></span>
+  <div class="wrap">
+    <header class="module-head">
+      <span class="num">00</span>
+      <h1 id="mission-title">La mission</h1>
+      <p class="promise">Avant d'écrire une ligne de skill, tu passes un entretien. Un grand groupe veut mettre l'IA dans sa façon de travailler, et c'est toi qu'on appelle. Tes questions et tes réponses fixent le cadre de tout le reste de la formation.</p>
+      <div class="chips"><span class="chip">⏱ <b>~15 min</b></span><span class="chip">1 jeu de rôle · 1 fiche mission</span><span class="lvl base">base</span></div>
+    </header>
+
+    <div class="rc note"><span class="av" aria-hidden="true">i</span><div><p class="who"><b>Client fictif, contraintes réelles</b></p><p>Le Groupe Hexa n'existe pas. Ses contraintes, si : un seul outil d'IA validé, une CI sans internet, des données personnelles qui traînent dans les tests, une RSSI qui a un droit de veto. Ta fiche mission te suit dans le module 2 (tu construis le skill pour ce client) et dans le module 4 (tu l'installes chez lui).</p></div></div>
+
+    <div class="game" data-game="mission"></div>
+
+    <section class="section" aria-labelledby="mission-real">
+      <div class="section-head"><h2 id="mission-real">Lundi, chez ton vrai client</h2></div>
+      <p>Les questions du jeu marchent aussi en vrai. Avant de proposer un outil, cherche ces six réponses :</p>
+      <ol class="checklist">
+        <li>Quel problème coûte le plus à l'équipe aujourd'hui, et comment on le mesurerait ?</li>
+        <li>Quels outils d'IA sont déjà validés, pour qui, et sur quel poste ?</li>
+        <li>Où vivent le code et la CI, et qu'est-ce qui sort du réseau (proxy, miroir npm, runners) ?</li>
+        <li>Quelles données circulent dans le dépôt : données personnelles, secrets, code sous licence ?</li>
+        <li>Qui valide un nouvel outil : DSI, RSSI, DPO, achats ? Qui a un droit de veto ?</li>
+        <li>Quel délai et quel critère de succès pour un premier résultat ?</li>
+      </ol>
+    </section>
+  </div>
+<script type="application/json" id="data-mission">
+{
+  "people": {
+    "claire": {
+      "name": "Claire",
+      "role": "CTO, Groupe Hexa",
+      "initial": "C",
+      "color": "#5853FF"
+    },
+    "karim": {
+      "name": "Karim",
+      "role": "RSSI",
+      "initial": "K",
+      "color": "#E2057A"
+    },
+    "lea": {
+      "name": "Léa",
+      "role": "tech lead Angular",
+      "initial": "L",
+      "color": "#2F2F9B"
+    },
+    "skillou": {
+      "name": "Skillou",
+      "role": "ton coach"
+    },
+    "me": {
+      "name": "Toi",
+      "role": ""
+    }
+  },
+  "cards": {
+    "probleme": {
+      "title": "Le problème",
+      "text": "Les MR attendent trois jours en revue, et les mêmes erreurs Angular reviennent à chaque sprint. C'est mesurable : un skill de review a de quoi prouver un gain."
+    },
+    "outils": {
+      "title": "Outil autorisé",
+      "text": "Un seul assistant validé par la DSI, sur le poste de dev. Ton skill doit marcher dans cet outil-là, sans en ajouter un nouveau."
+    },
+    "reseau": {
+      "title": "Réseau",
+      "text": "GitLab auto-hébergé, runners sans internet, npm via un miroir interne. Rien ne s'installe depuis internet : tout passe par le dépôt ou le miroir."
+    },
+    "donnees": {
+      "title": "Données",
+      "text": "De vraies données d'assurés ont déjà fini dans des fixtures de test. Ce qui part vers un modèle doit être cadré avec le DPO."
+    },
+    "validation": {
+      "title": "Qui valide",
+      "text": "Karim (RSSI) a un droit de veto, le DPO intervient dès qu'il y a des données personnelles, la DSI achète. À embarquer dès le début."
+    },
+    "delai": {
+      "title": "Délai",
+      "text": "Un premier retour chiffré dans deux mois. On parle d'un pilote, pas d'un déploiement."
+    },
+    "flux": {
+      "title": "Le flux de données",
+      "text": "Le skill ne crée pas de nouveau flux : c'est un dossier de fichiers dans le dépôt, lu par l'outil déjà validé."
+    },
+    "scripts": {
+      "title": "Les scripts",
+      "text": "Dans le dépôt, sans dépendance, relus en MR, version épinglée avec une empreinte. La porte sans IA tourne en CI sans aucun secret."
+    },
+    "mesure": {
+      "title": "La preuve",
+      "text": "Un score sur une MR de référence avant le pilote, puis à chaque étape : vrais problèmes trouvés, fausses alertes."
+    }
+  },
+  "games": {
+    "mission": {
+      "client": "Groupe Hexa (fictif)",
+      "brief": "On veut intégrer l'IA dans notre manière de faire, et tu as l'air d'être la bonne personne pour ça.",
+      "room": [
+        "claire",
+        "karim",
+        "lea"
+      ],
+      "next": [
+        "Module 2 : construire le skill de review avec les règles de l'équipe de Léa.",
+        "Module 4 : l'installer chez Hexa (dépôt, miroir, CI sans internet) et préparer le dossier de Karim.",
+        "Garder le score de départ : c'est l'argument du comité dans deux mois."
+      ],
+      "start": "s1",
+      "scenes": {
+        "s1": {
+          "kind": "say",
+          "who": "claire",
+          "say": "Bonjour ! Je vais être directe : la direction veut qu'on « intègre l'IA dans notre manière de faire ». Tout le monde en parle, personne ne sait par où commencer. On m'a dit que tu étais la bonne personne pour ça. Tu commencerais par quoi ?",
+          "choices": [
+            {
+              "text": "J'active un assistant de code pour toute la DSI la semaine prochaine, et on voit ce que ça donne.",
+              "next": "s1b",
+              "trust": {
+                "claire": -1,
+                "karim": -2
+              },
+              "coach": "Proposer un outil avant de connaître le terrain, c'est le meilleur moyen de te faire bloquer par la sécurité. Et dans deux mois, personne ne saura dire si ça a marché."
+            },
+            {
+              "text": "Avant de proposer quoi que ce soit, j'aimerais comprendre votre contexte. Je peux vous poser quelques questions ?",
+              "next": "s2",
+              "trust": {
+                "claire": 1
+              },
+              "coach": "Bon réflexe : le diagnostic avant la solution."
+            },
+            {
+              "text": "Qu'est-ce qui vous coûte le plus aujourd'hui, dans la façon dont l'équipe livre ?",
+              "next": "s2",
+              "trust": {
+                "claire": 2
+              },
+              "card": "probleme",
+              "reply": "Les revues de code, sans hésiter. Une MR attend trois jours, et on retrouve les mêmes erreurs d'un sprint à l'autre.",
+              "coach": "Partir d'un problème plutôt que d'un outil : tu sais déjà quoi mesurer."
+            }
+          ]
+        },
+        "s1b": {
+          "kind": "say",
+          "who": "claire",
+          "say": "Hmm. Karim, notre RSSI, risque de ne pas apprécier. On reprend ? Qu'est-ce que tu as besoin de savoir ?",
+          "choices": [
+            {
+              "text": "D'accord, je reprends par le début : quelques questions sur votre contexte.",
+              "next": "s2",
+              "trust": {
+                "claire": 1
+              }
+            }
+          ]
+        },
+        "s2": {
+          "kind": "ask",
+          "who": "claire",
+          "pick": 3,
+          "say": "Vas-y, pose tes questions. J'ai un quart d'heure avant mon comité, alors choisis bien.",
+          "after": "Merci, c'est plus clair. Je fais venir Karim et Léa : ils vont avoir leur mot à dire.",
+          "next": "s3",
+          "questions": {
+            "q1": {
+              "text": "Quels outils d'IA sont déjà autorisés chez vous ?",
+              "card": "outils",
+              "trust": {
+                "karim": 1
+              },
+              "answer": "La DSI a validé un assistant de code l'an dernier, sur le poste de dev seulement. Les chatbots grand public sont bloqués par le proxy."
+            },
+            "q2": {
+              "text": "Où vivent le code et la CI ?",
+              "card": "reseau",
+              "trust": {
+                "lea": 1
+              },
+              "answer": "Sur notre GitLab auto-hébergé. Les runners n'ont pas accès à internet, et les paquets npm passent par notre Artifactory."
+            },
+            "q3": {
+              "text": "Quelles données circulent dans le code et les tests ?",
+              "card": "donnees",
+              "trust": {
+                "karim": 1
+              },
+              "key": true,
+              "missedCoach": "Tu n'as pas demandé quelles données traînent dans le dépôt. Chez un assureur, c'est la première question de Karim.",
+              "answer": "Des contrats, des sinistres… On a déjà retrouvé de vrais noms d'assurés dans des fixtures de test. Ça a fait du bruit."
+            },
+            "q4": {
+              "text": "Où l'équipe perd-elle le plus de temps ?",
+              "card": "probleme",
+              "trust": {
+                "claire": 1,
+                "lea": 1
+              },
+              "key": true,
+              "missedCoach": "Tu n'as pas demandé quel problème régler. Sans problème chiffré, difficile de prouver un gain au comité.",
+              "answer": "Dans les revues de code. Une MR attend souvent trois jours, et les mêmes erreurs Angular reviennent d'un sprint à l'autre."
+            },
+            "q5": {
+              "text": "Qui doit valider un nouvel outil ?",
+              "card": "validation",
+              "trust": {
+                "karim": 1
+              },
+              "key": true,
+              "missedCoach": "Tu n'as pas demandé qui valide. Attention au veto qui tombe le jour de la démo.",
+              "answer": "Karim, notre RSSI, a un droit de veto. Le DPO intervient dès qu'on parle de données personnelles, et c'est la DSI qui achète."
+            },
+            "q6": {
+              "text": "Quel délai, et comment saurez-vous que c'est réussi ?",
+              "card": "delai",
+              "trust": {
+                "claire": 1
+              },
+              "answer": "Le comité veut un premier retour dans deux mois. Le budget, on en parlera quand on aura des chiffres."
+            }
+          }
+        },
+        "s3": {
+          "kind": "say",
+          "who": "karim",
+          "say": "Bonjour. Je vais te poser la question qu'on me pose tout le temps : votre IA, elle envoie notre code où ?",
+          "choices": [
+            {
+              "text": "Nulle part, c'est de l'IA, c'est sécurisé.",
+              "next": "s3b",
+              "trust": {
+                "karim": -2
+              },
+              "coach": "Faux, et Karim le sait : un assistant de code envoie du contexte au modèle. La bonne réponse décrit le flux."
+            },
+            {
+              "text": "Le contexte part vers le modèle de l'outil que vous avez déjà validé, selon le contrat signé par la DSI. Mon skill, lui, est un dossier de fichiers dans le dépôt : il n'ajoute aucun flux.",
+              "next": "s3b",
+              "trust": {
+                "karim": 2
+              },
+              "card": "flux",
+              "coach": "Exact. Un skill, ce sont des instructions et des scripts lus par un outil déjà validé. Le module 4 t'aide à dessiner ce flux pour Karim."
+            },
+            {
+              "text": "Je ne sais pas encore, je vous fais un retour.",
+              "next": "s3b",
+              "trust": {
+                "karim": -1
+              },
+              "coach": "Honnête, mais face à un RSSI, arrive avec le schéma des flux. C'est le premier livrable du module 4."
+            }
+          ]
+        },
+        "s3b": {
+          "kind": "say",
+          "who": "karim",
+          "say": "Et les scripts de ton skill, ils font quoi exactement ? Qui me garantit qu'ils ne téléchargent rien ?",
+          "choices": [
+            {
+              "text": "Ils sont dans le dépôt, sans dépendance, et vous pouvez les relire. On épingle la version avec une empreinte, et toute modification passe en MR.",
+              "next": "s4",
+              "trust": {
+                "karim": 2
+              },
+              "card": "scripts",
+              "coach": "Relire, épingler, vérifier : la base pour n'importe quel skill, surtout s'il vient de l'extérieur."
+            },
+            {
+              "text": "Ils viennent d'un registre public et se mettent à jour tout seuls, comme ça on a toujours la dernière version.",
+              "next": "s4",
+              "trust": {
+                "karim": -2
+              },
+              "coach": "Du code qui se met à jour tout seul sur les postes : c'est exactement ce qu'un RSSI refuse. Et ici, les runners n'ont même pas internet."
+            },
+            {
+              "text": "Ils tournent d'abord en CI, sur la MR, sans aucun secret. C'est une porte sans IA, avant même de parler de modèle.",
+              "next": "s4",
+              "trust": {
+                "karim": 1,
+                "lea": 1
+              },
+              "card": "scripts",
+              "coach": "Bien vu : une porte déterministe ne demande ni clé ni accès réseau. Pense aussi à dire comment on relit et on épingle les scripts."
+            }
+          ]
+        },
+        "s4": {
+          "kind": "say",
+          "who": "lea",
+          "say": "Moi, je suis tech lead. La dernière fois qu'on m'a vendu un outil de review, il commentait chaque ligne, et on a fini par tout ignorer. Pourquoi ce serait différent ?",
+          "choices": [
+            {
+              "text": "Il suit vos règles à vous, et il doit essayer de réfuter chaque finding avant de le garder.",
+              "next": "s5",
+              "trust": {
+                "lea": 2
+              },
+              "coach": "Les règles de l'équipe et la vérification : ce sont les étapes 2 et 4 du module 2."
+            },
+            {
+              "text": "On le mesure sur une vraie MR avant de l'imposer : combien de vrais problèmes, combien de fausses alertes.",
+              "next": "s5",
+              "trust": {
+                "lea": 2,
+                "claire": 1
+              },
+              "card": "mesure",
+              "coach": "Une mesure transforme un avis en argument. Tu as le script de score pour ça."
+            },
+            {
+              "text": "L'IA progresse vite, ça va s'améliorer tout seul.",
+              "next": "s5",
+              "trust": {
+                "lea": -2
+              },
+              "coach": "Promettre l'avenir ne règle pas le bruit d'aujourd'hui. Léa veut une preuve."
+            }
+          ]
+        },
+        "s5": {
+          "kind": "plan",
+          "who": "claire",
+          "say": "OK. Fais-moi une proposition que je peux présenter au comité. Qu'est-ce que tu mets dans ton pilote ?",
+          "legend": "Ton pilote (coche tout ce que tu proposes)",
+          "submit": "Présenter au comité",
+          "next": "s6",
+          "options": {
+            "p1": {
+              "text": "Une équipe pilote, celle de Léa, sur deux sprints.",
+              "good": true,
+              "key": true,
+              "trust": {
+                "claire": 1,
+                "lea": 1
+              },
+              "missedCoach": "Pas de périmètre de pilote : le comité va croire que tu veux tout déployer d'un coup."
+            },
+            "p2": {
+              "text": "Toute la DSI d'un coup, pour aller vite.",
+              "trust": {
+                "claire": -1,
+                "karim": -1,
+                "lea": -1
+              },
+              "coach": "Tout le monde d'un coup, c'est beaucoup de risques et aucune comparaison possible."
+            },
+            "p3": {
+              "text": "Le skill commité dans le dépôt, modifié par MR comme le reste du code.",
+              "good": true,
+              "key": true,
+              "trust": {
+                "karim": 1,
+                "lea": 1
+              },
+              "missedCoach": "Tu n'as pas dit où vit le skill. Dans le dépôt, versionné et relu en MR : c'est ce qui rassure Karim et Léa."
+            },
+            "p4": {
+              "text": "Installation en direct depuis un registre public, à chaque lancement.",
+              "trust": {
+                "karim": -2
+              },
+              "coach": "Pas d'internet en CI, et pas de code non relu sur les postes : à oublier ici."
+            },
+            "p5": {
+              "text": "Une porte sans IA dans la CI GitLab, sans secret, sur chaque MR.",
+              "good": true,
+              "trust": {
+                "karim": 1,
+                "lea": 1
+              }
+            },
+            "p6": {
+              "text": "Un score de départ sur une MR de référence, puis un point toutes les deux semaines.",
+              "good": true,
+              "key": true,
+              "trust": {
+                "claire": 1,
+                "lea": 1
+              },
+              "card": "mesure",
+              "missedCoach": "Sans score de départ, tu n'auras rien à montrer au comité dans deux mois."
+            },
+            "p7": {
+              "text": "Une note d'une page pour Karim et le DPO : flux, données, permissions des scripts.",
+              "good": true,
+              "key": true,
+              "trust": {
+                "karim": 2
+              },
+              "missedCoach": "Karim attend sa note : flux, données, permissions. Sans elle, son veto reste possible."
+            },
+            "p8": {
+              "text": "Tester le modèle avec de vraies fixtures, pour voir s'il repère les données sensibles.",
+              "trust": {
+                "karim": -3
+              },
+              "coach": "Envoyer de vraies données d'assurés à un modèle pour un test : c'est l'incident que Karim veut éviter."
+            },
+            "p9": {
+              "text": "Une courte formation pour l'équipe et une charte d'usage de l'IA.",
+              "good": true,
+              "trust": {
+                "claire": 1,
+                "karim": 1
+              }
+            }
+          }
+        },
+        "s6": {
+          "kind": "end",
+          "who": "claire",
+          "say": "Le comité a écouté ta proposition. Voilà ce qu'il en pense.",
+          "link": "#m2",
+          "linkText": "Construire le skill (module 2)",
+          "verdicts": [
+            {
+              "when": [
+                [
+                  "karim",
+                  ">=",
+                  3
+                ],
+                [
+                  "lea",
+                  ">=",
+                  3
+                ],
+                [
+                  "claire",
+                  ">=",
+                  3
+                ]
+              ],
+              "who": "claire",
+              "mood": "bravo",
+              "title": "Pilote validé.",
+              "say": "Le comité valide le pilote. Karim signe sous réserve de sa note, Léa est partante. On se revoit dans deux mois avec les chiffres.",
+              "coach": "Bravo : tu as cadré le problème, rassuré la sécurité et prévu une preuve. Télécharge ta fiche : elle sert dans les modules 2 et 4."
+            },
+            {
+              "when": [
+                [
+                  "karim",
+                  "<",
+                  1
+                ]
+              ],
+              "who": "karim",
+              "mood": "oups",
+              "title": "Veto de la sécurité.",
+              "say": "Désolé, je ne peux pas signer en l'état. Je n'ai aucune garantie sur les données ni sur ce que font les scripts.",
+              "coach": "Karim bloque. Le module 4 t'aide à préparer son dossier : schéma des flux, données, permissions, épinglage des scripts. Tu peux aussi recommencer l'entretien."
+            },
+            {
+              "when": [
+                [
+                  "lea",
+                  "<",
+                  1
+                ]
+              ],
+              "who": "lea",
+              "mood": "oups",
+              "title": "L'équipe n'y croit pas.",
+              "say": "Je veux bien essayer, mais rien ne me prouve qu'on ne va pas encore se noyer dans les commentaires.",
+              "coach": "Léa doute. Mesure avant d'imposer : le module 2 te fait noter ton skill sur une vraie PR à chaque étape."
+            },
+            {
+              "who": "claire",
+              "mood": "parle",
+              "title": "Pilote accepté, sous conditions.",
+              "say": "Le comité est d'accord pour un pilote, mais il manque des éléments. Complète ta proposition avant le lancement.",
+              "coach": "Pas mal ! Regarde les points qui manquent dans ta fiche, puis attaque le module 2."
+            }
+          ]
+        }
+      }
+    },
+    "restitution": {
+      "client": "Groupe Hexa (fictif), deux mois plus tard",
+      "brief": "Le pilote est fini. Le comité veut savoir s'il faut continuer.",
+      "room": [
+        "claire",
+        "karim",
+        "lea"
+      ],
+      "next": [
+        "Garder le protocole de mesure pour chaque nouvelle équipe.",
+        "Confier les règles à un référent par équipe : le skill doit survivre à ton départ.",
+        "Repasser par Karim avant chaque nouvel outil ou nouveau skill tiers."
+      ],
+      "start": "r1",
+      "scenes": {
+        "r1": {
+          "kind": "say",
+          "who": "claire",
+          "say": "Deux mois ont passé. Le comité est là, Karim et Léa aussi. Qu'est-ce que tu montres en premier ?",
+          "choices": [
+            {
+              "text": "Une démo en direct, sur une MR que j'ai choisie pour l'occasion.",
+              "next": "r2",
+              "trust": {
+                "lea": -1
+              },
+              "coach": "Une démo choisie impressionne, mais ne prouve rien. Le comité veut des chiffres qu'on peut comparer."
+            },
+            {
+              "text": "Le score de départ et celui d'aujourd'hui, sur la même MR de référence, avec les fausses alertes à côté.",
+              "next": "r2",
+              "trust": {
+                "claire": 2,
+                "lea": 1
+              },
+              "card": "mesure",
+              "coach": "Même MR, même corrigé, même façon de noter : la comparaison tient debout."
+            },
+            {
+              "text": "Les retours de l'équipe : ils adorent.",
+              "next": "r2",
+              "trust": {
+                "claire": 0
+              },
+              "coach": "Les retours comptent, mais seuls, ils ne convaincront pas un comité. Montre-les à côté des chiffres."
+            }
+          ]
+        },
+        "r2": {
+          "kind": "say",
+          "who": "karim",
+          "say": "Côté sécurité, il s'est passé quelque chose pendant le pilote ?",
+          "choices": [
+            {
+              "text": "Rien à signaler. La porte CI tourne sans secret, et les scripts n'ont pas bougé depuis leur empreinte.",
+              "next": "r3",
+              "trust": {
+                "karim": 2
+              },
+              "card": "scripts"
+            },
+            {
+              "text": "Une fois, un développeur a collé un vrai fichier client dans l'outil. On a prévenu le DPO le jour même et ajouté la règle à la charte.",
+              "next": "r3",
+              "trust": {
+                "karim": 2,
+                "claire": 1
+              },
+              "coach": "Signaler l'incident et montrer la correction : c'est comme ça qu'on gagne la confiance d'un RSSI."
+            },
+            {
+              "text": "On n'a pas vraiment regardé, mais personne ne s'est plaint.",
+              "next": "r3",
+              "trust": {
+                "karim": -2
+              },
+              "coach": "« Personne ne s'est plaint » n'est pas un contrôle. Karim attend des traces."
+            }
+          ]
+        },
+        "r3": {
+          "kind": "say",
+          "who": "lea",
+          "say": "Et après ? Nos règles vont vieillir, Angular aussi. Qui s'en occupe quand tu seras parti ?",
+          "choices": [
+            {
+              "text": "Moi : je repasse les mettre à jour dans six mois.",
+              "next": "r4",
+              "trust": {
+                "lea": -1
+              },
+              "coach": "Un skill qui dépend du consultant meurt quand il part. L'équipe doit savoir le faire évoluer."
+            },
+            {
+              "text": "Vous : les règles vivent dans le dépôt. Chaque erreur qui revient devient une règle, par MR, avec son exemple.",
+              "next": "r4",
+              "trust": {
+                "lea": 2
+              }
+            },
+            {
+              "text": "La CI : chaque règle a son exemple dans les evals, et le catalogue est vérifié à chaque MR.",
+              "next": "r4",
+              "trust": {
+                "lea": 2,
+                "karim": 1
+              },
+              "coach": "Des tests pour le skill lui-même : le module 2 t'a montré comment."
+            }
+          ]
+        },
+        "r4": {
+          "kind": "plan",
+          "who": "claire",
+          "say": "Le comité te demande la suite. Tu proposes quoi ?",
+          "legend": "La suite (coche ce que tu proposes)",
+          "submit": "Proposer au comité",
+          "next": "r5",
+          "options": {
+            "n1": {
+              "text": "Étendre à une deuxième équipe, avec le même protocole de mesure.",
+              "good": true,
+              "key": true,
+              "trust": {
+                "claire": 1,
+                "lea": 1
+              },
+              "missedCoach": "Sans deuxième équipe mesurée, impossible de savoir si le gain tient ailleurs."
+            },
+            "n2": {
+              "text": "Passer à toute la DSI : le pilote a marché.",
+              "trust": {
+                "claire": -1,
+                "karim": -1
+              },
+              "coach": "Un pilote réussi dans une équipe ne dit rien des autres stacks ni des autres règles."
+            },
+            "n3": {
+              "text": "Former un référent par équipe pour faire vivre les règles.",
+              "good": true,
+              "key": true,
+              "trust": {
+                "lea": 1,
+                "claire": 1
+              },
+              "missedCoach": "Qui fera vivre le skill après toi ? Prévois un référent par équipe."
+            },
+            "n4": {
+              "text": "Ajouter les skills de correction et de récit de branche, une fois la review stable.",
+              "good": true,
+              "trust": {
+                "lea": 1
+              }
+            },
+            "n5": {
+              "text": "Remplacer les revues humaines par l'IA pour gagner du temps.",
+              "trust": {
+                "lea": -2,
+                "karim": -2
+              },
+              "coach": "La revue par IA reste un avis. La retirer aux humains, c'est perdre la personne qui assume le merge."
+            },
+            "n6": {
+              "text": "Faire valider chaque nouveau skill tiers par Karim avant de l'installer.",
+              "good": true,
+              "trust": {
+                "karim": 2
+              }
+            }
+          }
+        },
+        "r5": {
+          "kind": "end",
+          "who": "claire",
+          "say": "Le comité a délibéré.",
+          "link": "#m4-final",
+          "linkText": "Préparer ton vrai client (atelier final)",
+          "verdicts": [
+            {
+              "when": [
+                [
+                  "karim",
+                  ">=",
+                  3
+                ],
+                [
+                  "lea",
+                  ">=",
+                  3
+                ],
+                [
+                  "claire",
+                  ">=",
+                  3
+                ]
+              ],
+              "who": "claire",
+              "mood": "bravo",
+              "title": "Extension validée.",
+              "say": "On étend à une deuxième équipe le mois prochain. Et on aimerait que tu formes les référents.",
+              "coach": "Mission réussie. Il ne reste plus qu'à refaire ça pour de vrai : l'atelier final t'y prépare."
+            },
+            {
+              "when": [
+                [
+                  "karim",
+                  "<",
+                  1
+                ]
+              ],
+              "who": "karim",
+              "mood": "oups",
+              "title": "La sécurité freine.",
+              "say": "Je ne bloque pas, mais je veux un vrai suivi avant d'aller plus loin.",
+              "coach": "Il manque des traces côté sécurité. Relis la leçon sur la prévention, puis recommence."
+            },
+            {
+              "who": "claire",
+              "mood": "parle",
+              "title": "On continue, sans s'emballer.",
+              "say": "Le pilote continue dans l'équipe de Léa. On reparle de l'extension dans un mois.",
+              "coach": "Bien, mais le comité reste prudent. Regarde ce qui manque dans ta fiche."
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+</script>
+</section>

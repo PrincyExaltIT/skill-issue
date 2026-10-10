@@ -1,0 +1,23 @@
+Ton premier skill ne sera pas bon. Le nôtre non plus, d'ailleurs. Du coup on tourne en boucle : une modif, un run sur la PR du lab, puis on regarde ce qui a été raté. On l'a fait pour de vrai, avec Opus et Haiku.
+
+Première étape, une vraie procédure. Au début, Haiku répondait dans le chat et n'écrivait jamais son rapport. Quand chaque étape a eu un critère de fin, il l'a écrit, et son score est passé de 22 à 59 pour cent.
+
+Ensuite, les règles. Angular, le modèle connaît. Les décisions de ton équipe, non. On les a écrites dans des références, et là, Opus monte à 100 pour cent, Haiku à 96.
+
+Puis des scripts. Ils sortent les mêmes vingt-sept pistes à chaque run, en moins d'une seconde et sans modèle. Le modèle, lui, décide lesquelles sont de vrais problèmes.
+
+On lui a aussi appris à dire non : chaque finding est contesté, et il explique pourquoi il le garde ou l'écarte. Sur cette PR, ça n'a rien changé, les leurres avaient déjà disparu avec les règles.
+
+Dernière étape : tu le commites, et toute l'équipe l'a. On l'a lancé tel quel sous Codex, sans changer une ligne : 93 pour cent.
+
+Voici le package de Princy, angular review. C'est un dossier comme le tien, installé là où chaque outil va le chercher, et partout il suffit de dire « review cette branche ».
+
+Il commence par un script qui lit le projet : ici Angular 22 point 2, quinze fichiers modifiés, zoneless, Vitest. Comme OnPush est le défaut en 22, la règle qui l'exigeait se retourne.
+
+Un deuxième script passe quarante et une règles sans modèle. Sur cette PR, il sort quarante-quatre candidats, et ce ne sont que des pistes.
+
+Ensuite, des relecteurs travaillent chacun sur un domaine, avec seulement ses règles. Si ton outil a des sous-agents, ils tournent en parallèle.
+
+Chaque candidat est ensuite attaqué. Si l'extrait cité n'existe pas à la ligne annoncée, un script le rejette, peu importe ce que le modèle en pense.
+
+Et le verdict final, c'est un script qui le calcule à partir des findings vérifiés, pas le modèle.

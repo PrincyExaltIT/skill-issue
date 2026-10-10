@@ -4,7 +4,7 @@
     <header class="module-head">
       <span class="num">02</span>
       <h1 id="m2-title">Construis-le, mesure-le</h1>
-      <p class="promise">Ton skill passe de la v0 à la v5 en cinq étapes : un dossier qui grandit, un score qui monte. À la fin du module, il a une procédure, les règles de ton équipe, des scripts, des exemples et des tests, et il est commité pour toute l'équipe, quel que soit l'outil de chacun.</p>
+      <p class="promise">Ton skill passe de la v0 à la v5 en cinq étapes, avec un dossier qui grossit et un score qui monte au passage. À la fin du module, il a une procédure, les règles de ton équipe, des scripts, des exemples et des tests, et il est commité pour toute l'équipe, quel que soit l'outil de chacun.</p>
       <div class="chips"><span class="chip">⏱ <b>{{DUREE:m2}}</b> ateliers compris</span><span class="chip">7 leçons · 5 ateliers · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
@@ -28,29 +28,29 @@
           <div class="hunk"><span class="at">@@ 02 · 2.1 @@</span><span>build · run · score</span><span class="spacer"></span><span class="lvl base">base</span><span>9 min</span></div>
           <div class="lesson-body">
             <h2>Construire, lancer, mesurer : la boucle</h2>
-            <p class="kicker">Personne n'écrit un bon skill du premier coup. On écrit une version, on la lance sur une vraie pull request, on la note, on lit ce qu'elle a raté. Puis on recommence. Exactement comme du code.</p>
+            <p class="kicker">Personne n'écrit un bon skill du premier coup. On écrit une version, on la lance sur une vraie pull request, on la note, on lit ce qu'elle a raté, et on recommence, comme on le fait avec du code.</p>
             <ol>
               <li><b>Modifier</b> le dossier <code>.claude/skills/revue-angular/</code> (ou <code>.agents/skills/</code>).</li>
               <li><b>Lancer</b> la review sur la PR du lab : <code>/revue-angular Relis cette branche avant que je la merge sur depart.</code></li>
               <li><b>Noter</b> le rapport contre le corrigé : <code>node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md</code></li>
               <li><b>Lire les écarts</b> : ce qui manque, ce qui est signalé à tort, ce qui sort du corrigé mais reste peut-être juste.</li>
             </ol>
-            <p>On a fait l'exercice pour de vrai, le {{RESULTS_DATE}}, avec le skill de référence de chaque étape. Même PR, même phrase, deux modèles : Opus 5.5, le plus fort, et Haiku 5.5, le plus rapide et le moins cher de la famille.</p>
+            <p>On a fait l'exercice pour de vrai le {{RESULTS_DATE}}, avec le skill de référence de chaque étape, toujours la même PR et la même phrase, sur deux modèles : Opus 5.5, le plus fort de la famille, et Haiku 5.5, le plus rapide et le moins cher.</p>
             {{PROGRESSION}}
-            <div class="rc"><span class="av" aria-hidden="true">≤</span><div><p class="who"><b>Un plafond, pas un objectif</b> · à lire avant les chiffres</p><p>Les règles et les pièges du skill de référence ont été écrits <b>après lecture du corrigé</b> de la PR du lab, puis mesurés sur cette seule PR, avec un run par étape et par modèle. Ces scores disent ce que donne un skill qui connaît déjà les réponses : ils sont une borne haute. Le tien ne les atteindra sans doute pas, et ce n'est pas un échec. Vise un gain net à chaque étape par rapport à <i>ton</i> atelier 0, pas 100 %. Et ne recopie pas dans tes règles les problèmes que le score te dit avoir manqués : tu mesurerais ta mémoire du corrigé, pas ton skill.</p></div></div>
-            <p>Trois leçons sortent de ce tableau, et elles guident tout le module.</p>
+            <div class="rc"><span class="av" aria-hidden="true">≤</span><div><p class="who"><b>Un plafond à ne pas viser</b> · à lire avant les chiffres</p><p>Les règles et les pièges du skill de référence ont été écrits <b>après lecture du corrigé</b> de la PR du lab, puis mesurés sur cette seule PR, avec un run par étape et par modèle. Ces scores montrent donc ce que donne un skill qui connaît déjà les réponses, autrement dit une borne haute. Le tien ne les atteindra sans doute pas, et ce n'est pas un échec. Vise un gain net à chaque étape par rapport à <i>ton</i> atelier 0, pas 100 %. Et ne recopie pas dans tes règles les problèmes que le score te dit avoir manqués, sinon tu mesures ta mémoire du corrigé au lieu de ton skill.</p></div></div>
+            <p>On tire trois leçons de ce tableau, et tout le module s'appuie dessus.</p>
             <ul>
-              <li><b>Un modèle de pointe est déjà un bon relecteur.</b> Avec un skill de dix lignes, Opus trouve {{R:opus:0:rappel}} % des problèmes. Le skill ne lui apprend pas l'Angular ; il lui apprend <i>ton</i> Angular, et il le rend régulier.</li>
-              <li><b>Le skill fait le plus de différence sur un petit modèle.</b> Haiku passe de {{R:haiku:0:rappel}} % à {{R:haiku:4:rappel}} %. Des règles écrites valent mieux qu'un modèle plus gros qui devine.</li>
-              <li><b>Chaque étape a un prix.</b> Plus de fichiers lus, plus de tours, plus de tokens. Mesure-le aussi : une étape qui n'améliore rien se retire.</li>
+              <li><b>Un modèle de pointe est déjà un bon relecteur.</b> Avec un skill de dix lignes, Opus trouve {{R:opus:0:rappel}} % des problèmes. Angular, il le connaît déjà ; le skill lui apprend <i>ton</i> Angular et le rend plus régulier.</li>
+              <li><b>Le skill fait le plus de différence sur un petit modèle.</b> Haiku passe de {{R:haiku:0:rappel}} % à {{R:haiku:4:rappel}} %. Avec des règles écrites, il n'a plus à deviner, et ça rapporte plus qu'un modèle plus gros.</li>
+              <li><b>Chaque étape a un prix.</b> Elle fait lire plus de fichiers, prend plus de tours et consomme plus de tokens. Mesure-le aussi, et retire une étape qui n'améliore rien.</li>
             </ul>
-            <div class="rc note"><span class="av" aria-hidden="true">°C</span><div><p class="who"><b>Le score est un thermomètre, pas un juge</b></p><p>Il ne connaît que des emplacements : un problème est trouvé si ta review cite <code>fichier:ligne</code> à deux lignes près. Un finding « hors corrigé » peut être un vrai problème que le corrigé ignore ; un leurre peut être cité pour une autre raison. Le chiffre dit où regarder ; c'est toi qui tranches en lisant.</p></div></div>
+            <div class="rc note"><span class="av" aria-hidden="true">°C</span><div><p class="who"><b>Le score est un thermomètre</b></p><p>Il ne connaît que des emplacements : un problème compte comme trouvé si ta review cite <code>fichier:ligne</code> à deux lignes près. Un finding « hors corrigé » peut être un vrai problème que le corrigé ignore, et un leurre peut être cité pour une autre raison. Le chiffre te dit où regarder, puis c'est en lisant que tu tranches.</p></div></div>
             <div class="video-card">
               <video controls preload="metadata" poster="media/v2-construire.jpg" playsinline>
                 <source src="media/v2-construire.mp4" type="video/mp4">
               </video>
-              <div class="video-meta"><b>Vidéo 02 · Construis-le, mesure-le</b><span>sous-titrée, sans son</span></div>
-              <div class="chapters"><button type="button" data-t="0">La boucle</button><button type="button" data-t="12">Procédure</button><button type="button" data-t="24">Règles</button><button type="button" data-t="36">Scripts</button><button type="button" data-t="48">Dire non</button><button type="button" data-t="60">Partager</button></div>
+              <div class="video-meta"><b>Vidéo 02 · Construis-le, mesure-le</b><span>présentée par Skillou, voix off et musique</span></div>
+              <div class="chapters"><button type="button" data-t="{{T:v2-construire:0}}">La boucle</button><button type="button" data-t="{{T:v2-construire:12}}">Procédure</button><button type="button" data-t="{{T:v2-construire:24}}">Règles</button><button type="button" data-t="{{T:v2-construire:36}}">Scripts</button><button type="button" data-t="{{T:v2-construire:48}}">Dire non</button><button type="button" data-t="{{T:v2-construire:60}}">Partager</button></div>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -60,9 +60,9 @@
         <article class="lesson" id="m2-l2">
           <div class="hunk"><span class="at">@@ 02 · 2.2 @@</span><span>étape 1 · procédure</span><span class="spacer"></span><span class="lvl core">core</span><span>10 min</span></div>
           <div class="lesson-body">
-            <h2>Étape 1 · Une procédure, pas une intention</h2>
-            <p class="kicker">« Relis ma branche » est une intention. Une procédure dit dans quel ordre travailler, sur quoi, et quand une étape est finie. C'est la différence entre un relecteur qui fait ce qu'il veut et un relecteur sur qui on peut compter.</p>
-            <p>La version 1 découpe la review en quatre étapes, et chacune se termine par un <b>critère de fin</b> que l'agent peut vérifier seul. C'est l'idée la plus rentable de Matt Pocock pour écrire des documents d'agent : un critère flou (« bien comprendre le code ») invite à bâcler pour passer à la suite ; un critère vérifiable (« chaque fichier de la liste a été lu en entier ») force le travail.</p>
+            <h2>Étape 1 · De l'intention à la procédure</h2>
+            <p class="kicker">« Relis ma branche » est une intention. Une procédure dit dans quel ordre travailler, sur quoi, et quand une étape est finie. Sans elle, le relecteur fait ce qu'il veut ; avec, on peut compter sur lui.</p>
+            <p>La version 1 découpe la review en quatre étapes, et chacune se termine par un <b>critère de fin</b> que l'agent peut vérifier seul. De toutes les idées de Matt Pocock pour écrire des documents d'agent, c'est celle qui rapporte le plus. Un critère flou (« bien comprendre le code ») invite à bâcler pour passer à la suite ; un critère vérifiable (« chaque fichier de la liste a été lu en entier ») force le travail.</p>
 <pre class="code" data-lang="md">## 1. Délimiter le périmètre
 git diff main...HEAD -- . ':!.claude' ':!.agents' ':!.review'
 Fini quand : tu as la liste des fichiers modifiés et, pour chacun, les lignes ajoutées ou modifiées.
@@ -80,9 +80,9 @@ Fini quand : .review/REVIEW.md existe, chaque finding cite fichier:ligne, les co
             <ul>
               <li><b>Le périmètre est le diff.</b> L'agent relit les lignes que la branche ajoute ou modifie ; le reste du projet sert de contexte. Les dossiers d'outillage (<code>.claude</code>, <code>.agents</code>, <code>.review</code>) sortent du diff : ton skill ne se relit pas lui-même.</li>
               <li><b>Le rapport a un gabarit.</b> <code>assets/rapport.md</code> fixe la forme : verdict, compteurs, un bloc par finding. Un gabarit dans <code>assets/</code> n'est lu qu'au moment d'écrire : c'est le troisième étage du chargement progressif.</li>
-              <li><b>Le verdict suit une règle, pas une humeur.</b> À corriger dès un BLOCKER ou trois MAJOR. Une règle écrite se discute en équipe ; une impression ne se discute pas.</li>
+              <li><b>Le verdict suit une règle écrite.</b> À corriger dès un BLOCKER ou trois MAJOR. Une règle écrite, l'équipe peut en débattre, alors qu'une impression ne se discute pas.</li>
             </ul>
-            <div class="rc"><span class="av" aria-hidden="true">H</span><div><p class="who"><b>Ce que la v0 a fait avec Haiku</b> · run du {{RESULTS_DATE}}</p><p>Avec le skill de dix lignes, Haiku a lu le README, compris que la PR venait d'un lab, puis a répondu dans le chat en demandant si la fusion était voulue. Il n'a jamais écrit <code>.review/REVIEW.md</code>, et ne cite que {{R:haiku:0:cites}} emplacements ({{R:haiku:0:rappel}} % de rappel). Avec la procédure et ses critères de fin, il écrit le rapport et monte à {{R:haiku:1:rappel}} %. Un petit modèle ne devine pas ce que tu attends : il faut le lui écrire.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">H</span><div><p class="who"><b>Ce que la v0 a fait avec Haiku</b> · run du {{RESULTS_DATE}}</p><p>Avec le skill de dix lignes, Haiku a lu le README, compris que la PR venait d'un lab, puis a répondu dans le chat en demandant si la fusion était voulue. Il n'a jamais écrit <code>.review/REVIEW.md</code>, et ne cite que {{R:haiku:0:cites}} emplacements ({{R:haiku:0:rappel}} % de rappel). Avec la procédure et ses critères de fin, il écrit le rapport et monte à {{R:haiku:1:rappel}} %. Un petit modèle ne devine pas ce que tu attends, alors écris-le-lui.</p></div></div>
             <div class="atelier">
               <span class="tool-title">Atelier 1 · ta procédure</span>
               <ol>
@@ -103,7 +103,7 @@ Fini quand : .review/REVIEW.md existe, chaque finding cite fichier:ligne, les co
           <div class="hunk"><span class="at">@@ 02 · 2.3 @@</span><span>étape 2 · references/</span><span class="spacer"></span><span class="lvl core">core</span><span>14 min</span></div>
           <div class="lesson-body">
             <h2>Étape 2 · Les règles de ton équipe, chargées à la demande</h2>
-            <p class="kicker">Le modèle connaît Angular. Il ne connaît pas tes décisions : ce que ton équipe tolère, ce qu'elle refuse, et pourquoi. C'est là que vit la valeur d'un skill de review.</p>
+            <p class="kicker">Le modèle connaît Angular, mais pas les décisions de ton équipe : ce qu'elle tolère, ce qu'elle refuse, et pourquoi. Pour un skill de review, c'est ce qu'il y a de plus utile à lui apprendre.</p>
             <p>Les règles vont dans <code>references/</code>, <b>un fichier par domaine</b> : <code>angular-22.md</code>, <code>reactivite.md</code>, <code>securite.md</code>, <code>accessibilite.md</code>, <code>tests.md</code>. Chaque règle a le même format court :</p>
 <pre class="code" data-lang="md">### SIG-04 · API à contexte d'injection appelée hors contexte (NG0203) — BLOCKER
 **Pourquoi** : inject(), takeUntilDestroyed() sans argument, toSignal() et effect() exigent un
@@ -111,7 +111,7 @@ contexte d'injection. Dans ngOnInit, une méthode ou un callback, ils lèvent NG
 **À repérer** : ces appels dans un hook ou une méthode. takeUntilDestroyed(this.destroyRef)
 avec un DestroyRef injecté fonctionne partout.
 **Correction** : déplacer l'appel dans un initialiseur de champ, ou passer DestroyRef explicitement.</pre>
-            <p>Le <code>SKILL.md</code> ne copie pas les règles : il dit <b>quand</b> charger chaque fichier. Un diff qui ne touche aucun template ne charge pas l'accessibilité. C'est le chargement progressif appliqué à ta review :</p>
+            <p>Le <code>SKILL.md</code> ne recopie pas les règles, il dit seulement <b>quand</b> charger chaque fichier. Un diff qui ne touche aucun template ne charge pas l'accessibilité. Voilà le chargement progressif appliqué à ta review :</p>
 <pre class="code" data-lang="md">| Le périmètre contient                                   | Charge                        |
 |---------------------------------------------------------|-------------------------------|
 | des composants, services, routes ou formulaires         | references/angular-22.md      |
@@ -145,7 +145,7 @@ avec un DestroyRef injecté fonctionne partout.
                 </table>
               </div>
             </details>
-            <div class="rc"><span class="av" aria-hidden="true">%</span><div><p class="who"><b>Le saut du module</b> · run du {{RESULTS_DATE}}</p><p>Avec les références, Opus passe de {{R:opus:1:rappel}} % à {{R:opus:2:rappel}} % de rappel, et Haiku de {{R:haiku:1:rappel}} % à {{R:haiku:2:rappel}} %. Le petit modèle n'a pas appris Angular en une étape : il a reçu la liste de ce que l'équipe vérifie.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">%</span><div><p class="who"><b>Le saut du module</b> · run du {{RESULTS_DATE}}</p><p>Avec les références, Opus passe de {{R:opus:1:rappel}} % à {{R:opus:2:rappel}} % de rappel, et Haiku de {{R:haiku:1:rappel}} % à {{R:haiku:2:rappel}} %. En une étape, le petit modèle n'a rien appris de plus sur Angular ; il a reçu la liste de ce que l'équipe vérifie.</p></div></div>
             <div class="atelier">
               <span class="tool-title">Atelier 2 · tes règles</span>
               <ol>
@@ -164,11 +164,11 @@ avec un DestroyRef injecté fonctionne partout.
         <article class="lesson" id="m2-l4">
           <div class="hunk"><span class="at">@@ 02 · 2.4 @@</span><span>étape 3 · scripts/</span><span class="spacer"></span><span class="lvl core">core</span><span>12 min</span></div>
           <div class="lesson-body">
-            <h2>Étape 3 · Le script trouve, le modèle juge</h2>
-            <p class="kicker">Tout ce qui se décrit par un motif, un script le fait mieux que toi : plus vite, sans fatigue, et deux fois de suite pareil. Garde le modèle pour ce qui demande du jugement.</p>
+            <h2>Étape 3 · Laisser les scripts chercher et le modèle juger</h2>
+            <p class="kicker">Ce qui se décrit par un motif, un script le fait mieux que toi : plus vite, sans se fatiguer, et avec le même résultat deux fois de suite. Le modèle, garde-le pour ce qui demande du jugement.</p>
             <p>Deux scripts Node, sans dépendance, dans <code>scripts/</code> :</p>
             <ul>
-              <li><code>perimetre.mjs</code> lit <code>git diff --unified=0</code> et écrit <code>.review/perimetre.json</code> : chaque fichier modifié et ses lignes ajoutées ou modifiées. Plus d'erreur de lecture du diff.</li>
+              <li><code>perimetre.mjs</code> lit <code>git diff --unified=0</code> et écrit <code>.review/perimetre.json</code> : chaque fichier modifié et ses lignes ajoutées ou modifiées, ce qui supprime les erreurs de lecture du diff.</li>
               <li><code>verifs.mjs</code> passe une table de motifs sur ces lignes et écrit des <b>pistes</b> : <code>bypassSecurityTrust</code>, URL en dur, <code>*ngIf</code>, <code>@Input</code>, <code>any</code>, <code>console.log</code>, image sans <code>alt</code>, clic sur un <code>div</code>, test focalisé, nouveau fichier sans test…</li>
             </ul>
 <pre class="code" data-lang="js">// Extrait de la table. Une règle : les fichiers visés, un motif, un message. L'identifiant renvoie à references/.
@@ -189,8 +189,8 @@ src/app/speakers/speaker-spotlight.ts:34 [SEC-01] BLOCKER — Sanitizer contourn
 src/app/talks/talk-card.ts:28 [SIG-01] BLOCKER — Signal testé sans être appelé…
 …
 27 piste(s) → .review/verifs.json</span></pre>
-            <p>Une piste n'est pas un finding. Sur la PR du lab, le motif <code>.subscribe(</code> remonte cinq pistes, toutes étiquetées RX-01 par le script. En lisant le code, la review les range autrement. Deux sont des abonnements imbriqués à réécrire (RX-02 dans les références de l'étape 2). Une cache le vrai problème : l'appel hors contexte d'injection (SIG-04). Une est déjà protégée par <code>takeUntilDestroyed(this.destroyRef)</code>. La dernière, sur <code>valueChanges</code>, se discute. Le script ne peut pas faire la différence ; le modèle, si. D'où la consigne du skill : <i>confirme chaque piste en lisant le code, ou écarte-la.</i></p>
-            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Ce que les scripts achètent</b> · run du {{RESULTS_DATE}}</p><p>Le rappel ne bouge presque plus (Opus {{R:opus:3:rappel}} %, Haiku {{R:haiku:3:rappel}} %), la précision monte (Opus {{R:opus:2:precision}} → {{R:opus:3:precision}} %). Le vrai gain est ailleurs : les mêmes pistes à chaque run, et une porte qui tourne <b>sans IA</b> en CI. Tu la brancheras dans le <a href="#cloud">bonus cloud</a>.</p></div></div>
+            <p>Une piste n'est pas encore un finding. Sur la PR du lab, le motif <code>.subscribe(</code> remonte cinq pistes, que le script étiquette toutes RX-01. En lisant le code, la review les range autrement. Deux sont des abonnements imbriqués à réécrire (RX-02 dans les références de l'étape 2), et une autre cache le vrai problème, l'appel hors contexte d'injection (SIG-04). La quatrième est déjà protégée par <code>takeUntilDestroyed(this.destroyRef)</code>, et la dernière, sur <code>valueChanges</code>, se discute. Le script ne sait pas faire cette différence, le modèle si, d'où la consigne du skill : <i>confirme chaque piste en lisant le code, ou écarte-la.</i></p>
+            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Ce que rapportent les scripts</b> · run du {{RESULTS_DATE}}</p><p>Le rappel ne bouge presque plus (Opus {{R:opus:3:rappel}} %, Haiku {{R:haiku:3:rappel}} %) et la précision monte (Opus {{R:opus:2:precision}} → {{R:opus:3:precision}} %). Surtout, tu obtiens les mêmes pistes à chaque run, et une porte qui tourne <b>sans IA</b> en CI, que tu brancheras dans le <a href="#cloud">bonus cloud</a>.</p></div></div>
             <h3>Pas à pas : copier les scripts, ajouter une règle</h3>
             <p>N'utilise pas le rattrapage pour ça : il remplace tout ton skill. Copie seulement le dossier <code>scripts/</code> de l'étape 3, depuis le dépôt du kit :</p>
 <pre class="term"><span class="cm"># Claude Code, Continue</span>
@@ -231,16 +231,16 @@ src/app/app.routes.ts:22 [NG-11] MAJOR — Page chargée d'emblée : utiliser lo
           <div class="hunk"><span class="at">@@ 02 · 2.5 @@</span><span>étape 4 · exemples + vérification</span><span class="spacer"></span><span class="lvl core">core</span><span>10 min</span></div>
           <div class="lesson-body">
             <h2>Étape 4 · Apprends-lui à dire non</h2>
-            <p class="kicker">Un relecteur qui signale tout ne sert à rien : l'équipe arrête de lire. La dernière qualité d'une review, c'est de savoir écarter ce qui ressemble à un problème et n'en est pas un.</p>
-            <p>Deux ajouts. D'abord <code>assets/exemples.md</code> : deux findings modèles, <b>inventés pour l'exemple, hors du lab</b>, pour montrer la forme sans souffler les réponses, et le tableau des <b>pièges</b> que l'équipe a déjà vus. Ensuite une étape de vérification, où l'agent essaie de <b>réfuter</b> chacun de ses findings :</p>
+            <p class="kicker">Un relecteur qui signale tout ne sert à rien, parce que l'équipe arrête de le lire. Reste à apprendre à ta review la dernière qualité : écarter ce qui ressemble à un problème sans en être un.</p>
+            <p>Tu ajoutes deux choses. D'abord <code>assets/exemples.md</code> : deux findings modèles, <b>inventés pour l'exemple, hors du lab</b>, pour montrer la forme sans souffler les réponses, et le tableau des <b>pièges</b> que l'équipe a déjà vus. Ensuite une étape de vérification, où l'agent essaie de <b>réfuter</b> chacun de ses findings :</p>
 <pre class="code" data-lang="md">## 6. Vérifier : réfuter chaque finding
 - Périmètre : la ligne est-elle ajoutée ou modifiée par la branche ? Sinon, elle sort du rapport.
 - Preuve : le code fait-il vraiment ce que tu affirmes ? Suis l'appel jusqu'au bout.
 - Déjà couvert : le framework ou le projet gère-t-il le cas ? Compare avec les pièges de assets/exemples.md.
 - Doublon : un finding par problème et par fichier ; les autres lignes vont dans sa note.
 Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</pre>
-            <p>Les pièges ne sortent pas d'un livre. Ce sont les faux positifs vus dans nos propres runs : la lecture de <code>localStorage</code> à l'initialisation d'un signal (signalée par Opus et par Haiku aux étapes 0 et 1, alors que l'application n'a pas de rendu serveur), et les « fuites » sur des appels HTTP qui se terminent seuls, que le package de Princy a écartées en relisant cette PR. Comme les règles de l'étape 2, ils ont été écrits pour ce lab, corrigé en main (voir l'encadré de la leçon 2.1) : les tiens viendront de tes propres faux positifs. Quand ta review se trompe, tu n'ajoutes pas une règle de plus : tu ajoutes le cas aux exemples.</p>
-            <div class="rc"><span class="av" aria-hidden="true">=</span><div><p class="who"><b>Mesuré, et c'est une leçon</b> · runs du {{RESULTS_DATE}}</p><p>Sur cette PR, l'étape 4 n'a rien gagné de mesurable : {{R:opus:4:rappel}} % de rappel avec Opus, {{R:haiku:4:rappel}} % avec Haiku, et une précision qui recule (Opus {{R:opus:3:precision}} → {{R:opus:4:precision}} %, Haiku {{R:haiku:3:precision}} → {{R:haiku:4:precision}} %). Relancée une seconde fois, elle donne {{REP:opus:4:rappel}} % de rappel et {{REP:opus:4:precision}} % de précision avec Opus, {{REP:haiku:4:rappel}} % et {{REP:haiku:4:precision}} % avec Haiku. Entre deux runs du même skill, le rappel bouge d'un problème et la précision de quelques points : c'est du bruit de mesure, pas l'effet de l'étape. Les leurres avaient déjà disparu à l'étape 2, avec les règles. Et avec Opus, la vérification a coûté des tours ({{R:opus:4:tours}} contre {{R:opus:3:tours}}).</p><p>Ce qu'elle apporte se lit dans le rapport : chaque piste écartée y figure, avec sa raison, et un humain peut la contester. Garde cette étape si tes runs produisent des faux positifs. Sinon, mesure-la avant de la payer à chaque PR.</p></div></div>
+            <p>Les pièges viennent des faux positifs de nos propres runs : la lecture de <code>localStorage</code> à l'initialisation d'un signal (signalée par Opus et par Haiku aux étapes 0 et 1, alors que l'application n'a pas de rendu serveur), et les « fuites » sur des appels HTTP qui se terminent seuls, que le package de Princy a écartées en relisant cette PR. Comme les règles de l'étape 2, ils ont été écrits pour ce lab avec le corrigé en main (voir l'encadré de la leçon 2.1). Les tiens viendront de tes propres faux positifs. Quand ta review se trompe, ajoute le cas aux exemples plutôt qu'une règle de plus.</p>
+            <div class="rc"><span class="av" aria-hidden="true">=</span><div><p class="who"><b>Mesuré : aucun gain sur cette PR</b> · runs du {{RESULTS_DATE}}</p><p>Sur cette PR, l'étape 4 n'a rien gagné de mesurable : {{R:opus:4:rappel}} % de rappel avec Opus, {{R:haiku:4:rappel}} % avec Haiku, et une précision qui recule (Opus {{R:opus:3:precision}} → {{R:opus:4:precision}} %, Haiku {{R:haiku:3:precision}} → {{R:haiku:4:precision}} %). Relancée une seconde fois, elle donne {{REP:opus:4:rappel}} % de rappel et {{REP:opus:4:precision}} % de précision avec Opus, {{REP:haiku:4:rappel}} % et {{REP:haiku:4:precision}} % avec Haiku. Entre deux runs du même skill, le rappel bouge d'un problème et la précision de quelques points, donc ces écarts relèvent du bruit de mesure plutôt que de l'étape. Les leurres avaient déjà disparu à l'étape 2, avec les règles. Et avec Opus, la vérification a coûté des tours ({{R:opus:4:tours}} contre {{R:opus:3:tours}}).</p><p>Son apport se voit dans le rapport, où chaque piste écartée figure avec sa raison, ce qui permet à un humain de la contester. Garde cette étape si tes runs produisent des faux positifs ; sinon, mesure-la avant de la payer à chaque PR.</p></div></div>
             <div class="atelier">
               <span class="tool-title">Atelier 4 · tes exemples</span>
               <ol>
@@ -260,7 +260,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
           <div class="hunk"><span class="at">@@ 02 · 2.6 @@</span><span>étape 5 · evals</span><span class="spacer"></span><span class="lvl core">core</span><span>10 min</span></div>
           <div class="lesson-body">
             <h2>Étape 5 · Teste ton skill comme du code</h2>
-            <p class="kicker">Ton skill va vivre : quelqu'un ajoutera une règle, raccourcira la description, changera de modèle. Sans tests, tu découvriras la régression dans une PR qui passe sans remarque.</p>
+            <p class="kicker">Ton skill va bouger. Quelqu'un ajoutera une règle, raccourcira la description ou changera de modèle, et sans tests tu découvriras la régression le jour où une PR passera sans la moindre remarque.</p>
             <div class="table-wrap">
               <table>
                 <thead><tr><th>Test</th><th>Il attrape</th><th>Comment</th></tr></thead>
@@ -275,10 +275,10 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
 <span class="p">$ </span><span class="cmd">node ../skill-issue/skills/skill-smith/scripts/validate.mjs --strict .claude/skills/revue-angular</span>
 <span class="o">✔ revue-angular — N1 ≈ {{TAILLE:n1exact}} tokens · corps {{TAILLE:lignes}} lignes
 0 erreur(s), 0 avertissement(s).</span></pre>
-            <p>Les tests de déclenchement suivent la méthode d'agentskills.io : chaque demande est rejouée trois fois, et compte comme déclenchée si le skill est chargé au moins deux fois. Les quasi-positifs (« écris la description de ma PR », « corrige le test qui échoue ») sont les plus utiles : ce sont eux qui attrapent une description trop gourmande. Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill ; sous Windows natif, il faut WSL2.</p>
-            <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>Le skill de référence, mesuré dans deux harnesses</b> · {{DECL:date}}, un passage par demande</p><p>Claude Code ({{DECL:harnesses.claude.modele}}) : {{DECL:harnesses.claude.total}}/{{DECL:harnesses.claude.sur}}. Codex ({{DECL:harnesses.codex.modele}}) : {{DECL:harnesses.codex.total}}/{{DECL:harnesses.codex.sur}}. Demandes de review qui déclenchent : {{DECL:harnesses.claude.doit_declencher}}/10 et {{DECL:harnesses.codex.doit_declencher}}/10. Les ratés sont des quasi-positifs : {{DECL:harnesses.claude.erreurs}} chez Claude Code ; {{DECL:harnesses.codex.erreurs}} chez Codex. Le mot « review » pèse plus lourd que « Angular » dans la description : c'est exactement ce que la liste négative sert à attraper. À toi de durcir la tienne, puis de remesurer.</p><p class="small muted">Un passage par demande, pas trois : une tendance, pas une moyenne. Les journaux sont dans <code>course/resultats-declenchement.json</code> du dépôt du kit.</p></div></div>
+            <p>Les tests de déclenchement suivent la méthode d'agentskills.io : chaque demande est rejouée trois fois, et compte comme déclenchée si le skill est chargé au moins deux fois. Les quasi-positifs (« écris la description de ma PR », « corrige le test qui échoue ») sont les plus utiles, parce qu'ils attrapent une description trop gourmande. Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill ; sous Windows natif, il faut WSL2.</p>
+            <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>Le skill de référence, mesuré dans deux harnesses</b> · {{DECL:date}}, un passage par demande</p><p>Claude Code ({{DECL:harnesses.claude.modele}}) : {{DECL:harnesses.claude.total}}/{{DECL:harnesses.claude.sur}}. Codex ({{DECL:harnesses.codex.modele}}) : {{DECL:harnesses.codex.total}}/{{DECL:harnesses.codex.sur}}. Demandes de review qui déclenchent : {{DECL:harnesses.claude.doit_declencher}}/10 et {{DECL:harnesses.codex.doit_declencher}}/10. Les ratés sont des quasi-positifs : {{DECL:harnesses.claude.erreurs}} chez Claude Code ; {{DECL:harnesses.codex.erreurs}} chez Codex. Dans la description, le mot « review » pèse plus lourd que « Angular », et la liste négative sert justement à repérer ce genre de dérive. À toi de durcir la tienne, puis de remesurer.</p><p class="small muted">Un seul passage par demande au lieu de trois : lis ces chiffres comme une tendance plutôt qu'une moyenne. Les journaux sont dans <code>course/resultats-declenchement.json</code> du dépôt du kit.</p></div></div>
             <h3>Mesurer le déclenchement dans les autres harnesses</h3>
-            <p><code>run-triggers.mjs</code> lance chaque demande sans interface et regarde si le skill est chargé : sous Claude Code (<code>--harness claude</code>, par défaut), l'outil Skill est appelé ; sous Codex (<code>--harness codex</code>, skill dans <code>.agents/skills/</code>), une commande lit <code>skills/revue-angular/SKILL.md</code>. Elle consomme de vrais tokens : commence par <code>--limit 4</code>. Les autres harnesses n'ont pas de sortie JSON sans interface à lire : fais la même mesure à la main :</p>
+            <p><code>run-triggers.mjs</code> lance chaque demande sans interface et regarde si le skill est chargé : sous Claude Code (<code>--harness claude</code>, par défaut), l'outil Skill est appelé ; sous Codex (<code>--harness codex</code>, skill dans <code>.agents/skills/</code>), une commande lit <code>skills/revue-angular/SKILL.md</code>. Le script consomme de vrais tokens, alors commence par <code>--limit 4</code>. Les autres harnesses n'ont pas de sortie JSON sans interface à lire, donc tu fais la même mesure à la main :</p>
             <ol>
               <li>Ouvre une session neuve à la racine du dépôt, sans rien dans le contexte.</li>
               <li>Colle une demande de ton <code>declenchement.json</code>, telle quelle, et rien d'autre.</li>
@@ -309,9 +309,9 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
         <article class="lesson" id="m2-l7">
           <div class="hunk"><span class="at">@@ 02 · 2.7 @@</span><span>étape 5 · partage</span><span class="spacer"></span><span class="lvl core">core</span><span>12 min</span></div>
           <div class="lesson-body">
-            <h2>Étape 5 · Un dossier, toute l'équipe, tous les harnesses</h2>
+            <h2>Étape 5 · Un seul dossier pour toute l'équipe et tous les harnesses</h2>
             <p class="kicker">Un skill dans ton home ne sert qu'à toi. Commité dans le dépôt, il sert à toute l'équipe, évolue avec le code qu'il relit, et se change par pull request comme le reste.</p>
-            <p>Le contenu du skill ne change jamais d'un outil à l'autre. Ce qui change : le dossier où le harness le cherche, la façon de l'appeler à la main, et quelques champs facultatifs.</p>
+            <p>Le contenu du skill ne change jamais d'un outil à l'autre. Seuls changent le dossier où le harness le cherche, la façon de l'appeler à la main et quelques champs facultatifs.</p>
             <div class="tool" id="harness">
               <span class="tool-title">Matrice · état vérifié au {{BUILD_DATE}}</span>
               <div class="seg" role="tablist" aria-label="Harness"></div>
@@ -319,7 +319,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
             </div>
             <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Deux dossiers suffisent pour tous ces exemples</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode et Kilo Code lisent <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic depuis janvier 2026), pas plus que Continue : eux lisent <code>.claude/skills/</code>. Commite donc le même dossier aux deux endroits, et laisse la CI vérifier qu'ils restent identiques (<code>diff -r</code>). Sur macOS et Linux, un lien symbolique fait aussi l'affaire.</p></div></div>
             <h3>Ton outil n'est pas dans la matrice ?</h3>
-            <p>La matrice donne des exemples, pas une liste fermée : ton équipe utilise peut-être un autre harness, ou un outil maison. Trois vérifications suffisent.</p>
+            <p>La matrice donne des exemples, et la liste n'est pas fermée : ton équipe utilise peut-être un autre harness, ou un outil maison. Dans ce cas, trois vérifications suffisent.</p>
             <ol>
               <li><b>Sa documentation parle-t-elle d'Agent Skills ou de <code>SKILL.md</code> ?</b> Alors il lit un dossier de skills : <code>.agents/skills/</code> le plus souvent, parfois un dossier à lui. Copie le skill là, sans rien changer d'autre.</li>
               <li><b>Le charge-t-il vraiment ?</b> Une demande de review, et tu regardes s'il ouvre <code>SKILL.md</code> : c'est le protocole manuel de la <a href="#m2-l6">leçon 2.6</a>.</li>
@@ -342,7 +342,7 @@ metadata:
               <li><b>Les extensions dans des fichiers à part.</b> <code>agents/openai.yaml</code> donne à Codex un nom d'affichage ; les autres harnesses l'ignorent.</li>
               <li><b>Une ligne dans <code>AGENTS.md</code></b> pour que tout le monde sache que le skill existe : « Pour une revue de code, utilise le skill <code>revue-angular</code> ; ses règles sont dans <code>references/</code>. »</li>
             </ul>
-            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le même dossier (avant l'ajout des garde-fous de la <a href="#m3-l7">leçon 3.7</a>), copié tel quel dans <code>.agents/skills/</code>, lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre. Aucune ligne modifiée entre Claude Code et Codex.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le même dossier (avant l'ajout des garde-fous de la <a href="#m3-l7">leçon 3.7</a>), copié tel quel dans <code>.agents/skills/</code>, lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre. Le skill n'a pas changé d'une ligne entre Claude Code et Codex.</p></div></div>
             <details class="more"><summary>D'où vient le standard Agent Skills</summary>
               <!-- @include partials/m2-standard.html -->
             </details>

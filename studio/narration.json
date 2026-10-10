@@ -1,0 +1,230 @@
+{
+  "$comment": "Voix off des vidéos. 'at' = temps de la scène (s) où la phrase commence ; 'say' = ce que la voix prononce quand l'écrit diffère (les sous-titres gardent 'text'). Les lots ('batches') regroupent les vidéos par appel de synthèse. Texte relu avec la skill humanizer (github.com/blader/humanizer).",
+  "voice": {
+    "provider": "vidIQ (ElevenLabs)",
+    "name": "Liam - Energetic, Social Media Creator",
+    "id": "TX3LPaxmHKxFdv7VOQHJ"
+  },
+  "batches": [
+    [
+      "v0-trailer",
+      "v5-client"
+    ],
+    [
+      "v3-flux",
+      "v1-anatomie",
+      "v4-cloud",
+      "v3-chain"
+    ],
+    [
+      "v2-construire",
+      "v2-review"
+    ]
+  ],
+  "drop": {
+    "v0-trailer": 7.2
+  },
+  "videos": {
+    "v0-trailer": [
+      {
+        "at": 0.3,
+        "text": "Salut, moi c'est Skillou. Je relis ton code en sirotant mon bubble tea. Et oui, j'ai un accent."
+      },
+      {
+        "at": 3.4,
+        "text": "Ton client veut de l'IA dans sa façon de travailler, et c'est toi qu'on appelle."
+      },
+      {
+        "at": 10.7,
+        "text": "Ici, tu écris ton propre skill de review, en partant de dix lignes."
+      },
+      {
+        "at": 16.3,
+        "text": "On l'a mesuré sur une vraie PR : avec les règles de l'équipe, Haiku passe de 22 à 93 % des problèmes trouvés, presque autant qu'Opus.",
+        "say": "On l'a mesuré sur une vraie PR : avec les règles de l'équipe, Haiku passe de 22 à 93 pour cent des problèmes trouvés, presque autant qu'Opus."
+      },
+      {
+        "at": 22.4,
+        "text": "Tu le commites, et toute l'équipe l'a, même ceux qui bossent avec un autre outil."
+      },
+      {
+        "at": 26.8,
+        "text": "Puis tu l'installes chez le client, proxy et RSSI compris. En bonus, le cloud et le package de Princy."
+      },
+      {
+        "at": 30.6,
+        "text": "Ta première mission commence maintenant."
+      }
+    ],
+    "v3-flux": [
+      {
+        "at": 0.3,
+        "text": "Le module 3 enchaîne trois skills. D'abord revue-angular, qui écrit son rapport dans un fichier, chaque problème avec sa gravité et sa ligne. Sur la PR du lab, il en trouve trente-quatre, dont cinq bloquants.",
+        "say": "Le module trois enchaîne trois skills. D'abord revue angular, qui écrit son rapport dans un fichier, chaque problème avec sa gravité et sa ligne. Sur la PR du lab, il en trouve trente-quatre, dont cinq bloquants."
+      },
+      {
+        "at": 14.3,
+        "text": "Ensuite corrige-review les prend un par un : il fait la plus petite correction possible, relance les tests et commite. Sur notre run avec Claude Code, ça a donné dix-sept commits, et trente-deux tests au vert au lieu de vingt-trois. Si un test avait viré au rouge, il se serait arrêté pour expliquer.",
+        "say": "Ensuite corrige review les prend un par un : il fait la plus petite correction possible, relance les tests et commite. Sur notre run avec Claude Code, ça a donné dix-sept commits, et trente-deux tests au vert au lieu de vingt-trois. Si un test avait viré au rouge, il se serait arrêté pour expliquer."
+      },
+      {
+        "at": 30.3,
+        "text": "Enfin, raconte-branche écrit la description de la PR. Il part des commits et du rapport, pas de la conversation, et il dit ce qui reste ouvert : dix-huit points, dont neuf qui semblent réglés mais restent à confirmer.",
+        "say": "Enfin, raconte branche écrit la description de la PR. Il part des commits et du rapport, pas de la conversation, et il dit ce qui reste ouvert : dix-huit points, dont neuf qui semblent réglés mais restent à confirmer."
+      },
+      {
+        "at": 46.3,
+        "text": "Aucun de ces skills n'appelle l'autre. Ils se passent des fichiers, donc tu peux faire la review avec Claude Code et la correction avec Codex."
+      }
+    ],
+    "v1-anatomie": [
+      {
+        "at": 0.3,
+        "text": "Avant même ta première question, ton agent a déjà rempli sa fenêtre : prompt système, outils, un fichier d'instructions de neuf cents lignes, les schémas MCP. Dans cet exemple, plus de la moitié y passe."
+      },
+      {
+        "at": 14.1,
+        "text": "Un skill, c'est un dossier. SKILL.md décrit la procédure, les scripts calculent ce qui doit être exact, et les références gardent les règles de l'équipe. Les tests restent à côté, jamais chargés.",
+        "say": "Un skill, c'est un dossier. Le fichier SKILL point M D décrit la procédure, les scripts calculent ce qui doit être exact, et les références gardent les règles de l'équipe. Les tests restent à côté, jamais chargés."
+      },
+      {
+        "at": 30.2,
+        "text": "Et il se charge par étages. Le nom et la description sont toujours là, une soixantaine de tokens. Le corps arrive si la description colle, une référence si une étape la demande, et des scripts, seule la sortie entre. Avec quarante skills, ça fait treize mille tokens au lieu de cent quatre-vingt-quatre mille."
+      },
+      {
+        "at": 52.3,
+        "text": "Sur la démo, je tape « relis ma branche avant le merge ». Le modèle choisit le skill sur sa description, lance les deux scripts, et n'ouvre que la référence sur la réactivité, parce que des signals ont changé."
+      }
+    ],
+    "v4-cloud": [
+      {
+        "at": 0.3,
+        "text": "Ton skill est commité, donc rien n'oblige à le lancer depuis ton poste. Ta CI peut le faire sur chaque PR, et des relecteurs hébergés comme Copilot savent déjà lire ce dossier."
+      },
+      {
+        "at": 12.3,
+        "text": "La première porte n'a pas besoin d'IA : ce sont les scripts du skill, sans aucun secret. Sur le dépôt de démo, elle a fermé la PR sur trois BLOCKER, sur GitHub et sur GitLab."
+      },
+      {
+        "at": 26.3,
+        "text": "Pour la review par IA, il te faut une clé d'API : l'agent lance le skill et le workflow poste son rapport sur la PR. Celui que tu vois là est une maquette, faite à partir d'un vrai rapport produit en local."
+      },
+      {
+        "at": 40.2,
+        "text": "Les relecteurs hébergés ont chacun leurs fichiers. Copilot lit les skills du dépôt, Codex et Claude lisent leurs fichiers d'instructions, et GitLab Duo a son YAML à lui. Mets tes règles là où ils regardent."
+      }
+    ],
+    "v3-chain": [
+      {
+        "at": 0.3,
+        "text": "Dans le package, quatre étapes se passent le relais par fichiers : angular-review relit, review-fix corrige, pr-handoff rédige la PR, et la CI rejoue le scan. Aucune ne dépend du code d'une autre.",
+        "say": "Dans le package, quatre étapes se passent le relais par fichiers : angular review relit, review fix corrige, PR handoff rédige la PR, et la CI rejoue le scan. Aucune ne dépend du code d'une autre."
+      },
+      {
+        "at": 18.3,
+        "text": "review-fix prend un seul finding, fait le plus petit changement, puis lance le build et les tests avant de commiter. Celui-là a été trouvé par Codex et corrigé par Claude Code, sur la même branche.",
+        "say": "Review fix prend un seul finding, fait le plus petit changement, puis lance le build et les tests avant de commiter. Celui-là a été trouvé par Codex et corrigé par Claude Code, sur la même branche."
+      },
+      {
+        "at": 36.3,
+        "text": "pr-handoff écrit la description à partir de la branche. Ici, il prévient de ne pas merger : il reste un BLOCKER, une URL d'API en dur. Lui, tu le lances à la main.",
+        "say": "PR handoff écrit la description à partir de la branche. Ici, il prévient de ne pas merger : il reste un BLOCKER, une URL d'API en dur. Lui, tu le lances à la main."
+      },
+      {
+        "at": 52.3,
+        "text": "En CI, le scan passe au vert sur la branche corrigée. Pourtant la nouvelle review trouve toujours cette URL en dur, alors garde un humain dans la boucle."
+      },
+      {
+        "at": 65.9,
+        "text": "Pour l'installer chez toi, une commande suffit."
+      }
+    ],
+    "v2-construire": [
+      {
+        "at": 0.3,
+        "text": "Ton premier skill ne sera pas bon. Le nôtre non plus, d'ailleurs. Du coup on tourne en boucle : une modif, un run sur la PR du lab, puis on regarde ce qui a été raté. On l'a fait pour de vrai, avec Opus et Haiku."
+      },
+      {
+        "at": 12.3,
+        "text": "Première étape, une vraie procédure. Au début, Haiku répondait dans le chat et n'écrivait jamais son rapport. Quand chaque étape a eu un critère de fin, il l'a écrit, et son score est passé de 22 à 59 %.",
+        "say": "Première étape, une vraie procédure. Au début, Haiku répondait dans le chat et n'écrivait jamais son rapport. Quand chaque étape a eu un critère de fin, il l'a écrit, et son score est passé de 22 à 59 pour cent."
+      },
+      {
+        "at": 24.3,
+        "text": "Ensuite, les règles. Angular, le modèle connaît. Les décisions de ton équipe, non. On les a écrites dans des références, et là, Opus monte à 100 %, Haiku à 96.",
+        "say": "Ensuite, les règles. Angular, le modèle connaît. Les décisions de ton équipe, non. On les a écrites dans des références, et là, Opus monte à 100 pour cent, Haiku à 96."
+      },
+      {
+        "at": 36.3,
+        "text": "Puis des scripts. Ils sortent les mêmes vingt-sept pistes à chaque run, en moins d'une seconde et sans modèle. Le modèle, lui, décide lesquelles sont de vrais problèmes."
+      },
+      {
+        "at": 48.3,
+        "text": "On lui a aussi appris à dire non : chaque finding est contesté, et il explique pourquoi il le garde ou l'écarte. Sur cette PR, ça n'a rien changé, les leurres avaient déjà disparu avec les règles."
+      },
+      {
+        "at": 60.3,
+        "text": "Dernière étape : tu le commites, et toute l'équipe l'a. On l'a lancé tel quel sous Codex, sans changer une ligne : 93 %.",
+        "say": "Dernière étape : tu le commites, et toute l'équipe l'a. On l'a lancé tel quel sous Codex, sans changer une ligne : 93 pour cent."
+      }
+    ],
+    "v2-review": [
+      {
+        "at": 0.3,
+        "text": "Voici le package de Princy, angular-review. C'est un dossier comme le tien, installé là où chaque outil va le chercher, et partout il suffit de dire « review cette branche ».",
+        "say": "Voici le package de Princy, angular review. C'est un dossier comme le tien, installé là où chaque outil va le chercher, et partout il suffit de dire « review cette branche »."
+      },
+      {
+        "at": 20.3,
+        "text": "Il commence par un script qui lit le projet : ici Angular 22.2, quinze fichiers modifiés, zoneless, Vitest. Comme OnPush est le défaut en 22, la règle qui l'exigeait se retourne.",
+        "say": "Il commence par un script qui lit le projet : ici Angular 22 point 2, quinze fichiers modifiés, zoneless, Vitest. Comme OnPush est le défaut en 22, la règle qui l'exigeait se retourne."
+      },
+      {
+        "at": 34.2,
+        "text": "Un deuxième script passe quarante et une règles sans modèle. Sur cette PR, il sort quarante-quatre candidats, et ce ne sont que des pistes."
+      },
+      {
+        "at": 50.2,
+        "text": "Ensuite, des relecteurs travaillent chacun sur un domaine, avec seulement ses règles. Si ton outil a des sous-agents, ils tournent en parallèle."
+      },
+      {
+        "at": 68.2,
+        "text": "Chaque candidat est ensuite attaqué. Si l'extrait cité n'existe pas à la ligne annoncée, un script le rejette, peu importe ce que le modèle en pense."
+      },
+      {
+        "at": 82.2,
+        "text": "Et le verdict final, c'est un script qui le calcule à partir des findings vérifiés, pas le modèle."
+      }
+    ],
+    "v5-client": [
+      {
+        "at": 0.3,
+        "text": "Ton client te dit : « on veut intégrer l'IA dans notre manière de faire ». Avant de proposer un outil, tu poses six questions : le problème, les outils déjà validés, le réseau, les données, qui valide, et le délai."
+      },
+      {
+        "at": 12.3,
+        "text": "La RSSI va te demander où part le code. Ton skill n'ajoute aucun flux : c'est un dossier dans le dépôt, lu par l'outil que le client a déjà validé. Les scripts tournent en local, et la porte de CI n'envoie rien à un modèle."
+      },
+      {
+        "at": 26.3,
+        "text": "Pour l'installer, le plus simple gagne : le skill vit dans le dépôt. Derrière un proxy, tu fais confiance au certificat du client, et tu ne coupes jamais la vérification TLS."
+      },
+      {
+        "at": 40.3,
+        "text": "Côté prévention : des données de test synthétiques, un diff traité comme des données, des skills tiers relus et épinglés, et aucun secret en CI sur les forks."
+      },
+      {
+        "at": 54.3,
+        "text": "Il te reste le dossier : une note pour la RSSI et le DPO, une charte, et un plan de pilote avec un score de départ. C'est lui qui convaincra le comité."
+      },
+      {
+        "at": 66.2,
+        "text": "Ta mission t'attend."
+      }
+    ]
+  },
+  "host": {
+    "name": "Skillou",
+    "what": "la mascotte : un chat blanc à lunettes roses et bubble tea, dessiné avec ChatGPT, animé en marionnette (studio/mascot.js)"
+  }
+}

@@ -206,6 +206,23 @@ const moduleDuree = (mods) => {
   return `~${Math.floor(half)} h${half % 1 ? ' 30' : ''}`;
 };
 
+// ── Videos: render.py fits each scene to the voice-over, so chapter times and durations come from studio/timing ──
+// {{T:v1-anatomie:14}} → output second of scene time 14 ; {{VDUR:v0-trailer}} → « 00:38 ».
+const timing = (video) => {
+  const f = join(here, '..', 'studio', 'timing', `${video}.json`);
+  if (!existsSync(f)) throw new Error(`studio/timing/${video}.json absent : lance python studio/render.py ${video}`);
+  return JSON.parse(read(f));
+};
+const outTime = (video, s) => {
+  const k = timing(video).knots;
+  for (let i = 1; i < k.length; i++) {
+    const [o0, s0] = k[i - 1], [o1, s1] = k[i];
+    if (s <= s1) return s1 > s0 ? o0 + ((o1 - o0) * (s - s0)) / (s1 - s0) : o0;
+  }
+  return k[k.length - 1][0];
+};
+const mmss = (sec) => `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(Math.round(sec % 60)).padStart(2, '0')}`;
+
 const dataBlock = (id, value) => `<script type="application/json" id="${id}">${JSON.stringify(value).replace(/</g, '\\u003c')}</script>`;
 // The matrix says when the harnesses were checked: that date is harnesses.json « checked », whichever placeholder the partial uses.
 html = html.replace(/(état vérifié au\s+)\{\{BUILD_DATE\}\}/g, '$1{{HARNESS_DATE}}');
@@ -226,6 +243,8 @@ html = html
   .replaceAll('{{PROGRESSION}}', () => progression)
   .replaceAll('{{CODEX_MODEL}}', results.modeles.codex.id)
   .replace(/\{\{DUREE:([\w+]+)\}\}/g, (_, mods) => moduleDuree(mods))
+  .replace(/\{\{T:([\w-]+):([\d.]+)\}\}/g, (_, video, s) => (Math.round(outTime(video, Number(s)) * 10) / 10).toString())
+  .replace(/\{\{VDUR:([\w-]+)\}\}/g, (_, video) => mmss(timing(video).duration))
   .replace(/\{\{CH:([\w.]+)\}\}/g, (_, path) => resultValue(chaine, 'resultats-chaine.json', path))
   .replace(/\{\{DECL:([\w.]+)\}\}/g, (_, path) => resultValue(declenchement, 'resultats-declenchement.json', path))
   .replace(/\{\{TAILLE:(\w+)\}\}/g, (_, k) => { if (!(k in sizes)) throw new Error(`{{TAILLE:${k}}} inconnu`); return sizes[k]; })

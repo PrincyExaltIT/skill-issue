@@ -1,8 +1,8 @@
 # Skill Issue
 
-> Ton agent sait coder. Il ne sait pas comment **ton équipe** relit.
+> Ton client veut de l'IA dans sa façon de travailler, et c'est toi qu'on appelle.
 
-Formation en trois modules et deux bonus : **construire son propre skill de code review** (cas Angular 22), le mesurer sur une vraie pull request, et le partager à toute l'équipe, quel que soit son outil. Bonus : le faire tourner dans le cloud, puis prendre le package prêt à l'emploi de Princy.
+Formation pour consultants : une mission (un jeu de rôle chez un grand compte fictif), quatre modules et deux bonus. Tu **construis ton propre skill de code review** (cas Angular 22), tu le mesures sur une vraie pull request, tu le partages à toute l'équipe quel que soit son outil, puis tu l'**installes chez le client** : proxy, CI sans internet, RSSI, DPO et pilote mesuré. Bonus : le faire tourner dans le cloud, puis prendre le package prêt à l'emploi de Princy.
 
 - **La formation** : en ligne sur https://princyexaltit.github.io/skill-issue-site/ (GitHub Pages, dépôt public [PrincyExaltIT/skill-issue-site](https://github.com/PrincyExaltIT/skill-issue-site)) ; en local, `site/dist/index.html` (un seul fichier) avec ses vidéos dans `site/dist/media/`. Pour mettre le site en ligne à jour : `node site/build.mjs`, copier `site/dist/index.html` et `site/dist/media/` dans `skill-issue-site`, commiter, pousser.
 - **Le terrain** : [PrincyExaltIT/skill-issue-playground](https://github.com/PrincyExaltIT/skill-issue-playground), une app Angular 22 et une pull request écrite trop vite (`lab/speaker-spotlight`, à relire depuis `depart`).
@@ -13,9 +13,11 @@ Formation en trois modules et deux bonus : **construire son propre skill de code
 
 | | Titre | Ce que tu fais |
 |---|---|---|
+| Mission | La mission | Jeu de rôle : la CTO, le RSSI et la tech lead d'un grand groupe fictif ; tu poses les bonnes questions et tu repars avec ta fiche mission |
 | Module 1 | Ouvre le capot | Bases agentiques, anatomie d'un skill, chargement progressif ; atelier 0 : ton skill en dix lignes, noté |
 | Module 2 | Construis-le, mesure-le | Procédure, règles de l'équipe, scripts, exemples, tests, partage : un atelier par étape |
 | Module 3 | Le flux d'équipe | Passage de relais, sous-agents, hook, sécurité des skills tiers, faire vivre le skill |
+| Module 4 | Chez le client | Ce qui sort de la machine, installer sans internet ou derrière un proxy, préventions, dossier RSSI/DPO/DSI, pilote mesuré ; ateliers 8 et 9 : ton vrai client |
 | Bonus +1 | Il relit pendant que tu dors | Le même skill en CI GitHub et GitLab, chez les relecteurs hébergés, dans les agents cloud |
 | Bonus +2 | Le package de Princy | Prêt à installer : environ 140 règles, sept relecteurs, une chaîne complète, comparé à ton skill |
 
@@ -84,7 +86,8 @@ npm run render:videos  # re-rend les vidéos (Python + Playwright + ffmpeg)
 ## Structure
 
 ```
-course/          le skill de référence étape par étape, le rattrapage, la CI du bonus cloud, les résultats mesurés
+course/          le skill de référence étape par étape, le rattrapage, la CI du bonus cloud, les résultats mesurés,
+                 et course/client/ : les modèles du module 4 (diagnostic, note RSSI, charte, plan de pilote)
 evals/           corrigé de la PR du lab, score.mjs, déclenchement, fixtures et snapshots du package
 skills/          le package : les 4 skills (le dossier EST le skill)
 kit/             installeur, harnesses.json, CI GitHub/GitLab du package, hook, gabarits

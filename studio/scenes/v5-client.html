@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>v5 — chez le client</title>
+<link rel="stylesheet" href="../stage.css">
+<style>
+  .quote { width: 1000px; border-left: 6px solid var(--pink); padding: 18px 26px; background: var(--surface); border-radius: 0 18px 18px 0; }
+  .quote p { margin: 0; font: 700 34px/1.25 var(--display); }
+  .quote small { display: block; margin-top: 10px; font: 600 17px/1 var(--mono); color: var(--ink-3); }
+  .qgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 1000px; }
+  .qgrid span { padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font: 600 19px/1.25 var(--body); }
+  .qgrid b { color: var(--accent); font-family: var(--mono); margin-right: 8px; }
+  .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 1000px; align-items: stretch; }
+  .node { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+  .node b { font: 800 23px/1.1 var(--display); }
+  .node span { font: 500 16px/1.4 var(--mono); color: var(--ink-2); }
+  .node.model { border-color: var(--brand-text); }
+  .gate { width: 1000px; display: flex; gap: 14px; align-items: center; padding: 14px 18px; border: 1px dashed var(--add); border-radius: 14px; font: 600 19px/1.3 var(--body); }
+  .gate b { color: var(--add); font-family: var(--mono); }
+  .tag { font: 700 15px/1 var(--mono); padding: 8px 12px; border-radius: 999px; background: rgba(76,217,160,.16); color: var(--add); }
+  .recipes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 1000px; }
+  .recipe { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+  .recipe b { font: 800 21px/1.15 var(--display); }
+  .recipe code { font: 500 15px/1.45 var(--mono); color: #E4E4FF; background: var(--term); border-radius: 8px; padding: 8px 10px; display: block; }
+  .nope { width: 1000px; font: 600 19px/1.3 var(--mono); color: var(--del); }
+  .nope s { text-decoration-thickness: 3px; }
+  .checks { display: grid; gap: 10px; width: 1000px; }
+  .check { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font: 500 20px/1.3 var(--body); }
+  .ok { color: var(--add); font-weight: 800; } .ko { color: var(--del); font-weight: 800; }
+  .docs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 1000px; }
+  .doc { background: var(--paper); color: var(--paper-ink); border-radius: 14px; padding: 16px; min-height: 150px; display: grid; gap: 8px; align-content: start; box-shadow: 0 24px 60px -30px #000; }
+  .doc b { font: 700 16px/1.2 var(--mono); }
+  .doc span { font: 500 15px/1.35 var(--body); color: var(--paper-dim); }
+  .score { width: 1000px; display: grid; grid-template-columns: 170px 1fr 120px; gap: 16px; align-items: center; }
+  .score .who { font: 800 22px/1 var(--display); }
+  .score .track { height: 40px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); position: relative; overflow: hidden; }
+  .score .track i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--brand); }
+  .score .num { font: 800 34px/1 var(--display); }
+</style></head>
+<body data-duration="70">
+<div class="brandmark">SKILL ISSUE · MODULE 4</div>
+
+<!-- A · 0–12 · la demande -->
+<div class="chapter" data-at="0.2" data-until="11.6">01 · la demande</div>
+<section class="scene" data-at="0" data-dur="0.01" data-until="11.7" style="gap:24px">
+  <div class="quote" data-at="0.3" data-fx="slide-l"><p>« On veut intégrer l'IA dans notre manière de faire. »</p><small>la CTO d'un grand groupe (fictif)</small></div>
+  <div class="qgrid">
+    <span data-at="2.4" data-fx="pop"><b>1</b>Quel problème ?</span>
+    <span data-at="2.8" data-fx="pop"><b>2</b>Quels outils validés ?</span>
+    <span data-at="3.2" data-fx="pop"><b>3</b>Quel réseau ?</span>
+    <span data-at="3.6" data-fx="pop"><b>4</b>Quelles données ?</span>
+    <span data-at="4.0" data-fx="pop"><b>5</b>Qui valide ?</span>
+    <span data-at="4.4" data-fx="pop"><b>6</b>Quel délai ?</span>
+  </div>
+</section>
+
+<!-- B · 12–26 · ce qui sort -->
+<div class="chapter" data-at="12.0" data-until="25.6">02 · ce qui sort de la machine</div>
+<section class="scene" data-at="12.0" data-until="25.7" style="gap:18px">
+  <div class="mid" data-at="12.2" data-fx="rise">Ton skill n'ajoute <span class="accent">aucun flux</span>.</div>
+  <div class="flow">
+    <div class="node" data-at="13.2" data-fx="rise"><b>Le dépôt</b><span>SKILL.md, règles, scripts : des fichiers relus en MR</span></div>
+    <div class="node" data-at="14.0" data-fx="rise"><b>Le poste</b><span>l'outil déjà validé lit le skill, les scripts tournent en local</span></div>
+    <div class="node model" data-at="14.8" data-fx="rise"><b>Le modèle</b><span>reçoit le contexte selon le contrat signé par la DSI</span></div>
+  </div>
+  <div class="gate" data-at="16.4" data-fx="wipe"><b>CI</b> la porte sans IA rejoue les scripts : rien ne part vers un modèle <span class="tag">0 secret</span></div>
+</section>
+
+<!-- C · 26–40 · installer -->
+<div class="chapter" data-at="26.0" data-until="39.6">03 · installer</div>
+<section class="scene" data-at="26.0" data-until="39.7" style="gap:18px">
+  <div class="recipes">
+    <div class="recipe" data-at="26.4" data-fx="rise"><b>Pas d'internet</b><code>.agents/skills/revue-angular/</code><span class="dim" style="font-size:16px">le skill vit dans le dépôt, il change par MR</span></div>
+    <div class="recipe" data-at="27.2" data-fx="rise"><b>Proxy et miroir</b><code>NODE_EXTRA_CA_CERTS=ca.pem<br>registry=https://artifactory/…</code><span class="dim" style="font-size:16px">on fait confiance au certificat du client</span></div>
+    <div class="recipe" data-at="28.0" data-fx="rise"><b>GitLab, GHES</b><code>rules: merge_request_event<br>tags: [runner-interne]</code><span class="dim" style="font-size:16px">la porte tourne sur un runner interne</span></div>
+  </div>
+  <div class="nope" data-at="30.4" data-fx="fade">✗ jamais <s>strict-ssl=false</s> ni <s>NODE_TLS_REJECT_UNAUTHORIZED=0</s></div>
+</section>
+
+<!-- D · 40–54 · prévenir -->
+<div class="chapter" data-at="40.0" data-until="53.6">04 · prévenir</div>
+<section class="scene" data-at="40.0" data-until="53.7" style="gap:12px">
+  <div class="checks">
+    <div class="check" data-at="40.4" data-fx="slide-l"><span class="ok">✓</span><span>Des données de test synthétiques, jamais de vrais clients</span></div>
+    <div class="check" data-at="41.4" data-fx="slide-l"><span class="ok">✓</span><span>Le diff est une donnée à relire, jamais une instruction</span></div>
+    <div class="check" data-at="42.4" data-fx="slide-l"><span class="ok">✓</span><span>Les skills tiers relus, épinglés, vérifiés par empreinte</span></div>
+    <div class="check" data-at="43.4" data-fx="slide-l"><span class="ok">✓</span><span>L'agent de review : la lecture et deux scripts, rien d'autre</span></div>
+    <div class="check" data-at="44.4" data-fx="slide-l"><span class="ko">✗</span><span>Des secrets en CI sur les merge requests de fork</span></div>
+  </div>
+</section>
+
+<!-- E · 54–66 · le dossier et le pilote -->
+<div class="chapter" data-at="54.0" data-until="65.6">05 · le dossier</div>
+<section class="scene" data-at="54.0" data-until="65.7" style="gap:20px">
+  <div class="docs">
+    <div class="doc" data-at="54.3" data-fx="pop"><b>diagnostic.md</b><span>les six réponses, et qui manque</span></div>
+    <div class="doc" data-at="54.8" data-fx="pop"><b>note-rssi.md</b><span>ce qui sort, les permissions, la réversibilité</span></div>
+    <div class="doc" data-at="55.3" data-fx="pop"><b>charte-ia.md</b><span>outils, données, relecture humaine</span></div>
+    <div class="doc" data-at="55.8" data-fx="pop"><b>plan-pilote.md</b><span>une équipe, des mesures, des critères</span></div>
+  </div>
+  <div class="score" data-at="57.4" data-fx="rise"><span class="who">Score de départ</span><span class="track"><i data-at="57.6" data-fx="grow" data-dur="1.2" style="width:22%"></i></span><span class="num"><span data-at="57.6" data-count="0:22" data-dur="1.2" data-suffix=" %">0</span></span></div>
+  <div class="score" data-at="58.6" data-fx="rise"><span class="who">Après le pilote</span><span class="track"><i data-at="58.8" data-fx="grow" data-dur="1.4" style="width:93%;background:var(--add)"></i></span><span class="num"><span data-at="58.8" data-count="0:93" data-dur="1.4" data-suffix=" %">0</span></span></div>
+  <div class="small dim" data-at="60.6" data-fx="fade" style="font:500 17px/1.4 var(--body)">Exemple : les scores de Haiku sur la PR du lab, de la v0 à la v4.</div>
+</section>
+
+<!-- F · 66–70 · fin -->
+<section class="scene center" data-at="66.0">
+  <div class="big" data-at="66.1" data-fx="track" data-dur="1.2">CHEZ LE CLIENT</div>
+  <div class="mid dim" data-at="66.8" data-fx="rise">module 4 · ta mission t'attend</div>
+</section>
+
+<script src="../engine.js"></script>
+</body></html>

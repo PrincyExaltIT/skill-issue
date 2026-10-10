@@ -7,6 +7,8 @@ This repo is a training course (learners build their own code-review skill) plus
 - `npm run test:update` — rewrite scan snapshots, only after a deliberate rule change (explain it in the commit).
 - `npm run build:site` — rebuild `site/dist/index.html` from `site/src/` and the kit's own files.
 - `python studio/render.py <video> --at 5,12` — preview video frames before a full render.
+- `python studio/render.py <video>` — full render: scenes fitted to the voice-over, Skillou (the mascot rig), music, effects, captions. The voice batches in `studio/audio/` cost vidIQ credits: reuse them, and regenerate a batch only when its text in `studio/narration.json` changes (then `python studio/voice.py split <n>` and check its printout).
+- `python studio/skillou_rig.py` — rebuild Skillou's rig from the ChatGPT pieces in `studio/assets/skillou/`.
 
 ## Rules of the house
 - A skill folder holds only what the agent uses. Human docs go to README/site.

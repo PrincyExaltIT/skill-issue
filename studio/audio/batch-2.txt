@@ -1,0 +1,33 @@
+Le module trois enchaîne trois skills. D'abord revue angular, qui écrit son rapport dans un fichier, chaque problème avec sa gravité et sa ligne. Sur la PR du lab, il en trouve trente-quatre, dont cinq bloquants.
+
+Ensuite corrige review les prend un par un : il fait la plus petite correction possible, relance les tests et commite. Sur notre run avec Claude Code, ça a donné dix-sept commits, et trente-deux tests au vert au lieu de vingt-trois. Si un test avait viré au rouge, il se serait arrêté pour expliquer.
+
+Enfin, raconte branche écrit la description de la PR. Il part des commits et du rapport, pas de la conversation, et il dit ce qui reste ouvert : dix-huit points, dont neuf qui semblent réglés mais restent à confirmer.
+
+Aucun de ces skills n'appelle l'autre. Ils se passent des fichiers, donc tu peux faire la review avec Claude Code et la correction avec Codex.
+
+Avant même ta première question, ton agent a déjà rempli sa fenêtre : prompt système, outils, un fichier d'instructions de neuf cents lignes, les schémas MCP. Dans cet exemple, plus de la moitié y passe.
+
+Un skill, c'est un dossier. Le fichier SKILL point M D décrit la procédure, les scripts calculent ce qui doit être exact, et les références gardent les règles de l'équipe. Les tests restent à côté, jamais chargés.
+
+Et il se charge par étages. Le nom et la description sont toujours là, une soixantaine de tokens. Le corps arrive si la description colle, une référence si une étape la demande, et des scripts, seule la sortie entre. Avec quarante skills, ça fait treize mille tokens au lieu de cent quatre-vingt-quatre mille.
+
+Sur la démo, je tape « relis ma branche avant le merge ». Le modèle choisit le skill sur sa description, lance les deux scripts, et n'ouvre que la référence sur la réactivité, parce que des signals ont changé.
+
+Ton skill est commité, donc rien n'oblige à le lancer depuis ton poste. Ta CI peut le faire sur chaque PR, et des relecteurs hébergés comme Copilot savent déjà lire ce dossier.
+
+La première porte n'a pas besoin d'IA : ce sont les scripts du skill, sans aucun secret. Sur le dépôt de démo, elle a fermé la PR sur trois BLOCKER, sur GitHub et sur GitLab.
+
+Pour la review par IA, il te faut une clé d'API : l'agent lance le skill et le workflow poste son rapport sur la PR. Celui que tu vois là est une maquette, faite à partir d'un vrai rapport produit en local.
+
+Les relecteurs hébergés ont chacun leurs fichiers. Copilot lit les skills du dépôt, Codex et Claude lisent leurs fichiers d'instructions, et GitLab Duo a son YAML à lui. Mets tes règles là où ils regardent.
+
+Dans le package, quatre étapes se passent le relais par fichiers : angular review relit, review fix corrige, PR handoff rédige la PR, et la CI rejoue le scan. Aucune ne dépend du code d'une autre.
+
+Review fix prend un seul finding, fait le plus petit changement, puis lance le build et les tests avant de commiter. Celui-là a été trouvé par Codex et corrigé par Claude Code, sur la même branche.
+
+PR handoff écrit la description à partir de la branche. Ici, il prévient de ne pas merger : il reste un BLOCKER, une URL d'API en dur. Lui, tu le lances à la main.
+
+En CI, le scan passe au vert sur la branche corrigée. Pourtant la nouvelle review trouve toujours cette URL en dur, alors garde un humain dans la boucle.
+
+Pour l'installer chez toi, une commande suffit.

@@ -1,0 +1,25 @@
+Salut, moi c'est Skillou. Je relis ton code en sirotant mon bubble tea. Et oui, j'ai un accent.
+
+Ton client veut de l'IA dans sa façon de travailler, et c'est toi qu'on appelle.
+
+Ici, tu écris ton propre skill de review, en partant de dix lignes.
+
+On l'a mesuré sur une vraie PR : avec les règles de l'équipe, Haiku passe de 22 à 93 pour cent des problèmes trouvés, presque autant qu'Opus.
+
+Tu le commites, et toute l'équipe l'a, même ceux qui bossent avec un autre outil.
+
+Puis tu l'installes chez le client, proxy et RSSI compris. En bonus, le cloud et le package de Princy.
+
+Ta première mission commence maintenant.
+
+Ton client te dit : « on veut intégrer l'IA dans notre manière de faire ». Avant de proposer un outil, tu poses six questions : le problème, les outils déjà validés, le réseau, les données, qui valide, et le délai.
+
+La RSSI va te demander où part le code. Ton skill n'ajoute aucun flux : c'est un dossier dans le dépôt, lu par l'outil que le client a déjà validé. Les scripts tournent en local, et la porte de CI n'envoie rien à un modèle.
+
+Pour l'installer, le plus simple gagne : le skill vit dans le dépôt. Derrière un proxy, tu fais confiance au certificat du client, et tu ne coupes jamais la vérification TLS.
+
+Côté prévention : des données de test synthétiques, un diff traité comme des données, des skills tiers relus et épinglés, et aucun secret en CI sur les forks.
+
+Il te reste le dossier : une note pour la RSSI et le DPO, une charte, et un plan de pilote avec un score de départ. C'est lui qui convaincra le comité.
+
+Ta mission t'attend.

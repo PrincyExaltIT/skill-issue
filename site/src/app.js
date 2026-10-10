@@ -27,6 +27,10 @@
     const viewId = viewFor(hash) ?? 'accueil';
     $$('.view').forEach((v) => { v.hidden = v.id !== viewId; });
     $$('.tab').forEach((t) => { if (t.getAttribute('href') === '#' + viewId) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
+    const cur = $(`.tab[href="#${viewId}"]`);
+    const crumb = $('.crumb');
+    if (crumb) crumb.innerHTML = cur && viewId !== 'accueil' ? `<b>${esc($('.num', cur).textContent)}</b> · ${esc($('.lbl', cur).textContent)}` : '';
+    closeMenu();
     const target = hash !== viewId ? document.getElementById(hash) : null;
     if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
     else if (!document.body.classList.contains('present')) window.scrollTo({ top: 0 });
@@ -34,6 +38,20 @@
     if (document.body.classList.contains('present')) stage(0);
   }
   window.addEventListener('hashchange', route);
+
+  // ── Navigation menu: one button opens every section, grouped; Escape, a click outside or a link closes it ──
+  const menuBtn = $('#navmenu-toggle');
+  const menu = $('#navmenu');
+  function closeMenu() { if (menu && !menu.hidden) { menu.hidden = true; menuBtn?.setAttribute('aria-expanded', 'false'); } }
+  menuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = menu.hidden;
+    menu.hidden = !open;
+    menuBtn.setAttribute('aria-expanded', String(open));
+    if (open) ($('.tab[aria-current]', menu) ?? $('.tab', menu))?.focus();
+  });
+  document.addEventListener('click', (e) => { if (menu && !menu.hidden && !menu.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu && !menu.hidden) { closeMenu(); menuBtn?.focus(); } });
 
   // ── Theme ──
   const root = document.documentElement;
@@ -337,6 +355,113 @@
   $$('.video-card').forEach((card) => {
     const v = $('video', card);
     $$('[data-t]', card).forEach((b) => b.addEventListener('click', () => { v.currentTime = Number(b.dataset.t); v.play().catch(() => {}); }));
+  });
+
+  // ── La mission: a role-play with branching scenes, read from the data-mission block. One <div class="game"
+  // data-game="…"> per game. Scene kinds: "say" (one choice), "ask" (pick N questions, each answer may add a card
+  // to the mission sheet), "plan" (tick the measures of the proposal), "end" (verdict and the sheet to download).
+  // Each choice moves the trust of the people in the room; Skillou comments as a coach. The run is saved per viewer. ──
+  const MISSION = data('data-mission');
+  $$('.game[data-game]').forEach((box) => {
+    const G = MISSION?.games?.[box.dataset.game];
+    if (!G) return;
+    const P = MISSION.people;
+    const key = 'game:' + box.dataset.game;
+    let st = store.get(key, null) ?? { at: G.start, log: [], trust: {}, cards: [], plan: [], asked: [] };
+    const save = () => store.set(key, st);
+    box.innerHTML = `<div class="game-main"><ol class="game-log" aria-live="polite"></ol><div class="game-act"></div></div>`
+      + `<aside class="game-side" aria-label="Ta fiche mission"><h3>Ta fiche mission</h3><div class="game-trust"></div><h4>Ce que tu sais</h4><ul class="game-cards"></ul>`
+      + `<button class="btn game-reset" type="button">Recommencer</button></aside>`;
+    const logEl = $('.game-log', box), act = $('.game-act', box), trustEl = $('.game-trust', box), cardsEl = $('.game-cards', box);
+    const who = (id) => P[id] ?? { name: id, role: '', initial: '?' };
+    const face = (id, mood) => id === 'skillou'
+      ? `<img class="face skillou" src="media/skillou-${mood || 'parle'}.png" alt="" width="44" height="44">`
+      : `<span class="face" style="--c:${who(id).color}" aria-hidden="true">${esc(who(id).initial)}</span>`;
+    const line = (id, html, mood, cls = '') => `<li class="msg ${id === 'me' ? 'me' : ''} ${cls}">${id === 'me' ? '' : face(id, mood)}<div class="bubble">`
+      + `${id === 'me' ? '' : `<span class="name">${esc(who(id).name)} <small>${esc(who(id).role)}</small></span>`}${html}</div></li>`;
+    const push = (entry) => { st.log.push(entry); save(); };
+    const bump = (delta = {}) => { for (const [k, v] of Object.entries(delta)) st.trust[k] = (st.trust[k] ?? 0) + v; };
+    const addCard = (id) => { if (id && !st.cards.includes(id)) st.cards.push(id); };
+
+    function renderSide() {
+      trustEl.innerHTML = (G.room ?? []).map((id) => {
+        const v = Math.max(-4, Math.min(4, st.trust[id] ?? 0));
+        return `<div class="trust"><span>${esc(who(id).name)} <small>${esc(who(id).role)}</small></span><span class="meter" role="meter" aria-valuemin="-4" aria-valuemax="4" aria-valuenow="${v}" aria-label="Confiance de ${esc(who(id).name)}"><i style="--v:${(v + 4) / 8}"></i></span></div>`;
+      }).join('');
+      cardsEl.innerHTML = st.cards.length ? st.cards.map((c) => `<li><b>${esc(MISSION.cards[c].title)}</b> ${esc(MISSION.cards[c].text)}</li>`).join('') : '<li class="muted">Rien encore : pose des questions.</li>';
+    }
+    function renderLog() { logEl.innerHTML = st.log.map((e) => line(e.who, e.html, e.mood, e.cls)).join(''); }
+
+    function go(id) { st.at = id; save(); renderSide(); renderLog(); renderAct(); act.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+
+    function sheet() {
+      const goodPlan = st.plan.filter((p) => G.scenes[st.planScene]?.options?.[p]?.good);
+      const lines = [`# Fiche mission · ${G.client}`, '', `> ${G.brief}`, '', '## Ce que je sais du client', ...st.cards.map((c) => `- **${MISSION.cards[c].title}** ${MISSION.cards[c].text}`),
+        '', '## Ma proposition de pilote', ...goodPlan.map((p) => `- ${G.scenes[st.planScene].options[p].text}`),
+        '', '## Où la confiance en est', ...(G.room ?? []).map((id) => `- ${who(id).name} (${who(id).role}) : ${st.trust[id] ?? 0}`),
+        '', '## Pour la suite', ...G.next.map((n) => `- ${n}`), ''];
+      return lines.join('\n');
+    }
+
+    function renderAct() {
+      const S = G.scenes[st.at];
+      if (!S) { act.innerHTML = ''; return; }
+      if (!st.log.some((e) => e.scene === st.at && e.intro)) { push({ who: S.who, html: `<p>${S.say}</p>`, scene: st.at, intro: true, mood: S.mood }); renderLog(); }
+      if (S.kind === 'say') {
+        act.innerHTML = `<div class="choices">${S.choices.map((c, i) => `<button class="choice" type="button" data-i="${i}">${esc(c.text)}</button>`).join('')}</div>`;
+        act.onclick = (e) => {
+          const b = e.target.closest('.choice'); if (!b) return;
+          const c = S.choices[Number(b.dataset.i)];
+          push({ who: 'me', html: `<p>${esc(c.text)}</p>` });
+          bump(c.trust); addCard(c.card);
+          if (c.reply) push({ who: S.who, html: `<p>${c.reply}</p>` });
+          if (c.coach) push({ who: 'skillou', html: `<p>${c.coach}</p>`, mood: c.mood || (Object.values(c.trust ?? {}).some((v) => v < 0) ? 'oups' : 'salut'), cls: 'coach' });
+          go(c.next);
+        };
+      } else if (S.kind === 'ask') {
+        const left = S.pick - st.asked.filter((q) => S.questions[q]).length;
+        if (left <= 0) {
+          const missed = Object.entries(S.questions).filter(([q, d]) => d.key && !st.asked.includes(q));
+          for (const [, d] of missed) push({ who: 'skillou', html: `<p>${d.missedCoach}</p>`, mood: 'oups', cls: 'coach' });
+          push({ who: S.who, html: `<p>${S.after}</p>` });
+          go(S.next);
+          return;
+        }
+        act.innerHTML = `<p class="hint">Encore ${left} question${left > 1 ? 's' : ''} : choisis bien.</p><div class="choices">`
+          + Object.entries(S.questions).filter(([q]) => !st.asked.includes(q)).map(([q, d]) => `<button class="choice" type="button" data-q="${q}">${esc(d.text)}</button>`).join('') + '</div>';
+        act.onclick = (e) => {
+          const b = e.target.closest('.choice'); if (!b) return;
+          const d = S.questions[b.dataset.q];
+          st.asked.push(b.dataset.q);
+          push({ who: 'me', html: `<p>${esc(d.text)}</p>` });
+          push({ who: S.who, html: `<p>${d.answer}</p>` });
+          bump(d.trust); addCard(d.card);
+          save(); renderSide(); renderLog(); renderAct();
+        };
+      } else if (S.kind === 'plan') {
+        st.planScene = st.at;
+        act.innerHTML = `<fieldset class="plan"><legend>${esc(S.legend)}</legend>${Object.entries(S.options).map(([k, o]) => `<label><input type="checkbox" value="${k}"> ${esc(o.text)}</label>`).join('')}</fieldset>`
+          + `<button class="btn primary" type="button">${esc(S.submit)}</button>`;
+        $('.btn', act).onclick = () => {
+          st.plan = $$('input:checked', act).map((i) => i.value);
+          if (!st.plan.length) return;
+          push({ who: 'me', html: `<ul>${st.plan.map((k) => `<li>${esc(S.options[k].text)}</li>`).join('')}</ul>` });
+          for (const k of st.plan) { bump(S.options[k].trust); if (S.options[k].coach) push({ who: 'skillou', html: `<p>${S.options[k].coach}</p>`, mood: S.options[k].good ? 'salut' : 'oups', cls: 'coach' }); }
+          for (const [k, o] of Object.entries(S.options)) if (o.good && o.key && !st.plan.includes(k)) push({ who: 'skillou', html: `<p>${o.missedCoach}</p>`, mood: 'montre', cls: 'coach' });
+          go(S.next);
+        };
+      } else if (S.kind === 'end') {
+        const v = S.verdicts.find((x) => (x.when ?? []).every(([id, op, n]) => (op === '>=' ? (st.trust[id] ?? 0) >= n : (st.trust[id] ?? 0) < n))) ?? S.verdicts[S.verdicts.length - 1];
+        if (!st.log.some((e) => e.verdict)) { push({ who: v.who, html: `<p>${v.say}</p>`, verdict: true }); push({ who: 'skillou', html: `<p>${v.coach}</p>`, mood: v.mood, cls: 'coach' }); renderLog(); }
+        act.innerHTML = `<div class="end"><p><b>${esc(v.title)}</b></p><button class="btn primary" type="button" data-dl>Télécharger ma fiche mission (.md)</button> <a class="btn" href="${S.link}">${esc(S.linkText)}</a></div>`;
+        $('[data-dl]', act).onclick = () => {
+          const url = URL.createObjectURL(new Blob([sheet()], { type: 'text/markdown' }));
+          const a = document.createElement('a'); a.href = url; a.download = `fiche-mission-${box.dataset.game}.md`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+        };
+      }
+    }
+    $('.game-reset', box).onclick = () => { st = { at: G.start, log: [], trust: {}, cards: [], plan: [], asked: [] }; save(); go(G.start); };
+    renderSide(); renderLog(); renderAct();
   });
 
   refreshProgress();

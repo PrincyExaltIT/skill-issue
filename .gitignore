@@ -5,3 +5,11 @@ studio/frames/
 .DS_Store
 site/dist/artifact.html
 .claude/launch.json
+# first-generation mascot drafts from ChatGPT (kept locally, not used by the rig)
+studio/assets/skillou/skillou-base.png
+studio/assets/skillou/skillou-talk.png
+studio/assets/skillou/skillou-sip.png
+studio/assets/skillou/skillou-wave.png
+studio/assets/skillou/skillou-point.png
+studio/assets/skillou/skillou-cheer.png
+studio/assets/skillou/skillou-shock.png
