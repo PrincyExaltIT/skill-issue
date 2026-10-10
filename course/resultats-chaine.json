@@ -28,22 +28,26 @@
     "etapes": {
       "revue": {
         "cout": 1.13,
-        "duree_s": 206,
+        "duree_s": 210,
         "tours": 30
       },
       "corrige": {
         "cout": 2.72,
-        "duree_s": 625,
+        "duree_s": 630,
         "tours": 104
       },
       "raconte": {
         "cout": 0.68,
-        "duree_s": 116,
+        "duree_s": 120,
         "tours": 14
       }
     },
     "cout_total": 4.53,
-    "duree_totale_s": 947
+    "duree_totale_s": 960,
+    "essai_ecarte": {
+      "duree_s": 148,
+      "raison": "PowerShell ne démarrait pas sur le poste (ligne de commande trop longue)"
+    }
   },
   "codex": {
     "date": "2026-10-09",
@@ -82,6 +86,10 @@
         "duree_s": 81
       }
     },
-    "duree_totale_s": 661
+    "duree_totale_s": 661,
+    "essai_ecarte": {
+      "duree_s": 289,
+      "raison": "bac à sable par défaut : écriture dans .git refusée"
+    }
   }
 }

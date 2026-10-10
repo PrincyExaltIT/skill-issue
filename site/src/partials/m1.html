@@ -4,8 +4,8 @@
     <header class="module-head">
       <span class="num">01</span>
       <h1 id="m1-title">Ouvre le capot</h1>
-      <p class="promise">À la fin de ce module, tu sais ce qu'est un skill (un dossier, pas un prompt) et ce qui se passe dans l'agent quand il se déclenche. Tu as aussi écrit ton premier skill de review, dix lignes que tu as lancées sur une vraie pull request et notées contre un corrigé.</p>
-      <div class="chips"><span class="chip">⏱ <b>{{DUREE:m1}}</b> avec l'atelier</span><span class="chip">8 leçons · 1 atelier · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
+      <p class="promise">À la fin de ce module, tu sais ce qu'est un skill (un dossier, pas un prompt) et ce qui se passe dans l'agent quand il se déclenche. Tu as aussi écrit ton premier skill de review, dix lignes que tu as lancées sur une vraie pull request et notées contre un corrigé. Si tu viens de <a href="#mission">la mission</a>, c'est ce skill que tu proposeras au Groupe Hexa au module 4 : note ton premier score dans ta fiche.</p>
+      <div class="chips"><span class="chip">⏱ <b>{{DUREE:m1}}</b> avec l'atelier</span><span class="chip">9 leçons · 1 atelier · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
     <div class="module-layout">
@@ -31,7 +31,7 @@
           <div class="lesson-body">
             <h2>Le harness lit tes fichiers à la place du modèle</h2>
             <p class="kicker">Un modèle de langage lit un texte et prédit la suite, rien de plus. Il ne voit pas ton disque, n'exécute rien et ne se souvient de rien d'un appel à l'autre.</p>
-            <p>Tout le reste revient au <b>harness</b>, le programme qui entoure le modèle. Claude Code, Codex, Cursor, Copilot, Gemini CLI sont des harnesses. À chaque tour, le harness assemble le contexte (instructions système, mémoire du projet, descriptions des skills, conversation), l'envoie au modèle, lit la réponse, et si le modèle demande un outil (lire un fichier, lancer une commande, appeler un serveur MCP), il l'exécute avec tes permissions puis renvoie le résultat. Cette boucle, c'est ce qu'on appelle un <b>agent</b>.</p>
+            <p>Tout le reste revient au <b>harness</b>, le programme qui entoure le modèle. Claude Code, Codex, Cursor, Copilot, Gemini CLI sont des harnesses, et il y en a bien d'autres, outils maison compris. À chaque tour, le harness assemble le contexte (instructions système, mémoire du projet, descriptions des skills, conversation), l'envoie au modèle, lit la réponse, et si le modèle demande un outil (lire un fichier, lancer une commande, appeler un serveur MCP), il l'exécute avec tes permissions puis renvoie le résultat. Cette boucle, c'est ce qu'on appelle un <b>agent</b>.</p>
             <figure class="wide">
               <svg class="diagram" viewBox="0 0 760 270" role="img" aria-labelledby="loop-t loop-d">
                 <title id="loop-t">La boucle agentique</title>
@@ -82,13 +82,18 @@
             <p>Chaque token se paie en argent, en latence et en qualité. Plus le contexte est long et hétérogène, plus l'attention du modèle se dilue ; on parle parfois de <i>context rot</i>. Un <code>CLAUDE.md</code> de 900 lignes qui explique la review, les migrations, les releases et le style CSS est lu à <b>chaque</b> tour, même pour renommer une variable.</p>
             <p>Avec les skills, ce qui est toujours chargé reste minuscule et tout le reste arrive à la demande. Joue avec le nombre de skills installés :</p>
             <div class="tool" id="meter">
-              <span class="tool-title">Simulateur · fenêtre de 200 000 tokens</span>
-              <div class="field"><label for="meter-n">Skills installés : <b data-k="n">40</b></label><input id="meter-n" type="range" min="1" max="200" value="40"></div>
+              <span class="tool-title">Simulateur · le contexte avant ta première question</span>
+              <div class="meter-controls">
+                <div class="field"><label for="meter-n">Skills installés : <b data-k="n">40</b></label><input id="meter-n" type="range" min="1" max="200" value="40"></div>
+                <div class="field"><span id="meter-w-label">Fenêtre de contexte</span><div class="seg" role="group" aria-labelledby="meter-w-label"><button type="button" data-window="200000" aria-pressed="true">200 000 · exemple</button><button type="button" data-window="1000000" aria-pressed="false">1 M · Claude 5.5</button></div></div>
+              </div>
               <div class="meter">
+                <div class="meter-row"><span class="meter-name">Progressive disclosure</span><span class="meter-val"><b data-k="l1">0</b> tokens · <b data-k="pct1">0 %</b></span></div>
                 <div class="meter-bar" aria-hidden="true"><i class="l1"></i><i class="l2"></i></div>
-                <div class="meter-legend"><span>■ Progressive disclosure : <b data-k="l1">0</b> tokens (toutes les descriptions + 2 skills actifs)</span></div>
+                <p class="meter-note"><span class="key"><i class="sw l1" aria-hidden="true"></i>toutes les descriptions</span><span class="key"><i class="sw l2" aria-hidden="true"></i>le corps des 2 skills utiles à la tâche</span></p>
+                <div class="meter-row"><span class="meter-name">Tout charger d'avance</span><span class="meter-val"><b data-k="full">0</b> tokens · <b data-k="pct">0 %</b></span></div>
                 <div class="meter-bar" aria-hidden="true"><i class="bad"></i></div>
-                <div class="meter-legend"><span>■ Tout charger d'avance : <b data-k="full">0</b> tokens, soit <b data-k="pct">0 %</b> de la fenêtre avant d'avoir lu une ligne de ton code</span></div>
+                <p class="meter-note">la part de la fenêtre déjà prise avant d'avoir lu une ligne de ton code</p>
               </div>
               <p class="small muted">Hypothèses du simulateur : environ 100 tokens par description (l'ordre de grandeur du standard) et environ 4 500 tokens par corps de skill (le standard recommande moins de 5 000). Le skill que tu vas construire est bien plus léger : environ {{TAILLE:n1}} tokens au niveau 1 et environ {{TAILLE:n2}} au niveau 2 (voir la leçon 1.4).</p>
             </div>
@@ -140,7 +145,7 @@
                 <source src="media/v1-anatomie.mp4" type="video/mp4">
               </video>
               <div class="video-meta"><b>Vidéo 01 · Anatomie d'un skill</b><span>présentée par Skillou, voix off et musique</span></div>
-              <div class="chapters"><button type="button" data-t="{{T:v1-anatomie:0}}">Le problème</button><button type="button" data-t="{{T:v1-anatomie:14}}">Le dossier</button><button type="button" data-t="{{T:v1-anatomie:30}}">Trois étages</button><button type="button" data-t="{{T:v1-anatomie:52}}">Un déclenchement réel</button></div>
+              <div class="chapters"><button type="button" data-t="{{T:v1-anatomie:0}}">Le problème</button><button type="button" data-t="{{T:v1-anatomie:14}}">Le dossier</button><button type="button" data-t="{{T:v1-anatomie:30}}">Trois étages</button><button type="button" data-t="{{T:v1-anatomie:52}}">La démo</button></div>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -254,7 +259,7 @@ disable-model-invocation: true   # extension Claude Code : invocation par /pr-ha
                 </tbody>
               </table>
             </div>
-            <div class="rc"><span class="av" aria-hidden="true">!</span><div><p class="who"><b>Le prix d'une extension</b></p><p>Un champ hors standard est ignoré par les harnesses qui ne le connaissent pas, mais il est <b>refusé</b> par le validateur officiel <code>skills-ref</code> et par l'upload sur claude.ai. Deux stratégies : un <code>SKILL.md</code> strictement standard, avec le comportement réglé dans la configuration de chaque harness (<code>agents/openai.yaml</code>, réglages Claude Code) ; ou des champs d'extension, plus simples pour l'équipe mais non publiables tels quels. <code>validate.mjs --strict</code> te dit dans quel camp est ton skill.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">!</span><div><p class="who"><b>Le prix d'une extension</b></p><p>Un champ hors standard est ignoré par les harnesses qui ne le connaissent pas, mais il est <b>refusé</b> par le validateur officiel <code>skills-ref</code>. Deux stratégies : un <code>SKILL.md</code> strictement standard, avec le comportement réglé dans la configuration de chaque harness (<code>agents/openai.yaml</code>, réglages Claude Code) ; ou des champs d'extension, plus simples pour l'équipe mais non publiables tels quels. <code>validate.mjs --strict</code> te dit dans quel camp est ton skill.</p></div></div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
@@ -294,8 +299,8 @@ Pour chaque problème, donne :
             <p>Ouvre ton harness à la racine du dépôt et lance <code>/revue-angular Relis cette branche avant que je la merge sur depart.</code> (Codex : <code>$revue-angular</code> ; ailleurs, la phrase seule suffit si la description fait son travail.) Ensuite :</p>
 <pre class="term"><span class="p">$ </span><span class="cmd">node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md</span>
 <span class="o">…
-Rappel {{R:opus:0:rappel}} % ({{R:opus:0:trouves}}/27) · …
-Précision {{R:opus:0:precision}} % · Leurres signalés à tort : {{R:opus:0:leurres}}/7</span></pre>
+Rappel {{R:opus:0:rappel}} % ({{R:opus:0:trouves}}/{{LAB_ISSUES}}) · …
+Précision {{R:opus:0:precision}} % · Leurres signalés à tort : {{R:opus:0:leurres}}/{{LAB_DECOYS}}</span></pre>
             <div class="atelier">
               <span class="tool-title">Atelier 0 · fini quand</span>
               <p class="expect">Ton skill se déclenche, <code>.review/REVIEW.md</code> existe, et ton score de départ est noté dans le tableau des <a href="#ateliers">ateliers</a>. Référence mesurée le {{RESULTS_DATE}} : {{R:opus:0:rappel}} % avec Opus 5.5, {{R:haiku:0:rappel}} % avec Haiku 5.5, qui n'a même pas écrit le fichier. Le module 2 explique cet écart et montre comment le combler.</p>

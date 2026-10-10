@@ -32,6 +32,8 @@ for (let pass = 0; pass < 5 && INCLUDE.test(html); pass++) {
 // ── Data: rules catalogue parsed from references/*.md ─────────────────────
 const { RULES } = await import(new URL('../skills/angular-review/scripts/lib/rules.mjs', import.meta.url));
 const mechanical = new Set(RULES.map((r) => r.id));
+// {{DETECTORS}}: unique detector ids in rules.mjs; {{DETECTORS_ESLINT}}: those that also name an ESLint rule.
+const detectorsEslint = new Set(RULES.filter((r) => r.eslintRule).map((r) => r.id));
 const GATES = {
   'R-PERF-020': 'selon version', 'R-ARCH-010': 'v19+', 'R-ARCH-028': 'déprécié v20', 'R-ARCH-034': 'v22+', 'R-ARCH-035': 'v20.2+',
   'R-SIG-007': 'stable v22', 'R-SIG-009': 'v22+', 'R-PERF-035': 'zoneless', 'R-TEST-005': 'zoneless', 'R-PERF-016': 'SSR', 'R-PERF-019': 'SSR', 'R-PERF-026': 'SSR',
@@ -106,6 +108,10 @@ const STEPS = [
 ];
 const fr = (v) => String(v).replace('.', ',');
 const bar = (v, cls) => (v == null ? '<td>—</td>' : `<td><span class="bar ${cls}"><i style="width:${v}%"></i><b>${v} %</b></span></td>`);
+const dash = (v, unit = '') => (v == null ? '—' : `${v}${unit}`);   // a missing measure prints « — », never « null »
+// The package row: Claude is the run with the course's phrase (same date as the caption); the Codex figure comes from another run, dated.
+const pkgClaude = results.package.claude;
+const pkgCodex = results.package.codex;
 const progression = `<div class="table-wrap scoreboard"><table>
   <caption>Mesuré le ${frDate(resultsDate)} sur la PR du lab, avec ${results.modeles.opus.harness}. Une ligne = un run par modèle.</caption>
   <thead><tr><th scope="col">Étape</th><th scope="col">Rappel · Opus 5.5</th><th scope="col">Rappel · Haiku 5.5</th><th scope="col">Précision O / H</th><th scope="col">Leurres O / H</th><th scope="col">Tours O / H</th><th scope="col">Coût Opus</th></tr></thead>
@@ -115,7 +121,7 @@ ${STEPS.map(({ n, what }) => {
   const h = results.runs.haiku[n] ?? {};
   return `    <tr><th scope="row"><span class="mono">v${n}</span> · ${what}</th>${bar(o.rappel, 'o')}${bar(h.rappel, 'h')}<td>${o.precision ?? '—'} / ${h.precision ?? '—'} %</td><td>${o.leurres ?? '—'} / ${h.leurres ?? '—'}</td><td>${o.tours ?? '—'} / ${h.tours ?? '—'}</td><td>${o.cout == null ? '—' : fr(o.cout) + ' $'}</td></tr>`;
 }).join('\n')}
-    <tr class="ref"><th scope="row">Le package de Princy <span class="small muted">(bonus)</span></th>${bar(results.package.claude.rappel, 'o')}<td>—</td><td>${results.package.claude.precision} % · Codex ${results.package.codex.rappel} %</td><td>${results.package.claude.leurres}</td><td>${results.package.claude.tours}</td><td>${fr(results.package.claude.cout)} $</td></tr>
+    <tr class="ref"><th scope="row">Le package de Princy <span class="small muted">(bonus)</span></th>${bar(pkgClaude.rappel, 'o')}<td>—</td><td>${dash(pkgClaude.precision, ' %')} · Codex ${dash(pkgCodex.rappel, ' %')} <span class="small muted">(run du ${frDate(parseDate(pkgCodex.date, 'course/resultats.json « package.codex.date »'))})</span></td><td>${dash(pkgClaude.leurres)}</td><td>${dash(pkgClaude.tours)}</td><td>${pkgClaude.cout == null ? '—' : fr(pkgClaude.cout) + ' $'}</td></tr>
   </tbody></table></div>
 <p class="small muted">${results.methode} Haiku 5.5 à l'étape 0 n'a pas écrit de rapport : sa réponse dans le chat a été notée. Coûts Haiku non affichés : Claude Code ne connaissait pas encore son tarif sur ce poste. Les rapports bruts sont dans <code>docs/sample-review/formation/</code>.</p>`;
 const duree = (s) => (s < 60 ? `${s} s` : `${Math.floor(s / 60)} min ${String(s % 60).padStart(2, '0')}`);
@@ -129,6 +135,8 @@ const metric = (model, step, key) => format(results.runs[model]?.[step], key, `$
 // ── The real run of the module 3 chain (course/resultats-chaine.json, collected from the run logs; artefacts in docs/sample-review/formation/chaine/) ──
 // {{CH:commits}}, {{CH:tests_apres.verts}}, {{CH:etapes.corrige.cout}} … ; dates, costs and durations are formatted like the rest.
 const chaine = json(join(repo, 'course', 'resultats-chaine.json'));
+// The package's own chain (bonus +2): {{PCH:etapes.fix.cout}}, {{PCH:etapes.revue.blocker}}, {{PCH:date}} …
+const packageChaine = json(join(repo, 'course', 'resultats-package-chaine.json'));
 const declenchement = json(join(repo, 'course', 'resultats-declenchement.json'));
 // A value from a results file by dotted path; dates, costs, durations and lists are formatted like the rest of the page.
 const resultValue = (data, file, path) => {
@@ -137,7 +145,7 @@ const resultValue = (data, file, path) => {
   if (value == null || typeof value === 'object') throw new Error(`${file} : pas de valeur simple pour ${path}`);
   if (path.endsWith('date')) return frDate(parseDate(value, `${file} « ${path} »`));
   if (/cout/.test(path)) return `${fr(value)} $`;
-  if (/duree/.test(path)) return duree(value);
+  if (/duree|secondes$/.test(path)) return duree(value);
   // Text written by an agent: escape it, and turn its `code` spans into <code>.
   return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/`([^`]+)`/g, '<code>$1</code>');
 };
@@ -233,6 +241,8 @@ html = html
   .replace('/* @script */', () => read(join(src, 'app.js')))
   .replaceAll('{{RULES_TOTAL}}', String(rules.length))
   .replaceAll('{{RULES_MECH}}', String(rules.filter((r) => r.mechanical).length))
+  .replaceAll('{{DETECTORS}}', String(mechanical.size))              // unique detector ids in scripts/lib/rules.mjs
+  .replaceAll('{{DETECTORS_ESLINT}}', String(detectorsEslint.size))  // … of which name an ESLint rule
   .replaceAll('{{BUILD_DATE}}', frDate(latestDate))          // "à jour au": the most recent of harnesses.json « checked » and resultats.json « date »
   .replaceAll('{{HARNESS_DATE}}', frDate(harnessDate))       // harnesses.json « checked »
   .replaceAll('{{RESULTS_DATE}}', frDate(resultsDate))       // resultats.json « date »
@@ -246,13 +256,19 @@ html = html
   .replace(/\{\{T:([\w-]+):([\d.]+)\}\}/g, (_, video, s) => (Math.round(outTime(video, Number(s)) * 10) / 10).toString())
   .replace(/\{\{VDUR:([\w-]+)\}\}/g, (_, video) => mmss(timing(video).duration))
   .replace(/\{\{CH:([\w.]+)\}\}/g, (_, path) => resultValue(chaine, 'resultats-chaine.json', path))
+  // That file names a step's duration « secondes » (like resultats.json): ….duree_s reads it when there is no duree_s.
+  .replace(/\{\{PCH:([\w.]+)\}\}/g, (_, path) => {
+    const has = (p) => p.split('.').reduce((o, k) => o?.[k], packageChaine) != null;
+    const alias = path.replace(/(^|\.)duree_s$/, '$1secondes');
+    return resultValue(packageChaine, 'resultats-package-chaine.json', has(path) || !has(alias) ? path : alias);
+  })
   .replace(/\{\{DECL:([\w.]+)\}\}/g, (_, path) => resultValue(declenchement, 'resultats-declenchement.json', path))
   .replace(/\{\{TAILLE:(\w+)\}\}/g, (_, k) => { if (!(k in sizes)) throw new Error(`{{TAILLE:${k}}} inconnu`); return sizes[k]; })
   .replace(/\{\{R:(\w+):(\w+):(\w+)\}\}/g, (_, model, step, key) => metric(model, step, key))
   .replace(/\{\{PKG:(\w+):(\w+)\}\}/g, (_, harness, key) => format(results.package[harness], key, `package/${harness}`))
   .replace(/\{\{REP:(\w+):(\w+):(\w+)\}\}/g, (_, model, step, key) => format(results.repetitions[model]?.[step], key, `repetitions/${model}/${step}`));
 
-const left = html.match(/\{\{[A-Za-z_:0-9]+\}\}/g);
+const left = html.match(/\{\{[A-Za-z_:0-9.+-]+\}\}/g);
 if (left) throw new Error(`placeholders non remplacés : ${[...new Set(left)].join(', ')}`);
 
 // ── Check: every in-page link (<a href="#x">) lands on an element inside a view ──
@@ -260,12 +276,50 @@ if (left) throw new Error(`placeholders non remplacés : ${[...new Set(left)].jo
 // <… class="view"> (apart from the skip-link target), would silently land on the wrong page.
 const SKIP_LINK_TARGETS = new Set(['main']);
 const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+// The role-play games (data-mission JSON, read by app.js) are checked too: every scene `next`, every card id and
+// every person id must exist, every `.game[data-game]` must name a game, and their end links join the anchor check.
+function checkMission(page) {
+  const block = /<script type="application\/json" id="data-mission">([\s\S]*?)<\/script>/.exec(page);
+  if (!block) return [];
+  let M;
+  try { M = JSON.parse(block[1]); } catch (e) { throw new Error(`partials/mission.html : data-mission n'est pas du JSON valide (${e.message})`); }
+  const errors = [];
+  const links = [];
+  const cards = M.cards ?? {};
+  const people = M.people ?? {};
+  const markup = page.replace(/<!--[\s\S]*?-->|<(script|style)\b[\s\S]*?<\/\1\s*>/gi, '');
+  for (const name of new Set([...markup.matchAll(/data-game="([^"]*)"/g)].map((m) => m[1]))) if (!M.games?.[name]) errors.push(`data-game="${name}" : aucun jeu de ce nom dans data-mission`);
+  for (const [g, G] of Object.entries(M.games ?? {})) {
+    const scenes = G.scenes ?? {};
+    const at = (where) => `jeu « ${g} », ${where}`;
+    const scene = (id, where) => { if (!scenes[id]) errors.push(`${at(where)} : la scène « ${id} » n'existe pas`); };
+    const card = (id, where) => { if (id != null && !cards[id]) errors.push(`${at(where)} : la carte « ${id} » n'existe pas`); };
+    const person = (id, where) => { if (id != null && !people[id]) errors.push(`${at(where)} : la personne « ${id} » n'existe pas`); };
+    const trust = (t, where) => Object.keys(t ?? {}).forEach((id) => { if (!(G.room ?? []).includes(id)) errors.push(`${at(where)} : « ${id} » n'est pas dans la salle (room)`); });
+    scene(G.start, 'start');
+    (G.room ?? []).forEach((id) => person(id, 'room'));
+    for (const [s, S] of Object.entries(scenes)) {
+      person(S.who, `scène ${s}`);
+      if (S.kind === 'ask' || S.kind === 'plan') scene(S.next, `scène ${s}`);
+      (S.choices ?? []).forEach((c, i) => { scene(c.next, `scène ${s}, choix ${i + 1}`); card(c.card, `scène ${s}, choix ${i + 1}`); trust(c.trust, `scène ${s}, choix ${i + 1}`); });
+      for (const [k, x] of Object.entries({ ...S.questions, ...S.options })) { card(x.card, `scène ${s}, ${k}`); trust(x.trust, `scène ${s}, ${k}`); }
+      (S.verdicts ?? []).forEach((v, i) => { person(v.who, `scène ${s}, verdict ${i + 1}`); (v.when ?? []).forEach(([id]) => { if (!(G.room ?? []).includes(id)) errors.push(`${at(`scène ${s}, verdict ${i + 1}`)} : « ${id} » n'est pas dans la salle (room)`); }); });
+      if (S.kind === 'end' && !(typeof S.link === 'string' && /^#./.test(S.link))) errors.push(`${at(`scène ${s}`)} : « link » doit être une ancre interne (#…)`);
+    }
+  }
+  // Every "link": "#…" anywhere in the JSON joins the anchor check.
+  const walk = (o) => { if (o && typeof o === 'object') for (const [k, v] of Object.entries(o)) { if (k === 'link' && typeof v === 'string' && /^#./.test(v)) links.push(v.slice(1)); else walk(v); } };
+  walk(M);
+  if (errors.length) throw new Error([`data-mission (partials/mission.html) : ${errors.length} erreur(s)`, ...errors.map((e) => '  ' + e)].join('\n'));
+  return links;
+}
+
 function checkAnchors(page) {
   const text = page.replace(/<!--[\s\S]*?-->|<(script|style)\b[\s\S]*?<\/\1\s*>/gi, ''); // inline JS/CSS and comments are not markup
   const attrOf = (attrs, name) => { const m = new RegExp(`(?:^|\\s)${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, 'i').exec(attrs); return m ? (m[1] ?? m[2]) : null; };
   const owner = new Map();            // id -> id of the view that contains it ('' = outside every view)
   const duplicates = new Set();
-  const links = [];
+  const links = [...checkMission(page)];
   const open = [];                    // open elements: { tag, view } (view = the element's id when it is a view, else '')
   const TAG = /<(\/?)([a-zA-Z][\w:-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g;
   for (let m; (m = TAG.exec(text));) {
@@ -285,7 +339,7 @@ function checkAnchors(page) {
   if (missing.length || outside.length) {
     // Point at the source file (partial) and line of each offending link: the page is assembled from several files.
     const files = [join(src, 'index.html'), ...readdirSync(join(src, 'partials')).map((f) => join(src, 'partials', f))];
-    const where = (id) => files.flatMap((f) => read(f).split('\n').flatMap((line, i) => (line.includes(`href="#${id}"`) ? [`${f.slice(src.length + 1).replaceAll('\\', '/')}:${i + 1}`] : []))).join(', ');
+    const where = (id) => files.flatMap((f) => read(f).split('\n').flatMap((line, i) => (line.includes(`href="#${id}"`) || line.includes(`"link": "#${id}"`) ? [`${f.slice(src.length + 1).replaceAll('\\', '/')}:${i + 1}`] : []))).join(', ');
     throw new Error([
       `liens internes cassés : ${missing.length + outside.length} cible(s) sur ${new Set(links).size} ancres distinctes`,
       ...missing.map((id) => `  #${id} : aucun élément avec cet id (liens : ${where(id) || '?'})`),

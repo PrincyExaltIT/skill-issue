@@ -102,7 +102,7 @@ Autres harnais demandés
 - **d44** Sous-modules Git : le dépôt parent ne stocke qu'un pointeur (gitlink, mode `160000`) vers un commit fixe, déclaré dans `.gitmodules` ; clone avec `git clone --recurse-submodules`, initialisation par `git submodule update --init --recursive`. Source : https://git-scm.com/book/en/v2/Git-Tools-Submodules . **VERIFIED**
 - **d45** Subtree Git : `git subtree add --prefix=<dossier> --squash <dépôt> <ref>` puis `git subtree pull` ; pas de `.gitmodules`, le contenu est copié dans le dépôt. Source : https://github.com/git/git/blob/master/contrib/subtree/git-subtree.adoc . **VERIFIED**
 - **d46** Paquet `forgent` : version 1.2.1 publiée le 9 octobre 2026 sur npm, binaire `forgent`, `engines` `node >= 18`, `dist.integrity` au format sha512. Source : https://registry.npmjs.org/forgent . **VERIFIED**
-- **d47** Le sha256 du lockfile de forgent et ses commandes `add` et `verify` ne sont pas confirmés : le registre ne publie qu'un sha512 pour le paquet. À tester avant d'enseigner. Source : https://registry.npmjs.org/forgent . **UNVERIFIED**
+- **d47** forgent 1.2.1, testé le 10 octobre 2026 sur un clone du lab : `add --provider agents,claude --project …` installe dans `.agents/skills` et `.claude/skills` et écrit `forgent.lock.json` ; `verify` sans argument contrôle les copies ; sans `--provider`, `add` refuse (« --provider is required ») ; `--registry` attend le dossier du registre (avec un chemin vers `registry.json`, il cherche `registry.json/registry.json` et échoue). Le registre npm ne publie qu'un sha512 pour le paquet lui-même. **VERIFIED (test local)**
 
 ---
 

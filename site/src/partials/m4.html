@@ -29,7 +29,7 @@
           <div class="hunk"><span class="at">@@ 04 · 4.1 @@</span><span>diagnostic</span><span class="spacer"></span><span class="lvl base">base</span><span>10 min</span></div>
           <div class="lesson-body">
             <h2>Avant l'outil, le terrain</h2>
-            <p class="kicker">Chez un grand compte, la question n'est presque jamais « quel est le meilleur assistant ». C'est « qu'est-ce qui est déjà autorisé ici, et qu'est-ce qui coince ». Tu l'as vu dans <a href="#mission">la mission</a> : celui qui propose un outil dès la première réunion se fait bloquer par la sécurité.</p>
+            <p class="kicker">Chez un grand compte, on te demandera rarement quel assistant est le meilleur. On voudra savoir ce qui est déjà autorisé, et ce qui coince. Tu l'as vu dans <a href="#mission">la mission</a> : celui qui propose un outil dès la première réunion se fait bloquer par la sécurité.</p>
             <div class="video-card">
               <video controls preload="metadata" poster="media/v5-client.jpg" playsinline>
                 <source src="media/v5-client.mp4" type="video/mp4">
@@ -37,16 +37,16 @@
               <div class="video-meta"><b>Vidéo 04 · Chez le client</b><span>présentée par Skillou, voix off et musique</span><span>client fictif</span></div>
               <div class="chapters"><button type="button" data-t="{{T:v5-client:0}}">La demande</button><button type="button" data-t="{{T:v5-client:12}}">Ce qui sort</button><button type="button" data-t="{{T:v5-client:26}}">Installer</button><button type="button" data-t="{{T:v5-client:40}}">Prévenir</button><button type="button" data-t="{{T:v5-client:54}}">Le dossier</button></div>
             </div>
-            <p>Ta première semaine sert à remplir une page. Chaque réponse décide d'un choix de ce module :</p>
+            <p>Ta première semaine sert à remplir une page, avec les six questions de <a href="#mission">la mission</a>. Chaque réponse décide d'un choix de ce module :</p>
             <div class="table-wrap"><table>
               <thead><tr><th scope="col">Tu demandes</th><th scope="col">Ça décide</th><th scope="col">Leçon</th></tr></thead>
               <tbody>
                 <tr><td>Quel problème coûte le plus à l'équipe, et comment le mesurer ?</td><td>Le périmètre du skill et son score de départ</td><td><a href="#m4-l6">4.6</a></td></tr>
                 <tr><td>Quels outils d'IA sont validés, sous quelle offre, pour qui ?</td><td>Le dossier où vit le skill, ce qui part vers quel modèle</td><td><a href="#m4-l2">4.2</a>, <a href="#m4-l3">4.3</a></td></tr>
-                <tr><td>Où vivent le code et la CI ? Les runners sortent-ils sur internet ?</td><td>La recette d'installation, le gabarit de CI</td><td><a href="#m4-l3">4.3</a></td></tr>
-                <tr><td>Proxy, inspection TLS, miroir npm ?</td><td>La configuration de Node et de npm</td><td><a href="#m4-l3">4.3</a></td></tr>
+                <tr><td>Quel réseau ? Où vivent le code et la CI, les runners sortent-ils sur internet, y a-t-il un proxy, une inspection TLS, un miroir npm ?</td><td>La recette d'installation, le gabarit de CI, la configuration de Node et de npm</td><td><a href="#m4-l3">4.3</a></td></tr>
                 <tr><td>Quelles données traînent dans le dépôt et les tests ?</td><td>Ce qui ne part jamais vers un modèle</td><td><a href="#m4-l4">4.4</a></td></tr>
-                <tr><td>Qui valide un nouvel outil, qui a un veto ?</td><td>À qui tu écris, et dans quel ordre</td><td><a href="#m4-l5">4.5</a></td></tr>
+                <tr><td>Qui valide un nouvel outil, qui a un veto ? Une charte d'usage de l'IA existe-t-elle déjà ?</td><td>À qui tu écris, dans quel ordre, et la charte à reprendre ou à écrire</td><td><a href="#m4-l5">4.5</a></td></tr>
+                <tr><td>Quel délai, et quel critère de succès pour un premier résultat ?</td><td>La durée du pilote et ce qu'il mesure</td><td><a href="#m4-l6">4.6</a></td></tr>
               </tbody>
             </table></div>
             <p>Le modèle est dans le dépôt du kit : <a href="https://github.com/PrincyExaltIT/skill-issue/blob/main/course/client/diagnostic.md" target="_blank" rel="noopener"><code>course/client/diagnostic.md</code> ↗</a>. Tu le remplis dans l'atelier final.</p>
@@ -60,7 +60,7 @@
           <div class="hunk"><span class="at">@@ 04 · 4.2 @@</span><span>data flows</span><span class="spacer"></span><span class="lvl core">core</span><span>15 min</span></div>
           <div class="lesson-body">
             <h2>Ce qui sort de la machine</h2>
-            <p class="kicker">La première question de toute RSSI : « votre IA, elle envoie notre code où ? ». La réponse honnête tient en un schéma. Ton skill n'ajoute aucun flux : c'est un dossier de fichiers lu par un outil déjà en place. Le flux, c'est l'outil qui le crée.</p>
+            <p class="kicker">La RSSI commencera presque toujours par la même question : « votre IA, elle envoie notre code où ? ». Un schéma suffit pour répondre. Ton skill n'ajoute aucun flux à ceux de l'outil : c'est un dossier de fichiers lu par un outil déjà en place, et c'est cet outil qui envoie le contexte au modèle.</p>
             <div class="pipeline wide" role="list">
               <div class="stage" role="listitem"><span class="who">le dépôt</span><span class="what">Le code, et ton skill : SKILL.md, règles, scripts.</span><span class="out">fichiers</span></div>
               <div class="stage" role="listitem"><span class="who">le poste ou le runner</span><span class="what">L'outil lit les fichiers et lance les scripts du skill, en local.</span><span class="out">diff, sorties des scripts</span></div>
@@ -71,8 +71,8 @@
             <div class="table-wrap"><table>
               <thead><tr><th scope="col">Outil (offre entreprise)</th><th scope="col">Entraînement sur le code</th><th scope="col">Conservation, région</th><th scope="col">Ce que l'admin peut imposer</th></tr></thead>
               <tbody>
-                <tr><th scope="row">GitHub Copilot Business, Enterprise</th><td>Non selon GitHub, mais la page officielle n'a pas pu être lue : à obtenir par écrit</td><td>Durée non chiffrée de façon cohérente dans les sources. Résidence États-Unis ou UE via une politique dédiée (GHE.com). Copilot n'est pas proposé sur GitHub Enterprise Server</td><td>Politiques entreprise et organisation, modèles autorisés, exclusion de contenu (pas en mode Agent dans l'éditeur), journal d'audit sur 180 jours</td></tr>
-                <tr><th scope="row">Claude Code (Team, Enterprise, API, Bedrock, Vertex, Foundry)</th><td>Non sur les offres commerciales, sauf programme choisi</td><td>30 jours en standard, rétention zéro possible sur Enterprise qualifié. Via Foundry « Hosted on Azure », prompts et réponses restent dans Azure</td><td>Fichier <code>managed-settings.json</code> ou politique Windows, modes de permission, serveurs MCP autorisés, modèles disponibles</td></tr>
+                <tr><th scope="row">GitHub Copilot Business, Enterprise</th><td>Non selon GitHub, mais la page officielle n'a pas pu être lue : à obtenir par écrit</td><td>Durée non chiffrée de façon cohérente dans les sources. Résidence États-Unis ou UE via une politique dédiée (GHE.com). Copilot n'est pas proposé sur GitHub Enterprise Server</td><td>Politiques entreprise et organisation, modèles autorisés, exclusion de contenu (non prise en charge par les modes Edit et Agent de Copilot Chat dans l'éditeur ; en preview publique sur GitHub.com), journal d'audit sur 180 jours</td></tr>
+                <tr><th scope="row">Claude Code (Team, Enterprise, API, Bedrock, Google Cloud, Foundry)</th><td>Non sur les offres commerciales, sauf programme choisi</td><td>30 jours en standard, rétention zéro possible sur Enterprise qualifié. Via Foundry « Hosted on Azure », prompts et réponses restent dans Azure</td><td>Fichier <code>managed-settings.json</code> ou politique Windows, modes de permission, serveurs MCP autorisés, modèles disponibles</td></tr>
                 <tr><th scope="row">OpenAI Codex (ChatGPT Enterprise)</th><td>Non confirmé sur la page d'administration : à obtenir par écrit</td><td>Pas de chiffre publié sur la page. Le mode « Work locally » ne permet pas la rétention zéro stricte</td><td>Fichier <code>requirements.toml</code> : modes de sandbox, politiques d'approbation, serveurs MCP</td></tr>
                 <tr><th scope="row">Cursor (Privacy Mode)</th><td>Non, avec Privacy Mode (imposable, activé par défaut en Enterprise), avec des exceptions par modèle</td><td>Résidence États-Unis en Enterprise, inférence UE sur demande</td><td>Privacy Mode d'équipe, clés de chiffrement gérées par le client en Enterprise</td></tr>
                 <tr><th scope="row">Modèle auto-hébergé (Ollama, vLLM) avec OpenCode, Kilo Code, Continue…</th><td>Le modèle tourne chez le client</td><td>Sur l'infrastructure du client. Attention aux défauts : OpenCode envoie par défaut les titres de session à un petit modèle hébergé, Ollama a des modèles cloud à couper (<code>OLLAMA_NO_CLOUD=1</code>)</td><td>Tout, et c'est au client de tout maintenir</td></tr>
@@ -94,49 +94,50 @@
           <div class="hunk"><span class="at">@@ 04 · 4.3 @@</span><span>install · atelier 8</span><span class="spacer"></span><span class="lvl core">core</span><span>30 min</span></div>
           <div class="lesson-body">
             <h2>Installer chez le client</h2>
-            <p class="kicker">La recette la plus sûre est aussi la plus simple : le skill vit dans le dépôt, il change par merge request, et chaque outil le lit à l'endroit où il regarde. Rien à installer sur les postes, rien à télécharger en CI.</p>
+            <p class="kicker">La recette la plus sûre est aussi la plus simple : le skill vit dans le dépôt, il change par merge request, et chaque outil le lit à l'endroit où il regarde. Il n'y a rien à installer sur les postes, ni à télécharger en CI.</p>
             <h3>Où chaque outil regarde</h3>
             <div class="table-wrap"><table>
               <thead><tr><th scope="col">Dossier dans le dépôt</th><th scope="col">Lu par (exemples relevés dans leurs docs)</th></tr></thead>
               <tbody>
-                <tr><td><code>.agents/skills/</code></td><td>Codex, GitHub Copilot, Cursor, Gemini CLI, OpenCode, GitLab Duo</td></tr>
+                <tr><td><code>.agents/skills/</code></td><td>Codex, GitHub Copilot, Cursor, Gemini CLI, OpenCode, GitLab Duo Agent Platform</td></tr>
                 <tr><td><code>.claude/skills/</code></td><td>Claude Code ; aussi lu par Copilot, Cursor et OpenCode</td></tr>
                 <tr><td><code>.github/skills/</code></td><td>GitHub Copilot</td></tr>
               </tbody>
             </table></div>
-            <p>Un même dossier dans <code>.agents/skills/</code> couvre donc la plupart des outils. Si l'équipe utilise Claude Code, ajoute la copie dans <code>.claude/skills/</code> (le kit le fait avec <code>install.mjs</code>, forgent avec <code>--provider agents,claude</code>). Ton outil n'est pas dans la liste ? Lis sa documentation, ou fais le test de la <a href="#m2">leçon 2.7</a>.</p>
+            <p>Un même dossier dans <code>.agents/skills/</code> couvre donc la plupart des outils. Si l'équipe utilise Claude Code ou Continue, ou un autre outil qui ne lit pas <code>.agents/skills/</code>, ajoute la copie dans <code>.claude/skills/</code> (le kit le fait avec <code>install.mjs</code>, forgent avec <code>--provider agents,claude</code>). Ton outil n'est pas dans la liste ? Lis sa documentation, ou fais le test de la <a href="#m2-l7">leçon 2.7</a>.</p>
 
             <h3>Quatre contextes, quatre recettes</h3>
             <div class="table-wrap"><table>
               <thead><tr><th scope="col">Contexte</th><th scope="col">Recette</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Pas d'internet</th><td>Le skill est commité dans le dépôt interne : c'est tout. Si tu passes par forgent, fais l'installation une fois depuis un poste autorisé, commite le résultat et <code>forgent.lock.json</code>, puis vérifie en CI avec <code>forgent verify</code>. Pour Claude Code, une marketplace de type <code>directory</code> sur un partage réseau ou un « seed » posé dans l'image fonctionne sans git sortant. Le modèle, lui, doit rester joignable : sans sortie réseau, il faut une passerelle interne ou un modèle auto-hébergé.</td></tr>
+                <tr><th scope="row">Pas d'internet</th><td>Le skill est commité dans le dépôt interne : c'est tout. Si tu passes par forgent, fais l'installation une fois depuis un poste autorisé, commite le résultat et <code>forgent.lock.json</code>, puis vérifie en CI avec <code>forgent verify</code>. Pour Claude Code, une marketplace de type <code>directory</code> sur un partage réseau ou un « seed » posé dans l'image fonctionne sans git sortant. Le modèle, lui, doit rester joignable : sans sortie réseau, il faut une passerelle interne vers un modèle autorisé.</td></tr>
                 <tr><th scope="row">Proxy avec inspection TLS, miroir npm</th><td>Fais confiance à la racine du proxy plutôt que de couper la vérification : la racine dans le magasin système, sinon <code>NODE_EXTRA_CA_CERTS=/chemin/ca.pem</code> (Node), <code>cafile</code> dans <code>.npmrc</code> (npm), <code>CODEX_CA_CERTIFICATE</code> (Codex). Le proxy : <code>HTTPS_PROXY</code>, <code>NO_PROXY</code>, et les clés npm <code>proxy</code>, <code>https-proxy</code>, <code>noproxy</code>. Le miroir : <code>registry=</code> vers Artifactory ou Nexus dans <code>.npmrc</code>. Jamais <code>strict-ssl=false</code> ni <code>NODE_TLS_REJECT_UNAUTHORIZED=0</code>.</td></tr>
                 <tr><th scope="row">GitHub Enterprise Server</th><td>Skills et instructions dans le dépôt GHES. Copilot n'y tourne pas : ses licences passent par un compte entreprise cloud. En CI, labels de runner, pas de secrets pour les PR de fork, pas de <code>pull_request_target</code> pour exécuter le code d'une PR.</td></tr>
-                <tr><th scope="row">GitLab auto-hébergé</th><td>Skills dans <code>.agents/skills/</code> (GitLab Duo le lit aussi). La porte sans IA tourne sur <code>merge_request_event</code>, sur un runner choisi par ses tags. Images préchargées (<code>pull_policy = "never"</code> sur un runner dédié) et proxy du runner configuré côté service.</td></tr>
+                <tr><th scope="row">GitLab auto-hébergé</th><td>Skills dans <code>.agents/skills/</code> (GitLab Duo Agent Platform le lit aussi ; la revue de code de Duo, elle, a son propre fichier YAML). La porte sans IA tourne sur <code>merge_request_event</code>, sur un runner choisi par ses tags. Images préchargées (<code>pull_policy = "never"</code> sur un runner dédié) et proxy du runner configuré côté service.</td></tr>
               </tbody>
             </table></div>
             <p class="small muted">Chaque ligne renvoie à sa source dans les <a href="https://github.com/PrincyExaltIT/skill-issue/blob/main/docs/research/entreprise-installation-2026-10.md" target="_blank" rel="noopener">notes de recherche sur l'installation ↗</a>, avec les variantes à tester avant d'en parler au client.</p>
 
             <h3>forgent avec un registre interne</h3>
-            <p>Si l'entreprise veut un catalogue de skills partagé entre équipes, forgent accepte un registre à toi, en URL interne ou en chemin local : un dépôt Git qui contient un <code>registry.json</code>, relu en MR comme le reste.</p>
-<pre class="term"><span class="p">$ </span><span class="cmd">npx forgent add --registry ./registre-interne/registry.json --provider agents,claude --project revue-angular</span>
+            <p>Si l'entreprise veut un catalogue de skills partagé entre équipes, forgent accepte un registre à toi, en URL interne ou en chemin local : le dossier d'un dépôt Git qui contient un <code>registry.json</code> et ses <code>skills/</code>, relu en MR comme le reste. Donne le dossier, pas le fichier : forgent y cherche lui-même <code>registry.json</code>.</p>
+<pre class="term"><span class="p">$ </span><span class="cmd">npx forgent add --registry ./registre-interne --provider agents,claude --project revue-angular</span>
 <span class="p">$ </span><span class="cmd">npx forgent verify</span>
 <span class="p">$ </span><span class="cmd">git add .agents .claude forgent.lock.json && git commit -m "chore: skill revue-angular 1.0.0"</span></pre>
 
             <div class="atelier" id="m4-a8">
               <span class="tool-title">Atelier 8 · installer comme chez Hexa</span>
-              <p>But : poser ton skill du module 2 comme si tu étais chez le Groupe Hexa de <a href="#mission">la mission</a> : un seul outil validé, une CI sans internet, une RSSI qui relira tout.</p>
+              <p>But : poser ton skill du module 2 comme si tu étais chez le Groupe Hexa de <a href="#mission">la mission</a> : un seul outil validé, une CI sans internet, et Karim, le RSSI, qui relira tout.</p>
               <ol>
-                <li>Sur ta branche du lab, place ton skill dans <code>.agents/skills/revue-angular/</code>, et dans <code>.claude/skills/revue-angular/</code> si ton équipe utilise Claude Code. Commite-les.</li>
+                <li>Sur ta branche du lab, place ton skill dans <code>.agents/skills/revue-angular/</code>, et dans <code>.claude/skills/revue-angular/</code> si ton équipe utilise Claude Code ou Continue. Commite-les.</li>
                 <li>Vérifie ce que les scripts ont le droit de faire. Lance-les avec le modèle de permissions de Node : lecture partout, écriture seulement dans <code>.review</code>, et le droit de lancer <code>git</code>. Puis cherche le moindre appel réseau dans leur code.</li>
                 <li>Copie le gabarit GitLab <code>course/ci/gitlab/revue-angular.gitlab-ci.yml</code> (ou le gabarit GitHub) et garde seulement le job sans IA. Il ne doit lire aucune variable secrète.</li>
                 <li>Écris le <code>.npmrc</code> d'exemple que tu laisserais à l'équipe : registre du miroir, <code>cafile</code>, aucune désactivation de TLS.</li>
               </ol>
-<pre class="term"><span class="p">$ </span><span class="cmd">node --permission --allow-fs-read=* --allow-fs-write=.review --allow-child-process .agents/skills/revue-angular/scripts/verifs.mjs --base depart</span>
+<pre class="term"><span class="p">$ </span><span class="cmd">node --permission --allow-fs-read=* --allow-fs-write=".review/*" --allow-child-process .agents/skills/revue-angular/scripts/perimetre.mjs --base depart</span>
+<span class="p">$ </span><span class="cmd">node --permission --allow-fs-read=* --allow-fs-write=".review/*" --allow-child-process .agents/skills/revue-angular/scripts/verifs.mjs</span>
 <span class="p">$ </span><span class="cmd">grep -rnE "fetch\(|https?\.request|net\.connect" .agents/skills/revue-angular/scripts || echo "aucun appel réseau"</span></pre>
               <p class="expect"><b>Fini quand</b> : le skill est commité dans le ou les bons dossiers ; ses scripts tournent sous <code>node --permission</code> sans rien écrire hors de <code>.review</code>, et la recherche ne trouve aucun appel réseau ; le job de CI ne lit aucun secret et ferme la porte sur la PR du lab ; ton <code>.npmrc</code> d'exemple pointe vers un miroir et garde la vérification TLS.</p>
-              <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5</code> pose la version de référence de l'étape 5, dont les scripts passent ce contrôle.</p>
+              <p class="small muted">Les guillemets autour de <code>.review/*</code> comptent : sans eux, le shell remplace l'étoile par les fichiers du dossier. Testé sur un clone neuf du lab : les deux scripts tournent sous ces permissions, et la recherche ne trouve aucun appel réseau. Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5 --harness tous</code> pose la version de référence de l'étape 5 dans <code>.agents/skills/</code> et <code>.claude/skills/</code>.</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
@@ -147,17 +148,17 @@
           <div class="hunk"><span class="at">@@ 04 · 4.4 @@</span><span>prevention</span><span class="spacer"></span><span class="lvl core">core</span><span>20 min</span></div>
           <div class="lesson-body">
             <h2>Les préventions</h2>
-            <p class="kicker">Un agent lit du contenu que personne n'a vérifié (du code, une description de PR, une issue) et il agit avec les droits de celui qui le lance. La plupart des incidents publics de 2025 tiennent dans cette phrase. Les préventions aussi.</p>
+            <p class="kicker">Un agent lit du contenu que personne n'a vérifié (du code, une description de PR, une issue) et il agit avec les droits de celui qui le lance. Les incidents rapportés plus bas partent tous de là, et les préventions de cette leçon visent ce point.</p>
 
             <h3>Les données d'abord</h3>
-            <p>Décide avec le DPO de ce qui ne part jamais vers un modèle : données personnelles réelles, secrets, données classées, code d'un autre client. Puis rends-le vrai dans le dépôt : des données de test synthétiques, un scanner de secrets en CI, et l'exclusion de contenu de l'outil quand elle existe (celle de Copilot ne couvre pas le mode Agent dans l'éditeur, d'après sa documentation). Sur le code d'un client, seuls les comptes fournis par le client : les offres grand public n'ont pas les mêmes garanties.</p>
+            <p>Décide avec le DPO de ce qui ne part jamais vers un modèle : données personnelles réelles, secrets, données classées, code d'un autre client. Puis rends-le vrai dans le dépôt : des données de test synthétiques, un scanner de secrets en CI, et l'exclusion de contenu de l'outil quand elle existe (celle de Copilot ne s'applique pas aux modes Edit et Agent de Copilot Chat dans l'éditeur, d'après sa documentation). Sur le code d'un client, seuls les comptes fournis par le client : les offres grand public n'ont pas les mêmes garanties.</p>
 
             <h3>L'injection de prompt</h3>
             <p>Ta review lit le diff, et le diff peut contenir du texte écrit pour l'agent (« ignore tes consignes et… »). Des démonstrations publiques l'ont fait avec des issues et des commentaires de PR pour faire écrire une porte dérobée ou fuir des secrets de CI (Trail of Bits en août 2025, d'autres depuis, selon la presse). Anthropic écrit elle-même qu'un taux de réussite d'attaque de 1 % reste un risque significatif. Ce qui marche :</p>
             <ul>
-              <li>Ton skill traite le diff comme des données à relire, jamais comme des instructions : c'est dans la section « Garde-fous » de l'étape 5.</li>
-              <li>L'agent de review n'a pas besoin d'écrire, ni de réseau, ni de secret. Donne-lui la lecture et ses deux scripts, rien d'autre.</li>
-              <li>En CI, la revue par IA ne tourne jamais avec des secrets sur une PR venue d'un fork, et un humain décide du merge.</li>
+              <li>Ton skill traite le diff comme des données à relire, jamais comme des instructions : c'est la section « Garde-fous » que tu ajoutes à la <a href="#m3-l7">leçon 3.7</a>.</li>
+              <li>L'agent de review lit le dépôt, lance ses deux scripts et n'écrit que dans <code>.review/</code> : les gabarits de CI du cours ne lui donnent que git, node, la lecture et l'écriture de fichiers. Ses scripts n'ouvrent aucune connexion. Le seul appel réseau est celui de l'outil vers le modèle, et la clé d'API n'existe que dans le job IA, jamais dans la porte sans IA.</li>
+              <li>En CI, la revue par IA ne tourne jamais avec des secrets sur une PR venue d'un fork : GitHub n'en donne pas aux PR de fork, mais sur GitLab un membre du projet peut lancer le pipeline d'une MR externe avec les variables du projet, alors ne le fais pas. Et un humain décide du merge.</li>
             </ul>
 
             <h3>Les skills tiers et la chaîne d'approvisionnement</h3>
@@ -184,7 +185,7 @@
           <div class="hunk"><span class="at">@@ 04 · 4.5 @@</span><span>dossier</span><span class="spacer"></span><span class="lvl core">core</span><span>15 min</span></div>
           <div class="lesson-body">
             <h2>Le dossier pour la RSSI, le DPO et la DSI</h2>
-            <p class="kicker">Trois personnes, trois questions. La RSSI veut savoir ce qui sort et ce qui s'exécute. Le DPO veut savoir si des données personnelles partent, vers qui, et sous quel contrat. La DSI veut savoir ce que ça coûte, qui le maintient et comment on revient en arrière. Une page par réponse suffit.</p>
+            <p class="kicker">Chacun lira ton dossier avec sa question. La RSSI veut savoir ce qui sort et ce qui s'exécute. Le DPO veut savoir si des données personnelles partent, vers qui, et sous quel contrat. La DSI veut savoir ce que ça coûte, qui le maintient et comment on revient en arrière. Une page pour chacun, c'est assez.</p>
             <div class="table-wrap"><table>
               <thead><tr><th scope="col">Document</th><th scope="col">Pour qui</th><th scope="col">Modèle</th></tr></thead>
               <tbody>
@@ -216,7 +217,7 @@
             <h3>Ce que disent les études, et pourquoi ça ne suffit pas</h3>
             <ul>
               <li>Dans le rapport DORA 2025 de Google, 90 % des professionnels interrogés utilisent l'IA et plus de 80 % pensent qu'elle les rend plus productifs. Ce sont des perceptions déclarées, et le rapport décrit l'IA comme un amplificateur : elle renforce les équipes qui marchent bien et aggrave les dysfonctionnements des autres.</li>
-              <li>L'essai randomisé de METR (juillet 2025) a mesuré l'inverse sur 16 développeurs expérimentés, dans des dépôts qu'ils connaissaient : 19 % de temps en plus avec l'IA, alors qu'ils pensaient avoir gagné 20 %. Sa mise à jour de février 2026 ne permet pas de conclure.</li>
+              <li>L'essai randomisé de METR (juillet 2025) a mesuré l'inverse sur 16 développeurs expérimentés, dans des dépôts qu'ils connaissaient : 19 % de temps en plus avec l'IA, alors qu'ils pensaient avoir gagné 20 %. Sa mise à jour de février 2026 juge « probable » que les développeurs soient plus accélérés qu'en 2025, mais ses données n'en donnent qu'une preuve « très faible ».</li>
               <li>Sur la revue de code elle-même, Atlassian a publié en 2026 une étude sur son assistant interne : 38,7 % de ses commentaires sont suivis d'une modification du code, contre 44,5 % pour ceux des humains, et le cycle des PR a raccourci d'environ 30 %. C'est une série dans le temps, pas un essai randomisé. Chez Mozilla et Ubisoft (RevMate), 7 à 8 % des commentaires générés étaient acceptés.</li>
             </ul>
             <p>La perception ne mesure donc rien, et un assistant de revue fait un premier passage : ce qui compte, c'est ce que l'équipe fait de ses commentaires.</p>
@@ -235,7 +236,7 @@
               <tbody>
                 <tr><td>Les commentaires de l'IA sont approuvés sans être lus</td><td>Biais d'automatisation et fatigue de revue, que Thoughtworks signale depuis 2024</td><td>Moins de findings, mieux vérifiés : l'étape « dire non » du module 2</td></tr>
                 <tr><td>Les PR grossissent</td><td>Faros (télémétrie de ses clients) observe des PR plus grosses et un temps de revue en hausse chez les gros utilisateurs d'IA</td><td>Petits lots, et la porte sans IA qui coupe tôt</td></tr>
-                <tr><td>Les juniors ne savent plus expliquer leur code</td><td>Dans un essai d'Anthropic (janvier 2026), ceux qui apprenaient avec l'IA ont eu 50 % au quiz, contre 67 % pour les autres</td><td>Le skill explique ses findings ; on demande à l'auteur de répondre, pas de cliquer</td></tr>
+                <tr><td>Les auteurs expliquent mal le code qu'ils ont fait écrire</td><td>Dans un essai d'Anthropic (janvier 2026, 52 ingénieurs qui découvraient une bibliothèque Python, avec un assistant dans l'éditeur), le groupe avec IA a eu 50 % au quiz passé juste après, contre 67 % sans IA</td><td>Le skill explique ses findings ; on demande à l'auteur de répondre, pas de cliquer</td></tr>
                 <tr><td>Des gens utilisent d'autres outils</td><td>Du shadow AI : un besoin que l'outil validé ne couvre pas</td><td>Le remonter au comité plutôt que le cacher</td></tr>
               </tbody>
             </table></div>
@@ -249,19 +250,20 @@
           <div class="hunk"><span class="at">@@ 04 · 4.7 @@</span><span>atelier 9 · final</span><span class="spacer"></span><span class="lvl core">core</span><span>60 min</span></div>
           <div class="lesson-body">
             <h2>Atelier final : ton skill chez ton client</h2>
-            <p class="kicker">Tu as construit un skill pour le Groupe Hexa. Maintenant, celui de ta vraie équipe. Même démarche, mêmes livrables, avec les règles et les contraintes de ton client.</p>
+            <p class="kicker">Avec le Groupe Hexa, tu as préparé une mission sur un client fictif. Maintenant, c'est celle de ta vraie équipe : tu reprends la démarche et les livrables, avec les règles et les contraintes de ton client.</p>
             <div class="atelier" id="m4-a9">
               <span class="tool-title">Atelier 9 · le kit de ta mission</span>
               <p>But : repartir avec un skill installable dans ton équipe et le dossier qui permet de le faire valider.</p>
               <ol>
                 <li><b>Le diagnostic.</b> Remplis <code>diagnostic.md</code> pour ton client réel. Ce que tu ne sais pas, note-le avec le nom de la personne à qui le demander.</li>
-                <li><b>Les règles.</b> Pars de ton skill du module 2. Remplace les références Angular par les décisions de ton équipe : relis les dix dernières merge requests et note les remarques qui reviennent. Si ta stack n'est pas Angular, garde la structure (procédure, références par domaine, scripts, exemples) et change le contenu.</li>
+                <li><b>Les règles.</b> Pars de ton skill du module 2, copié dans <code>.agents/skills/revue-equipe/</code> (change aussi le champ <code>name</code> de son frontmatter). Remplace les références Angular par les décisions de ton équipe : relis les dix dernières merge requests et note les remarques qui reviennent. Si ta stack n'est pas Angular, garde la structure (procédure, références par domaine, scripts, exemples) et change le contenu.</li>
                 <li><b>La mesure.</b> Choisis une MR passée dont tu connais les vrais problèmes, écris son corrigé et note ton skill dessus. C'est ton score de départ.</li>
                 <li><b>L'installation.</b> Choisis la recette de la <a href="#m4-l3">leçon 4.3</a> qui correspond à ton client et prépare la merge request qui ajoute le skill et la porte sans IA.</li>
                 <li><b>Le dossier.</b> Remplis <code>note-rssi.md</code>, adapte <code>charte-ia.md</code> et <code>plan-pilote.md</code>.</li>
               </ol>
 <pre class="term"><span class="p">$ </span><span class="cmd">cp -r ../skill-issue/course/client ./mission-client</span>
 <span class="p">$ </span><span class="cmd">node ../skill-issue/skills/skill-smith/scripts/validate.mjs .agents/skills/revue-equipe</span></pre>
+              <p class="small muted">Pas de rattrapage ici : c'est ton client. Pour repartir d'une base propre, <code>node ../skill-issue/course/rattrapage.mjs 5 --harness codex</code> pose le skill de référence dans <code>.agents/skills/revue-angular/</code> ; renomme ensuite le dossier et le champ <code>name</code>.</p>
               <p class="expect"><b>Fini quand</b> : ton skill passe le validateur et a un score de départ sur une vraie MR de ton équipe ; la merge request d'installation est prête (skill, porte sans IA, aucun secret) ; les quatre documents sont remplis, et chaque point inconnu porte le nom de la personne qui répondra.</p>
             </div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
@@ -273,7 +275,7 @@
           <div class="hunk"><span class="at">@@ 04 · 4.8 @@</span><span>restitution</span><span class="spacer"></span><span class="lvl base">base</span><span>10 min</span></div>
           <div class="lesson-body">
             <h2>La restitution</h2>
-            <p class="kicker">Deux mois ont passé chez le Groupe Hexa. Le pilote est fini, le comité t'attend, et Karim comme Léa auront leurs questions.</p>
+            <p class="kicker">Deux mois ont passé chez le Groupe Hexa (fictif). Le pilote est fini, le comité t'attend, et Karim comme Léa auront leurs questions.</p>
             <div class="game" data-game="restitution"></div>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>

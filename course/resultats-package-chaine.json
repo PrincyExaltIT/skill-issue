@@ -1,0 +1,37 @@
+{
+  "date": "8 octobre 2026",
+  "branche": "solution/review-fix (PR #2 de skill-issue-playground)",
+  "source": "docs/sample-review/chain/ (rapports) ; journaux bruts hors dépôt",
+  "etapes": {
+    "revue": {
+      "harness": "Codex",
+      "duree_s": 682,
+      "cout": null,
+      "verdict": "REQUEST_CHANGES",
+      "blocker": 8,
+      "major": 13,
+      "minor": 16
+    },
+    "fix": {
+      "harness": "Claude Code",
+      "duree_s": 1243,
+      "cout": 6.08,
+      "commits": 21
+    },
+    "rerevue": {
+      "harness": "Claude Code",
+      "duree_s": 359,
+      "cout": 5.69,
+      "verdict": "REQUEST_CHANGES",
+      "blocker": 1,
+      "major": 2,
+      "minor": 15,
+      "info": 5
+    },
+    "handoff": {
+      "harness": "Claude Code",
+      "duree_s": 101,
+      "cout": 0.71
+    }
+  }
+}

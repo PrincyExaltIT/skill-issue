@@ -5,10 +5,10 @@
       <span class="num">00</span>
       <h1 id="mission-title">La mission</h1>
       <p class="promise">Avant d'écrire une ligne de skill, tu passes un entretien. Un grand groupe veut mettre l'IA dans sa façon de travailler, et c'est toi qu'on appelle. Tes questions et tes réponses fixent le cadre de tout le reste de la formation.</p>
-      <div class="chips"><span class="chip">⏱ <b>~15 min</b></span><span class="chip">1 jeu de rôle · 1 fiche mission</span><span class="lvl base">base</span></div>
+      <div class="chips"><span class="chip">⏱ <b>~15 min</b> (estimation)</span><span class="chip">1 jeu de rôle · 1 fiche mission</span><span class="lvl base">base</span></div>
     </header>
 
-    <div class="rc note"><span class="av" aria-hidden="true">i</span><div><p class="who"><b>Client fictif, contraintes réelles</b></p><p>Le Groupe Hexa n'existe pas. Ses contraintes, si : un seul outil d'IA validé, une CI sans internet, des données personnelles qui traînent dans les tests, une RSSI qui a un droit de veto. Ta fiche mission te suit dans le module 2 (tu construis le skill pour ce client) et dans le module 4 (tu l'installes chez lui).</p></div></div>
+    <div class="rc note"><span class="av" aria-hidden="true">i</span><div><p class="who"><b>Client fictif, contraintes typiques</b></p><p>Le Groupe Hexa est inventé. Ses contraintes, on les retrouve chez beaucoup de grands comptes : un seul outil d'IA validé, une CI sans internet, des données personnelles qui traînent dans les tests, et un RSSI, Karim, qui a un droit de veto. Ta fiche mission te suit dans le module 2 (tu construis le skill pour ce client) et dans le module 4 (tu l'installes chez lui).</p></div></div>
 
     <div class="game" data-game="mission"></div>
 
@@ -78,7 +78,7 @@
     },
     "delai": {
       "title": "Délai",
-      "text": "Un premier retour chiffré dans deux mois. On parle d'un pilote, pas d'un déploiement."
+      "text": "Le comité attend un premier retour chiffré dans deux mois, le temps d'un pilote sur une équipe, et décidera du déploiement ensuite."
     },
     "flux": {
       "title": "Le flux de données",
@@ -102,10 +102,11 @@
         "karim",
         "lea"
       ],
+      "planTitle": "Ma proposition de pilote",
       "next": [
+        "Module 1 : ouvrir le capot. À l'atelier 0, tu notes ton score de départ, celui que tu montreras au comité dans deux mois.",
         "Module 2 : construire le skill de review avec les règles de l'équipe de Léa.",
-        "Module 4 : l'installer chez Hexa (dépôt, miroir, CI sans internet) et préparer le dossier de Karim.",
-        "Garder le score de départ : c'est l'argument du comité dans deux mois."
+        "Module 4 : l'installer chez Hexa (dépôt, miroir, CI sans internet) et préparer le dossier de Karim."
       ],
       "start": "s1",
       "scenes": {
@@ -121,7 +122,7 @@
                 "claire": -1,
                 "karim": -2
               },
-              "coach": "Proposer un outil avant de connaître le terrain, c'est le meilleur moyen de te faire bloquer par la sécurité. Et dans deux mois, personne ne saura dire si ça a marché."
+              "coach": "Proposer un outil avant de connaître le terrain, c'est le meilleur moyen de te faire bloquer par la sécurité, et dans deux mois personne ne saura dire si ça a marché."
             },
             {
               "text": "Avant de proposer quoi que ce soit, j'aimerais comprendre votre contexte. Je peux vous poser quelques questions ?",
@@ -139,7 +140,7 @@
               },
               "card": "probleme",
               "reply": "Les revues de code, sans hésiter. Une MR attend trois jours, et on retrouve les mêmes erreurs d'un sprint à l'autre.",
-              "coach": "Partir d'un problème plutôt que d'un outil : tu sais déjà quoi mesurer."
+              "coach": "Tu pars du problème de l'équipe, et tu sais déjà quoi mesurer : le temps d'attente des MR et les erreurs qui reviennent. Claire n'aura pas à te le redire."
             }
           ]
         },
@@ -233,7 +234,7 @@
               "trust": {
                 "karim": -2
               },
-              "coach": "Faux, et Karim le sait : un assistant de code envoie du contexte au modèle. La bonne réponse décrit le flux."
+              "coach": "Faux, et Karim le sait : un assistant de code envoie du contexte au modèle, et il attend que tu décrives ce flux."
             },
             {
               "text": "Le contexte part vers le modèle de l'outil que vous avez déjà validé, selon le contrat signé par la DSI. Mon skill, lui, est un dossier de fichiers dans le dépôt : il n'ajoute aucun flux.",
@@ -250,7 +251,7 @@
               "trust": {
                 "karim": -1
               },
-              "coach": "Honnête, mais face à un RSSI, arrive avec le schéma des flux. C'est le premier livrable du module 4."
+              "coach": "Honnête, mais Karim attend le schéma des flux. Le module 4 t'apprend à le dessiner en leçon 4.2, juste après le diagnostic (4.1)."
             }
           ]
         },
@@ -266,7 +267,7 @@
                 "karim": 2
               },
               "card": "scripts",
-              "coach": "Relire, épingler, vérifier : la base pour n'importe quel skill, surtout s'il vient de l'extérieur."
+              "coach": "Bonne réponse : Karim peut relire le code et vérifier l'empreinte lui-même. Demande la même chose à tout skill, surtout s'il vient de l'extérieur."
             },
             {
               "text": "Ils viennent d'un registre public et se mettent à jour tout seuls, comme ça on a toujours la dernière version.",
@@ -274,7 +275,7 @@
               "trust": {
                 "karim": -2
               },
-              "coach": "Du code qui se met à jour tout seul sur les postes : c'est exactement ce qu'un RSSI refuse. Et ici, les runners n'ont même pas internet."
+              "coach": "Du code qui se met à jour tout seul sur les postes, Karim le refusera, et ici les runners n'ont même pas internet."
             },
             {
               "text": "Ils tournent d'abord en CI, sur la MR, sans aucun secret. C'est une porte sans IA, avant même de parler de modèle.",
@@ -309,7 +310,7 @@
                 "claire": 1
               },
               "card": "mesure",
-              "coach": "Une mesure transforme un avis en argument. Tu as le script de score pour ça."
+              "coach": "Avec des chiffres, Léa peut juger sur pièces. Le script de score, que tu utilises dès l'atelier 0, sert à ça."
             },
             {
               "text": "L'IA progresse vite, ça va s'améliorer tout seul.",
@@ -317,7 +318,7 @@
               "trust": {
                 "lea": -2
               },
-              "coach": "Promettre l'avenir ne règle pas le bruit d'aujourd'hui. Léa veut une preuve."
+              "coach": "Promettre que l'outil s'améliorera ne règle pas le bruit que Léa subit aujourd'hui, et elle attend une preuve."
             }
           ]
         },
@@ -330,7 +331,7 @@
           "next": "s6",
           "options": {
             "p1": {
-              "text": "Une équipe pilote, celle de Léa, sur deux sprints.",
+              "text": "Une équipe pilote, celle de Léa, sur quatre sprints (deux mois).",
               "good": true,
               "key": true,
               "trust": {
@@ -391,7 +392,7 @@
               "trust": {
                 "karim": 2
               },
-              "missedCoach": "Karim attend sa note : flux, données, permissions. Sans elle, son veto reste possible."
+              "missedCoach": "Karim attend sa note sur les flux, les données et les permissions des scripts. Sans elle, il peut encore poser son veto."
             },
             "p8": {
               "text": "Tester le modèle avec de vraies fixtures, pour voir s'il repère les données sensibles.",
@@ -414,8 +415,8 @@
           "kind": "end",
           "who": "claire",
           "say": "Le comité a écouté ta proposition. Voilà ce qu'il en pense.",
-          "link": "#m2",
-          "linkText": "Construire le skill (module 2)",
+          "link": "#m1",
+          "linkText": "Commencer le module 1 (ton score de départ)",
           "verdicts": [
             {
               "when": [
@@ -439,7 +440,7 @@
               "mood": "bravo",
               "title": "Pilote validé.",
               "say": "Le comité valide le pilote. Karim signe sous réserve de sa note, Léa est partante. On se revoit dans deux mois avec les chiffres.",
-              "coach": "Bravo : tu as cadré le problème, rassuré la sécurité et prévu une preuve. Télécharge ta fiche : elle sert dans les modules 2 et 4."
+              "coach": "Bravo : Claire, Karim et Léa te suivent. Télécharge ta fiche : elle te servira dans les modules 2 et 4. Le parcours commence au module 1, où l'atelier 0 te donne ton score de départ."
             },
             {
               "when": [
@@ -467,14 +468,14 @@
               "mood": "oups",
               "title": "L'équipe n'y croit pas.",
               "say": "Je veux bien essayer, mais rien ne me prouve qu'on ne va pas encore se noyer dans les commentaires.",
-              "coach": "Léa doute. Mesure avant d'imposer : le module 2 te fait noter ton skill sur une vraie PR à chaque étape."
+              "coach": "Léa doute. Mesure avant d'imposer : dès l'atelier 0 du module 1, tu notes ton skill sur une vraie PR, puis à chaque étape du module 2."
             },
             {
               "who": "claire",
               "mood": "parle",
               "title": "Pilote accepté, sous conditions.",
               "say": "Le comité est d'accord pour un pilote, mais il manque des éléments. Complète ta proposition avant le lancement.",
-              "coach": "Pas mal ! Regarde les points qui manquent dans ta fiche, puis attaque le module 2."
+              "coach": "Pas mal ! Regarde les points qui manquent dans ta fiche, puis attaque le module 1."
             }
           ]
         }
@@ -483,11 +484,13 @@
     "restitution": {
       "client": "Groupe Hexa (fictif), deux mois plus tard",
       "brief": "Le pilote est fini. Le comité veut savoir s'il faut continuer.",
+      "intro": "Nouvelle partie, indépendante de la mission : la confiance repart de zéro et ta fiche se remplit à nouveau.",
       "room": [
         "claire",
         "karim",
         "lea"
       ],
+      "planTitle": "La suite proposée",
       "next": [
         "Garder le protocole de mesure pour chaque nouvelle équipe.",
         "Confier les règles à un référent par équipe : le skill doit survivre à ton départ.",
@@ -506,7 +509,7 @@
               "trust": {
                 "lea": -1
               },
-              "coach": "Une démo choisie impressionne, mais ne prouve rien. Le comité veut des chiffres qu'on peut comparer."
+              "coach": "Une MR choisie pour l'occasion ne prouve pas grand-chose : le comité veut des chiffres qu'il peut comparer à ceux du départ."
             },
             {
               "text": "Le score de départ et celui d'aujourd'hui, sur la même MR de référence, avec les fausses alertes à côté.",
@@ -516,7 +519,7 @@
                 "lea": 1
               },
               "card": "mesure",
-              "coach": "Même MR, même corrigé, même façon de noter : la comparaison tient debout."
+              "coach": "Les deux scores viennent de la même MR, notée avec le même corrigé : le comité peut les comparer."
             },
             {
               "text": "Les retours de l'équipe : ils adorent.",
@@ -524,7 +527,8 @@
               "trust": {
                 "claire": 0
               },
-              "coach": "Les retours comptent, mais seuls, ils ne convaincront pas un comité. Montre-les à côté des chiffres."
+              "mood": "montre",
+              "coach": "Les retours de l'équipe comptent, mais seuls, ils ne convaincront pas le comité. Montre-les à côté des chiffres."
             }
           ]
         },
@@ -548,7 +552,7 @@
                 "karim": 2,
                 "claire": 1
               },
-              "coach": "Signaler l'incident et montrer la correction : c'est comme ça qu'on gagne la confiance d'un RSSI."
+              "coach": "Tu signales l'incident et tu montres la correction : Karim sait maintenant que tu ne lui cacheras rien."
             },
             {
               "text": "On n'a pas vraiment regardé, mais personne ne s'est plaint.",
@@ -556,7 +560,7 @@
               "trust": {
                 "karim": -2
               },
-              "coach": "« Personne ne s'est plaint » n'est pas un contrôle. Karim attend des traces."
+              "coach": "Sans trace de contrôle, Karim n'a aucune raison de te croire. Garde au moins les journaux de la porte CI et les empreintes vérifiées."
             }
           ]
         },
@@ -571,7 +575,7 @@
               "trust": {
                 "lea": -1
               },
-              "coach": "Un skill qui dépend du consultant meurt quand il part. L'équipe doit savoir le faire évoluer."
+              "coach": "Si le skill dépend de toi, il s'arrêtera à ton départ : l'équipe doit savoir le faire évoluer seule."
             },
             {
               "text": "Vous : les règles vivent dans le dépôt. Chaque erreur qui revient devient une règle, par MR, avec son exemple.",
@@ -640,7 +644,7 @@
                 "lea": -2,
                 "karim": -2
               },
-              "coach": "La revue par IA reste un avis. La retirer aux humains, c'est perdre la personne qui assume le merge."
+              "coach": "La revue par IA reste un avis, et il faut toujours quelqu'un pour assumer le merge."
             },
             "n6": {
               "text": "Faire valider chaque nouveau skill tiers par Karim avant de l'installer.",
@@ -655,8 +659,8 @@
           "kind": "end",
           "who": "claire",
           "say": "Le comité a délibéré.",
-          "link": "#m4-final",
-          "linkText": "Préparer ton vrai client (atelier final)",
+          "link": "#m4-quiz",
+          "linkText": "Finir le module 4 (quiz)",
           "verdicts": [
             {
               "when": [
@@ -680,7 +684,7 @@
               "mood": "bravo",
               "title": "Extension validée.",
               "say": "On étend à une deuxième équipe le mois prochain. Et on aimerait que tu formes les référents.",
-              "coach": "Mission réussie. Il ne reste plus qu'à refaire ça pour de vrai : l'atelier final t'y prépare."
+              "coach": "Mission réussie. Pour refaire ça chez ton vrai client, garde l'atelier final (leçon 4.7) sous la main."
             },
             {
               "when": [
@@ -694,7 +698,7 @@
               "mood": "oups",
               "title": "La sécurité freine.",
               "say": "Je ne bloque pas, mais je veux un vrai suivi avant d'aller plus loin.",
-              "coach": "Il manque des traces côté sécurité. Relis la leçon sur la prévention, puis recommence."
+              "coach": "Il manque des traces côté sécurité. Relis la leçon 4.4 sur les préventions, puis recommence."
             },
             {
               "who": "claire",

@@ -30,7 +30,7 @@
             <p class="kicker">Le package tient en quatre skills, qu'une seule commande forgent installe. Autour d'eux, un kit sans dépendance : un installeur, deux pipelines CI, un hook, des gabarits et des evals.</p>
 <div class="kit-tree"><span class="d">skill-issue/</span>
 ├─ <span class="d">skills/</span>                         <span class="c"># les 4 skills du package, au standard agentskills.io</span>
-│  ├─ <span class="d">angular-review/</span>              <span class="c"># la review : scripts (scope, scan, findings), 10 références, 7 relecteurs</span>
+│  ├─ <span class="d">angular-review/</span>              <span class="c"># la review : scripts (scope, scan, findings), 10 références, jusqu'à 7 relecteurs</span>
 │  ├─ <span class="d">review-fix/</span>                  <span class="c"># corrige les findings un par un, build et test après chacun</span>
 │  ├─ <span class="d">pr-handoff/</span>                  <span class="c"># description de PR/MR et note de passation (invocation manuelle)</span>
 │  └─ <span class="d">skill-smith/</span>                 <span class="c"># crée et valide des skills : new-skill.mjs, validate.mjs</span>
@@ -57,8 +57,8 @@
 <span class="cm"># la CI et le hook : depuis le dépôt du kit</span>
 <span class="p">$ </span><span class="cmd">git clone https://github.com/PrincyExaltIT/skill-issue.git</span>
 <span class="p">$ </span><span class="cmd">cp skill-issue/kit/ci/github/angular-review.yml ./mon-app-angular/.github/workflows/</span></pre>
-            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy (1.2 ou plus). Il copie chaque skill depuis le registre public <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a> : <code>agents</code> dans <code>.agents/skills</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code…), <code>claude</code> dans <code>.claude/skills</code>. Il note l'empreinte de chaque fichier et l'endroit de chaque installation dans <code>forgent.lock.json</code> ; <code>verify</code> contrôle toutes tes copies, en CI aussi. Pour épingler une version : <code>angular-review@2.1.0</code>. Le dépôt du kit, lui, sert à la CI et à <code>install.mjs</code> (leçon P.6).</p>
-            <p class="small muted">Sur la démo, la branche <code>main</code> a le package déjà installé, comme le ferait une équipe ; <code>feat/speaker-spotlight</code> porte la même PR que le lab.</p>
+            <p class="small muted"><a href="https://github.com/PrincyExaltIT/forgent" target="_blank" rel="noopener">forgent</a> est l'installeur de Princy (1.2 ou plus). Il copie chaque skill depuis le registre public <a href="https://github.com/PrincyExaltIT/agent-skill" target="_blank" rel="noopener">agent-skill</a> : <code>agents</code> dans <code>.agents/skills</code> (Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code…), <code>claude</code> dans <code>.claude/skills</code>. Il note l'empreinte de chaque fichier et l'endroit de chaque installation dans <code>forgent.lock.json</code> ; <code>verify</code> contrôle toutes tes copies, en CI aussi. Pour épingler la version publiée par le registre : <code>angular-review@2.1.1</code>. Le dépôt du kit, lui, sert à la CI et à <code>install.mjs</code> (leçon P.6).</p>
+            <p class="small muted">Sur la démo, la branche <code>main</code> a le package déjà installé, comme le ferait une équipe ; <code>feat/speaker-spotlight</code> porte le code de la PR du lab, avec le package installé.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
@@ -71,17 +71,18 @@
             <p class="kicker">Les deux relisent la même PR et sont notés avec le même corrigé, de la même façon. On cherche surtout à voir ce que la machinerie en plus du package rapporte.</p>
             <div class="table-wrap">
               <table>
-                <thead><tr><th></th><th>Ton skill · étape 4<br><span class="small muted">Opus 5.5</span></th><th>Ton skill · étape 4<br><span class="small muted">Haiku 5.5</span></th><th>Package<br><span class="small muted">Claude Code · Opus 5.5</span></th><th>Package<br><span class="small muted">Codex · gpt-5.6-sol</span></th></tr></thead>
+                <thead><tr><th></th><th>Ton skill · étape 4<br><span class="small muted">Opus 5.5</span></th><th>Ton skill · étape 4<br><span class="small muted">Haiku 5.5</span></th><th>Package<br><span class="small muted">Claude Code · Opus 5.5 · {{PKG:claude:date}}</span></th><th>Package<br><span class="small muted">Codex · gpt-5.6-sol · {{PKG:codex:date}}</span></th></tr></thead>
                 <tbody>
-                  <tr><th scope="row">Rappel (27 attendus)</th><td>{{R:opus:4:rappel}} %</td><td>{{R:haiku:4:rappel}} %</td><td>{{PKG:claude:rappel}} %</td><td>{{PKG:codex:rappel}} %</td></tr>
+                  <tr><th scope="row">Rappel ({{LAB_ISSUES}} attendus)</th><td>{{R:opus:4:rappel}} %</td><td>{{R:haiku:4:rappel}} %</td><td>{{PKG:claude:rappel}} %</td><td>{{PKG:codex:rappel}} %</td></tr>
                   <tr><th scope="row">Précision</th><td>{{R:opus:4:precision}} %</td><td>{{R:haiku:4:precision}} %</td><td>{{PKG:claude:precision}} %</td><td>{{PKG:codex:precision}} %</td></tr>
-                  <tr><th scope="row">Leurres signalés</th><td>{{R:opus:4:leurres}} / 7</td><td>{{R:haiku:4:leurres}} / 7</td><td>{{PKG:claude:leurres}} / 7</td><td>{{PKG:codex:leurres}} / 7</td></tr>
+                  <tr><th scope="row">Leurres signalés</th><td>{{R:opus:4:leurres}} / {{LAB_DECOYS}}</td><td>{{R:haiku:4:leurres}} / {{LAB_DECOYS}}</td><td>{{PKG:claude:leurres}} / {{LAB_DECOYS}}</td><td>{{PKG:codex:leurres}} / {{LAB_DECOYS}}</td></tr>
                   <tr><th scope="row">Durée</th><td>{{R:opus:4:duree}}</td><td>{{R:haiku:4:duree}}</td><td>{{PKG:claude:duree}}</td><td>≈ {{PKG:codex:duree}}</td></tr>
-                  <tr><th scope="row">Taille du skill</th><td colspan="2">1 SKILL.md, 5 références, 2 scripts, 2 assets</td><td colspan="2">1 SKILL.md, 10 références, 3 scripts + 4 modules, 7 relecteurs</td></tr>
+                  <tr><th scope="row">Coût</th><td>{{R:opus:4:cout}} $</td><td>non mesuré</td><td>{{PKG:claude:cout}} $ ({{PKG:claude:relecteurs}})</td><td>abonnement ChatGPT</td></tr>
+                  <tr><th scope="row">Taille du skill</th><td colspan="2">1 SKILL.md, 5 références, 2 scripts, 2 assets</td><td colspan="2">1 SKILL.md, 10 références, 3 scripts + 4 modules, jusqu'à 7 relecteurs</td></tr>
                 </tbody>
               </table>
             </div>
-            <p>Sur cette PR, le skill de l'étape 4 fait presque jeu égal avec le package. La comparaison l'avantage, puisque ses règles ont été écrites après lecture du corrigé de cette PR ; sur un autre code, l'écart reste à mesurer. Et de toute façon, ce que le package ajoute ne se voit pas dans un seul score :</p>
+            <p>Sur cette PR, avec Opus, ton skill de l'étape 4 trouve autant de problèmes que le package sous Claude Code ({{R:opus:4:rappel}} % contre {{PKG:claude:rappel}} %), avec moins de bruit ({{R:opus:4:precision}} % de précision contre {{PKG:claude:precision}} %). Sous Codex, le package fait {{PKG:codex:rappel}} % et {{PKG:codex:precision}} %. Un run n'est pas une moyenne : le {{PKG:claude_seq:date}}, un autre run du package sous Claude Code, relecteurs joués en séquence, donnait {{PKG:claude_seq:precision}} % de précision et {{PKG:claude_seq:leurres}} leurre en {{PKG:claude_seq:duree}}, pour {{PKG:claude_seq:cout}} $. Ce run-là et celui de Codex demandaient une review avant un merge sur <code>main</code> ; celui du tableau reprend la phrase du cours. La comparaison avantage ton skill, puisque ses règles ont été écrites après lecture du corrigé de cette PR ; sur un autre code, l'écart reste à mesurer. Ce que le package ajoute ne se voit pas dans un seul score :</p>
             <ul>
               <li><b>Une sortie machine.</b> <code>findings.json</code> valide un schéma ; <code>review-fix</code>, <code>pr-handoff</code> et la CI le lisent. Ton rapport Markdown, lui, n'est lu que par des humains.</li>
               <li><b>Des garde-fous par script.</b> Les scripts vérifient l'extrait cité par chaque finding à la ligne annoncée et calculent le verdict. Tant qu'un candidat n'est pas tranché, ils refusent le rendu.</li>
@@ -102,7 +103,7 @@
             <div class="pipeline wide" role="list">
               <div class="stage" role="listitem"><span class="who">1 · Scope</span><span class="what">scope.mjs : diff, version d'Angular, zoneless, SSR, runner de tests.</span><span class="out">scope.json</span></div>
               <div class="stage" role="listitem"><span class="who">2 · Scan</span><span class="what">scan.mjs : {{RULES_MECH}} détecteurs, avec leur niveau de confiance.</span><span class="out">scan.json</span></div>
-              <div class="stage" role="listitem"><span class="who">3 · Review</span><span class="what">Sept relecteurs, un par domaine, en sous-agents quand le harness le permet.</span><span class="out">reviewers/*.json</span></div>
+              <div class="stage" role="listitem"><span class="who">3 · Review</span><span class="what">Jusqu'à sept relecteurs, un par domaine (le septième, conformité projet, seulement si le projet a ses propres règles), en sous-agents quand le harness le permet.</span><span class="out">reviewers/*.json</span></div>
               <div class="stage" role="listitem"><span class="who">4-5 · Merge, Verify</span><span class="what">Fusion, contrôle des extraits, réfutation de chaque candidat.</span><span class="out">findings.json</span></div>
               <div class="stage" role="listitem"><span class="who">6 · Report</span><span class="what">Verdict calculé, rendu du rapport.</span><span class="out">REVIEW.md</span></div>
             </div>
@@ -150,7 +151,7 @@
                 <table><thead><tr><th>Règle</th><th>Titre</th><th>Sévérité</th><th>Domaine</th><th>Détection</th></tr></thead><tbody></tbody></table>
               </div>
             </div>
-            <p>Si le projet utilise angular-eslint, beaucoup de règles mécaniques tournent déjà en CI (<code>prefer-control-flow</code>, <code>prefer-inject</code>, <code>template/alt-text</code>, <code>no-output-native</code>…). Chaque détecteur du package porte le nom de la règle eslint équivalente : quand le lint est installé, la review garde son attention pour ce qu'aucun lint ne voit.</p>
+            <p>Si le projet utilise angular-eslint, beaucoup de règles mécaniques tournent déjà en CI (<code>prefer-control-flow</code>, <code>prefer-inject</code>, <code>template/alt-text</code>, <code>no-output-native</code>…). {{DETECTORS_ESLINT}} des {{DETECTORS}} détecteurs du package portent le nom de la règle eslint équivalente : quand le lint est installé, la review garde son attention pour ce qu'aucun lint ne voit. Les autres n'ont pas d'équivalent dans le lint, et la review reste leur seul garde-fou.</p>
             <button class="btn read-btn" type="button" aria-pressed="false">Marquer comme lue</button>
           </div>
         </article>
@@ -160,15 +161,15 @@
           <div class="hunk"><span class="at">@@ bonus · P.5 @@</span><span>chain · CI</span><span class="spacer"></span><span class="lvl core">core</span><span>8 min</span></div>
           <div class="lesson-body">
             <h2>La chaîne et la CI, en vrai</h2>
-            <p class="kicker">Le 8 octobre 2026, la chaîne complète du package a tourné sur la PR de démo. Elle a beaucoup corrigé, et elle a quand même conclu qu'il ne fallait pas merger.</p>
+            <p class="kicker">Le {{PCH:date}}, la chaîne complète du package a tourné sur la PR de démo. Elle a beaucoup corrigé, et elle a quand même conclu qu'il ne fallait pas merger.</p>
             <div class="table-wrap">
               <table>
                 <thead><tr><th>Étape</th><th>Harness</th><th>Résultat</th><th>Durée · coût</th></tr></thead>
                 <tbody>
-                  <tr><td><code>angular-review</code></td><td>Codex</td><td><span class="sev blocker">REQUEST_CHANGES</span> 8 BLOCKER, 13 MAJOR, 16 MINOR</td><td>≈ 12 min · quota ChatGPT</td></tr>
-                  <tr><td><code>review-fix</code> (BLOCKER + MAJOR)</td><td>Claude Code</td><td>21 commits, un par finding, chacun avec un test de régression</td><td>21 min · 6,08 $</td></tr>
-                  <tr><td><code>angular-review</code> (re-review)</td><td>Claude Code</td><td><span class="sev blocker">REQUEST_CHANGES</span> 1 BLOCKER, 2 MAJOR, 15 MINOR</td><td>2,7 min · 5,69 $</td></tr>
-                  <tr><td><code>pr-handoff</code></td><td>Claude Code</td><td>Description de PR « à ne pas merger en l'état », décisions listées pour l'humain</td><td>1,7 min · 0,71 $</td></tr>
+                  <tr><td><code>angular-review</code></td><td>Codex</td><td><span class="sev blocker">REQUEST_CHANGES</span> {{PCH:etapes.revue.blocker}} BLOCKER, {{PCH:etapes.revue.major}} MAJOR, {{PCH:etapes.revue.minor}} MINOR</td><td>≈ {{PCH:etapes.revue.duree_s}} · quota ChatGPT</td></tr>
+                  <tr><td><code>review-fix</code> (BLOCKER + MAJOR)</td><td>Claude Code</td><td>{{PCH:etapes.fix.commits}} commits, un par finding, chacun avec un test de régression</td><td>{{PCH:etapes.fix.duree_s}} · {{PCH:etapes.fix.cout}}</td></tr>
+                  <tr><td><code>angular-review</code> (re-review)</td><td>Claude Code</td><td><span class="sev blocker">REQUEST_CHANGES</span> {{PCH:etapes.rerevue.blocker}} BLOCKER, {{PCH:etapes.rerevue.major}} MAJOR, {{PCH:etapes.rerevue.minor}} MINOR, {{PCH:etapes.rerevue.info}} INFO</td><td>{{PCH:etapes.rerevue.duree_s}} · {{PCH:etapes.rerevue.cout}}</td></tr>
+                  <tr><td><code>pr-handoff</code></td><td>Claude Code</td><td>Description de PR « à ne pas merger en l'état », décisions listées pour l'humain</td><td>{{PCH:etapes.handoff.duree_s}} · {{PCH:etapes.handoff.cout}}</td></tr>
                 </tbody>
               </table>
             </div>
@@ -179,7 +180,7 @@
               <li><b>La porte fait ce qu'elle promet.</b> Sur la PR #1, il y a 44 candidats mais un seul BLOCKER de confiance haute (R-SIG-010, <code>talk-card.ts:28</code>), et le job échoue. Sur la branche corrigée, la porte passe, alors que la re-review trouve encore un BLOCKER.</li>
               <li><b>Les annotations sont plafonnées.</b> Sur nos runs, GitHub n'en a affiché que dix par niveau et par étape : 9 MAJOR sur 11 manquaient. D'où le tri par sévérité et le résumé du job, qui liste tout.</li>
               <li><b>Le SARIF a ses conditions.</b> L'upload demande la permission <code>actions: read</code>, et le code scanning d'un dépôt privé demande GitHub Code Security : le package n'envoie le SARIF que sur un dépôt public, ou si <code>ANGULAR_REVIEW_SARIF</code> vaut <code>true</code>.</li>
-              <li><b>Les avertissements vieillissent vite.</b> Sur nos runs, GitHub a signalé des actions encore en Node 20 (dépréciées) et CodeQL v3 en fin de vie en décembre 2026 : le package est passé à <code>checkout@v7</code>, <code>setup-node@v7</code> et <code>upload-sarif@v4</code>.</li>
+              <li><b>Les avertissements vieillissent vite.</b> Sur nos runs du 8 octobre, GitHub signalait des actions écrites pour Node 20, exécutées de force en Node 24, et CodeQL v3, qui sera déprécié en décembre 2026 : le package est passé à <code>checkout@v7</code>, <code>setup-node@v7</code> et <code>upload-sarif@v4</code>.</li>
             </ul>
             <div class="video-card">
               <video controls preload="metadata" poster="media/v3-chain.jpg" playsinline>

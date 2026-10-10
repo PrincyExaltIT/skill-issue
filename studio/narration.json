@@ -99,7 +99,7 @@
     "v4-cloud": [
       {
         "at": 0.3,
-        "text": "Ton skill est commité, donc rien n'oblige à le lancer depuis ton poste. Ta CI peut le faire sur chaque PR, et des relecteurs hébergés comme Copilot savent déjà lire ce dossier."
+        "text": "Ton skill est commité, donc rien n'oblige à le lancer depuis ton poste. Ta CI peut le faire sur chaque PR, et des relecteurs hébergés comme Copilot savent déjà lire des skills."
       },
       {
         "at": 12.3,
@@ -111,7 +111,7 @@
       },
       {
         "at": 40.2,
-        "text": "Les relecteurs hébergés ont chacun leurs fichiers. Copilot lit les skills du dépôt, Codex et Claude lisent leurs fichiers d'instructions, et GitLab Duo a son YAML à lui. Mets tes règles là où ils regardent."
+        "text": "Les relecteurs hébergés ont chacun leurs fichiers. Par exemple, Copilot lit les skills du dépôt, Codex et Claude leurs fichiers d'instructions, et GitLab Duo un YAML à lui. Mets tes règles là où ils regardent."
       }
     ],
     "v3-chain": [
@@ -146,8 +146,8 @@
       },
       {
         "at": 12.3,
-        "text": "Première étape, une vraie procédure. Au début, Haiku répondait dans le chat et n'écrivait jamais son rapport. Quand chaque étape a eu un critère de fin, il l'a écrit, et son score est passé de 22 à 59 %.",
-        "say": "Première étape, une vraie procédure. Au début, Haiku répondait dans le chat et n'écrivait jamais son rapport. Quand chaque étape a eu un critère de fin, il l'a écrit, et son score est passé de 22 à 59 pour cent."
+        "text": "Première étape, une vraie procédure. Au premier run, Haiku a répondu dans le chat sans écrire son rapport. Quand chaque étape a eu un critère de fin, il l'a écrit, et son score est passé de 22 à 59 %.",
+        "say": "Première étape, une vraie procédure. Au premier run, Haiku a répondu dans le chat sans écrire son rapport. Quand chaque étape a eu un critère de fin, il l'a écrit, et son score est passé de 22 à 59 pour cent."
       },
       {
         "at": 24.3,
@@ -160,7 +160,7 @@
       },
       {
         "at": 48.3,
-        "text": "On lui a aussi appris à dire non : chaque finding est contesté, et il explique pourquoi il le garde ou l'écarte. Sur cette PR, ça n'a rien changé, les leurres avaient déjà disparu avec les règles."
+        "text": "On lui a aussi appris à dire non : chaque finding est contesté, et il explique pourquoi il le garde ou l'écarte. Sur cette PR, ça n'a rien apporté de plus, les leurres avaient déjà disparu avec les règles."
       },
       {
         "at": 60.3,
@@ -171,8 +171,8 @@
     "v2-review": [
       {
         "at": 0.3,
-        "text": "Voici le package de Princy, angular-review. C'est un dossier comme le tien, installé là où chaque outil va le chercher, et partout il suffit de dire « review cette branche ».",
-        "say": "Voici le package de Princy, angular review. C'est un dossier comme le tien, installé là où chaque outil va le chercher, et partout il suffit de dire « review cette branche »."
+        "text": "Voici le package de Princy, angular-review. C'est un dossier comme le tien, installé là où chaque outil va le chercher. Sous Claude Code et sous Codex, une simple demande de review de ta branche suffit à le lancer.",
+        "say": "Voici le package de Princy, angular review. C'est un dossier comme le tien, installé là où chaque outil va le chercher. Sous Claude Code et sous Codex, une simple demande de review de ta branche suffit à le lancer."
       },
       {
         "at": 20.3,
@@ -189,7 +189,7 @@
       },
       {
         "at": 68.2,
-        "text": "Chaque candidat est ensuite attaqué. Si l'extrait cité n'existe pas à la ligne annoncée, un script le rejette, peu importe ce que le modèle en pense."
+        "text": "Chaque candidat est ensuite attaqué. Si l'extrait cité n'existe pas à la ligne annoncée, un script le signale, et le rapport ne sort pas tant que ce candidat n'a pas été tranché."
       },
       {
         "at": 82.2,
@@ -215,7 +215,7 @@
       },
       {
         "at": 54.3,
-        "text": "Il te reste le dossier : une note pour la RSSI et le DPO, une charte, et un plan de pilote avec un score de départ. C'est lui qui convaincra le comité."
+        "text": "Il te reste le dossier : une note pour la RSSI et le DPO, une charte, et un plan de pilote avec un score de départ. C'est ce dossier que tu présenteras au comité."
       },
       {
         "at": 66.2,
@@ -226,5 +226,37 @@
   "host": {
     "name": "Skillou",
     "what": "la mascotte : un chat blanc à lunettes roses et bubble tea, dessiné avec ChatGPT, animé en marionnette (studio/mascot.js)"
-  }
+  },
+  "patches": [
+    [
+      [
+        "v2-construire",
+        1
+      ],
+      [
+        "v2-construire",
+        4
+      ],
+      [
+        "v2-review",
+        0
+      ],
+      [
+        "v2-review",
+        4
+      ],
+      [
+        "v4-cloud",
+        0
+      ],
+      [
+        "v4-cloud",
+        3
+      ],
+      [
+        "v5-client",
+        4
+      ]
+    ]
+  ]
 }

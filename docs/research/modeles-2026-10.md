@@ -153,7 +153,7 @@ Source unique pour cette section : l'article d'ingénierie sur le système de re
 | gm4 | Sous-agents intégrés : `codebase_investigator`, `cli_help` et `generalist` activés par défaut, `browser_agent` désactivé ; la page ne donne pas leur modèle. | https://geminicli.com/docs/core/subagents/ | VERIFIED |
 | gm5 | « The /model command (and the --model flag) does not override the model used by sub-agents. » | https://geminicli.com/docs/cli/model/ | VERIFIED |
 | gm6 | Choix du modèle : commande `/model` (dialogue) et option `--model` au démarrage ; la page ne cite ni `-m` ni clé de `settings.json`. | https://geminicli.com/docs/cli/model/ | VERIFIED |
-| gm7 | Le 19 mai 2026, Google annonce qu'il unifie Gemini CLI avec Antigravity ; Gemini CLI et les extensions Gemini Code Assist cessent de répondre le 18 juin 2026 pour les abonnés Google AI Pro et Ultra. | https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ | VERIFIED |
+| gm7 | Le 19 mai 2026, Google annonce qu'il unifie Gemini CLI avec Antigravity ; Gemini CLI et les extensions Gemini Code Assist cessent de répondre le 18 juin 2026 pour les abonnés Google AI Pro et Ultra, et pour les utilisateurs gratuits de Gemini Code Assist for individuals (précision du 10 octobre 2026). | https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ | VERIFIED |
 | gm8 | Gemini CLI reste accessible avec des clés API Gemini payantes ou Gemini Enterprise Agent Platform : « will remain accessible via paid Gemini and Gemini Enterprise Agent Platform API keys ». | https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ | VERIFIED |
 | gm9 | La page des sous-agents ne dit rien sur le coût ni sur l'usage d'un modèle plus petit pour les sous-agents. | https://geminicli.com/docs/core/subagents/ | VERIFIED |
 
@@ -175,7 +175,7 @@ Prix en dollars par MTok, entrée puis sortie. Le niveau est le classement de l'
 | e8 | OpenAI, `gpt-6-luna` : niveau petit et rapide, 0,10 $ / 0,50 $ ; décrit comme « Our most efficient model for focused, high-volume tasks ». | https://developers.openai.com/api/docs/pricing | VERIFIED |
 | e9 | OpenAI, `gpt-5.6-luna` : niveau petit et rapide, 0,20 $ / 1,20 $. | https://developers.openai.com/api/docs/pricing | VERIFIED |
 | e10 | Google, `gemini-3.1-pro-preview` (étiqueté preview) : 2 $ / 12 $ jusqu'à 200 000 tokens, 4 $ / 18 $ au-delà. | https://ai.google.dev/gemini-api/docs/pricing | VERIFIED |
-| e11 | Google, `gemini-3.5-flash` : 1,50 $ / 9 $ ; la page ne le marque ni stable ni preview. | https://ai.google.dev/gemini-api/docs/pricing | VERIFIED |
+| e11 | Google, `gemini-3.8-flash` : 0,75 $ / 3,75 $ jusqu'au 31 décembre 2026, puis 1,50 $ / 7,50 $ à partir du 1er janvier 2027. Corrigé le 10 octobre 2026 : la ligne `gemini-3.5-flash` à 1,50 $ / 9 $ n'existe pas sur la page. | https://ai.google.dev/gemini-api/docs/pricing | VERIFIED (10/10/2026) |
 | e12 | Google, `gemini-3.5-flash-lite` : niveau petit et rapide, 0,30 $ / 2,50 $. | https://ai.google.dev/gemini-api/docs/pricing | VERIFIED |
 | e13 | Google, `gemini-3.8-flash` : 0,75 $ / 3,75 $ jusqu'au 31 décembre 2026, puis 1,50 $ / 7,50 $ dès le 1er janvier 2027 (lu deux fois). | https://ai.google.dev/gemini-api/docs/pricing | VERIFIED |
 | e14 | Google, `gemini-2.5-flash-lite` : niveau petit et rapide, 0,10 $ / 0,40 $ pour le texte, l'image et la vidéo. | https://ai.google.dev/gemini-api/docs/pricing | VERIFIED |

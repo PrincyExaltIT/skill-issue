@@ -52,6 +52,11 @@
   });
   document.addEventListener('click', (e) => { if (menu && !menu.hidden && !menu.contains(e.target)) closeMenu(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu && !menu.hidden) { closeMenu(); menuBtn?.focus(); } });
+  // Focus that leaves both the menu and its button (Tab past the last link, Shift+Tab before the first) closes it.
+  // No relatedTarget means a click on something unfocusable or the window losing focus: the click handler covers that.
+  const leaveMenu = (e) => { const to = e.relatedTarget; if (to && !menu.contains(to) && !menuBtn?.contains(to)) closeMenu(); };
+  menu?.addEventListener('focusout', leaveMenu);
+  menuBtn?.addEventListener('focusout', leaveMenu);
 
   // ── Theme ──
   const root = document.documentElement;
@@ -204,8 +209,11 @@
   const meter = $('#meter');
   if (meter) {
     const slider = $('input', meter);
-    const out = { n: $('[data-k="n"]', meter), l1: $('[data-k="l1"]', meter), full: $('[data-k="full"]', meter), pct: $('[data-k="pct"]', meter) };
-    const WINDOW = 200000; const META = 100; const BODY = 4500; const ACTIVE = 2;
+    const out = { n: $('[data-k="n"]', meter), l1: $('[data-k="l1"]', meter), pct1: $('[data-k="pct1"]', meter), full: $('[data-k="full"]', meter), pct: $('[data-k="pct"]', meter) };
+    const META = 100; const BODY = 4500; const ACTIVE = 2;
+    const windows = $$('[data-window]', meter);
+    let WINDOW = Number(windows[0]?.dataset.window ?? 200000);
+    const pct = (v) => { const p = (v / WINDOW) * 100; return (p < 1 ? p.toFixed(1).replace('.', ',') : Math.min(100, p).toFixed(0)) + ' %'; };
     const render = () => {
       const n = Number(slider.value);
       const progressive = n * META + ACTIVE * BODY;
@@ -213,13 +221,19 @@
       out.n.textContent = n;
       out.l1.textContent = progressive.toLocaleString('fr-FR');
       out.full.textContent = naive.toLocaleString('fr-FR');
-      out.pct.textContent = Math.min(100, (naive / WINDOW) * 100).toFixed(0) + ' %';
+      out.pct1.textContent = pct(progressive);
+      out.pct.textContent = pct(naive);
       $('.l1', meter).style.width = Math.min(100, (n * META / WINDOW) * 100) + '%';
       $('.l2', meter).style.left = Math.min(100, (n * META / WINDOW) * 100) + '%';
       $('.l2', meter).style.width = Math.min(100, (ACTIVE * BODY / WINDOW) * 100) + '%';
       $('.bad', meter).style.width = Math.min(100, (naive / WINDOW) * 100) + '%';
     };
     slider.addEventListener('input', render);
+    windows.forEach((b) => b.addEventListener('click', () => {
+      WINDOW = Number(b.dataset.window);
+      windows.forEach((w) => w.setAttribute('aria-pressed', String(w === b)));
+      render();
+    }));
     render();
   }
 
@@ -372,7 +386,7 @@
     const key = 'game:' + box.dataset.game;
     let st = store.get(key, null) ?? { at: G.start, log: [], trust: {}, cards: [], plan: [], asked: [] };
     const save = () => store.set(key, st);
-    box.innerHTML = `<div class="game-main"><ol class="game-log" aria-live="polite"></ol><div class="game-act"></div></div>`
+    box.innerHTML = `<div class="game-main">${G.intro ? `<p class="game-intro">${esc(G.intro)}</p>` : ''}<ol class="game-log" aria-live="polite"></ol><div class="game-act"></div></div>`
       + `<aside class="game-side" aria-label="Ta fiche mission"><h3>Ta fiche mission</h3><div class="game-trust"></div><h4>Ce que tu sais</h4><ul class="game-cards"></ul>`
       + `<button class="btn game-reset" type="button">Recommencer</button></aside>`;
     const logEl = $('.game-log', box), act = $('.game-act', box), trustEl = $('.game-trust', box), cardsEl = $('.game-cards', box);
@@ -385,10 +399,16 @@
     const push = (entry) => { st.log.push(entry); save(); };
     const bump = (delta = {}) => { for (const [k, v] of Object.entries(delta)) st.trust[k] = (st.trust[k] ?? 0) + v; };
     const addCard = (id) => { if (id && !st.cards.includes(id)) st.cards.push(id); };
+    const trustOf = (id) => Math.max(-4, Math.min(4, st.trust[id] ?? 0));   // what the meter and the sheet show; verdicts use the raw total
+    // Skillou's face follows the trust it comments on: a loss → oups, a gain → salut, no change → montre (a hint, not praise).
+    const moodOf = (c) => { const d = Object.values(c.trust ?? {}); return c.mood || (d.some((v) => v < 0) ? 'oups' : d.some((v) => v > 0) ? 'salut' : 'montre'); };
+    // An "ask" question is covered when the player already holds its card (an earlier answer gave it): it is neither
+    // offered again nor reported as missed.
+    const covered = (q, d) => !st.asked.includes(q) && Boolean(d.card) && st.cards.includes(d.card);
 
     function renderSide() {
       trustEl.innerHTML = (G.room ?? []).map((id) => {
-        const v = Math.max(-4, Math.min(4, st.trust[id] ?? 0));
+        const v = trustOf(id);
         return `<div class="trust"><span>${esc(who(id).name)} <small>${esc(who(id).role)}</small></span><span class="meter" role="meter" aria-valuemin="-4" aria-valuemax="4" aria-valuenow="${v}" aria-label="Confiance de ${esc(who(id).name)}"><i style="--v:${(v + 4) / 8}"></i></span></div>`;
       }).join('');
       cardsEl.innerHTML = st.cards.length ? st.cards.map((c) => `<li><b>${esc(MISSION.cards[c].title)}</b> ${esc(MISSION.cards[c].text)}</li>`).join('') : '<li class="muted">Rien encore : pose des questions.</li>';
@@ -400,8 +420,8 @@
     function sheet() {
       const goodPlan = st.plan.filter((p) => G.scenes[st.planScene]?.options?.[p]?.good);
       const lines = [`# Fiche mission · ${G.client}`, '', `> ${G.brief}`, '', '## Ce que je sais du client', ...st.cards.map((c) => `- **${MISSION.cards[c].title}** ${MISSION.cards[c].text}`),
-        '', '## Ma proposition de pilote', ...goodPlan.map((p) => `- ${G.scenes[st.planScene].options[p].text}`),
-        '', '## Où la confiance en est', ...(G.room ?? []).map((id) => `- ${who(id).name} (${who(id).role}) : ${st.trust[id] ?? 0}`),
+        '', `## ${G.planTitle ?? 'Ma proposition'}`, ...goodPlan.map((p) => `- ${G.scenes[st.planScene].options[p].text}`),
+        '', '## Où la confiance en est (de -4 à 4)', ...(G.room ?? []).map((id) => `- ${who(id).name} (${who(id).role}) : ${trustOf(id)}/4`),
         '', '## Pour la suite', ...G.next.map((n) => `- ${n}`), ''];
       return lines.join('\n');
     }
@@ -418,20 +438,23 @@
           push({ who: 'me', html: `<p>${esc(c.text)}</p>` });
           bump(c.trust); addCard(c.card);
           if (c.reply) push({ who: S.who, html: `<p>${c.reply}</p>` });
-          if (c.coach) push({ who: 'skillou', html: `<p>${c.coach}</p>`, mood: c.mood || (Object.values(c.trust ?? {}).some((v) => v < 0) ? 'oups' : 'salut'), cls: 'coach' });
+          if (c.coach) push({ who: 'skillou', html: `<p>${c.coach}</p>`, mood: moodOf(c), cls: 'coach' });
           go(c.next);
         };
       } else if (S.kind === 'ask') {
-        const left = S.pick - st.asked.filter((q) => S.questions[q]).length;
+        const offered = Object.entries(S.questions).filter(([q, d]) => !st.asked.includes(q) && !covered(q, d));
+        const known = Object.entries(S.questions).filter(([q, d]) => covered(q, d));
+        const left = Math.min(S.pick - st.asked.filter((q) => S.questions[q]).length, offered.length);
         if (left <= 0) {
-          const missed = Object.entries(S.questions).filter(([q, d]) => d.key && !st.asked.includes(q));
+          const missed = Object.entries(S.questions).filter(([q, d]) => d.key && !st.asked.includes(q) && !covered(q, d));
           for (const [, d] of missed) push({ who: 'skillou', html: `<p>${d.missedCoach}</p>`, mood: 'oups', cls: 'coach' });
           push({ who: S.who, html: `<p>${S.after}</p>` });
           go(S.next);
           return;
         }
-        act.innerHTML = `<p class="hint">Encore ${left} question${left > 1 ? 's' : ''} : choisis bien.</p><div class="choices">`
-          + Object.entries(S.questions).filter(([q]) => !st.asked.includes(q)).map(([q, d]) => `<button class="choice" type="button" data-q="${q}">${esc(d.text)}</button>`).join('') + '</div>';
+        act.innerHTML = `<p class="hint">Encore ${left} question${left > 1 ? 's' : ''} : choisis bien.`
+          + `${known.length ? ` Tu as déjà la réponse à « ${known.map(([, d]) => esc(d.text)).join(' », « ')} » : inutile de la reposer.` : ''}</p><div class="choices">`
+          + offered.map(([q, d]) => `<button class="choice" type="button" data-q="${q}">${esc(d.text)}</button>`).join('') + '</div>';
         act.onclick = (e) => {
           const b = e.target.closest('.choice'); if (!b) return;
           const d = S.questions[b.dataset.q];
@@ -444,12 +467,14 @@
       } else if (S.kind === 'plan') {
         st.planScene = st.at;
         act.innerHTML = `<fieldset class="plan"><legend>${esc(S.legend)}</legend>${Object.entries(S.options).map(([k, o]) => `<label><input type="checkbox" value="${k}"> ${esc(o.text)}</label>`).join('')}</fieldset>`
-          + `<button class="btn primary" type="button">${esc(S.submit)}</button>`;
+          + `<button class="btn primary" type="button">${esc(S.submit)}</button><p class="hint plan-msg" role="status" aria-live="polite"></p>`;
+        const msg = $('.plan-msg', act);
+        $('.plan', act).onchange = () => { msg.textContent = ''; };
         $('.btn', act).onclick = () => {
           st.plan = $$('input:checked', act).map((i) => i.value);
-          if (!st.plan.length) return;
+          if (!st.plan.length) { msg.textContent = S.empty ?? 'Coche au moins une proposition avant de passer devant le comité.'; return; }
           push({ who: 'me', html: `<ul>${st.plan.map((k) => `<li>${esc(S.options[k].text)}</li>`).join('')}</ul>` });
-          for (const k of st.plan) { bump(S.options[k].trust); if (S.options[k].coach) push({ who: 'skillou', html: `<p>${S.options[k].coach}</p>`, mood: S.options[k].good ? 'salut' : 'oups', cls: 'coach' }); }
+          for (const k of st.plan) { bump(S.options[k].trust); if (S.options[k].good) addCard(S.options[k].card); if (S.options[k].coach) push({ who: 'skillou', html: `<p>${S.options[k].coach}</p>`, mood: S.options[k].good ? 'salut' : 'oups', cls: 'coach' }); }
           for (const [k, o] of Object.entries(S.options)) if (o.good && o.key && !st.plan.includes(k)) push({ who: 'skillou', html: `<p>${o.missedCoach}</p>`, mood: 'montre', cls: 'coach' });
           go(S.next);
         };

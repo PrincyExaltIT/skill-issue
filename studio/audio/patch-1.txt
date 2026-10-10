@@ -1,0 +1,13 @@
+Première étape, une vraie procédure. Au premier run, Haiku a répondu dans le chat sans écrire son rapport. Quand chaque étape a eu un critère de fin, il l'a écrit, et son score est passé de 22 à 59 pour cent.
+
+On lui a aussi appris à dire non : chaque finding est contesté, et il explique pourquoi il le garde ou l'écarte. Sur cette PR, ça n'a rien apporté de plus, les leurres avaient déjà disparu avec les règles.
+
+Voici le package de Princy, angular review. C'est un dossier comme le tien, installé là où chaque outil va le chercher. Sous Claude Code et sous Codex, une simple demande de review de ta branche suffit à le lancer.
+
+Chaque candidat est ensuite attaqué. Si l'extrait cité n'existe pas à la ligne annoncée, un script le signale, et le rapport ne sort pas tant que ce candidat n'a pas été tranché.
+
+Ton skill est commité, donc rien n'oblige à le lancer depuis ton poste. Ta CI peut le faire sur chaque PR, et des relecteurs hébergés comme Copilot savent déjà lire des skills.
+
+Les relecteurs hébergés ont chacun leurs fichiers. Par exemple, Copilot lit les skills du dépôt, Codex et Claude leurs fichiers d'instructions, et GitLab Duo un YAML à lui. Mets tes règles là où ils regardent.
+
+Il te reste le dossier : une note pour la RSSI et le DPO, une charte, et un plan de pilote avec un score de départ. C'est ce dossier que tu présenteras au comité.

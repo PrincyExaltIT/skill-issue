@@ -273,6 +273,25 @@
       "rappel": 96,
       "trouves": 26,
       "attendus": 27,
+      "precision": 86,
+      "cites": 37,
+      "leurres": 1,
+      "manques": [
+        "S15"
+      ],
+      "rapport": "fichier",
+      "secondes": 396,
+      "tours": null,
+      "cout": 5.35,
+      "date": "9 octobre 2026",
+      "branche": "depart",
+      "relecteurs": "6 sous-agents en parallèle",
+      "source": "docs/sample-review/package-forgent"
+    },
+    "claude_seq": {
+      "rappel": 96,
+      "trouves": 26,
+      "attendus": 27,
       "precision": 100,
       "cites": 26,
       "leurres": 0,
@@ -282,7 +301,11 @@
       "rapport": "fichier",
       "secondes": 270,
       "tours": 33,
-      "cout": 1.59
+      "cout": 1.59,
+      "date": "8 octobre 2026",
+      "branche": "main",
+      "relecteurs": "6 joués en séquence",
+      "source": "docs/sample-review/claude-code"
     },
     "codex": {
       "rappel": 100,
@@ -295,7 +318,11 @@
       "rapport": "fichier",
       "secondes": 720,
       "tours": null,
-      "cout": null
+      "cout": null,
+      "date": "8 octobre 2026",
+      "branche": "main",
+      "relecteurs": "5 sous-agents en parallèle",
+      "source": "docs/sample-review/codex"
     }
   }
 }

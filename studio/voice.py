@@ -2,8 +2,11 @@
 
     python studio/voice.py split 1        find the segment boundaries in audio/batch-1.mp3 -> audio/batch-1.split.json
                                           (check the printout once per new batch: one line per segment)
+    python studio/voice.py split patch-1  same for audio/patch-1.mp3
 
 The batches come from narration.json: each was synthesized in one call, segments separated by a blank line.
+A patch re-records only the segments whose text was corrected after the batch ("patches" in narration.json, a list
+of [video, index] per call): it costs a fraction of a batch, and clip() takes a segment from the newest file that has it.
 The cut points are pauses found by ffmpeg's silencedetect, chosen so that every segment speaks at a plausible rate.
 render.py and mix.py import the rest: clip() (the tightened audio of one segment), fit() (scene clock -> output
 clock), captions() (word timings for the burned-in subtitles).
@@ -34,8 +37,15 @@ def spoken(seg: dict) -> str:
 
 # ── split ────────────────────────────────────────────────────────────────────
 
-def batch_segments(i: int) -> list[tuple[str, int, dict]]:
-    return [(v, k, seg) for v in NARRATION['batches'][i - 1] for k, seg in enumerate(NARRATION['videos'][v])]
+def sources() -> list[tuple[str, list[tuple[str, int]]]]:
+    """The voice files, oldest first: batch-1, batch-2… then patch-1, patch-2…"""
+    out = [(f'batch-{i}', [(v, k) for v in b for k in range(len(NARRATION['videos'][v]))])
+           for i, b in enumerate(NARRATION['batches'], 1)]
+    return out + [(f'patch-{i}', [(v, k) for v, k in p]) for i, p in enumerate(NARRATION.get('patches', []), 1)]
+
+
+def batch_segments(name: str) -> list[tuple[str, int, dict]]:
+    return [(v, k, NARRATION['videos'][v][k]) for v, k in dict(sources())[name]]
 
 
 def silences(mp3: pathlib.Path, noise: str = '-38dB', d: float = 0.18) -> tuple[list[tuple[float, float]], float]:
@@ -53,9 +63,9 @@ def pauses_in(text: str) -> float:
     return len(re.findall(r'[.:;!?…]\s', body)) + 0.6 * len(re.findall(r',\s', body))
 
 
-def split(i: int) -> None:
-    mp3 = AUDIO / f'batch-{i}.mp3'
-    segs = batch_segments(i)
+def split(name: str) -> None:
+    mp3 = AUDIO / f'{name}.mp3'
+    segs = batch_segments(name)
     sil, total = silences(mp3)
     sil = [s for s in sil if s[0] > 0.05 and s[1] < total - 0.05]
     # a breath or a click after the last pause is not a word: end the batch at that pause
@@ -100,7 +110,7 @@ def split(i: int) -> None:
         inside = [(round(a - start, 3), round(b - start, 3)) for a, b in sil if start < a and b < end]
         result.append({'video': video, 'index': idx, 'start': round(start, 3), 'end': round(end, 3), 'pauses': inside})
         print(f'{video:14} #{idx}  {start:6.2f} → {end:6.2f}  ({end - start:5.2f} s, {chars[k] / (end - start):4.1f} car/s)  {texts[k][:60]}…')
-    (AUDIO / f'batch-{i}.split.json').write_text(json.dumps(result, indent=1, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
+    (AUDIO / f'{name}.split.json').write_text(json.dumps(result, indent=1, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
 
 
 # ── clips ────────────────────────────────────────────────────────────────────
@@ -118,12 +128,12 @@ def decode(mp3: pathlib.Path) -> np.ndarray:
 
 def clip(video: str, index: int) -> dict:
     """One segment's audio with long pauses and breaths trimmed, and where its words are (clip time)."""
-    for i, batch in enumerate(NARRATION['batches'], 1):
-        if video not in batch:
+    for name, segs in reversed(sources()):
+        if (video, index) not in segs:
             continue
-        row = next(r for r in json.loads((AUDIO / f'batch-{i}.split.json').read_text(encoding='utf-8'))
+        row = next(r for r in json.loads((AUDIO / f'{name}.split.json').read_text(encoding='utf-8'))
                    if r['video'] == video and r['index'] == index)
-        x = decode(AUDIO / f'batch-{i}.mp3')
+        x = decode(AUDIO / f'{name}.mp3')
         seg = NARRATION['videos'][video][index]
         # speech chunks between the pauses (segment time), dropping blips shorter than 0.14 s (breaths)
         edges = [0.0] + [t for p in row['pauses'] for t in p] + [row['end'] - row['start']]
@@ -306,4 +316,4 @@ def captions(cs: list[dict]) -> list[dict]:
 
 if __name__ == '__main__':
     if sys.argv[1] == 'split':
-        split(int(sys.argv[2]))
+        split(f'batch-{sys.argv[2]}' if sys.argv[2].isdigit() else sys.argv[2])

@@ -54,6 +54,11 @@ function validate(dir) {
   const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/.exec(text);
   if (!m) return { errors: ['frontmatter YAML absent (le fichier doit commencer par ---)'], warnings };
   const fm = parseYaml(m[1]);
+  // Unquoted values with ": " or " #" parse here but break strict YAML parsers (the skills CLI, skills-ref): quote them.
+  for (const line of m[1].split(/\r?\n/)) {
+    const kv = /^\s*([A-Za-z0-9_-]+):\s+(.+)$/.exec(line);
+    if (kv && !/^["'>|]/.test(kv[2]) && /: | #/.test(kv[2])) errors.push(`${kv[1]} : « : » ou « # » dans une valeur sans guillemets, YAML invalide pour un parseur strict (mettre la valeur entre guillemets)`);
+  }
   const body = m[2];
 
   // name

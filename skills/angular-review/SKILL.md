@@ -1,10 +1,10 @@
 ---
 name: angular-review
-description: Senior-level review of Angular changes — a branch, a PR/MR, staged files or a commit range — against modern Angular (17 to 22) practice: signals, control flow, change detection, RxJS, DI, security, accessibility, performance and tests. Scripts scope the diff, scan it and compute the verdict; domain reviewers judge the rest; output is a French REVIEW.md plus a findings.json that follow-up skills and CI consume. Use when asked to review, audit or check Angular code, a pull or merge request before merge, or whether a change is good Angular.
+description: Senior-level review of Angular changes — a branch, a PR/MR, staged files or a commit range — against modern Angular (17 to 22) practice, from signals, control flow and change detection to RxJS, DI, security, accessibility, performance and tests. Scripts scope the diff, scan it and compute the verdict; domain reviewers judge the rest; output is a French REVIEW.md plus a findings.json that follow-up skills and CI consume. Use when asked to review, audit or check Angular code, a pull or merge request before merge, or whether a change is good Angular.
 license: MIT
 compatibility: Requires git and Node.js 18+. Runs in any Agent Skills harness; uses parallel subagents when the harness has them.
 metadata:
-  version: "2.1.0"
+  version: "2.1.1"
   author: PrincyExaltIT
   angular: "17-22"
   supersedes: "PrincyExaltIT/agent-skill angular-review 1.x"
