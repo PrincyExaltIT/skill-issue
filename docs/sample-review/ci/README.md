@@ -19,9 +19,9 @@ src/app/talks/talk-card.ts:28 [SIG-01] BLOCKER — Signal testé sans être appe
 Porte fermée : au moins une piste BLOCKER ou plus grave.
 ```
 
-Le script lui-même tourne en moins d'une seconde : sur GitHub, 0,12 s entre la commande et sa dernière ligne (11:31:04.27 → 11:31:04.39) ; sur GitLab, 0,04 s (21:53:17.84 → 21:53:17.88). Les 24 s du job GitLab comptent surtout l'image Docker et le `git fetch`.
+Le script lui-même tourne en moins d'une seconde : sur GitHub, 0,12 s entre la commande et sa dernière ligne (11:31:04.27 → 11:31:04.39) ; sur GitLab, 0,04 s (21:53:17.84 → 21:53:17.88). Le reste des 24 s du job GitLab se passe hors du script.
 
-Les jobs « Revue IA » de PR #4 passent en 4 à 5 s parce qu'ils s'arrêtent tout de suite : « Pas de secret ANTHROPIC_API_KEY, donc pas de revue IA. Les vérifications sans IA ont tourné. » Le dépôt de démo n'a pas de clé : la revue IA n'a jamais tourné en CI.
+Les jobs « Revue IA » de PR #4 passent en 4 à 5 s parce qu'ils s'arrêtent tout de suite. Le job Claude Code écrit « Pas de secret ANTHROPIC_API_KEY, donc pas de revue IA. Les vérifications sans IA ont tourné. », le job Codex « Pas de secret OPENAI_API_KEY, donc pas de revue IA Codex. Les vérifications sans IA ont tourné. » Le dépôt de démo n'a pas de clé : la revue IA n'a jamais tourné en CI.
 
 ## La porte du package (`angular-review`, bonus package)
 
@@ -38,4 +38,4 @@ PR #2 : [scan] 21 candidat(s) — BLOCKER:0 MAJOR:0 MINOR:18 INFO:3 — .review/
 
 Sur PR #1, un seul des 8 BLOCKER est de confiance haute : R-SIG-010 (`talk-card.ts:28`). Les sept autres sont en confiance moyenne ou basse (R-A11Y-013, R-ARCH-017 ×3, R-A11Y-005, R-SIG-005, R-SEC-003), d'après `scan.mjs` relancé sur la branche le 10 octobre.
 
-Les annotations des runs du 8 octobre portaient aussi deux avertissements de GitHub : « Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24 » et « CodeQL Action v3 will be deprecated in December 2026 ».
+Les quatre runs précédents de cette porte, le 8 octobre (PR #1 : [37749028344](https://github.com/PrincyExaltIT/skill-issue-playground/actions/runs/37749028344), [37749940800](https://github.com/PrincyExaltIT/skill-issue-playground/actions/runs/37749940800) ; PR #2 : [37748997942](https://github.com/PrincyExaltIT/skill-issue-playground/actions/runs/37748997942), [37749934052](https://github.com/PrincyExaltIT/skill-issue-playground/actions/runs/37749934052)) portaient aussi dans leurs annotations deux avertissements de GitHub, absents des deux runs du tableau : « Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24 » et « CodeQL Action v3 will be deprecated in December 2026 ».

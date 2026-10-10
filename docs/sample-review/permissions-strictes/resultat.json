@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-10",
+  "branche": "lab/speaker-spotlight",
+  "base": "depart",
+  "modele": "claude-opus-5-5",
+  "mode_permission": "default",
+  "cout_usd": 1.0764,
+  "duree_s": 245,
+  "tours": 36,
+  "refus": [
+    {
+      "outil": "Bash",
+      "commande": "cat .review/perimetre.json | head -c 4000; echo; for f in .claude/skills/revue-angular/references/*.md .claude/skills/re"
+    },
+    {
+      "outil": "Bash",
+      "commande": "for f in src/app/app.html src/app/app.routes.ts src/app/favorites/favorites.store.ts src/app/proposals/proposal-form.htm"
+    }
+  ]
+}

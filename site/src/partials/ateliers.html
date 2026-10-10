@@ -4,7 +4,7 @@
     <header class="module-head">
       <span class="num">lab</span>
       <h1 id="ateliers-title">Tes dix ateliers, autour d'un seul skill</h1>
-      <p class="promise">Tout le fil rouge de la formation est ici. Le terrain est une vraie PR Angular 22, écrite trop vite, avec {{R:opus:0:attendus}} problèmes cachés et {{LAB_DECOYS}} leurres. Tu construis ton skill de review en six versions (v0 à v5), du premier jet à la version partagée, puis tu l'automatises dans le module 3 (ateliers 6 et 7) et tu l'installes chez le client dans le module 4 (ateliers 8 et 9). Après chaque atelier, tu lances le skill, tu le notes et tu suis ton score. Et si tu bloques, chaque atelier a son rattrapage.</p>
+      <p class="promise">Le terrain de la formation est ici :  une vraie PR Angular 22, écrite trop vite, avec {{R:opus:0:attendus}} problèmes cachés et {{LAB_DECOYS}} leurres. Tu construis ton skill de review en six versions (v0 à v5), du premier jet à la version partagée, puis tu l'automatises dans le module 3 (ateliers 6 et 7) et tu l'installes chez le client dans le module 4 (ateliers 8 et 9). Après chaque atelier, tu lances le skill, tu le notes et tu suis ton score. Et si tu bloques, chaque atelier a son rattrapage.</p>
       <div class="chips"><span class="chip">⏱ <b>{{DUREE:m1+m2+m3+m4}}</b> leçons et ateliers, modules 1 à 4</span><span class="chip">10 ateliers · 2 bonus</span><span class="chip">dépôt : <b>skill-issue-playground</b></span></div>
     </header>
 
@@ -16,14 +16,14 @@
 <span class="p">$ </span><span class="cmd">git checkout depart</span>                 <span class="cm"># la base de la PR, en local</span>
 <span class="p">$ </span><span class="cmd">git checkout lab/speaker-spotlight</span>
 <span class="p">$ </span><span class="cmd">npm install</span></pre>
-      <p class="small muted">Il te faut Node.js 24.15 ou plus, ou 22.22.3 ou plus (<code>node --version</code>), car la CLI Angular 22.2 refuse de démarrer en dessous. Sous Windows, si <code>git clone</code> répond « Filename too long », lance <code>git config --global core.longpaths true</code>. Le second dépôt contient le corrigé, le score et le skill de référence ; garde-le à côté du dépôt relu, jamais dedans. Ton skill vit dans <code>.claude/skills/revue-angular/</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/</code> (les autres harnesses), et git ne le suit pas pendant que tu le construis.</p>
+      <p class="small muted">Il te faut Node.js 22.22.3 ou plus sur la branche 22, 24.15 ou plus sur la branche 24, ou 26 et au-delà (<code>node --version</code>), car la CLI Angular 22.2 refuse de démarrer en dessous. Sous Windows, si <code>git clone</code> répond « Filename too long », lance <code>git config --global core.longpaths true</code>. Le second dépôt contient le corrigé, le score et le skill de référence ; garde-le à côté du dépôt relu, jamais dedans. Ton skill vit dans <code>.claude/skills/revue-angular/</code> (Claude Code, Continue) ou <code>.agents/skills/revue-angular/</code> (les autres harnesses), et git ne le suit pas pendant que tu le construis.</p>
       <p class="small muted">Bloqué à l'atelier N ? <code>node ../skill-issue/course/rattrapage.mjs N</code> remplace ton skill par la version de référence de l'étape N (<code>--harness codex</code> pour <code>.agents/skills/</code>, <code>--harness tous</code> pour les deux dossiers). Ton ancien dossier est mis de côté dans <code>.review/ancien-skill/</code>.</p>
     </section>
 
     <section class="section" aria-labelledby="tracker-title">
       <div class="section-head">
         <h2 id="tracker-title">Ton tableau des scores</h2>
-        <p>Après chaque atelier, lance <code>node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md</code> et reporte ton rappel et tes leurres. Tes chiffres restent dans ce navigateur et s'affichent à côté des runs de référence du {{RESULTS_DATE}}.</p>
+        <p>Après chaque atelier, lance <code>node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md</code> et reporte ton rappel et tes leurres. Tes chiffres restent dans ce navigateur et s'affichent à côté des runs de référence du {{RESULTS_DATE}}. Les dossiers d'étape du kit ont été relus après ces runs (formulations, références, garde-fous) ; sur la branche du lab, leurs scripts sortent exactement les mêmes pistes que les copies mesurées.</p>
       </div>
       <div class="tool" id="score-tracker">
         <span class="tool-title">Ton score, étape par étape</span>
@@ -118,7 +118,7 @@
 <pre class="term"><span class="p">$ </span><span class="cmd">node --permission --allow-fs-read="*" --allow-fs-write=".review/*" --allow-child-process .agents/skills/revue-angular/scripts/perimetre.mjs --base depart</span>
 <span class="p">$ </span><span class="cmd">node --permission --allow-fs-read="*" --allow-fs-write=".review/*" --allow-child-process .agents/skills/revue-angular/scripts/verifs.mjs</span></pre>
         <div class="expect">Le skill est commité, ses scripts tournent sous <code>node --permission</code>, et le job de CI ferme la porte sur la PR du lab sans lire de secret.</div>
-        <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5</code> (<code>--harness tous</code> pour les deux dossiers)</p>
+        <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5 --harness tous</code></p>
         <label class="check"><input type="checkbox" data-step="a8"> Fait</label>
       </div></div>
 

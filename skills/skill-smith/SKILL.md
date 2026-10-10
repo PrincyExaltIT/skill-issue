@@ -1,6 +1,6 @@
 ---
 name: skill-smith
-description: Create or improve an Agent Skill the team can share — interview, scaffold, description that triggers, workflow with completion criteria, scripts for the exact parts, references for the branches, evals, validation against the open standard, install for every harness. Use when asked to create, write, refactor, review or port a skill, a SKILL.md, or to turn a repeated prompt or procedure into a skill.
+description: Create or improve an Agent Skill the team can share — interview, scaffold, description that triggers, workflow with completion criteria, scripts for the exact parts, references for the branches, evals, validation against the open standard, where to install it for each harness. Use when asked to create, write, refactor, review or port a skill, a SKILL.md, or to turn a repeated prompt or procedure into a skill.
 license: MIT
 compatibility: Requires Node.js 18+.
 metadata:
@@ -45,9 +45,9 @@ Move every exact, repeated or verifiable operation into `scripts/` (Node with ze
 
 Next to the skill — never inside it — add `evals/<name>/triggers.json` (should and should-not prompts) and at least one fixture with its expected output. Re-run them on every change.
 
-### 7. Validate and install
+### 7. Validate, then say where to install
 
-Run `node scripts/validate.mjs <skill folder>` until it reports no error. Then install it where each harness looks (`references/portability.md`), or with the kit's installer: `node kit/install.mjs --target <repo>`.
+Run `node scripts/validate.mjs <skill folder>` until it reports no error. Then tell the user where each harness looks for skills (`references/portability.md`). This skill installs nothing itself; the skill-issue kit's repository has an installer (`node kit/install.mjs --target <repo>`, run from that repository).
 
 ## Guardrails
 

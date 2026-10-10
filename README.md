@@ -7,7 +7,7 @@ Formation pour consultants : une mission (un jeu de rôle chez un grand compte f
 - **La formation** : en ligne sur https://princyexaltit.github.io/skill-issue-site/ (GitHub Pages, dépôt public [PrincyExaltIT/skill-issue-site](https://github.com/PrincyExaltIT/skill-issue-site)) ; en local, `site/dist/index.html` (un seul fichier) avec ses vidéos dans `site/dist/media/`. Pour mettre le site en ligne à jour : `node site/build.mjs`, copier `site/dist/index.html` et `site/dist/media/` dans `skill-issue-site`, commiter, pousser.
 - **Le terrain** : [PrincyExaltIT/skill-issue-playground](https://github.com/PrincyExaltIT/skill-issue-playground), une app Angular 22 et une pull request écrite trop vite (`lab/speaker-spotlight`, à relire depuis `depart`).
 - **Le skill de référence** : `course/revue-angular/etape-0` à `etape-5`, le même skill aux six étapes de la formation, avec un script de rattrapage ; `course/chaine/` pour les deux skills de la chaîne (atelier 6), dont le run réel est dans `course/resultats-chaine.json`.
-- **Le package** (bonus final) : `skills/` et `kit/`, quatre skills au standard [agentskills.io](https://agentskills.io), un installeur pour les harnesses de la matrice (huit à ce jour), la CI GitHub et GitLab.
+- **Le package** (bonus final) : `skills/` et `kit/`, quatre skills au standard [agentskills.io](https://agentskills.io), sauf un champ optionnel hors standard dans `pr-handoff` (`disable-model-invocation`, honoré par Claude Code, Cursor et Copilot dans VS Code ; sous Codex, l'invocation manuelle passe par `agents/openai.yaml`), un installeur pour les harnesses de la matrice (huit à ce jour), la CI GitHub et GitLab.
 
 ## Le parcours
 
@@ -66,7 +66,7 @@ Ou avec l'installeur communautaire : `npx skills add PrincyExaltIT/skill-issue`.
 | [`angular-review`](skills/angular-review/SKILL.md) | Review d'un diff Angular 17 → 22 : scripts pour le périmètre, le scan et le verdict ; jusqu'à sept relecteurs pour le jugement |
 | [`review-fix`](skills/review-fix/SKILL.md) | Corrige les findings un par un, build et test après chacun |
 | [`pr-handoff`](skills/pr-handoff/SKILL.md) | Description de PR/MR et note de passation (invocation manuelle) |
-| [`skill-smith`](skills/skill-smith/SKILL.md) | Crée, valide et installe un nouveau skill |
+| [`skill-smith`](skills/skill-smith/SKILL.md) | Crée et valide un skill ; indique où l'installer |
 
 ## CI
 
@@ -98,4 +98,4 @@ docs/            notes de recherche sourcées, reviews réelles notées
 
 ## Licence
 
-MIT. Les règles héritées de la v1 du package viennent de [PrincyExaltIT/agent-skill](https://github.com/PrincyExaltIT/agent-skill) (MIT). Le package y est publié (angular-review 2.1, review-fix, pr-handoff, skill-smith) : `npx forgent add --provider agents,claude --project angular-review review-fix pr-handoff skill-smith`, avec [forgent](https://github.com/PrincyExaltIT/forgent) 1.2 ou plus ; la v1 reste sous l'étiquette `angular-review-v1`.
+MIT. Les règles héritées de la v1 du package viennent de [PrincyExaltIT/agent-skill](https://github.com/PrincyExaltIT/agent-skill) (MIT). Le package y est publié (angular-review 2.1, review-fix, pr-handoff, skill-smith) : `npx forgent add --provider agents,claude --project angular-review review-fix pr-handoff skill-smith`, avec [forgent](https://github.com/PrincyExaltIT/forgent) 1.2 ou plus ; la v1 reste installable sous l'étiquette `angular-review-v1` : `npx forgent add --provider agents --project --registry https://raw.githubusercontent.com/PrincyExaltIT/agent-skill/angular-review-v1 angular-review`.

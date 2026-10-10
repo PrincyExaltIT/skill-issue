@@ -7,7 +7,7 @@
 | Modèle | claude-opus-5-5 |
 | Prompt | « Fais une review de cette branche avant que je la merge sur main. » |
 | Déclenchement | automatique (outil Skill → angular-review) |
-| Durée | 4,5 min |
+| Durée | 4 min 28 (268 s, ligne `result` du journal) |
 | Coût | 1,59 $ |
 | Tours | 33 |
 | Appels d'outils | Skill 1, Glob 1, Read 7, Bash 9, Grep 4, PowerShell 3, Write 7 |

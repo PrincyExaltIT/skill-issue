@@ -5,7 +5,7 @@
       <span class="num">02</span>
       <h1 id="m2-title">Construis-le, mesure-le</h1>
       <p class="promise">Ton skill passe de la v0 à la v5 en cinq étapes, avec un dossier qui grossit et un score qui monte au passage. À la fin du module, il a une procédure, les règles de ton équipe, des scripts, des exemples et des tests, et il est commité pour toute l'équipe, quel que soit l'outil de chacun.</p>
-      <div class="chips"><span class="chip">⏱ <b>{{DUREE:m2}}</b> ateliers compris</span><span class="chip">7 leçons · 5 ateliers (5a et 5b) · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
+      <div class="chips"><span class="chip">⏱ <b>{{DUREE:m2}}</b> estimées, ateliers compris</span><span class="chip">7 leçons · 6 ateliers (1 à 5b) · 1 vidéo · 1 quiz</span><span class="lvl base">base</span><span class="lvl core">core</span><span class="lvl deep">deep</span></div>
     </header>
 
     <div class="module-layout">
@@ -29,6 +29,7 @@
           <div class="lesson-body">
             <h2>Construire, lancer, mesurer : la boucle</h2>
             <p class="kicker">Personne n'écrit un bon skill du premier coup. On écrit une version, on la lance sur une vraie pull request, on la note, on lit ce qu'elle a raté, et on recommence, comme on le fait avec du code.</p>
+            <div class="rc note"><span class="av" aria-hidden="true">H</span><div><p class="who"><b>Ta fiche mission dans ce module</b></p><p>Le skill que tu construis ici est celui que tu as proposé au Groupe Hexa, et ta fiche te dit quoi y mettre. « La preuve » : c'est le tableau des scores de cette leçon. « Le problème », les mêmes erreurs Angular à chaque sprint : ce sont les règles de l'équipe de Léa, que tu écris à l'étape 2. « Les scripts » : sans dépendance et relus en MR, comme ceux de l'étape 3. « Outil autorisé » : un seul assistant chez Hexa, d'où l'étape 5, un dossier que chaque outil sait lire. L'installation chez Hexa vient au <a href="#m4">module 4</a>.</p></div></div>
             <ol>
               <li><b>Modifier</b> le dossier <code>.claude/skills/revue-angular/</code> (ou <code>.agents/skills/</code>).</li>
               <li><b>Lancer</b> la review sur la PR du lab : <code>/revue-angular Relis cette branche avant que je la merge sur depart.</code></li>
@@ -82,7 +83,7 @@ Fini quand : .review/REVIEW.md existe, chaque finding cite fichier:ligne, les co
               <li><b>Le rapport a un gabarit.</b> <code>assets/rapport.md</code> fixe la forme : verdict, compteurs, un bloc par finding. Un gabarit dans <code>assets/</code> n'est lu qu'au moment d'écrire : c'est le troisième étage du chargement progressif.</li>
               <li><b>Le verdict suit une règle écrite.</b> À corriger dès un BLOCKER ou trois MAJOR. Une règle écrite, l'équipe peut en débattre, alors qu'une impression ne se discute pas.</li>
             </ul>
-            <div class="rc"><span class="av" aria-hidden="true">H</span><div><p class="who"><b>Ce que la v0 a fait avec Haiku</b> · run du {{RESULTS_DATE}}</p><p>Avec le skill de dix lignes, Haiku a lu le README, compris que la PR venait d'un lab, puis a répondu dans le chat en demandant si la fusion était voulue. Il n'a jamais écrit <code>.review/REVIEW.md</code>, et ne cite que {{R:haiku:0:cites}} emplacements ({{R:haiku:0:rappel}} % de rappel). Avec la procédure et ses critères de fin, il écrit le rapport et monte à {{R:haiku:1:rappel}} %. Un petit modèle ne devine pas ce que tu attends, alors écris-le-lui.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">H</span><div><p class="who"><b>Ce que la v0 a fait avec Haiku</b> · run du {{RESULTS_DATE}}</p><p>Avec le skill de dix lignes, Haiku a lu le README, compris que la PR venait d'un lab, puis a répondu dans le chat en demandant si la fusion était voulue. Il n'a jamais écrit <code>.review/REVIEW.md</code>, et ne cite que {{R:haiku:0:cites}} emplacements ({{R:haiku:0:rappel}} % de rappel). Avec la procédure et ses critères de fin, il écrit le rapport et monte à {{R:haiku:1:rappel}} %. Un petit modèle ne devine pas ce que tu attends : il faut l'écrire.</p></div></div>
             <div class="atelier">
               <span class="tool-title">Atelier 1 · ta procédure</span>
               <ol>
@@ -111,7 +112,7 @@ contexte d'injection. Dans ngOnInit, une méthode ou un callback, ils lèvent NG
 **À repérer** : ces appels dans un hook ou une méthode. takeUntilDestroyed(this.destroyRef)
 avec un DestroyRef injecté fonctionne partout.
 **Correction** : déplacer l'appel dans un initialiseur de champ, ou passer DestroyRef explicitement.</pre>
-            <p>Le <code>SKILL.md</code> ne recopie pas les règles, il dit seulement <b>quand</b> charger chaque fichier. Un diff qui ne touche aucun template ne charge pas l'accessibilité. Voilà le chargement progressif appliqué à ta review :</p>
+            <p>Le <code>SKILL.md</code> ne recopie pas les règles, il dit seulement <b>quand</b> charger chaque fichier. Un diff qui ne touche aucun template ne charge pas l'accessibilité. Le chargement progressif, appliqué à ta review, donne ceci :</p>
 <pre class="code" data-lang="md">| Le périmètre contient                                   | Charge                        |
 |---------------------------------------------------------|-------------------------------|
 | des composants, services, routes ou formulaires         | references/angular-22.md      |
@@ -182,14 +183,14 @@ const REGLES = [
   // …
 ];</pre>
 <pre class="term"><span class="p">$ </span><span class="cmd">node .claude/skills/revue-angular/scripts/perimetre.mjs --base depart</span>
-<span class="o">15 fichier(s) dans le périmètre (base depart) → .review/perimetre.json</span>
+<span class="o">{{VF:perimetre_fichiers}} fichier(s) dans le périmètre (base depart) → .review/perimetre.json</span>
 <span class="p">$ </span><span class="cmd">node .claude/skills/revue-angular/scripts/verifs.mjs</span>
 <span class="o">src/app/speakers/speaker-spotlight.html:22 [A11Y-02] BLOCKER — Clic sur un élément non interactif…
 src/app/speakers/speaker-spotlight.ts:34 [SEC-01] BLOCKER — Sanitizer contourné…
 src/app/talks/talk-card.ts:28 [SIG-01] BLOCKER — Signal testé sans être appelé…
 …
-27 piste(s) → .review/verifs.json</span></pre>
-            <p>Une piste n'est pas encore un finding. Sur la PR du lab, le motif <code>.subscribe(</code> remonte cinq pistes, que le script étiquette toutes RX-01. En lisant le code, la review les range autrement. Deux sont des abonnements imbriqués à réécrire (RX-02 dans les références de l'étape 2), et une autre cache le vrai problème, l'appel hors contexte d'injection (SIG-04). La quatrième est déjà protégée par <code>takeUntilDestroyed(this.destroyRef)</code>, et la dernière, sur <code>valueChanges</code>, se discute. Le script ne sait pas faire cette différence, le modèle si, d'où la consigne du skill : <i>confirme chaque piste en lisant le code, ou écarte-la.</i></p>
+{{VF:pistes}} piste(s) → .review/verifs.json</span></pre>
+            <p>Une piste n'est pas encore un finding. Sur la PR du lab, le motif <code>.subscribe(</code> remonte {{VF:pistes_rx01}} pistes, que le script étiquette toutes RX-01. En lisant le code, la review les range autrement. Deux sont des abonnements imbriqués à réécrire (RX-02 dans les références de l'étape 2), et une autre cache le vrai problème, l'appel hors contexte d'injection (SIG-04). La quatrième est déjà protégée par <code>takeUntilDestroyed(this.destroyRef)</code>, et la dernière, sur <code>valueChanges</code>, se discute. Le script ne sait pas faire cette différence, le modèle si, d'où la consigne du skill : <i>confirme chaque piste en lisant le code, ou écarte-la.</i></p>
             <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Ce que rapportent les scripts</b> · run du {{RESULTS_DATE}}</p><p>Le rappel ne bouge presque plus (Opus {{R:opus:3:rappel}} %, Haiku {{R:haiku:3:rappel}} %) et la précision monte (Opus {{R:opus:2:precision}} → {{R:opus:3:precision}} %). Surtout, tu obtiens les mêmes pistes à chaque run, et une porte qui tourne <b>sans IA</b> en CI, que tu brancheras dans le <a href="#cloud">bonus cloud</a>.</p></div></div>
             <h3>Pas à pas : copier les scripts, ajouter une règle</h3>
             <p>N'utilise pas le rattrapage pour ça : il remplace tout ton skill. Copie seulement le dossier <code>scripts/</code> de l'étape 3, depuis le dépôt du kit :</p>
@@ -205,12 +206,12 @@ src/app/talks/talk-card.ts:28 [SIG-01] BLOCKER — Signal testé sans être appe
               <li><code>fichiers</code> est une expression régulière testée sur le chemin du fichier. <code>motif</code> est une expression régulière avec le drapeau <code>g</code>, cherchée dans son texte.</li>
               <li>Le script ne garde que les correspondances qui tombent sur une ligne ajoutée ou modifiée par la branche.</li>
             </ul>
-            <p>Relance <code>verifs.mjs</code> : la nouvelle piste sort en une seconde, sans modèle, et le compteur passe de 27 à 28.</p>
+            <p>Relance <code>verifs.mjs</code> : la nouvelle piste sort en une seconde, sans modèle, et le compteur passe de {{VF:pistes}} à {{VF:avec_ng11.pistes}}.</p>
 <pre class="term"><span class="p">$ </span><span class="cmd">node .claude/skills/revue-angular/scripts/verifs.mjs</span>
 <span class="o">…
 src/app/app.routes.ts:22 [NG-11] MAJOR — Page chargée d'emblée : utiliser loadComponent pour la sortir du bundle initial.
 …
-28 piste(s) → .review/verifs.json</span></pre>
+{{VF:avec_ng11.pistes}} piste(s) → .review/verifs.json</span></pre>
             <p>Rien ne sort ? Relance d'abord <code>perimetre.mjs --base depart</code>, puis vérifie que ton motif tombe sur une ligne que la branche a ajoutée.</p>
             <div class="atelier">
               <span class="tool-title">Atelier 3 · tes scripts</span>
@@ -275,7 +276,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
 <span class="p">$ </span><span class="cmd">node ../skill-issue/skills/skill-smith/scripts/validate.mjs --strict .claude/skills/revue-angular</span>
 <span class="o">✔ revue-angular — N1 ≈ {{TAILLE:n1exact}} tokens · corps {{TAILLE:lignes}} lignes
 0 erreur(s), 0 avertissement(s).</span></pre>
-            <p>Les tests de déclenchement suivent la méthode d'agentskills.io : chaque demande est rejouée trois fois, et compte comme déclenchée si le skill est chargé au moins deux fois. Les quasi-positifs (« écris la description de ma PR », « corrige le test qui échoue ») sont les plus utiles, parce qu'ils attrapent une description trop gourmande. Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill ; sous Windows natif, il faut WSL2.</p>
+            <p>Les tests de déclenchement reprennent le point de départ proposé par agentskills.io : chaque demande est rejouée trois fois, et compte comme déclenchée si le skill est chargé au moins deux fois. Les quasi-positifs (« écris la description de ma PR », « corrige le test qui échoue ») sont les plus utiles, parce qu'ils attrapent une description trop gourmande. Claude Code propose aussi <code>claude plugin eval</code>, qui compare chaque cas avec et sans le skill ; sous Windows natif, il faut WSL2.</p>
             <div class="rc"><span class="av" aria-hidden="true">R</span><div><p class="who"><b>Le skill de référence, mesuré dans deux harnesses</b> · {{DECL:date}}, un passage par demande</p><p>Claude Code ({{DECL:harnesses.claude.modele}}) : {{DECL:harnesses.claude.total}}/{{DECL:harnesses.claude.sur}}. Codex ({{DECL:harnesses.codex.modele}}) : {{DECL:harnesses.codex.total}}/{{DECL:harnesses.codex.sur}}. Demandes de review qui déclenchent : {{DECL:harnesses.claude.doit_declencher}}/10 et {{DECL:harnesses.codex.doit_declencher}}/10. Les ratés sont des quasi-positifs : {{DECL:harnesses.claude.erreurs}} chez Claude Code ; {{DECL:harnesses.codex.erreurs}} chez Codex. Dans la description, le mot « review » pèse plus lourd que « Angular », et la liste négative sert justement à repérer ce genre de dérive. À toi de durcir la tienne, puis de remesurer.</p><p class="small muted">Un seul passage par demande au lieu de trois : lis ces chiffres comme une tendance plutôt qu'une moyenne. Le résumé des runs est dans <code>course/resultats-declenchement.json</code> du dépôt du kit.</p></div></div>
             <h3>Mesurer le déclenchement dans les autres harnesses</h3>
             <p><code>run-triggers.mjs</code> lance chaque demande sans interface et regarde si le skill est chargé : sous Claude Code (<code>--harness claude</code>, par défaut), l'outil Skill est appelé ; sous Codex (<code>--harness codex</code>, skill dans <code>.agents/skills/</code>), une commande lit <code>skills/revue-angular/SKILL.md</code>. Le script consomme de vrais tokens, alors commence par <code>--limit 4</code>. Les autres harnesses n'ont pas de sortie JSON sans interface à lire, donc tu fais la même mesure à la main :</p>
@@ -309,7 +310,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
         <article class="lesson" id="m2-l7">
           <div class="hunk"><span class="at">@@ 02 · 2.7 @@</span><span>étape 5 · partage</span><span class="spacer"></span><span class="lvl core">core</span><span>12 min</span></div>
           <div class="lesson-body">
-            <h2>Étape 5 · Un seul dossier pour toute l'équipe et tous les harnesses</h2>
+            <h2>Étape 5 · Un seul dossier pour toute l'équipe et les harnesses de la matrice</h2>
             <p class="kicker">Un skill dans ton home ne sert qu'à toi. Commité dans le dépôt, il sert à toute l'équipe, évolue avec le code qu'il relit, et se change par pull request comme le reste.</p>
             <p>Le contenu du skill ne change jamais d'un outil à l'autre. Seuls changent le dossier où le harness le cherche, la façon de l'appeler à la main et quelques champs facultatifs.</p>
             <div class="tool" id="harness">
@@ -342,7 +343,7 @@ metadata:
               <li><b>Les extensions dans des fichiers à part.</b> <code>agents/openai.yaml</code> donne à Codex un nom d'affichage ; les autres harnesses l'ignorent.</li>
               <li><b>Une ligne dans <code>AGENTS.md</code></b> pour que tout le monde sache que le skill existe : « Pour une revue de code, utilise le skill <code>revue-angular</code> ; ses règles sont dans <code>references/</code>. »</li>
             </ul>
-            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le même dossier (avant l'ajout des garde-fous de la <a href="#m3-l7">leçon 3.7</a>), copié tel quel dans <code>.agents/skills/</code>, lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre. Aucune ligne n'a été adaptée pour Codex : c'est le dossier de l'étape 5 tel qu'il était avant les garde-fous.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le skill de l'étape 5, copié dans <code>.agents/skills/</code> et lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre, sans une ligne adaptée pour Codex.</p><p class="small muted">Codex a lu une copie de travail plus ancienne que le dossier du kit : sans la section « Garde-fous » de la <a href="#m3-l7">leçon 3.7</a> ni l'option <code>--echec-sur</code> de <code>verifs.mjs</code>. Sur la branche du lab, ses scripts sortent exactement les mêmes pistes que ceux du kit.</p></div></div>
             <details class="more"><summary>D'où vient le standard Agent Skills</summary>
               <!-- @include partials/m2-standard.html -->
             </details>
@@ -387,7 +388,7 @@ metadata:
                   <label><input type="radio" value="c"> Il ignore les pistes, le modèle sait mieux</label>
                 </fieldset>
               </div>
-              <div class="q" data-answer="b" data-why="Claude Code et Continue lisent .claude/skills ; les six autres harnesses lisent .agents/skills. Le même dossier aux deux endroits couvre tous les harnesses de la matrice.">
+              <div class="q" data-answer="b" data-why="Claude Code et Continue lisent .claude/skills ; Codex, Copilot, Cursor, Gemini CLI et bien d'autres lisent .agents/skills. Le même dossier aux deux endroits couvre les harnesses de la matrice, et d'autres.">
                 <fieldset><legend>Ton équipe utilise Claude Code, Codex et Cursor. Où commiter le skill ?</legend>
                   <label><input type="radio" value="a"> Dans .agents/skills/ seulement : c'est le dossier commun</label>
                   <label><input type="radio" value="b"> Dans .agents/skills/ et .claude/skills/, identiques</label>

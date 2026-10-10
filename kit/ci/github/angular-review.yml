@@ -71,6 +71,8 @@ jobs:
           fetch-depth: 0
       - if: env.HAS_KEY == 'true'
         uses: anthropics/claude-code-action@v1
+        env:
+          CLAUDE_CODE_SUBPROCESS_ENV_SCRUB: "1"   # commands the agent runs do not see the API key
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           # A repo skill is invoked by name; Claude Code reads it from .claude/skills/ in the checkout.
@@ -78,8 +80,9 @@ jobs:
             /angular-review
             Base branch: origin/${{ github.base_ref }} (run scope.mjs with --committed --base origin/${{ github.base_ref }}).
             Application code is read-only.
+          # Least privilege: read, the skill's three scripts, read-only git, writes under .review/ only.
           claude_args: >-
-            --allowedTools "Bash(node:*),Bash(git:*),Read,Grep,Glob,Write"
+            --allowedTools "Read,Grep,Glob,Edit(.review/**),Bash(node .claude/skills/angular-review/scripts/scope.mjs:*),Bash(node .agents/skills/angular-review/scripts/scope.mjs:*),Bash(node .claude/skills/angular-review/scripts/scan.mjs:*),Bash(node .agents/skills/angular-review/scripts/scan.mjs:*),Bash(node .claude/skills/angular-review/scripts/findings.mjs:*),Bash(node .agents/skills/angular-review/scripts/findings.mjs:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git status:*),Bash(git rev-parse:*),Bash(git merge-base:*)"
       # Posting is a plain step with the workflow token: deterministic, and no GitHub credential inside the agent.
       - if: env.HAS_KEY == 'true'
         name: Publier le rapport

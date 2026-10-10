@@ -8,7 +8,7 @@
       <div class="chips"><span class="chip">⏱ <b>~15 min</b> (estimation)</span><span class="chip">1 jeu de rôle · 1 fiche mission</span><span class="lvl base">base</span></div>
     </header>
 
-    <div class="rc note"><span class="av" aria-hidden="true">i</span><div><p class="who"><b>Client fictif, contraintes typiques</b></p><p>Le Groupe Hexa est inventé. Ses contraintes, on les retrouve chez beaucoup de grands comptes : un seul outil d'IA validé, une CI sans internet, des données personnelles qui traînent dans les tests, et un RSSI, Karim, qui a un droit de veto. Ta fiche mission te suit dans le module 2 (tu construis le skill pour ce client) et dans le module 4 (tu l'installes chez lui).</p></div></div>
+    <div class="rc note"><span class="av" aria-hidden="true">i</span><div><p class="who"><b>Client fictif, contraintes typiques</b></p><p>Le Groupe Hexa est inventé. Ses contraintes reviennent souvent chez les grands comptes : un seul outil d'IA validé, une CI sans internet, des données personnelles qui traînent dans les tests, et un RSSI, Karim, qui a un droit de veto. Tu les vérifieras chez le tien. Ta fiche mission te suit dans le module 2 (tu construis le skill pour ce client) et dans le module 4 (tu l'installes chez lui).</p></div></div>
 
     <div class="game" data-game="mission"></div>
 
@@ -86,7 +86,7 @@
     },
     "scripts": {
       "title": "Les scripts",
-      "text": "Dans le dépôt, sans dépendance, relus en MR, version épinglée avec une empreinte. La porte sans IA tourne en CI sans aucun secret."
+      "text": "Dans le dépôt, sans dépendance, relus en MR, version épinglée avec une empreinte. La porte sans IA tourne en CI sans aucune variable secrète du projet."
     },
     "mesure": {
       "title": "La preuve",
@@ -99,7 +99,10 @@
       "chat": {
         "title": "Groupe Hexa · L’IA dans nos équipes",
         "day": "Aujourd’hui",
-        "time": "09:30"
+        "time": "09:30",
+        "present": [
+          "claire"
+        ]
       },
       "brief": "On veut intégrer l'IA dans notre manière de faire, et tu as l'air d'être la bonne personne pour ça.",
       "room": [
@@ -283,14 +286,14 @@
               "coach": "Du code qui se met à jour tout seul sur les postes, Karim le refusera, et ici les runners n'ont même pas internet."
             },
             {
-              "text": "Ils tournent d'abord en CI, sur la MR, sans aucun secret. C'est une porte sans IA, avant même de parler de modèle.",
+              "text": "Ils tournent d'abord en CI, sur la MR, sans aucune variable secrète du projet. C'est une porte sans IA, avant même de parler de modèle.",
               "next": "s4",
               "trust": {
                 "karim": 1,
                 "lea": 1
               },
               "card": "scripts",
-              "coach": "Bien vu : une porte déterministe ne demande ni clé ni accès réseau. Pense aussi à dire comment on relit et on épingle les scripts."
+              "coach": "Bien vu : une porte déterministe ne demande pas de clé et n'appelle aucun service externe, à part le fetch vers le dépôt interne. Pense aussi à dire comment on relit et on épingle les scripts."
             }
           ]
         },
@@ -372,7 +375,7 @@
               "coach": "Pas d'internet en CI, et pas de code non relu sur les postes : à oublier ici."
             },
             "p5": {
-              "text": "Une porte sans IA dans la CI GitLab, sans secret, sur chaque MR.",
+              "text": "Une porte sans IA dans la CI GitLab, sans variable secrète du projet, sur chaque MR.",
               "good": true,
               "trust": {
                 "karim": 1,
@@ -419,7 +422,7 @@
         "s6": {
           "kind": "end",
           "who": "claire",
-          "say": "Le comité a écouté ta proposition. Voilà ce qu'il en pense.",
+          "say": "Le comité a écouté ta proposition. Il te donne son avis.",
           "link": "#m1",
           "linkText": "Commencer le module 1 (ton score de départ)",
           "verdicts": [
@@ -491,6 +494,11 @@
                   "bad",
                   "<",
                   1
+                ],
+                [
+                  "missedq",
+                  "<",
+                  1
                 ]
               ],
               "who": "claire",
@@ -500,11 +508,35 @@
               "coach": "Bravo : Claire, Karim et Léa te suivent. Télécharge ta fiche : elle te servira dans les modules 2 et 4. Le parcours commence au module 1, où l'atelier 0 te donne ton score de départ."
             },
             {
+              "when": [
+                [
+                  "missing",
+                  "<",
+                  2
+                ],
+                [
+                  "bad",
+                  "<",
+                  1
+                ],
+                [
+                  "missedq",
+                  "<",
+                  2
+                ]
+              ],
               "who": "claire",
               "mood": "parle",
               "title": "Pilote accepté, sous conditions.",
-              "say": "Le comité est d'accord pour un pilote, mais il manque des éléments. Complète ta proposition avant le lancement.",
-              "coach": "Pas mal ! Regarde les points qui manquent dans ta fiche, puis attaque le module 1."
+              "say": "Le comité est d'accord pour un pilote, sous réserve de quelques points. Complète ta proposition avant le lancement.",
+              "coach": "Pas mal ! Regarde ce qui manque dans ta fiche, puis attaque le module 1."
+            },
+            {
+              "who": "claire",
+              "mood": "oups",
+              "title": "Proposition à revoir.",
+              "say": "En l'état, je ne peux pas présenter ça au comité. Retravaille ta proposition et reviens me voir quand elle tiendra la route.",
+              "coach": "Claire ne te suit pas. Télécharge ta fiche : la partie « Ce qui manque » dit quoi ajouter ou retirer, et les questions que tu n'as pas posées viennent juste après. Ensuite, recommence l'entretien."
             }
           ]
         }
@@ -572,7 +604,7 @@
           "say": "Côté sécurité, il s'est passé quelque chose pendant le pilote ?",
           "choices": [
             {
-              "text": "Rien à signaler. La porte CI tourne sans secret, et les scripts n'ont pas bougé depuis leur empreinte.",
+              "text": "Rien à signaler. La porte CI tourne sans variable secrète du projet, et les scripts n'ont pas bougé depuis leur empreinte.",
               "next": "r3",
               "trust": {
                 "karim": 2
@@ -759,11 +791,30 @@
               "coach": "Mission réussie. Pour refaire ça chez ton vrai client, garde l'atelier final (leçon 4.7) sous la main."
             },
             {
+              "when": [
+                [
+                  "missing",
+                  "<",
+                  2
+                ],
+                [
+                  "bad",
+                  "<",
+                  1
+                ]
+              ],
               "who": "claire",
               "mood": "parle",
               "title": "On continue, sans s'emballer.",
               "say": "Le pilote continue dans l'équipe de Léa. On reparle de l'extension dans un mois.",
               "coach": "Bien, mais le comité reste prudent. Regarde ce qui manque dans ta fiche."
+            },
+            {
+              "who": "claire",
+              "mood": "oups",
+              "title": "Extension gelée.",
+              "say": "On gèle l'extension. Le pilote continue dans l'équipe de Léa, et on en reparlera quand la suite sera plus solide.",
+              "coach": "Le comité ne te suit pas sur la suite. Télécharge ta fiche : la partie « Ce qui manque » dit quoi ajouter ou retirer. Relis la leçon 4.6 sur le pilote mesuré, puis recommence la restitution."
             }
           ]
         }

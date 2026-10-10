@@ -24,7 +24,7 @@ Les scripts du skill ne font **aucun appel réseau**. On peut le vérifier en le
 ## 4. Permissions
 
 - Ce que l'agent peut faire pendant la revue : lire les fichiers, lancer les deux scripts du skill. [Préciser le mode de permission de l'outil.]
-- La porte sans IA en CI tourne **sans aucun secret**, y compris sur les MR venant de forks.
+- La porte sans IA en CI tourne **sans aucune variable secrète du projet**, y compris sur les MR venant de forks.
 
 ## 5. Chaîne d'approvisionnement
 

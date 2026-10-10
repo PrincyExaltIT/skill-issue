@@ -1,0 +1,39 @@
+✔ S01 MINOR   speaker.service.ts:9  Injection par paramètres de constructeur (constructor(private http: HttpClient))  ← src/app/speakers/speaker.service.ts:9
+✔ S02 MINOR   speaker.service.ts:7  URL d'API codée en dur (http://localhost:3000/api/speakers) au lieu du token API_BASE_URL  ← src/app/speakers/speaker.service.ts:7
+✔ S03 MINOR   speaker.service.ts:11  Méthodes typées Observable<any>  ← src/app/speakers/speaker.service.ts:11
+✔ S04 MINOR   speaker.service.ts:12  console.log résiduel dans getSpeaker()  ← src/app/speakers/speaker.service.ts:12
+✔ S05 INFO    speaker.service.ts:5  Nouveau service racine en @Injectable({ providedIn: 'root' }) au lieu de @Service() (Angular 22)  ← src/app/speakers/speaker.service.ts:5
+✔ S06 MINOR   speaker-spotlight.ts:17  Décorateurs @Input() / @Output() + EventEmitter au lieu de input() / output()  ← src/app/speakers/speaker-spotlight.ts:17
+✔ S07 MAJOR   speaker-spotlight.ts:18  Output nommé select, comme l'événement DOM natif  ← src/app/speakers/speaker-spotlight.ts:18
+✔ S08 MAJOR   speaker-spotlight.ts:14  ChangeDetectionStrategy.Eager forcé sans justification dans un nouveau composant (OnPush est le défaut en v22)  ← src/app/speakers/speaker-spotlight.ts:14
+✔ S09 MINOR   speaker-spotlight.ts:20  Champs speaker: any et talks: any[]  ← src/app/speakers/speaker-spotlight.ts:20
+✔ S10 BLOCKER speaker-spotlight.ts:30  takeUntilDestroyed() sans argument dans ngOnInit : NG0203 à l'ouverture de /speakers/:id (constaté dans le navigateur)  ← src/app/speakers/speaker-spotlight.ts:30
+✔ S11 MAJOR   speaker-spotlight.ts:32  subscribe imbriqués (paramMap → speaker → talks) : aucune annulation, réponses dans le désordre  ← src/app/speakers/speaker-spotlight.ts:32
+✔ S12 MAJOR   speaker-spotlight.ts:33  Zoneless : champs simples (speaker, bioHtml, talks) assignés dans des callbacks subscribe, la vue n'est pas rafraîchie (Eager n'y change rien)  ← src/app/speakers/speaker-spotlight.ts:33
+✔ S13 BLOCKER speaker-spotlight.ts:34  bypassSecurityTrustHtml sur la bio saisie par les orateurs, rendue via [innerHTML] : XSS stockée  ← src/app/speakers/speaker-spotlight.ts:34
+✔ S14 MINOR   speaker-spotlight.html:3  *ngIf / *ngFor (NgIf, NgFor importés) au lieu du control flow @if / @for  ← src/app/speakers/speaker-spotlight.html:3
+✖ S15 MINOR   speaker-spotlight.html:6  Méthode avec argument appelée dans le template : getInitials(speaker.name)
+✔ S16 MAJOR   speaker-spotlight.html:5  <img> de la photo du speaker sans attribut alt  ← src/app/speakers/speaker-spotlight.html:5
+· S17 INFO    speaker-spotlight.html:5  <img [src]> sans NgOptimizedImage (ngSrc, width, height)
+✔ S18 BLOCKER speaker-spotlight.html:22  (click) sur une <div class="talk"> : ni focusable ni activable au clavier  ← src/app/speakers/speaker-spotlight.html:22
+✔ S19 MINOR   proposal-form.ts:27  Formulaire non typé (UntypedFormBuilder / UntypedFormGroup)  ← src/app/proposals/proposal-form.ts:16
+✔ S20 BLOCKER proposal-form.ts:47  this.form.valueChanges.subscribe(...) sans désabonnement (source infinie)  ← src/app/proposals/proposal-form.ts:47
+✔ S21 MAJOR   proposal-form.ts:38  effect() qui recopie abstract().length dans le signal charCount : état dérivé, à remplacer par computed()  ← src/app/proposals/proposal-form.ts:38
+✔ S22 MAJOR   proposal-form.ts:67  Zoneless : submitted (champ simple) passé à true dans un setTimeout, la confirmation ne s'affiche qu'au prochain événement (constaté)  ← src/app/proposals/proposal-form.ts:67
+✔ S23 MINOR   proposal-form.ts:1  Nouveau composant ProposalForm sans fichier spec  ← src/app/proposals/proposal-form.ts:1
+✔ S24 BLOCKER proposal-form.html:15  Champ titre sans label ni aria-label (placeholder seul)  ← src/app/proposals/proposal-form.html:15
+✔ S25 MINOR   proposal.guard.ts:7  Guard sous forme de classe (implements CanActivate) au lieu d'un CanActivateFn  ← src/app/proposals/proposal.guard.ts:7
+✔ S26 MAJOR   app.routes.ts:22  Route secondaire speakers/:id chargée eagerly (component:) : bundle initial 284,67 kB → 323,07 kB  ← src/app/app.routes.ts:22
+✔ S27 MAJOR   favorites.store.ts:28  add() mute le tableau du signal en place (this.ids().push) : ni le compteur ni la persistance ne sont notifiés  ← src/app/favorites/favorites.store.ts:28
+✔ S28 BLOCKER talk-card.ts:28  Signal isFavorite testé sans être appelé (!this.isFavorite toujours faux) : le feedback affiche toujours « Retiré de vos favoris » (constaté)  ← src/app/talks/talk-card.ts:28
+✔ S29 MAJOR   speaker-spotlight.spec.ts:20  it.only : test focalisé (avec CI=true, Vitest échoue : « Unexpected .only modifier »)  ← src/app/speakers/speaker-spotlight.spec.ts:20
+✔ S30 MINOR   speaker-spotlight.spec.ts:21  Seule assertion : expect(component).toBeTruthy()  ← src/app/speakers/speaker-spotlight.spec.ts:21
+✔ S31 MINOR   speaker.service.ts:1  Nouveau service SpeakerService sans fichier spec  ← src/app/speakers/speaker.service.ts:1
+✔ S32 MINOR   proposal.guard.ts:1  Nouveau guard ProposalGuard sans fichier spec  ← src/app/proposals/proposal.guard.ts:1
+· S33 INFO    proposal.guard.ts:6  @Injectable({ providedIn: 'root' }) sur une nouvelle classe (disparaît avec un CanActivateFn)
+· S34 MAJOR   speaker-spotlight.ts:32  Appels HTTP sans gestion d'erreur : « Chargement du speaker… » reste affiché si l'API échoue
+✔ S35 MINOR   speaker-spotlight.ts:42  getInitials() duplique initialsOf() de src/app/talks/initials.ts  ← src/app/speakers/speaker-spotlight.ts:42
+
+Rappel 96 % (26/27) · BLOCKER 5/5 · MAJOR 10/10 · MINOR 11/12 · bonus 5/8
+Précision 100 % (32/32 emplacements cités expliqués par le corrigé ; un « hors corrigé » peut rester légitime)
+Leurres signalés à tort : 0/7

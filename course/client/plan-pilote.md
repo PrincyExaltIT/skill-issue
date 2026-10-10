@@ -12,7 +12,7 @@ Un pilote répond à une question : est-ce que ce skill fait gagner du temps à 
 
 ## Le point de départ
 
-Avant le premier sprint, lance le skill sur une MR de référence dont tu connais les vrais problèmes, et note le score avec `evals/angular-review/score.mjs` (ou ton propre corrigé si la stack n'est pas Angular).
+Avant le premier sprint, lance le skill sur une MR de référence dont tu connais les vrais problèmes, et note le score avec le script du kit (`node <kit>/evals/angular-review/score.mjs`) (ou ton propre corrigé si la stack n'est pas Angular).
 
 | Mesure | Départ | Sprint 1 | Sprint 2 | Fin |
 |---|---|---|---|---|

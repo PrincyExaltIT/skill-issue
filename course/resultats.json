@@ -299,7 +299,7 @@
         "S04"
       ],
       "rapport": "fichier",
-      "secondes": 270,
+      "secondes": 268,
       "tours": 33,
       "cout": 1.59,
       "date": "8 octobre 2026",
@@ -316,12 +316,12 @@
       "leurres": 0,
       "manques": [],
       "rapport": "fichier",
-      "secondes": 720,
+      "secondes": 682,
       "tours": null,
       "cout": null,
       "date": "8 octobre 2026",
       "branche": "main",
-      "relecteurs": "5 sous-agents en parallèle",
+      "relecteurs": "6 sous-agents lancés, dont 2 refaits par Codex lui-même (leur sous-agent ne pouvait pas lire le dépôt)",
       "source": "docs/sample-review/codex"
     }
   }

@@ -42,13 +42,17 @@ angular-review:ai:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == $CI_PROJECT_ID && $ANTHROPIC_API_KEY && $GITLAB_REVIEW_TOKEN
       changes: ["**/*.ts", "**/*.html", "angular.json", "package.json"]
       when: always
+  variables:
+    CLAUDE_CODE_SUBPROCESS_ENV_SCRUB: "1"   # commands the agent runs do not see the API key
   script:
     - npm install -g @anthropic-ai/claude-code
     - test -d .claude/skills || (mkdir -p .claude && cp -r .agents/skills .claude/skills)   # Claude Code reads .claude/skills
+    # Least privilege: read, the skill's three scripts, read-only git, writes under .review/ only.
+    # The posting token does not exist for the agent: only curl gets it, after the review.
     - >
-      claude -p "/angular-review Base: origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+      env -u GITLAB_REVIEW_TOKEN claude -p "/angular-review Base: origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
       (run scope.mjs with --committed). Application code is read-only."
-      --allowedTools "Bash(node:*) Bash(git:*) Read Grep Glob Write"
+      --allowedTools "Read" "Grep" "Glob" "Edit(.review/**)" "Bash(node .claude/skills/angular-review/scripts/scope.mjs:*)" "Bash(node .agents/skills/angular-review/scripts/scope.mjs:*)" "Bash(node .claude/skills/angular-review/scripts/scan.mjs:*)" "Bash(node .agents/skills/angular-review/scripts/scan.mjs:*)" "Bash(node .claude/skills/angular-review/scripts/findings.mjs:*)" "Bash(node .agents/skills/angular-review/scripts/findings.mjs:*)" "Bash(git diff:*)" "Bash(git log:*)" "Bash(git show:*)" "Bash(git status:*)" "Bash(git rev-parse:*)" "Bash(git merge-base:*)"
     - >
       curl --fail --silent --show-error --request POST
       --header "PRIVATE-TOKEN: $GITLAB_REVIEW_TOKEN"

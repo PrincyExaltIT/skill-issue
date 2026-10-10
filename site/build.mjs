@@ -138,6 +138,8 @@ const chaine = json(join(repo, 'course', 'resultats-chaine.json'));
 // The package's own chain (bonus +2): {{PCH:etapes.fix.cout}}, {{PCH:etapes.revue.blocker}}, {{PCH:date}} …
 const packageChaine = json(join(repo, 'course', 'resultats-package-chaine.json'));
 const declenchement = json(join(repo, 'course', 'resultats-declenchement.json'));
+// The atelier 8 run of perimetre.mjs + verifs.mjs (written by runs/verifs/collect.mjs): {{VF:pistes}}, {{VF:avec_ng11.pistes}} …
+const verifs = json(join(repo, 'course', 'resultats-verifs.json'));
 // A value from a results file by dotted path; dates, costs, durations and lists are formatted like the rest of the page.
 const resultValue = (data, file, path) => {
   const value = path.split('.').reduce((o, k) => o?.[k], data);
@@ -263,6 +265,7 @@ html = html
     return resultValue(packageChaine, 'resultats-package-chaine.json', has(path) || !has(alias) ? path : alias);
   })
   .replace(/\{\{DECL:([\w.]+)\}\}/g, (_, path) => resultValue(declenchement, 'resultats-declenchement.json', path))
+  .replace(/\{\{VF:([\w.]+)\}\}/g, (_, path) => resultValue(verifs, 'resultats-verifs.json', path))
   .replace(/\{\{TAILLE:(\w+)\}\}/g, (_, k) => { if (!(k in sizes)) throw new Error(`{{TAILLE:${k}}} inconnu`); return sizes[k]; })
   .replace(/\{\{R:(\w+):(\w+):(\w+)\}\}/g, (_, model, step, key) => metric(model, step, key))
   .replace(/\{\{PKG:(\w+):(\w+)\}\}/g, (_, harness, key) => format(results.package[harness], key, `package/${harness}`))
@@ -298,16 +301,19 @@ function checkMission(page) {
     const trust = (t, where) => Object.keys(t ?? {}).forEach((id) => { if (!(G.room ?? []).includes(id)) errors.push(`${at(where)} : « ${id} » n'est pas dans la salle (room)`); });
     scene(G.start, 'start');
     (G.room ?? []).forEach((id) => person(id, 'room'));
+    (G.chat?.present ?? []).forEach((id) => { if (!(G.room ?? []).includes(id)) errors.push(`${at('chat.present')} : « ${id} » n'est pas dans la salle (room)`); });
     for (const [s, S] of Object.entries(scenes)) {
       person(S.who, `scène ${s}`);
       if (S.kind === 'ask' || S.kind === 'plan') scene(S.next, `scène ${s}`);
       (S.choices ?? []).forEach((c, i) => { scene(c.next, `scène ${s}, choix ${i + 1}`); card(c.card, `scène ${s}, choix ${i + 1}`); trust(c.trust, `scène ${s}, choix ${i + 1}`); });
       for (const [k, x] of Object.entries({ ...S.questions, ...S.options })) { card(x.card, `scène ${s}, ${k}`); trust(x.trust, `scène ${s}, ${k}`); }
       (S.verdicts ?? []).forEach((v, i) => { person(v.who, `scène ${s}, verdict ${i + 1}`); (v.when ?? []).forEach(([id]) => {
-        // a condition reads a person's trust, the plan (missing key options, bad options) or one plan option
+        // a condition reads a person's trust, the plan (missing key options, bad options), one plan option, or the key
+        // questions of the "ask" scenes left unasked (missedq: only in a game that has key questions)
         const planIds = Object.values(G.scenes).flatMap((x) => Object.keys(x.options ?? {}));
-        const ok = (G.room ?? []).includes(id) || id === 'missing' || id === 'bad' || (id.startsWith('plan:') && planIds.includes(id.slice(5)));
-        if (!ok) errors.push(`${at(`scène ${s}, verdict ${i + 1}`)} : « ${id} » n'est ni dans la salle (room) ni une option du plan`);
+        const keyQuestions = Object.values(G.scenes).some((x) => x.kind === 'ask' && Object.values(x.questions ?? {}).some((q) => q.key));
+        const ok = (G.room ?? []).includes(id) || id === 'missing' || id === 'bad' || (id === 'missedq' && keyQuestions) || (id.startsWith('plan:') && planIds.includes(id.slice(5)));
+        if (!ok) errors.push(`${at(`scène ${s}, verdict ${i + 1}`)} : « ${id} » n'est ni dans la salle (room), ni une option du plan, ni missing, bad ou missedq (questions clés)`);
       }); });
       if (S.kind === 'end' && !(typeof S.link === 'string' && /^#./.test(S.link))) errors.push(`${at(`scène ${s}`)} : « link » doit être une ancre interne (#…)`);
     }
@@ -357,14 +363,20 @@ function checkAnchors(page) {
 const anchorsChecked = checkAnchors(html);
 
 // French typography: a non-breaking space keeps ? ! ; : » % and $ with the word before them (and « with the word after),
-// in running text only: never inside a tag, <pre>, <code>, <kbd>, <script>, <style>, <textarea> or <svg>.
+// the groups of a number together (« 200 000 ») and a number with its unit (« 10 min »), in running text only: never
+// inside a tag, <pre>, <code>, <kbd>, <script>, <style>, <textarea> or <svg>. app.js applies the same rules (nb) to
+// the text it renders from the JSON blocks.
+const FR_SPACES = [
+  [/ ([?!;:»%$])/g, '\u00a0$1'], [/« /g, '«\u00a0'],
+  [/(?<=\d) (?=\d{3}(?!\d))/g, '\u00a0'], [/(?<=\d) (?=(?:min|h|s|ms|tokens?|Ko|Mo|Go)\b)/g, '\u00a0'],
+];
 function frenchSpacing(src) {
   // Raw blocks are set aside whole (a "<" inside a script would otherwise swallow its closing tag), then put back.
   const kept = [];
   const hold = (m) => '\u0000' + (kept.push(m) - 1) + '\u0000';
   const text = src.replace(/<(script|style|pre|textarea|svg)\b[\s\S]*?<\/\1>/gi, hold).replace(/<(code|kbd)\b[\s\S]*?<\/\1>/gi, hold);
   const spaced = text.split(/(<[^>]+>)/).map((part) => (part.startsWith('<') ? part
-    : part.replace(/ ([?!;:»%$])/g, '\u00a0$1').replace(/« /g, '«\u00a0'))).join('');
+    : FR_SPACES.reduce((t, [re, to]) => t.replace(re, to), part))).join('');
   return spaced.replace(/\u0000(\d+)\u0000/g, (_, i) => kept[Number(i)]);
 }
 html = frenchSpacing(html);
