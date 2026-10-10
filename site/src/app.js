@@ -379,23 +379,40 @@
   // Inside the claude.ai viewer, a file is offered through the downloads capability; elsewhere, a plain blob link.
   let saver = null;
   if (window.claude?.use) window.claude.use('downloads').then((d) => { saver = d; }).catch(() => {});
+  // The game is drawn as a group chat: incoming bubbles on the left, yours on the right, Skillou's tips as private
+  // messages, a typing indicator before each incoming line, and your possible answers as drafts above a composer.
+  const ICON = {
+    send: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>',
+    seen: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg>',
+    lock: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="16" height="10" x="4" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+    info: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+    reset: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>',
+  };
+  const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   $$('.game[data-game]').forEach((box) => {
     const G = MISSION?.games?.[box.dataset.game];
     if (!G) return;
     const P = MISSION.people;
+    const CH = G.chat ?? {};
     const key = 'game:' + box.dataset.game;
     let st = store.get(key, null) ?? { at: G.start, log: [], trust: {}, cards: [], plan: [], asked: [] };
     const save = () => store.set(key, st);
-    box.innerHTML = `<div class="game-main">${G.intro ? `<p class="game-intro">${esc(G.intro)}</p>` : ''}<ol class="game-log" aria-live="polite"></ol><div class="game-act"></div></div>`
-      + `<aside class="game-side" aria-label="Ta fiche mission"><h3>Ta fiche mission</h3><div class="game-trust"></div><h4>Ce que tu sais</h4><ul class="game-cards"></ul>`
-      + `<button class="btn game-reset" type="button">Recommencer</button></aside>`;
-    const logEl = $('.game-log', box), act = $('.game-act', box), trustEl = $('.game-trust', box), cardsEl = $('.game-cards', box);
     const who = (id) => P[id] ?? { name: id, role: '', initial: '?' };
+    const room = G.room ?? [];
     const face = (id, mood) => id === 'skillou'
-      ? `<img class="face skillou" src="media/skillou-${mood || 'parle'}.png" alt="" width="44" height="44">`
+      ? `<img class="face skillou" src="media/skillou-${mood || 'parle'}.png" alt="" width="36" height="36">`
       : `<span class="face" style="--c:${who(id).color}" aria-hidden="true">${esc(who(id).initial)}</span>`;
-    const line = (id, html, mood, cls = '') => `<li class="msg ${id === 'me' ? 'me' : ''} ${cls}">${id === 'me' ? '' : face(id, mood)}<div class="bubble">`
-      + `${id === 'me' ? '' : `<span class="name">${esc(who(id).name)} <small>${esc(who(id).role)}</small></span>`}${html}</div></li>`;
+    const idle = `${room.map((id) => who(id).name).join(', ')} · Skillou te conseille en privé`;
+    box.innerHTML = `<div class="game-grid"><section class="chat" aria-label="Conversation : ${esc(CH.title ?? G.client)}">`
+      + `<header class="chat-head"><div class="chat-faces">${room.map((id) => face(id)).join('')}${face('skillou', 'salut')}</div>`
+      + `<div class="chat-who"><b>${esc(CH.title ?? G.client)}</b><span class="chat-status">${esc(idle)}</span></div></header>`
+      + `<ol class="game-log chat-log" aria-live="polite" aria-relevant="additions" aria-label="Messages"></ol>`
+      + `<div class="chat-compose"><div class="game-act"></div><div class="compose-bar" aria-hidden="true"><span></span><i>${ICON.send}</i></div></div></section>`
+      + `<aside class="game-side" aria-label="Ta fiche mission"><h3>Ta fiche mission</h3><div class="game-trust"></div><h4>Ce que tu sais</h4><ul class="game-cards"></ul>`
+      + `<button class="btn game-reset" type="button">${ICON.reset}Recommencer</button></aside></div>`;
+    const logEl = $('.game-log', box), act = $('.game-act', box), trustEl = $('.game-trust', box), cardsEl = $('.game-cards', box);
+    const statusEl = $('.chat-status', box), barEl = $('.compose-bar span', box);
     const push = (entry) => { st.log.push(entry); save(); };
     const bump = (delta = {}) => { for (const [k, v] of Object.entries(delta)) st.trust[k] = (st.trust[k] ?? 0) + v; };
     const addCard = (id) => { if (id && !st.cards.includes(id)) st.cards.push(id); };
@@ -406,35 +423,112 @@
     // offered again nor reported as missed.
     const covered = (q, d) => !st.asked.includes(q) && Boolean(d.card) && st.cards.includes(d.card);
 
+    // A message's clock time: the conversation starts at CH.time and each message takes a minute.
+    const [h0, m0] = String(CH.time ?? '09:30').split(':').map(Number);
+    const clock = (i) => { const m = h0 * 60 + m0 + i; return `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`; };
+    const line = (i) => {
+      const e = st.log[i], prev = st.log[i - 1];
+      const me = e.who === 'me', coach = (e.cls ?? '').includes('coach');
+      const first = !prev || prev.who !== e.who || (prev.cls ?? '') !== (e.cls ?? '');
+      const name = me || !first ? '' : `<span class="name">${esc(who(e.who).name)} <small>${coach ? `${ICON.lock}visible par toi seul` : esc(who(e.who).role)}</small></span>`;
+      return `<li class="msg ${me ? 'out' : 'in'}${first ? ' first' : ''} ${e.cls ?? ''}">${me ? '' : `<span class="who">${first ? face(e.who, e.mood) : ''}</span>`}`
+        + `<div class="bubble">${name}<div class="text">${e.html}</div><span class="meta"><span>${clock(i)}</span>${me ? `${ICON.seen}<span class="sr-only">lu</span>` : ''}</span></div></li>`;
+    };
+    const opening = () => `<li class="chat-day"><span>${esc(CH.day ?? "Aujourd'hui")}</span></li>`
+      + (G.intro ? `<li class="chat-note">${ICON.info}<span>${esc(G.intro)}</span></li>` : '');
+    const toBottom = (smooth) => logEl.scrollTo({ top: logEl.scrollHeight, behavior: smooth && !reducedMotion() ? 'smooth' : 'auto' });
+    // The thread stays pinned to its last message (when the view appears, the composer changes or the window resizes),
+    // unless the player scrolled up to reread.
+    let pinned = true;
+    logEl.addEventListener('scroll', () => { pinned = logEl.scrollHeight - logEl.scrollTop - logEl.clientHeight < 48; }, { passive: true });
+    if ('ResizeObserver' in window) new ResizeObserver(() => { if (pinned) toBottom(false); }).observe(logEl);
+    // The view is hidden while the page starts, and a background tab may skip resize callbacks: pin again once the
+    // router has shown a view, and on every navigation.
+    const repin = () => setTimeout(() => { if (pinned) toBottom(false); }, 0);
+    window.addEventListener('hashchange', repin);
+    repin();
+
+    let shown = st.log.length;   // messages already on screen; the rest are revealed one by one
+    let epoch = 0, busy = false, refocus = false;
+    function paintAll() {
+      logEl.setAttribute('aria-busy', 'true');
+      logEl.innerHTML = opening() + st.log.slice(0, shown).map((_, i) => line(i)).join('');
+      logEl.removeAttribute('aria-busy');
+      toBottom(false);
+    }
+    function typing(id) {
+      $('.typing', logEl)?.remove();
+      if (id) {
+        logEl.insertAdjacentHTML('beforeend', `<li class="msg in first typing" aria-hidden="true"><span class="who">${face(id, 'parle')}</span><div class="bubble"><span class="dots"><i></i><i></i><i></i></span></div></li>`);
+        toBottom(true);
+      }
+      statusEl.textContent = id ? `${who(id).name} écrit…` : idle;
+      statusEl.classList.toggle('is-typing', Boolean(id));
+      barEl.textContent = id ? `${who(id).name} écrit…` : barText();
+    }
+    // Messages added since the last reveal appear in order, each incoming one after a short typing pause.
+    async function reveal() {
+      if (busy) return;
+      busy = true; box.classList.add('is-busy');
+      const run = epoch;
+      while (shown < st.log.length && run === epoch) {
+        const e = st.log[shown];
+        if (e.who !== 'me' && !reducedMotion()) {
+          typing(e.who);
+          await wait(Math.min(1600, 450 + e.html.replace(/<[^>]+>/g, '').length * 7));
+          if (run !== epoch) break;
+        }
+        typing(null);
+        logEl.insertAdjacentHTML('beforeend', line(shown));
+        logEl.lastElementChild.classList.add('new');
+        shown += 1;
+        toBottom(true);
+        if (!reducedMotion()) await wait(e.who === 'me' ? 380 : 260);
+      }
+      if (run !== epoch) return;
+      busy = false; box.classList.remove('is-busy');
+      typing(null);
+      toBottom(false);   // the replies are back and the thread got shorter: keep its last message in view
+      if (refocus) { refocus = false; $('button, input', act)?.focus({ preventScroll: true }); }
+    }
+
     function renderSide() {
-      trustEl.innerHTML = (G.room ?? []).map((id) => {
+      trustEl.innerHTML = room.map((id) => {
         const v = trustOf(id);
         return `<div class="trust"><span>${esc(who(id).name)} <small>${esc(who(id).role)}</small></span><span class="meter" role="meter" aria-valuemin="-4" aria-valuemax="4" aria-valuenow="${v}" aria-label="Confiance de ${esc(who(id).name)}"><i style="--v:${(v + 4) / 8}"></i></span></div>`;
       }).join('');
       cardsEl.innerHTML = st.cards.length ? st.cards.map((c) => `<li><b>${esc(MISSION.cards[c].title)}</b> ${esc(MISSION.cards[c].text)}</li>`).join('') : '<li class="muted">Rien encore : pose des questions.</li>';
     }
-    function renderLog() { logEl.innerHTML = st.log.map((e) => line(e.who, e.html, e.mood, e.cls)).join(''); }
+    function barText() {
+      const kind = G.scenes[st.at]?.kind;
+      return kind === 'plan' ? 'Coche ta proposition, puis envoie-la' : kind === 'end' ? 'Conversation terminée' : 'Choisis ta réponse au-dessus';
+    }
+    const renderLog = () => { reveal(); };
 
-    function go(id) { st.at = id; save(); renderSide(); renderLog(); renderAct(); act.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    function go(id) { st.at = id; save(); renderSide(); renderAct(); renderLog(); }
 
     function sheet() {
       const goodPlan = st.plan.filter((p) => G.scenes[st.planScene]?.options?.[p]?.good);
       const lines = [`# Fiche mission · ${G.client}`, '', `> ${G.brief}`, '', '## Ce que je sais du client', ...st.cards.map((c) => `- **${MISSION.cards[c].title}** ${MISSION.cards[c].text}`),
         '', `## ${G.planTitle ?? 'Ma proposition'}`, ...goodPlan.map((p) => `- ${G.scenes[st.planScene].options[p].text}`),
-        '', '## Où la confiance en est (de -4 à 4)', ...(G.room ?? []).map((id) => `- ${who(id).name} (${who(id).role}) : ${trustOf(id)}/4`),
+        '', '## Où la confiance en est (de -4 à 4)', ...room.map((id) => `- ${who(id).name} (${who(id).role}) : ${trustOf(id)}/4`),
         '', '## Pour la suite', ...G.next.map((n) => `- ${n}`), ''];
       return lines.join('\n');
     }
 
+    const replies = (items) => `<div class="replies" role="group" aria-label="Tes réponses possibles">${items.join('')}</div>`;
+    const reply = (attr, text) => `<button class="choice reply" type="button" ${attr}><span>${esc(text)}</span>${ICON.send}</button>`;
     function renderAct() {
       const S = G.scenes[st.at];
       if (!S) { act.innerHTML = ''; return; }
-      if (!st.log.some((e) => e.scene === st.at && e.intro)) { push({ who: S.who, html: `<p>${S.say}</p>`, scene: st.at, intro: true, mood: S.mood }); renderLog(); }
+      if (!st.log.some((e) => e.scene === st.at && e.intro)) push({ who: S.who, html: `<p>${S.say}</p>`, scene: st.at, intro: true, mood: S.mood });
+      barEl.textContent = barText();
       if (S.kind === 'say') {
-        act.innerHTML = `<div class="choices">${S.choices.map((c, i) => `<button class="choice" type="button" data-i="${i}">${esc(c.text)}</button>`).join('')}</div>`;
+        act.innerHTML = replies(S.choices.map((c, i) => reply(`data-i="${i}"`, c.text)));
         act.onclick = (e) => {
-          const b = e.target.closest('.choice'); if (!b) return;
+          const b = e.target.closest('.choice'); if (!b || busy) return;
           const c = S.choices[Number(b.dataset.i)];
+          refocus = true;
           push({ who: 'me', html: `<p>${esc(c.text)}</p>` });
           bump(c.trust); addCard(c.card);
           if (c.reply) push({ who: S.who, html: `<p>${c.reply}</p>` });
@@ -452,27 +546,30 @@
           go(S.next);
           return;
         }
-        act.innerHTML = `<p class="hint">Encore ${left} question${left > 1 ? 's' : ''} : choisis bien.`
-          + `${known.length ? ` Tu as déjà la réponse à « ${known.map(([, d]) => esc(d.text)).join(' », « ')} » : inutile de la reposer.` : ''}</p><div class="choices">`
-          + offered.map(([q, d]) => `<button class="choice" type="button" data-q="${q}">${esc(d.text)}</button>`).join('') + '</div>';
+        act.innerHTML = `<p class="hint"><b>Encore ${left} question${left > 1 ? 's' : ''}</b>, choisis bien.`
+          + `${known.length ? ` Tu as déjà la réponse à « ${known.map(([, d]) => esc(d.text)).join(' », « ')} » : inutile de la reposer.` : ''}</p>`
+          + replies(offered.map(([q, d]) => reply(`data-q="${q}"`, d.text)));
         act.onclick = (e) => {
-          const b = e.target.closest('.choice'); if (!b) return;
+          const b = e.target.closest('.choice'); if (!b || busy) return;
           const d = S.questions[b.dataset.q];
+          refocus = true;
           st.asked.push(b.dataset.q);
           push({ who: 'me', html: `<p>${esc(d.text)}</p>` });
           push({ who: S.who, html: `<p>${d.answer}</p>` });
           bump(d.trust); addCard(d.card);
-          save(); renderSide(); renderLog(); renderAct();
+          save(); renderSide(); renderAct(); renderLog();
         };
       } else if (S.kind === 'plan') {
         st.planScene = st.at;
-        act.innerHTML = `<fieldset class="plan"><legend>${esc(S.legend)}</legend>${Object.entries(S.options).map(([k, o]) => `<label><input type="checkbox" value="${k}"> ${esc(o.text)}</label>`).join('')}</fieldset>`
-          + `<button class="btn primary" type="button">${esc(S.submit)}</button><p class="hint plan-msg" role="status" aria-live="polite"></p>`;
+        act.innerHTML = `<fieldset class="plan"><legend>${esc(S.legend)}</legend>${Object.entries(S.options).map(([k, o]) => `<label><input type="checkbox" value="${k}"> <span>${esc(o.text)}</span></label>`).join('')}</fieldset>`
+          + `<div class="plan-send"><p class="hint plan-msg" role="status" aria-live="polite"></p><button class="btn primary" type="button">${esc(S.submit)}${ICON.send}</button></div>`;
         const msg = $('.plan-msg', act);
         $('.plan', act).onchange = () => { msg.textContent = ''; };
         $('.btn', act).onclick = () => {
+          if (busy) return;
           st.plan = $$('input:checked', act).map((i) => i.value);
           if (!st.plan.length) { msg.textContent = S.empty ?? 'Coche au moins une proposition avant de passer devant le comité.'; return; }
+          refocus = true;
           push({ who: 'me', html: `<ul>${st.plan.map((k) => `<li>${esc(S.options[k].text)}</li>`).join('')}</ul>` });
           for (const k of st.plan) { bump(S.options[k].trust); if (S.options[k].good) addCard(S.options[k].card); if (S.options[k].coach) push({ who: 'skillou', html: `<p>${S.options[k].coach}</p>`, mood: S.options[k].good ? 'salut' : 'oups', cls: 'coach' }); }
           for (const [k, o] of Object.entries(S.options)) if (o.good && o.key && !st.plan.includes(k)) push({ who: 'skillou', html: `<p>${o.missedCoach}</p>`, mood: 'montre', cls: 'coach' });
@@ -480,8 +577,8 @@
         };
       } else if (S.kind === 'end') {
         const v = S.verdicts.find((x) => (x.when ?? []).every(([id, op, n]) => (op === '>=' ? (st.trust[id] ?? 0) >= n : (st.trust[id] ?? 0) < n))) ?? S.verdicts[S.verdicts.length - 1];
-        if (!st.log.some((e) => e.verdict)) { push({ who: v.who, html: `<p>${v.say}</p>`, verdict: true }); push({ who: 'skillou', html: `<p>${v.coach}</p>`, mood: v.mood, cls: 'coach' }); renderLog(); }
-        act.innerHTML = `<div class="end"><p><b>${esc(v.title)}</b></p><button class="btn primary" type="button" data-dl>Télécharger ma fiche mission (.md)</button> <a class="btn" href="${S.link}">${esc(S.linkText)}</a></div>`;
+        if (!st.log.some((e) => e.verdict)) { push({ who: v.who, html: `<p>${v.say}</p>`, verdict: true }); push({ who: 'skillou', html: `<p>${v.coach}</p>`, mood: v.mood, cls: 'coach' }); }
+        act.innerHTML = `<div class="end"><p class="end-title">${esc(v.title)}</p><div class="end-actions"><button class="btn primary" type="button" data-dl>Télécharger ma fiche mission (.md)</button> <a class="btn" href="${S.link}">${esc(S.linkText)}</a></div></div>`;
         $('[data-dl]', act).onclick = async () => {
           const filename = `fiche-mission-${box.dataset.game}.md`;
           if (saver) { try { await saver.save({ filename, data: sheet() }); } catch { /* declined or unavailable: nothing to retry */ } return; }
@@ -490,8 +587,12 @@
         };
       }
     }
-    $('.game-reset', box).onclick = () => { st = { at: G.start, log: [], trust: {}, cards: [], plan: [], asked: [] }; save(); go(G.start); };
-    renderSide(); renderLog(); renderAct();
+    $('.game-reset', box).onclick = () => {
+      epoch += 1; busy = false; box.classList.remove('is-busy');
+      st = { at: G.start, log: [], trust: {}, cards: [], plan: [], asked: [] }; shown = 0; save();
+      paintAll(); typing(null); go(G.start);
+    };
+    paintAll(); renderSide(); renderAct(); renderLog();
   });
 
   refreshProgress();
