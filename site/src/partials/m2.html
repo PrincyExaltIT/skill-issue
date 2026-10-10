@@ -124,7 +124,7 @@ avec un DestroyRef injecté fonctionne partout.
               <li><b>Pars de tes vraies reviews.</b> Les dix remarques que ton équipe répète dans les PR sont tes dix premières règles.</li>
               <li><b>Pas d'équipe sous la main ?</b> Prends deux sources. D'abord les conventions du <code>AGENTS.md</code> du lab (signals, <code>input()</code> et <code>output()</code>, <code>inject()</code>, control flow natif, <code>NgOptimizedImage</code>). Ensuite le menu ci-dessous : des règles candidates tirées des références de l'étape 2.</li>
               <li><b>Écris aussi ce qui n'est pas un problème.</b> « Un composant sans <code>changeDetection</code> est déjà en OnPush (v22) : rien à signaler » évite un faux positif à chaque PR.</li>
-              <li><b>Date tes faits.</b> En Angular 22, OnPush est le défaut, <code>ChangeDetectionStrategy.Eager</code> remplace <code>Default</code>, et les <code>*ngIf</code> sont dépréciés depuis la v20. Une règle écrite pour la v17 donne de mauvais conseils en v22.</li>
+              <li><b>Date tes faits.</b> En Angular 22, OnPush est le défaut des composants qui ne précisent pas <code>changeDetection</code>, <code>ChangeDetectionStrategy.Eager</code> remplace <code>Default</code>, et les <code>*ngIf</code> sont dépréciés depuis la v20. Une règle écrite pour la v17 donne de mauvais conseils en v22.</li>
               <li><b><code>AGENTS.md</code> prime.</b> Les conventions toujours vraies du dépôt y sont déjà ; tes références les détaillent pour la review, sans les contredire.</li>
             </ul>
             <details class="more"><summary>Le menu de règles candidates, pour qui n'a pas d'équipe</summary>
@@ -317,7 +317,7 @@ Fini quand : chaque finding est gardé, fusionné ou écarté avec une raison.</
               <div class="seg" role="tablist" aria-label="Harness"></div>
               <div class="pane" aria-live="polite"></div>
             </div>
-            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Deux dossiers suffisent pour tous ces exemples</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode et Kilo Code lisent <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic depuis janvier 2026), pas plus que Continue d'après son code source : eux lisent <code>.claude/skills/</code>. Commite donc le même dossier aux deux endroits, et laisse la CI vérifier qu'ils restent identiques (<code>diff -r</code>). Sur macOS et Linux, un lien symbolique fait aussi l'affaire.</p></div></div>
+            <div class="rc note"><span class="av" aria-hidden="true">→</span><div><p class="who"><b>Deux dossiers suffisent pour tous ces exemples</b></p><p>Codex, Copilot, Cursor, Gemini CLI, OpenCode, Kilo Code et bien d'autres lisent <code>.agents/skills/</code>. <b>Claude Code ne le lit pas</b> (demande ouverte chez Anthropic depuis janvier 2026), pas plus que Continue d'après son code source : eux lisent <code>.claude/skills/</code>. Commite donc le même dossier aux deux endroits, et laisse la CI vérifier qu'ils restent identiques (<code>diff -r</code>). Sur macOS et Linux, un lien symbolique fait aussi l'affaire.</p></div></div>
             <h3>Ton outil n'est pas dans la matrice ?</h3>
             <p>La matrice donne des exemples, et la liste n'est pas fermée : ton équipe utilise peut-être un autre harness, ou un outil maison. Dans ce cas, trois vérifications suffisent.</p>
             <ol>
@@ -342,7 +342,7 @@ metadata:
               <li><b>Les extensions dans des fichiers à part.</b> <code>agents/openai.yaml</code> donne à Codex un nom d'affichage ; les autres harnesses l'ignorent.</li>
               <li><b>Une ligne dans <code>AGENTS.md</code></b> pour que tout le monde sache que le skill existe : « Pour une revue de code, utilise le skill <code>revue-angular</code> ; ses règles sont dans <code>references/</code>. »</li>
             </ul>
-            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le même dossier (avant l'ajout des garde-fous de la <a href="#m3-l7">leçon 3.7</a>), copié tel quel dans <code>.agents/skills/</code>, lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre. Le skill n'a pas changé d'une ligne entre Claude Code et Codex.</p></div></div>
+            <div class="rc"><span class="av" aria-hidden="true">C</span><div><p class="who"><b>La preuve par Codex</b> · run du {{RESULTS_DATE}}</p><p>Le même dossier (avant l'ajout des garde-fous de la <a href="#m3-l7">leçon 3.7</a>), copié tel quel dans <code>.agents/skills/</code>, lancé avec Codex, modèle {{CODEX_MODEL}} : {{R:codex:5:rappel}} % de rappel, {{R:codex:5:precision}} % de précision, {{R:codex:5:leurres}} leurre. Aucune ligne n'a été adaptée pour Codex : c'est le dossier de l'étape 5 tel qu'il était avant les garde-fous.</p></div></div>
             <details class="more"><summary>D'où vient le standard Agent Skills</summary>
               <!-- @include partials/m2-standard.html -->
             </details>

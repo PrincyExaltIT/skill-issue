@@ -16,7 +16,8 @@
       "harness": "Claude Code",
       "duree_s": 1243,
       "cout": 6.08,
-      "commits": 21
+      "commits": 21,
+      "commits_avec_test": 17
     },
     "rerevue": {
       "harness": "Claude Code",

@@ -6,7 +6,7 @@ Branche `solution/review-fix` de [skill-issue-playground](https://github.com/Pri
 |---|---|---|---|---|
 | 1. `angular-review` | Codex (gpt-5.6-sol) | REQUEST_CHANGES — 8 BLOCKER, 13 MAJOR, 16 MINOR | ≈ 12 min | quota ChatGPT |
 | 2. `review-fix` sur BLOCKER + MAJOR | Claude Code (Opus 5.5) | 21 commits, un par finding, chacun avec un test de régression ([1-FIXES.md](1-FIXES.md)) | 20,8 min | 6,08 $ |
-| 3. `angular-review` (re-review) | Claude Code | REQUEST_CHANGES — 1 BLOCKER, 2 MAJOR, 15 MINOR, 5 INFO ([2-REVIEW-apres-fix.md](2-REVIEW-apres-fix.md)) | 2,7 min | 5,69 $ |
+| 3. `angular-review` (re-review) | Claude Code | REQUEST_CHANGES — 1 BLOCKER, 2 MAJOR, 15 MINOR, 5 INFO ([2-REVIEW-apres-fix.md](2-REVIEW-apres-fix.md)) | ≈ 6 min | 5,69 $ |
 | 4. `pr-handoff` | Claude Code | Description de PR « à ne pas merger en l'état » ([3-PR_BODY.md](3-PR_BODY.md)) et note de passation ([4-HANDOFF.md](4-HANDOFF.md)) | 1,7 min | 0,71 $ |
 
 Ce que ça montre :

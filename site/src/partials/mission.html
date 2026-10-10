@@ -82,7 +82,7 @@
     },
     "flux": {
       "title": "Le flux de données",
-      "text": "Le skill ne crée pas de nouveau flux : c'est un dossier de fichiers dans le dépôt, lu par l'outil déjà validé."
+      "text": "Le skill ne crée pas de flux à lui : c'est un dossier de fichiers dans le dépôt, lu par l'outil déjà validé, qui garde ses propres flux."
     },
     "scripts": {
       "title": "Les scripts",
@@ -96,7 +96,11 @@
   "games": {
     "mission": {
       "client": "Groupe Hexa (fictif)",
-      "chat": { "title": "Groupe Hexa · L’IA dans nos équipes", "day": "Aujourd’hui", "time": "09:30" },
+      "chat": {
+        "title": "Groupe Hexa · L’IA dans nos équipes",
+        "day": "Aujourd’hui",
+        "time": "09:30"
+      },
       "brief": "On veut intégrer l'IA dans notre manière de faire, et tu as l'air d'être la bonne personne pour ça.",
       "room": [
         "claire",
@@ -238,7 +242,7 @@
               "coach": "Faux, et Karim le sait : un assistant de code envoie du contexte au modèle, et il attend que tu décrives ce flux."
             },
             {
-              "text": "Le contexte part vers le modèle de l'outil que vous avez déjà validé, selon le contrat signé par la DSI. Mon skill, lui, est un dossier de fichiers dans le dépôt : il n'ajoute aucun flux.",
+              "text": "Le contexte part vers le modèle de l'outil que vous avez déjà validé, selon le contrat signé par la DSI. Mon skill, lui, est un dossier de fichiers dans le dépôt : il n'ajoute aucun flux à ceux de l'outil.",
               "next": "s3b",
               "trust": {
                 "karim": 2
@@ -422,26 +426,16 @@
             {
               "when": [
                 [
-                  "karim",
+                  "plan:p8",
                   ">=",
-                  3
-                ],
-                [
-                  "lea",
-                  ">=",
-                  3
-                ],
-                [
-                  "claire",
-                  ">=",
-                  3
+                  1
                 ]
               ],
-              "who": "claire",
-              "mood": "bravo",
-              "title": "Pilote validé.",
-              "say": "Le comité valide le pilote. Karim signe sous réserve de sa note, Léa est partante. On se revoit dans deux mois avec les chiffres.",
-              "coach": "Bravo : Claire, Karim et Léa te suivent. Télécharge ta fiche : elle te servira dans les modules 2 et 4. Le parcours commence au module 1, où l'atelier 0 te donne ton score de départ."
+              "who": "karim",
+              "mood": "oups",
+              "title": "Veto de la sécurité.",
+              "say": "Non. Envoyer de vraies données d'assurés à un modèle pour voir ce qu'il en fait, c'est précisément l'incident que je dois éviter. Je ne signe pas.",
+              "coach": "Karim bloque à cause d'une seule ligne : les vraies fixtures. Des données synthétiques font le même test sans risque (leçon 4.4). Retire-la et recommence l'entretien."
             },
             {
               "when": [
@@ -472,6 +466,40 @@
               "coach": "Léa doute. Mesure avant d'imposer : dès l'atelier 0 du module 1, tu notes ton skill sur une vraie PR, puis à chaque étape du module 2."
             },
             {
+              "when": [
+                [
+                  "karim",
+                  ">=",
+                  3
+                ],
+                [
+                  "lea",
+                  ">=",
+                  3
+                ],
+                [
+                  "claire",
+                  ">=",
+                  3
+                ],
+                [
+                  "missing",
+                  "<",
+                  1
+                ],
+                [
+                  "bad",
+                  "<",
+                  1
+                ]
+              ],
+              "who": "claire",
+              "mood": "bravo",
+              "title": "Pilote validé.",
+              "say": "Le comité valide le pilote. Karim signe sous réserve de sa note, Léa est partante. On se revoit dans deux mois avec les chiffres.",
+              "coach": "Bravo : Claire, Karim et Léa te suivent. Télécharge ta fiche : elle te servira dans les modules 2 et 4. Le parcours commence au module 1, où l'atelier 0 te donne ton score de départ."
+            },
+            {
               "who": "claire",
               "mood": "parle",
               "title": "Pilote accepté, sous conditions.",
@@ -484,7 +512,11 @@
     },
     "restitution": {
       "client": "Groupe Hexa (fictif), deux mois plus tard",
-      "chat": { "title": "Groupe Hexa · Comité du pilote", "day": "Deux mois plus tard", "time": "14:00" },
+      "chat": {
+        "title": "Groupe Hexa · Comité du pilote",
+        "day": "Deux mois plus tard",
+        "time": "14:00"
+      },
       "brief": "Le pilote est fini. Le comité veut savoir s'il faut continuer.",
       "intro": "Nouvelle partie, indépendante de la mission : la confiance repart de zéro et ta fiche se remplit à nouveau.",
       "room": [
@@ -667,26 +699,16 @@
             {
               "when": [
                 [
-                  "karim",
+                  "plan:n5",
                   ">=",
-                  3
-                ],
-                [
-                  "lea",
-                  ">=",
-                  3
-                ],
-                [
-                  "claire",
-                  ">=",
-                  3
+                  1
                 ]
               ],
-              "who": "claire",
-              "mood": "bravo",
-              "title": "Extension validée.",
-              "say": "On étend à une deuxième équipe le mois prochain. Et on aimerait que tu formes les référents.",
-              "coach": "Mission réussie. Pour refaire ça chez ton vrai client, garde l'atelier final (leçon 4.7) sous la main."
+              "who": "lea",
+              "mood": "oups",
+              "title": "Le comité refuse.",
+              "say": "Remplacer nos revues par l'IA ? Non. L'équipe relit, l'IA aide. Si c'est ça la suite, on en reste au pilote.",
+              "coach": "L'IA fait un premier passage, un humain décide du merge : c'est la règle de la leçon 4.4. Recommence la restitution sans cette proposition."
             },
             {
               "when": [
@@ -701,6 +723,40 @@
               "title": "La sécurité freine.",
               "say": "Je ne bloque pas, mais je veux un vrai suivi avant d'aller plus loin.",
               "coach": "Il manque des traces côté sécurité. Relis la leçon 4.4 sur les préventions, puis recommence."
+            },
+            {
+              "when": [
+                [
+                  "karim",
+                  ">=",
+                  3
+                ],
+                [
+                  "lea",
+                  ">=",
+                  3
+                ],
+                [
+                  "claire",
+                  ">=",
+                  3
+                ],
+                [
+                  "missing",
+                  "<",
+                  1
+                ],
+                [
+                  "bad",
+                  "<",
+                  1
+                ]
+              ],
+              "who": "claire",
+              "mood": "bravo",
+              "title": "Extension validée.",
+              "say": "On étend à une deuxième équipe le mois prochain. Et on aimerait que tu formes les référents.",
+              "coach": "Mission réussie. Pour refaire ça chez ton vrai client, garde l'atelier final (leçon 4.7) sous la main."
             },
             {
               "who": "claire",

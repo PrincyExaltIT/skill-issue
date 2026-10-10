@@ -33,7 +33,7 @@ let errors = 0;
 let warnings = 0;
 for (const d of dirs) {
   const dir = resolve(d);
-  if (!statSync(dir, { throwIfNoEntry: false })?.isDirectory()) continue;
+  if (!statSync(dir, { throwIfNoEntry: false })?.isDirectory()) { console.log(`✖ ${d}\n    ✖ dossier introuvable`); errors += 1; continue; }
   const res = validate(dir);
   errors += res.errors.length;
   warnings += res.warnings.length;

@@ -4,7 +4,7 @@ Une page. Elle répond aux questions qu'on te posera de toute façon. Garde-la f
 
 ## 1. Ce qu'on installe
 
-Un **skill** : un dossier de fichiers texte (`SKILL.md`, des règles en Markdown, des scripts Node sans dépendance) commité dans le dépôt `…`. Il est lu par **[outil déjà validé]**. Il n'ajoute ni compte, ni service, ni connexion réseau.
+Un **skill** : un dossier de fichiers texte (`SKILL.md`, des règles en Markdown, des scripts Node sans dépendance) commité dans le dépôt `…`. Il est lu par **[outil déjà validé]**. Il n'ajoute ni compte, ni service, ni connexion réseau : c'est l'outil qui parle au modèle, depuis le poste, ou depuis la CI si la revue IA y est activée (section 2).
 
 ## 2. Ce qui sort du poste
 

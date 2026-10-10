@@ -111,7 +111,7 @@
     });
   }
   document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.read-btn');
+    const btn = e.target.closest?.('.read-btn');
     if (!btn) return;
     const id = btn.closest('.lesson').id;
     read.has(id) ? read.delete(id) : read.add(id);
@@ -159,7 +159,7 @@
   $('#present-prev')?.addEventListener('click', () => stage(stageIndex - 1));
   $('#present-next')?.addEventListener('click', () => stage(stageIndex + 1));
   document.addEventListener('keydown', (e) => {
-    if (e.target.closest('input, textarea, select, [contenteditable]')) return;
+    if (e.target.closest?.('input, textarea, select, [contenteditable]')) return;
     if (!document.body.classList.contains('present')) { if (e.key === 'p' && !e.ctrlKey && !e.metaKey) togglePresent(true); return; }
     if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); stage(stageIndex + 1); }
     if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); stage(stageIndex - 1); }
@@ -213,10 +213,11 @@
     const META = 100; const BODY = 4500; const ACTIVE = 2;
     const windows = $$('[data-window]', meter);
     let WINDOW = Number(windows[0]?.dataset.window ?? 200000);
-    const pct = (v) => { const p = (v / WINDOW) * 100; return (p < 1 ? p.toFixed(1).replace('.', ',') : Math.min(100, p).toFixed(0)) + ' %'; };
+    // The figure says the real share, even past 100 % (the bar itself stops at the edge of the window).
+    const pct = (v) => { const p = (v / WINDOW) * 100; return (p < 1 ? p.toFixed(1).replace('.', ',') : p.toFixed(0)) + ' %'; };
     const render = () => {
       const n = Number(slider.value);
-      const progressive = n * META + ACTIVE * BODY;
+      const progressive = n * META + Math.min(ACTIVE, n) * BODY;   // only the skills the task needs load their body
       const naive = n * (META + BODY);
       out.n.textContent = n;
       out.l1.textContent = progressive.toLocaleString('fr-FR');
@@ -225,7 +226,7 @@
       out.pct.textContent = pct(naive);
       $('.l1', meter).style.width = Math.min(100, (n * META / WINDOW) * 100) + '%';
       $('.l2', meter).style.left = Math.min(100, (n * META / WINDOW) * 100) + '%';
-      $('.l2', meter).style.width = Math.min(100, (ACTIVE * BODY / WINDOW) * 100) + '%';
+      $('.l2', meter).style.width = Math.min(100, (Math.min(ACTIVE, n) * BODY / WINDOW) * 100) + '%';
       $('.bad', meter).style.width = Math.min(100, (naive / WINDOW) * 100) + '%';
     };
     slider.addEventListener('input', render);
@@ -406,11 +407,11 @@
     const idle = `${room.map((id) => who(id).name).join(', ')} · Skillou te conseille en privé`;
     box.innerHTML = `<div class="game-grid"><section class="chat" aria-label="Conversation : ${esc(CH.title ?? G.client)}">`
       + `<header class="chat-head"><div class="chat-faces">${room.map((id) => face(id)).join('')}${face('skillou', 'salut')}</div>`
-      + `<div class="chat-who"><b>${esc(CH.title ?? G.client)}</b><span class="chat-status">${esc(idle)}</span></div></header>`
-      + `<ol class="game-log chat-log" aria-live="polite" aria-relevant="additions" aria-label="Messages"></ol>`
+      + `<div class="chat-who"><b>${esc(CH.title ?? G.client)}</b><span class="chat-status">${esc(idle)}</span></div>`
+      + `<button class="chat-reset game-reset" type="button">${ICON.reset}<span>Recommencer</span></button></header>`
+      + `<ol class="game-log chat-log" aria-live="polite" aria-relevant="additions" aria-label="Messages" tabindex="-1"></ol>`
       + `<div class="chat-compose"><div class="game-act"></div><div class="compose-bar" aria-hidden="true"><span></span><i>${ICON.send}</i></div></div></section>`
-      + `<aside class="game-side" aria-label="Ta fiche mission"><h3>Ta fiche mission</h3><div class="game-trust"></div><h4>Ce que tu sais</h4><ul class="game-cards"></ul>`
-      + `<button class="btn game-reset" type="button">${ICON.reset}Recommencer</button></aside></div>`;
+      + `<aside class="game-side" aria-label="Ta fiche mission"><h3>Ta fiche mission</h3><div class="game-trust"></div><h4>Ce que tu sais</h4><ul class="game-cards"></ul></aside></div>`;
     const logEl = $('.game-log', box), act = $('.game-act', box), trustEl = $('.game-trust', box), cardsEl = $('.game-cards', box);
     const statusEl = $('.chat-status', box), barEl = $('.compose-bar span', box);
     const push = (entry) => { st.log.push(entry); save(); };
@@ -426,13 +427,14 @@
     // A message's clock time: the conversation starts at CH.time and each message takes a minute.
     const [h0, m0] = String(CH.time ?? '09:30').split(':').map(Number);
     const clock = (i) => { const m = h0 * 60 + m0 + i; return `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`; };
+    const nb = (s) => String(s).replace(/ ([?!;:»])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
     const line = (i) => {
       const e = st.log[i], prev = st.log[i - 1];
       const me = e.who === 'me', coach = (e.cls ?? '').includes('coach');
       const first = !prev || prev.who !== e.who || (prev.cls ?? '') !== (e.cls ?? '');
       const name = me || !first ? '' : `<span class="name">${esc(who(e.who).name)} <small>${coach ? `${ICON.lock}visible par toi seul` : esc(who(e.who).role)}</small></span>`;
       return `<li class="msg ${me ? 'out' : 'in'}${first ? ' first' : ''} ${e.cls ?? ''}">${me ? '' : `<span class="who">${first ? face(e.who, e.mood) : ''}</span>`}`
-        + `<div class="bubble">${name}<div class="text">${e.html}</div><span class="meta"><span>${clock(i)}</span>${me ? `${ICON.seen}<span class="sr-only">lu</span>` : ''}</span></div></li>`;
+        + `<div class="bubble">${name}<div class="text">${nb(e.html)}</div><span class="meta"><span>${clock(i)}</span>${me ? `${ICON.seen}<span class="sr-only">lu</span>` : ''}</span></div></li>`;
     };
     const opening = () => `<li class="chat-day"><span>${esc(CH.day ?? "Aujourd'hui")}</span></li>`
       + (G.intro ? `<li class="chat-note">${ICON.info}<span>${esc(G.intro)}</span></li>` : '');
@@ -470,6 +472,7 @@
     async function reveal() {
       if (busy) return;
       busy = true; box.classList.add('is-busy');
+      if (refocus) logEl.focus({ preventScroll: true });
       const run = epoch;
       while (shown < st.log.length && run === epoch) {
         const e = st.log[shown];
@@ -507,17 +510,32 @@
 
     function go(id) { st.at = id; save(); renderSide(); renderAct(); renderLog(); }
 
+    // The plan read by the verdicts: key options left out, options that are not good, one option ticked.
+    const planOpts = () => G.scenes[st.planScene]?.options ?? {};
+    const planValue = (id) => {
+      if (id === 'missing') return Object.entries(planOpts()).filter(([k, o]) => o.good && o.key && !st.plan.includes(k)).length;
+      if (id === 'bad') return st.plan.filter((k) => planOpts()[k] && !planOpts()[k].good).length;
+      if (id.startsWith('plan:')) return st.plan.includes(id.slice(5)) ? 1 : 0;
+      return st.trust[id] ?? 0;
+    };
+    function gaps() {
+      const O = planOpts();
+      const add = Object.entries(O).filter(([k, o]) => o.good && o.key && !st.plan.includes(k)).map(([, o]) => `- À ajouter : ${o.text}`);
+      const drop = st.plan.filter((k) => O[k] && !O[k].good).map((k) => `- À retirer : ${O[k].text}`);
+      return add.length || drop.length ? [...add, ...drop] : ['- Rien d\'essentiel : ta proposition couvre les points clés.'];
+    }
     function sheet() {
       const goodPlan = st.plan.filter((p) => G.scenes[st.planScene]?.options?.[p]?.good);
       const lines = [`# Fiche mission · ${G.client}`, '', `> ${G.brief}`, '', '## Ce que je sais du client', ...st.cards.map((c) => `- **${MISSION.cards[c].title}** ${MISSION.cards[c].text}`),
         '', `## ${G.planTitle ?? 'Ma proposition'}`, ...goodPlan.map((p) => `- ${G.scenes[st.planScene].options[p].text}`),
+        '', '## Ce qui manque', ...gaps(),
         '', '## Où la confiance en est (de -4 à 4)', ...room.map((id) => `- ${who(id).name} (${who(id).role}) : ${trustOf(id)}/4`),
         '', '## Pour la suite', ...G.next.map((n) => `- ${n}`), ''];
       return lines.join('\n');
     }
 
     const replies = (items) => `<div class="replies" role="group" aria-label="Tes réponses possibles">${items.join('')}</div>`;
-    const reply = (attr, text) => `<button class="choice reply" type="button" ${attr}><span>${esc(text)}</span>${ICON.send}</button>`;
+    const reply = (attr, text) => `<button class="choice reply" type="button" ${attr}><span>${nb(esc(text))}</span>${ICON.send}</button>`;
     function renderAct() {
       const S = G.scenes[st.at];
       if (!S) { act.innerHTML = ''; return; }
@@ -576,7 +594,7 @@
           go(S.next);
         };
       } else if (S.kind === 'end') {
-        const v = S.verdicts.find((x) => (x.when ?? []).every(([id, op, n]) => (op === '>=' ? (st.trust[id] ?? 0) >= n : (st.trust[id] ?? 0) < n))) ?? S.verdicts[S.verdicts.length - 1];
+        const v = S.verdicts.find((x) => (x.when ?? []).every(([id, op, n]) => (op === '>=' ? planValue(id) >= n : planValue(id) < n))) ?? S.verdicts[S.verdicts.length - 1];
         if (!st.log.some((e) => e.verdict)) { push({ who: v.who, html: `<p>${v.say}</p>`, verdict: true }); push({ who: 'skillou', html: `<p>${v.coach}</p>`, mood: v.mood, cls: 'coach' }); }
         act.innerHTML = `<div class="end"><p class="end-title">${esc(v.title)}</p><div class="end-actions"><button class="btn primary" type="button" data-dl>Télécharger ma fiche mission (.md)</button> <a class="btn" href="${S.link}">${esc(S.linkText)}</a></div></div>`;
         $('[data-dl]', act).onclick = async () => {
@@ -590,6 +608,7 @@
     $('.game-reset', box).onclick = () => {
       epoch += 1; busy = false; box.classList.remove('is-busy');
       st = { at: G.start, log: [], trust: {}, cards: [], plan: [], asked: [] }; shown = 0; save();
+      refocus = true;
       paintAll(); typing(null); go(G.start);
     };
     paintAll(); renderSide(); renderAct(); renderLog();

@@ -121,7 +121,7 @@ ${STEPS.map(({ n, what }) => {
   const h = results.runs.haiku[n] ?? {};
   return `    <tr><th scope="row"><span class="mono">v${n}</span> · ${what}</th>${bar(o.rappel, 'o')}${bar(h.rappel, 'h')}<td>${o.precision ?? '—'} / ${h.precision ?? '—'} %</td><td>${o.leurres ?? '—'} / ${h.leurres ?? '—'}</td><td>${o.tours ?? '—'} / ${h.tours ?? '—'}</td><td>${o.cout == null ? '—' : fr(o.cout) + ' $'}</td></tr>`;
 }).join('\n')}
-    <tr class="ref"><th scope="row">Le package de Princy <span class="small muted">(bonus)</span></th>${bar(pkgClaude.rappel, 'o')}<td>—</td><td>${dash(pkgClaude.precision, ' %')} · Codex ${dash(pkgCodex.rappel, ' %')} <span class="small muted">(run du ${frDate(parseDate(pkgCodex.date, 'course/resultats.json « package.codex.date »'))})</span></td><td>${dash(pkgClaude.leurres)}</td><td>${dash(pkgClaude.tours)}</td><td>${pkgClaude.cout == null ? '—' : fr(pkgClaude.cout) + ' $'}</td></tr>
+    <tr class="ref"><th scope="row">Le package de Princy <span class="small muted">(bonus)</span></th>${bar(pkgClaude.rappel, 'o')}<td>—</td><td>${dash(pkgClaude.precision, ' %')} · Codex ${dash(pkgCodex.rappel, ' %')} <span class="small muted">(run du ${frDate(parseDate(pkgCodex.date, 'course/resultats.json « package.codex.date »'))}, base <code>${String(pkgCodex.branche ?? '?')}</code>)</span></td><td>${dash(pkgClaude.leurres)}</td><td>${dash(pkgClaude.tours)}</td><td>${pkgClaude.cout == null ? '—' : fr(pkgClaude.cout) + ' $'}</td></tr>
   </tbody></table></div>
 <p class="small muted">${results.methode} Haiku 5.5 à l'étape 0 n'a pas écrit de rapport : sa réponse dans le chat a été notée. Coûts Haiku non affichés : Claude Code ne connaissait pas encore son tarif sur ce poste. Les rapports bruts sont dans <code>docs/sample-review/formation/</code>.</p>`;
 const duree = (s) => (s < 60 ? `${s} s` : `${Math.floor(s / 60)} min ${String(s % 60).padStart(2, '0')}`);
@@ -303,7 +303,12 @@ function checkMission(page) {
       if (S.kind === 'ask' || S.kind === 'plan') scene(S.next, `scène ${s}`);
       (S.choices ?? []).forEach((c, i) => { scene(c.next, `scène ${s}, choix ${i + 1}`); card(c.card, `scène ${s}, choix ${i + 1}`); trust(c.trust, `scène ${s}, choix ${i + 1}`); });
       for (const [k, x] of Object.entries({ ...S.questions, ...S.options })) { card(x.card, `scène ${s}, ${k}`); trust(x.trust, `scène ${s}, ${k}`); }
-      (S.verdicts ?? []).forEach((v, i) => { person(v.who, `scène ${s}, verdict ${i + 1}`); (v.when ?? []).forEach(([id]) => { if (!(G.room ?? []).includes(id)) errors.push(`${at(`scène ${s}, verdict ${i + 1}`)} : « ${id} » n'est pas dans la salle (room)`); }); });
+      (S.verdicts ?? []).forEach((v, i) => { person(v.who, `scène ${s}, verdict ${i + 1}`); (v.when ?? []).forEach(([id]) => {
+        // a condition reads a person's trust, the plan (missing key options, bad options) or one plan option
+        const planIds = Object.values(G.scenes).flatMap((x) => Object.keys(x.options ?? {}));
+        const ok = (G.room ?? []).includes(id) || id === 'missing' || id === 'bad' || (id.startsWith('plan:') && planIds.includes(id.slice(5)));
+        if (!ok) errors.push(`${at(`scène ${s}, verdict ${i + 1}`)} : « ${id} » n'est ni dans la salle (room) ni une option du plan`);
+      }); });
       if (S.kind === 'end' && !(typeof S.link === 'string' && /^#./.test(S.link))) errors.push(`${at(`scène ${s}`)} : « link » doit être une ancre interne (#…)`);
     }
   }
@@ -350,6 +355,19 @@ function checkAnchors(page) {
   return new Set(links).size;
 }
 const anchorsChecked = checkAnchors(html);
+
+// French typography: a non-breaking space keeps ? ! ; : » % and $ with the word before them (and « with the word after),
+// in running text only: never inside a tag, <pre>, <code>, <kbd>, <script>, <style>, <textarea> or <svg>.
+function frenchSpacing(src) {
+  // Raw blocks are set aside whole (a "<" inside a script would otherwise swallow its closing tag), then put back.
+  const kept = [];
+  const hold = (m) => '\u0000' + (kept.push(m) - 1) + '\u0000';
+  const text = src.replace(/<(script|style|pre|textarea|svg)\b[\s\S]*?<\/\1>/gi, hold).replace(/<(code|kbd)\b[\s\S]*?<\/\1>/gi, hold);
+  const spaced = text.split(/(<[^>]+>)/).map((part) => (part.startsWith('<') ? part
+    : part.replace(/ ([?!;:»%$])/g, '\u00a0$1').replace(/« /g, '«\u00a0'))).join('');
+  return spaced.replace(/\u0000(\d+)\u0000/g, (_, i) => kept[Number(i)]);
+}
+html = frenchSpacing(html);
 
 writeFileSync(join(dist, 'index.html'), html);
 

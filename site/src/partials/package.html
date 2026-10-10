@@ -167,7 +167,7 @@
                 <thead><tr><th>Étape</th><th>Harness</th><th>Résultat</th><th>Durée · coût</th></tr></thead>
                 <tbody>
                   <tr><td><code>angular-review</code></td><td>Codex</td><td><span class="sev blocker">REQUEST_CHANGES</span> {{PCH:etapes.revue.blocker}} BLOCKER, {{PCH:etapes.revue.major}} MAJOR, {{PCH:etapes.revue.minor}} MINOR</td><td>≈ {{PCH:etapes.revue.duree_s}} · quota ChatGPT</td></tr>
-                  <tr><td><code>review-fix</code> (BLOCKER + MAJOR)</td><td>Claude Code</td><td>{{PCH:etapes.fix.commits}} commits, un par finding, chacun avec un test de régression</td><td>{{PCH:etapes.fix.duree_s}} · {{PCH:etapes.fix.cout}}</td></tr>
+                  <tr><td><code>review-fix</code> (BLOCKER + MAJOR)</td><td>Claude Code</td><td>{{PCH:etapes.fix.commits}} commits, un par finding ; {{PCH:etapes.fix.commits_avec_test}} ajoutent ou modifient un test</td><td>{{PCH:etapes.fix.duree_s}} · {{PCH:etapes.fix.cout}}</td></tr>
                   <tr><td><code>angular-review</code> (re-review)</td><td>Claude Code</td><td><span class="sev blocker">REQUEST_CHANGES</span> {{PCH:etapes.rerevue.blocker}} BLOCKER, {{PCH:etapes.rerevue.major}} MAJOR, {{PCH:etapes.rerevue.minor}} MINOR, {{PCH:etapes.rerevue.info}} INFO</td><td>{{PCH:etapes.rerevue.duree_s}} · {{PCH:etapes.rerevue.cout}}</td></tr>
                   <tr><td><code>pr-handoff</code></td><td>Claude Code</td><td>Description de PR « à ne pas merger en l'état », décisions listées pour l'humain</td><td>{{PCH:etapes.handoff.duree_s}} · {{PCH:etapes.handoff.cout}}</td></tr>
                 </tbody>

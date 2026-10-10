@@ -303,7 +303,7 @@ td code { white-space: nowrap; }
 .meter-controls input[type="range"] { width: 100%; accent-color: var(--accent); }
 @media (max-width: 640px) { .meter-controls { grid-template-columns: minmax(0, 1fr); } }
 .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--accent), var(--shadow); }
-.meter { display: grid; gap: 8px; }
+#meter .meter { display: grid; gap: 8px; }
 .meter-row { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 16px; flex-wrap: wrap; font-weight: 600; font-size: .92rem; }
 .meter-val { font: 500 .85rem/1.3 var(--font-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .meter-val b { color: var(--ink); }
@@ -576,8 +576,11 @@ details.more[open] > summary { margin-bottom: 10px; }
 .trust small { color: var(--ink-3); }
 .trust .meter { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
 .trust .meter i { display: block; height: 100%; width: calc(var(--v) * 100%); background: linear-gradient(90deg, var(--pink), var(--accent)); border-radius: inherit; transition: width .3s; }
-.game-reset { margin-top: 14px; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-.game-reset svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.chat-reset { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); font: 600 .8rem/1 var(--font-body); cursor: pointer; transition: background-color .15s, color .15s; }
+.chat-reset:hover { background: var(--surface-2); color: var(--ink); }
+.chat-reset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chat-reset svg { width: 15px; height: 15px; }
+.game .chat-log:focus { outline: none; }
 @media (max-width: 860px) {
   .chat { height: clamp(520px, calc(100svh - 96px), 760px); border-radius: 18px; }
   .msg { max-width: 94%; }
@@ -586,7 +589,9 @@ details.more[open] > summary { margin-bottom: 10px; }
   .chat-head { padding: 10px 12px; gap: 10px; }
   .chat-faces .face { width: 30px; height: 30px; font-size: 12px; }
   .game .chat-log { padding: 14px 10px 10px; }
-  .chat-compose { padding: 10px 10px 12px; }
+  .chat-compose { padding: 10px 10px 12px; max-height: 46vh; }
+  .chat-reset { padding: 8px; }
+  .chat-reset span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .msg { grid-template-columns: 30px minmax(0, 1fr); gap: 6px; }
   .msg .face { width: 30px; height: 30px; font-size: 13px; }
   .reply { max-width: 100%; }

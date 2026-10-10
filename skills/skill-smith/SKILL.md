@@ -4,7 +4,7 @@ description: Create or improve an Agent Skill the team can share — interview, 
 license: MIT
 compatibility: Requires Node.js 18+.
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   author: PrincyExaltIT
 ---
 

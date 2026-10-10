@@ -115,7 +115,8 @@
       <div class="step lesson" id="at-8"><div class="step-body">
         <h3>Atelier 8 · Installer comme chez Hexa</h3>
         <p>Ton skill posé comme chez le client de la mission : dans le dépôt, des scripts qui n'écrivent que dans <code>.review</code> et n'appellent pas le réseau, une porte de CI sans secret, un <code>.npmrc</code> qui garde la vérification TLS. <a href="#m4-a8">Leçon 4.3</a></p>
-<pre class="term"><span class="p">$ </span><span class="cmd">node --permission --allow-fs-read=* --allow-fs-write=.review --allow-child-process .agents/skills/revue-angular/scripts/verifs.mjs --base depart</span></pre>
+<pre class="term"><span class="p">$ </span><span class="cmd">node --permission --allow-fs-read="*" --allow-fs-write=".review/*" --allow-child-process .agents/skills/revue-angular/scripts/perimetre.mjs --base depart</span>
+<span class="p">$ </span><span class="cmd">node --permission --allow-fs-read="*" --allow-fs-write=".review/*" --allow-child-process .agents/skills/revue-angular/scripts/verifs.mjs</span></pre>
         <div class="expect">Le skill est commité, ses scripts tournent sous <code>node --permission</code>, et le job de CI ferme la porte sur la PR du lab sans lire de secret.</div>
         <p class="small muted">Rattrapage : <code>node ../skill-issue/course/rattrapage.mjs 5</code> (<code>--harness tous</code> pour les deux dossiers)</p>
         <label class="check"><input type="checkbox" data-step="a8"> Fait</label>
@@ -126,6 +127,7 @@
         <p>Le skill de ta vraie équipe et son dossier : diagnostic, règles tirées des dernières MR, score de départ, merge request d'installation, note pour la RSSI, charte, plan de pilote. <a href="#m4-final">Leçon 4.7</a></p>
 <pre class="term"><span class="p">$ </span><span class="cmd">cp -r ../skill-issue/course/client ./mission-client</span></pre>
         <div class="expect">Un skill validé avec un score de départ sur une MR de ton équipe, une MR d'installation prête, et quatre documents remplis.</div>
+        <p class="small muted">Pas de rattrapage : c'est ton client. Pour repartir d'une base propre : <code>node ../skill-issue/course/rattrapage.mjs 5 --harness codex</code>, puis renomme le dossier et le champ <code>name</code>.</p>
         <label class="check"><input type="checkbox" data-step="a9"> Fait</label>
       </div></div>
     </div>

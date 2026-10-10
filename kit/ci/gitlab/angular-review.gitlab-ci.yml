@@ -4,7 +4,8 @@
 #
 # 1. angular-review:scan — deterministic, no AI. Produces a Code Quality report shown in the MR widget.
 # 2. angular-review:ai   — runs the full skill with Claude Code (headless) and posts REVIEW.md as an MR note.
-#    Runs only when ANTHROPIC_API_KEY and GITLAB_REVIEW_TOKEN (scope: api) are defined as masked CI/CD variables.
+#    Runs only when ANTHROPIC_API_KEY and GITLAB_REVIEW_TOKEN (scope: api) are defined as masked CI/CD variables,
+#    and never for a merge request from a fork (a project member could run it with these variables).
 # Prerequisite: the skill is versioned in the repo under .agents/skills/ (node kit/install.mjs --target .).
 
 stages: [review]
@@ -38,7 +39,7 @@ angular-review:ai:
   # `rules` replaces the base rules, so the file filter is repeated here. `when: always` keeps the AI review
   # running when the scan gate fails: that is when it matters most.
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $ANTHROPIC_API_KEY && $GITLAB_REVIEW_TOKEN
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == $CI_PROJECT_ID && $ANTHROPIC_API_KEY && $GITLAB_REVIEW_TOKEN
       changes: ["**/*.ts", "**/*.html", "angular.json", "package.json"]
       when: always
   script:

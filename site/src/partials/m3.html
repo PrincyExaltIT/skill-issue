@@ -178,7 +178,7 @@ description: Écrit la description de PR ou de MR d'une branche à partir
               <li><b>Parallélisme.</b> Les relecteurs tournent en même temps quand le harness le permet ; sinon, l'orchestrateur les joue un par un.</li>
               <li><b>Attention focalisée.</b> Un relecteur qui ne cherche que des problèmes de réactivité n'a qu'une liste de règles en tête.</li>
             </ul>
-            <p>Le risque, avec des relecteurs spécialisés, c'est qu'ils trouvent toujours quelque chose. Ton étape de vérification sert à ça : elle essaie de réfuter chaque finding avant de le garder, comme les outils du moment, qui vérifient avant de publier. Le package du bonus final pousse l'idée au bout avec sept relecteurs. Chaque relecteur peut aussi tourner sur un modèle plus petit que l'orchestrateur ; on le voit dans l'extra de la <a href="#m3-l9">leçon 3.9</a>.</p>
+            <p>Le risque, avec des relecteurs spécialisés, c'est qu'ils trouvent toujours quelque chose. Ton étape de vérification sert à ça : elle essaie de réfuter chaque finding avant de le garder, comme les outils du moment, qui vérifient avant de publier. Le package du bonus final pousse l'idée au bout avec jusqu'à sept relecteurs. Chaque relecteur peut aussi tourner sur un modèle plus petit que l'orchestrateur ; on le voit dans l'extra de la <a href="#m3-l9">leçon 3.9</a>.</p>
             <h3>Ce sur quoi les outils du marché ont convergé</h3>
             <div class="table-wrap">
               <table>
@@ -189,7 +189,7 @@ description: Écrit la description de PR ou de MR d'une branche à partir
                   <tr><td>Vérifier avant de publier</td><td><code>/code-review ultra</code> reproduit chaque finding</td><td>Étape 6 : réfuter chaque finding</td></tr>
                   <tr><td>Un bouton de confiance</td><td><code>/code-review</code> se règle de <code>low</code> à <code>max</code></td><td>La porte CI ne bloque que les BLOCKER du script</td></tr>
                   <tr><td>Les règles de l'équipe dans le dépôt</td><td><code>REVIEW.md</code> (Claude Code Review), <code>## Code Review Rules</code> dans <code>AGENTS.md</code> (Codex), <code>BUGBOT.md</code> (Cursor)</td><td><code>references/</code>, versionné avec le code qu'il relit</td></tr>
-                  <tr><td>Un regard neuf, des axes séparés</td><td><code>adversarial-review</code> (équipe Claude Code), Standards / Spec (Pocock)</td><td>Un relecteur par fichier de références</td></tr>
+                  <tr><td>Un regard neuf, des axes séparés</td><td><code>adversarial-review</code> (skills de la communauté), Standards / Spec (Pocock)</td><td>Un relecteur par fichier de références</td></tr>
                   <tr><td>Apprendre des retours</td><td>Bugbot (Cursor) apprend des règles</td><td>Les écartés et leur raison, puis <code>exemples.md</code></td></tr>
                 </tbody>
               </table>

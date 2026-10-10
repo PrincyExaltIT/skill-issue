@@ -19,7 +19,7 @@ Formation pour consultants : une mission (un jeu de rôle chez un grand compte f
 | Module 3 | Le flux d'équipe | Passage de relais, sous-agents, hook, sécurité des skills tiers, faire vivre le skill |
 | Module 4 | Chez le client | Ce qui sort de la machine, installer sans internet ou derrière un proxy, préventions, dossier RSSI/DPO/DSI, pilote mesuré ; ateliers 8 et 9 : ton vrai client |
 | Bonus +1 | Il relit pendant que tu dors | Le même skill en CI GitHub et GitLab, chez les relecteurs hébergés, dans les agents cloud |
-| Bonus +2 | Le package de Princy | Prêt à installer : environ 140 règles, sept relecteurs, une chaîne complète, comparé à ton skill |
+| Bonus +2 | Le package de Princy | Prêt à installer : environ 140 règles, jusqu'à sept relecteurs, une chaîne complète, comparé à ton skill |
 
 ## Ce que le skill change, mesuré
 
@@ -33,7 +33,7 @@ Le skill de référence lancé à chaque étape sur la PR du lab, le 9 octobre 2
 | v3 · scripts | 100 % | 96 % |
 | v4 · exemples et vérification | 96 % | 93 % |
 
-Même dossier lancé avec Codex (gpt-5.6-sol) : 93 %. Le détail (précision, leurres, tours, coût) et les rapports bruts : [`course/resultats.json`](course/resultats.json), [`docs/sample-review/formation/`](docs/sample-review/formation/).
+Le dossier de l'étape 5 (avant les garde-fous), lancé tel quel avec Codex (gpt-5.6-sol) : 93 %. Le détail (précision, leurres, tours, coût) et les rapports bruts : [`course/resultats.json`](course/resultats.json), [`docs/sample-review/formation/`](docs/sample-review/formation/).
 
 ## Démarrer la formation
 
@@ -46,7 +46,7 @@ git checkout lab/speaker-spotlight
 npm install
 ```
 
-Prérequis : Git, Node.js 24.15 ou plus, ou 22.22.3 ou plus (la CLI Angular 22.2 refuse de démarrer en dessous) et un harness au choix.
+Prérequis : Git, Node.js 22.22.3 ou plus dans la ligne 22, 24.15 ou plus dans la ligne 24, ou 26 et au-delà (ce que demande la CLI Angular 22.2, qui refuse de démarrer sinon) et un harness au choix.
 
 Noter une review : `node ../skill-issue/evals/angular-review/score.mjs --report .review/REVIEW.md`.
 Rattraper une étape : `node ../skill-issue/course/rattrapage.mjs <0-5 | chaine> [--harness claude|codex|tous]` (`chaine` pose les deux skills de l'atelier 6).
@@ -63,7 +63,7 @@ Ou avec l'installeur communautaire : `npx skills add PrincyExaltIT/skill-issue`.
 
 | Skill | Rôle |
 |---|---|
-| [`angular-review`](skills/angular-review/SKILL.md) | Review d'un diff Angular 17 → 22 : scripts pour le périmètre, le scan et le verdict ; sept relecteurs pour le jugement |
+| [`angular-review`](skills/angular-review/SKILL.md) | Review d'un diff Angular 17 → 22 : scripts pour le périmètre, le scan et le verdict ; jusqu'à sept relecteurs pour le jugement |
 | [`review-fix`](skills/review-fix/SKILL.md) | Corrige les findings un par un, build et test après chacun |
 | [`pr-handoff`](skills/pr-handoff/SKILL.md) | Description de PR/MR et note de passation (invocation manuelle) |
 | [`skill-smith`](skills/skill-smith/SKILL.md) | Crée, valide et installe un nouveau skill |
