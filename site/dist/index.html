@@ -269,6 +269,20 @@ kbd { font-size: .8em; border: 1px solid var(--line); border-bottom-width: 2px; 
 .lesson li::marker { color: var(--ink-3); }
 .lesson .read-btn { justify-self: start; margin-top: 6px; }
 .lesson .read-btn[aria-pressed="true"] { border-color: var(--add); color: var(--add); }
+.pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 10px 0 34px; }
+.pager-link {
+  display: grid; gap: 4px; padding: 16px 20px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--surface);
+  text-decoration: none; color: var(--ink); transition: border-color .15s, background-color .15s;
+}
+.pager-link:hover { border-color: var(--accent); }
+.pager-link.next { text-align: right; background: var(--cta); border-color: var(--cta); color: var(--cta-ink); }
+.pager-link.next:hover { background: var(--cta-hover); border-color: var(--cta-hover); }
+.pager-dir { font: 600 .82rem/1.2 var(--font-body); color: var(--ink-3); }
+.pager-link.next .pager-dir { color: inherit; opacity: .85; }
+.pager-title { font: 700 1.05rem/1.3 var(--font-display); }
+.pager-title b { font-family: var(--font-mono); font-size: .85em; margin-right: 6px; color: var(--accent); }
+.pager-link.next .pager-title b { color: inherit; }
+@media (max-width: 640px) { .pager { grid-template-columns: minmax(0, 1fr); } .pager > span:empty { display: none; } .pager-link.next { order: -1; } }
 .kicker { font-size: 1.12rem; color: var(--ink); }
 .muted { color: var(--ink-2); }
 .small { font-size: .9rem; }
@@ -4143,6 +4157,18 @@ revue-angular:ia:
     });
     tools.append(b);
     wrap.append(tools);
+  });
+
+  // ── Pager: previous / next section at the bottom of every view, in the order of the nav menu ──
+  const ORDER = $$('#navmenu .tab').map((t) => ({ id: t.getAttribute('href').slice(1), num: $('.num', t).textContent, lbl: $('.lbl', t).textContent }));
+  ORDER.forEach(({ id }, i) => {
+    const wrap = $(`#${id} > .wrap`);
+    if (!wrap || id === 'accueil') return;                  // the landing has its own call to action
+    const prev = ORDER[i - 1], next = ORDER[i + 1];
+    const link = (s, dir) => `<a class="pager-link ${dir}" href="#${s.id}"><span class="pager-dir">${dir === 'prev' ? '← Précédent' : 'Suivant →'}</span>`
+      + `<span class="pager-title"><b>${esc(s.num)}</b> ${esc(s.lbl)}</span></a>`;
+    wrap.insertAdjacentHTML('beforeend', `<nav class="pager no-present" aria-label="Section précédente et suivante">`
+      + (prev ? link(prev, 'prev') : '<span></span>') + (next ? link(next, 'next') : '') + '</nav>');
   });
 
   // ── Lesson progress (per viewer, best effort) ──

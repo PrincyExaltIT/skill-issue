@@ -104,6 +104,18 @@
     wrap.append(tools);
   });
 
+  // ── Pager: previous / next section at the bottom of every view, in the order of the nav menu ──
+  const ORDER = $$('#navmenu .tab').map((t) => ({ id: t.getAttribute('href').slice(1), num: $('.num', t).textContent, lbl: $('.lbl', t).textContent }));
+  ORDER.forEach(({ id }, i) => {
+    const wrap = $(`#${id} > .wrap`);
+    if (!wrap || id === 'accueil') return;                  // the landing has its own call to action
+    const prev = ORDER[i - 1], next = ORDER[i + 1];
+    const link = (s, dir) => `<a class="pager-link ${dir}" href="#${s.id}"><span class="pager-dir">${dir === 'prev' ? '← Précédent' : 'Suivant →'}</span>`
+      + `<span class="pager-title"><b>${esc(s.num)}</b> ${esc(s.lbl)}</span></a>`;
+    wrap.insertAdjacentHTML('beforeend', `<nav class="pager no-present" aria-label="Section précédente et suivante">`
+      + (prev ? link(prev, 'prev') : '<span></span>') + (next ? link(next, 'next') : '') + '</nav>');
+  });
+
   // ── Lesson progress (per viewer, best effort) ──
   const read = new Set(store.get('read', []));
   function refreshProgress() {
